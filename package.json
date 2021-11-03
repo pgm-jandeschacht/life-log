@@ -1,0 +1,26 @@
+{
+  "name": "coil-project-2021-rhytm-and-buzz",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">   <a href=\"http://nestjs.com/\" target=\"blank\"><img src=\"https://nestjs.com/img/logo_text.svg\" width=\"320\" alt=\"Nest Logo\" /></a> </p>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server:dev": "npm run -w server start:dev",
+    "client:start": "npm run -w client start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pgmgent-pgm-5/coil-project-2021-rhytm-and-buzz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pgmgent-pgm-5/coil-project-2021-rhytm-and-buzz/issues"
+  },
+  "homepage": "https://github.com/pgmgent-pgm-5/coil-project-2021-rhytm-and-buzz#readme",
+  "workspaces": [
+    "./client",
+    "./server"
+  ]
+}
