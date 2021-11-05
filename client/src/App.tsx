@@ -19,21 +19,21 @@ function App() {
     // const { loading, error, data } = useQuery<FamilyMembersData>(GET_ALL_FAMILYMEMBERS, {
     //     fetchPolicy: "cache-first"
     // });
-    const {
-        data,
-        loading,
-        error
-    } = useQuery(GET_ALL_FAMILYMEMBERS);
+    // const {
+    //     data,
+    //     loading,
+    //     error
+    // } = useQuery(GET_ALL_FAMILYMEMBERS);
 
 
     
 
 
-    if(loading) return <p>"loading ..."</p>;
-    if(error) return <p>"ERRRORRR!!"</p>;
+    // if(loading) return <p>"loading ..."</p>;
+    // if(error) return <p>"ERRRORRR!!"</p>;
 
-    const familyMembers = data?.familyMembers;
-    console.log(familyMembers);
+    // const familyMembers = data?.familyMembers;
+    // console.log(familyMembers);
 
 
     return (
@@ -77,7 +77,7 @@ function App() {
                     <Button/>
                     <ul>
                         <pre>
-                        { JSON.stringify(familyMembers, null, " ") }
+                        {/* { JSON.stringify(familyMembers, null, " ") } */}
                         </pre>
                         
                     </ul>
