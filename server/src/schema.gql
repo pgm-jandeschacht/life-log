@@ -2,21 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AgendaItem {
-  """The ID of the agenda-item"""
-  id: Int!
-
-  """Name of the agenda-item"""
-  title: String!
-  authorId: Int
-
-  """Author of this agenda-item"""
-  author: FamilyMember!
-
-  """List of family members invited for this agenda-item"""
-  with: FamilyMember
-}
-
 type AlbumItem {
   id: Int!
 
@@ -46,6 +31,21 @@ type Note {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type User {
+  """The ID of the user"""
+  id: Int!
+
+  """The username of the user"""
+  username: String!
+
+  """The email of the user"""
+  email: String!
+
+  """The password of the user"""
+  password: String!
+  familyMember: FamilyMember
+}
 
 type WishListItem {
   id: Int!
@@ -82,6 +82,9 @@ type FamilyMember {
   """A small bio about the family member"""
   bio: String
 
+  """The user that is linked to the family member"""
+  user: User
+
   """
   Boolean representation if the family member is going to send information as well
   """
@@ -112,6 +115,21 @@ type FamilyMember {
   wishListItems: [WishListItem!]
 }
 
+type AgendaItem {
+  """The ID of the agenda-item"""
+  id: Int!
+
+  """Name of the agenda-item"""
+  title: String!
+  authorId: Int
+
+  """Author of this agenda-item"""
+  author: FamilyMember!
+
+  """List of family members invited for this agenda-item"""
+  with: FamilyMember
+}
+
 type Query {
   familyMembers: [FamilyMember!]!
   familyMemberById(id: Int!): FamilyMember!
@@ -123,6 +141,8 @@ type Query {
   albumItem(id: Int!): AlbumItem!
   wishListItems: [WishListItem!]!
   wishListItem(id: Int!): WishListItem!
+  users: [User!]!
+  user(id: Int!): User!
 }
 
 type Mutation {
@@ -141,6 +161,9 @@ type Mutation {
   createWishListItem(createWishListItemInput: CreateWishListItemInput!): WishListItem!
   updateWishListItem(updateWishListItemInput: UpdateWishListItemInput!, id: Int!): WishListItem!
   deleteWishListItem(id: Int!): WishListItem!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!, id: Int!): User!
+  removeUser(id: Int!): User!
 }
 
 input CreateFamilyMemberInput {
@@ -213,4 +236,16 @@ input UpdateWishListItemInput {
   content: String!
   completed: Boolean = false
   authorId: Int
+}
+
+input CreateUserInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  username: String!
+  email: String!
+  password: String!
 }
