@@ -2,8 +2,9 @@ import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { AgendaItem } from 'src/agenda-items/entities/agenda-item.entity';
 import { AlbumItem } from 'src/album-items/entities/album-item.entity';
 import { Note } from 'src/notes/entities/note.entity';
+import { User } from 'src/users/entities/user.entity';
 import { WishListItem } from 'src/wish-list-items/entities/wish-list-item.entity';
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, ManyToOne, OneToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable, ManyToOne, OneToOne, JoinColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -35,6 +36,14 @@ export class FamilyMember {
     // @Column()
     // @Field()
     // dob: Date;
+
+    
+    
+    @OneToOne(type => User, user => user.familyMember)
+    @JoinColumn()
+    
+    @Field(type => User, { nullable: true, description: 'The user that is linked to the family member'})
+    user?: User;
 
     @Column({ nullable: true })
     @Field({ nullable: true,  defaultValue:true, description: 'Boolean representation if the family member is going to send information as well'})
