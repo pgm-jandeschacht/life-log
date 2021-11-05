@@ -9,6 +9,11 @@ import { FamilyMembersService } from './family-members.service';
 export class FamilyMembersResolver {
     constructor(private familyMemberService: FamilyMembersService) {}
 
+    @Mutation(returns => FamilyMember)
+    createFamilyMember(@Args('createFamilyMemberInput') createFamilyMemberInput: CreateFamilyMemberInput) : Promise<FamilyMember> {
+        return this.familyMemberService.create(createFamilyMemberInput);
+    }
+    
     @Query(returns => [FamilyMember])
     familyMembers(): Promise<FamilyMember[]> {
         return this.familyMemberService.findAll();
@@ -19,10 +24,6 @@ export class FamilyMembersResolver {
         return this.familyMemberService.findOneById(id)
     }
 
-    @Mutation(returns => FamilyMember)
-    createFamilyMember(@Args('createFamilyMemberInput') createFamilyMemberInput: CreateFamilyMemberInput) : Promise<FamilyMember> {
-        return this.familyMemberService.create(createFamilyMemberInput);
-    }
 
     @Mutation(returns => FamilyMember)
     updateFamilyMember(@Args('id', { type: () => Int }) id: number, @Args('updateFamilyMemberInput') updateFamilyMemberInput: UpdateFamilyMemberInput) : Promise<FamilyMember> {
