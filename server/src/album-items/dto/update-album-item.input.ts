@@ -11,6 +11,6 @@ export class UpdateAlbumItemInput extends PartialType(CreateAlbumItemInput) {
 
     //date
 
-    @Field(type => Int, { nullable: true })
-    uploaderId?: number;
+    // @Field(type => Int, { nullable: true })
+    // uploaderId?: number;
 }

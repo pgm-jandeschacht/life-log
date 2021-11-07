@@ -9,7 +9,10 @@ import { AlbumItem } from './entities/album-item.entity';
 
 @Injectable()
 export class AlbumItemsService {
-    constructor(@InjectRepository(AlbumItem) private albumItemRepository: Repository<AlbumItem>, private familyMemberService: FamilyMembersService) {};
+    constructor(
+        @InjectRepository(AlbumItem) 
+        private albumItemRepository: Repository<AlbumItem>, 
+        private familyMemberService: FamilyMembersService) {};
 
     create(createAlbumItemInput: CreateAlbumItemInput): Promise<AlbumItem> {
         const newAlbumItem = this.albumItemRepository.create(createAlbumItemInput);

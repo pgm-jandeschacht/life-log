@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { threadId } from 'worker_threads';
 import { CreateFamilyMemberInput } from './dto/create-family-member.input';
@@ -8,7 +10,11 @@ import { FamilyMember } from './entities/family-member.entity';
 
 @Injectable()
 export class FamilyMembersService {
-    constructor(@InjectRepository(FamilyMember) private familyMemberRepository: Repository<FamilyMember>) {};
+    constructor(
+        @InjectRepository(FamilyMember) 
+        private familyMemberRepository: Repository<FamilyMember>,
+        private userService: UsersService
+    ) {};
 
     create(createFamilyMemberInput: CreateFamilyMemberInput) : Promise<FamilyMember> {
         const newFamilyMember = this.familyMemberRepository.create(createFamilyMemberInput);
@@ -44,6 +50,10 @@ export class FamilyMembersService {
         const familyMember = await this.findOneById(id);
 
         return this.familyMemberRepository.remove(familyMember);
+    }
+
+    getUser(userId: number) :Promise<User> {
+        return this.userService.findUserById(userId);
     }
 
 

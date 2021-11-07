@@ -10,6 +10,6 @@ export class CreateAgendaItemInput {
     // // @Field({ nullable: true, description: 'Extra information about agenda-item'})
     // content?: string;
 
-    @Field(type => Int)
-    authorId: number;
+    // @Field(type => Int)
+    // authorId: number;
 }

@@ -23,7 +23,8 @@ export class User {
     password: string;
 
     
-    @OneToOne(type => FamilyMember, familyMember => familyMember.user)
+    @OneToOne(type => FamilyMember, familyMember => familyMember.user )
+    // @JoinColumn()
     @Field(type => FamilyMember, { nullable: true })
     familyMember?: FamilyMember;
 
