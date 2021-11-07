@@ -28,7 +28,7 @@ export class WishListItemsResolver {
   uploader(@Parent() wishListItem: WishListItem): Promise<FamilyMember> {
     //console.log('AUTHOR RESOLVER');  
     //console.log(note);
-      return this.wishListItemsService.getUploader(wishListItem.authorId);
+      return this.wishListItemsService.getUploader(wishListItem.author.id);
   }
 
   @Mutation(() => WishListItem)

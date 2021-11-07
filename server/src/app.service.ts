@@ -7,6 +7,8 @@ import { FamilyMember } from './family-members/entities/family-member.entity';
 import { Note } from './notes/entities/note.entity';
 import { User } from './users/entities/user.entity';
 import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
+import * as faker from 'faker';
+import * as bcrypt from 'bcrypt';
 
 
 @Injectable()
@@ -30,117 +32,120 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async seedDatabase() {
-    const faker = require('faker');
-      const amountOfUsers = 3;
-      for (let i = 0; i < amountOfUsers; i++) {
-          const alsoFamilyMember = faker.datatype.boolean();
+  async createWishListItems(amount: number): Promise<WishListItem[]> {
+    let wishes = [];
+    for (let i = 0; i < amount; i++) {
+        const wish = await this.wishListItemRepository.create({
+            content: faker.lorem.sentence(),
+            completed: faker.datatype.boolean(),
+        })
+        wishes.push(wish);
+    }
+    return wishes;
+  }
 
-          const newUser = await this.userRepository.create({
-            username : faker.internet.userName(),
-            email : faker.internet.email(),
-            password : faker.internet.password(),
-          });
+  async createAgendaItems(amount: number): Promise<AgendaItem[]> {
+      let agendaItems = [];
+      for(let i= 0; i < amount; i++) {
+        const agendaItem = await this.agendaItemRepository.create({
+            title: faker.lorem.sentence()
+        })
+        agendaItems.push(agendaItem);
+    }
+    return agendaItems;
+  }
 
-          // create familyMember
-          if(alsoFamilyMember) {
-              console.log('OOK FAMILY');
-              const newFamilyMember = await this.familyMemberRepository.create({
+  async createAlbumItems(amount: number): Promise<AlbumItem[]> {
+      let albumItems = [];
+      for(let i= 0; i < amount; i++) {
+        const albumItem = await this.albumItemRepository.create({
+            location: faker.address.city(),
+        })
+        albumItems.push(albumItem);
+      }
+      return albumItems;
+  }
 
-              firstname : faker.name.firstName(),
-              lastname : faker.name.lastName(),
-              gender : faker.name.gender(),
-              isAlive : true,
-              bio : faker.lorem.sentences(),
-              });
-              newUser.familyMember = await newFamilyMember;
-            //   newFamilyMember.user = newUser
-            //   console.log(newFamilyMember);
-            this.familyMemberRepository.save(await newFamilyMember);
-          } else {
-            //   this.userRepository.save(newUser);
-          }
+  async createNotes(amount: number): Promise<Note[]> {
+      let notes = [];
+      for(let i= 0; i < amount; i++) {
+        const note = await this.noteRepository.create({
+            content: faker.lorem.sentence()
+        })
+        notes.push(note);
+      }
+      return notes;
+  }
+  
+  async createFamilyMember(): Promise<FamilyMember> {
+      const familyMember = await this.familyMemberRepository.create({
+          firstname : faker.name.firstName(),
+          lastname : faker.name.lastName(),
+          gender : faker.name.gender(),
+          isSender: true,
+          isAlive : true,
+          bio : faker.lorem.sentences(),
+        });
+        return familyMember;
+  }
+  hashPassword(password: string): string {
+    // const salt = bcrypt.genSaltSync(10);
+    return bcrypt.hashSync(password, 10);
+  }
+
+  async createUser(): Promise<User> {
+      const salt = bcrypt.genSaltSync(10);
+    const user = await this.userRepository.create({
+      username : faker.internet.userName(),
+      email : faker.internet.email(),
+      password: this.hashPassword(faker.internet.password()),
+    //   password : faker.internet.password(),
+    });
+    return user;
+  }
+
+  // save somewhere else, put SALT ROUNDS in .env
+
+  async seedDatabase(amount: number = 5) {
+    //   const amountOfUsers = 3;
+    console.log(amount);
+
+      let users=[];
+
+      for(let i=0; i<amount; i++) {
+        const user = await this.createUser();
+
+        const alsoFamilyMember = faker.datatype.boolean();
+
+        if(alsoFamilyMember) {
+          const familyMember = await this.createFamilyMember();
+
+          familyMember.wishListItems = await this.createWishListItems(5);
+          familyMember.agendaItems = await this.createAgendaItems(5);
+          familyMember.albumItems = await this.createAlbumItems(5);
+        //   const albumItems = await this.createAlbumItems(5);
+          familyMember.notes = await this.createNotes(5);
+          familyMember.user = user;
+
+          // Many to Many Relations
+        //   familyMember.inAlbumItems = 
+          
+        //   console.log(familyMember);
+          await this.familyMemberRepository.save(familyMember);
+        } else {
+            await this.userRepository.save(user);
         }
-}
-//   async seedDatabase() {
-//       const amountOfUsers = 10;
-//       for (let i = 0; i < amountOfUsers; i++) {
-//           const alsoFamilyMember = faker.datatype.boolean();
 
-//           const user = new User();
-//           console.log(user);
-//           user.username = faker.name.internet.userName();
-//           user.email = faker.name.internet.email();
-//           user.password = faker.internet.password();
+      }
+    }
 
-//           // create familyMember
-//           if(alsoFamilyMember) {
-//               const familyMember = new FamilyMember();
-//               familyMember.firstname = faker.name.firstName();
-//               familyMember.lastname = faker.name.lastName();
-//               // familyMember.dob = faker.date.past();
-//               // familyMember.dob = faker.date.past(50);
-//               familyMember.gender = faker.name.gender();
-//               familyMember.isAlive = true;
-//               familyMember.bio = faker.lorem.sentences();
-//             user.familyMember = familyMember;
-//           }
-//           this.userRepository.create(user);
-//         }
-// }
-
-// seedFamilyMembers() {
-//     const minato = this.familyMemberRepository.create({
-//         firstname: 'Minato',
-//         lastname: 'Namikaze',
-//         gender: 'male',
-//     });
-
-//     const kushina = this.familyMemberRepository.create({
-//         firstname: 'Kushina',
-//         lastname: 'Uzumaki',
-//         gender: 'female',
-//     })
-
-//     minato.partner = kushina;
-//     kushina.partner = minato;
-    
-//     const naruto = this.familyMemberRepository.create({
-//         firstname: 'Naruto',
-//         lastname: 'Uzumaki',
-//         gender: 'male',
-//     })
-
-//     naruto.father = minato;
-//     naruto.mother = kushina;
-//     minato.children = [naruto];
-//     kushina.children = [naruto];
-
-//     const hinata = this.familyMemberRepository.create({
-//         firstname: 'Hinata',
-//         lastname: 'Hyuga',
-//         gender: 'female',
-//     });
-
-//     const boruto = this.familyMemberRepository.create({
-//         firstname: 'Boruto',
-//         lastname: 'Uzumaki',
-//         gender: 'male',
-//     });
-
-//     const hinawari = this.familyMemberRepository.create({
-//         firstname: 'Hinawari',
-//         lastname: 'Uzumaki',
-//         gender: 'female',
-//     })
-
-//     naruto.children = [boruto, hinawari];
-//     hinata.children = [boruto, hinawari];
-//     naruto.partner = hinata;
-//     hinata.partner = naruto;
-
-
-//     this.familyMemberRepository.save(naruto);
-    
-//   }
+    // Clear all tables, cascade & restart count
+    async emptyDatabase() {
+        await this.userRepository.query(`TRUNCATE "user" RESTART IDENTITY CASCADE`);
+        await this.familyMemberRepository.query(`TRUNCATE "family_member" RESTART IDENTITY CASCADE`);
+        await this.wishListItemRepository.query(`TRUNCATE "wish_list_item" RESTART IDENTITY CASCADE`);
+        await this.agendaItemRepository.query(`TRUNCATE "agenda_item" RESTART IDENTITY CASCADE`);
+        await this.albumItemRepository.query(`TRUNCATE "album_imte" RESTART IDENTITY CASCADE`);
+        await this.noteRepository.query(`TRUNCATE "note" RESTART IDENTITY CASCADE`);
+    }
 }

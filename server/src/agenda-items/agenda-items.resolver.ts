@@ -28,7 +28,7 @@ export class AgendaItemsResolver {
   author(@Parent() agendaItem: AgendaItem): Promise<FamilyMember> {
     //console.log('AUTHOR RESOLVER');  
     //console.log(note);
-      return this.agendaItemsService.getAuthor(agendaItem.authorId);
+      return this.agendaItemsService.getAuthor(agendaItem.author.id);
   }
 
 //   @ResolveField(returns => FamilyMember[])

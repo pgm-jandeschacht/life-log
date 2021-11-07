@@ -22,9 +22,9 @@ export class AgendaItem {
     // @Field({ nullable: true})
     // content?: string;
 
-    @Column()
-    @Field(type => Int, { nullable: true })
-    authorId?: number;
+    // @Column()
+    // @Field(type => Int, { nullable: true })
+    // authorId?: number;
 
     @ManyToOne(() => FamilyMember, author => author.agendaItems, { onDelete: 'CASCADE' })
     @Field(type => FamilyMember, { description: 'Author of this agenda-item' })

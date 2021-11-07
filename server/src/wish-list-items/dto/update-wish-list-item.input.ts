@@ -11,6 +11,6 @@ export class UpdateWishListItemInput extends PartialType(CreateWishListItemInput
     completed: boolean;
 
     
-    @Field(type => Int, { nullable: true })
-    authorId?: number;
+    // @Field(type => Int, { nullable: true })
+    // authorId?: number;
 }
