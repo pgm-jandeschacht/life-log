@@ -9,6 +9,7 @@ import { User } from './users/entities/user.entity';
 import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
 import * as faker from 'faker';
 import * as bcrypt from 'bcrypt';
+import * as _ from 'lodash';
 
 
 @Injectable()
@@ -93,6 +94,8 @@ export class AppService {
     return bcrypt.hashSync(password, 10);
   }
 
+
+  // BCRYPT.COMPARE
   async createUser(): Promise<User> {
       const salt = bcrypt.genSaltSync(10);
     const user = await this.userRepository.create({
