@@ -1,8 +1,13 @@
 import React from "react";
 import Ipage from '../interfaces/page';
+import { BaseLayout } from "../layouts";
 
 const HomePage: React.FunctionComponent<Ipage> = props => {
-    return <p>This is the HOME page!</p>
+    return (
+        <BaseLayout PageTitle={"Home"}>
+            <p>This is the HOME page!</p>
+        </BaseLayout>
+    )
 }
 
 export default HomePage;

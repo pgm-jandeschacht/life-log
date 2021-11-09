@@ -3,10 +3,11 @@ import AboutPage from "../pages/about";
 import AboutMePage from "../pages/about-me";
 import HomePage from "../pages/home";
 import MyAgendaPage from "../pages/my-agenda";
-import MyAlbumPage from "../pages/my-album";
+import MyPicturesPage from "../pages/my-pictures";
 import MyFamilyPage from "../pages/my-family";
-import MyNotesPage from "../pages/my-notes";
-import WishlistPage from "../pages/wishlist";
+import WishlistPage from "../pages/my-wishlist";
+import SettingsPage from "../pages/Settings";
+import HelpPage from "../pages/Help";
 
 const routes: IRoute[] = [
     {
@@ -24,13 +25,6 @@ const routes: IRoute[] = [
         
     },
     {
-        path: '/my-notes',
-        name: 'My Notes',
-        component: MyNotesPage,
-        exact: true
-        
-    },
-    {
         path: '/my-agenda',
         name: 'My Agenda',
         component: MyAgendaPage,
@@ -38,15 +32,15 @@ const routes: IRoute[] = [
         
     },
     {
-        path: '/my-album',
-        name: 'My Album Page',
-        component: MyAlbumPage,
+        path: '/my-pictures',
+        name: 'My Pictures Page',
+        component: MyPicturesPage,
         exact: true
         
     },
     {
-        path: '/wishlist',
-        name: 'WishList Page',
+        path: '/my-wishlist',
+        name: 'My WishList Page',
         component: WishlistPage,
         exact: true
         
@@ -55,6 +49,20 @@ const routes: IRoute[] = [
         path: '/my-family',
         name: 'My Family Page',
         component: MyFamilyPage,
+        exact: true
+        
+    },
+    {
+        path: '/settings',
+        name: 'Settings Page',
+        component: SettingsPage,
+        exact: true
+        
+    },
+    {
+        path: '/help',
+        name: 'Help Page',
+        component: HelpPage,
         exact: true
         
     },

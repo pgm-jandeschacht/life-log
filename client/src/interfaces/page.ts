@@ -1,3 +1,3 @@
 export default interface Ipage {
-    naem:string;
+    name:string;
 }
