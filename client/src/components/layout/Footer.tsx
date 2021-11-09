@@ -1,14 +1,14 @@
 import React from 'react'
 import Navigation from './Navigation'
 
-interface Props {
-    
+interface FooterProps {
+    backgroundColor: string
 }
 
-const Footer = (props: Props) => {
+const Footer = ({ backgroundColor }: FooterProps) => {
     return (
         <footer>
-            <Navigation/>
+            <Navigation backgroundColorStyle={backgroundColor}/>
         </footer>
     )
 }

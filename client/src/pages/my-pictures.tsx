@@ -4,7 +4,7 @@ import { BaseLayout } from "../layouts";
 
 const MyPicturesPage: React.FunctionComponent<Ipage> = props => {
     return (
-        <BaseLayout>
+        <BaseLayout backgroundStyle={"accent1"} PageTitle={"My pictures"}>
            <p>This is the MY PICTURES page!</p>
         </BaseLayout>
     )

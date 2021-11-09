@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { Colors } from './variables';
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -8,13 +9,20 @@ const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         font-family: 'Lato';
     }
+    
     #root {
         margin:0 auto;
     }
+
+    body {
+        color: ${Colors.primary}
+    }
+
     a {
         text-decoration: none;
         color: currentColor;
     }
+
     li {
         list-style: none;
     }
@@ -22,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
     img {
         width: 100%;
     }
+
     button {
         cursor: pointer;
         border: none;

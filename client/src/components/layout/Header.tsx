@@ -1,14 +1,26 @@
-import React from 'react'
+import React from 'react';
+import styled from 'styled-components';
 
-interface Props {
-    
+interface headerProps {
+    title: string
 }
 
-const Header = (props: Props) => {
+const StyledHeader = styled.header`
+    padding: 5rem 4rem;
+    
+    h1 {
+        font-size: 4rem;
+        font-weight: 900;
+    }
+`
+
+const Header = ({ title }: headerProps) => {
     return (
-        <header>
-            Header
-        </header>
+        <StyledHeader>
+            <h1>
+                {title}
+            </h1>
+        </StyledHeader>
     )
 }
 

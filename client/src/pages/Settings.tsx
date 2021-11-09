@@ -4,7 +4,7 @@ import { BaseLayout } from "../layouts";
 
 const SettingsPage: React.FunctionComponent<Ipage> = props => {
     return (
-        <BaseLayout>
+        <BaseLayout PageTitle={"Settings"}>
             <p>This is the SETTINGS page!</p>
         </BaseLayout>
     )
