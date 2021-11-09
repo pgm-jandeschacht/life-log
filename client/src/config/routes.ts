@@ -1,5 +1,5 @@
 import IRoute from "../interfaces/route";
-import AboutPage from "../pages/about";
+// import AboutPage from "../pages/about";
 import AboutMePage from "../pages/about-me";
 import HomePage from "../pages/home";
 import MyAgendaPage from "../pages/my-agenda";

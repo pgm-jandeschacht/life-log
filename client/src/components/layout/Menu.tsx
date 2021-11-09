@@ -75,7 +75,7 @@ const Menu = ({ clicked, onClose }: MenuProps) => {
     useEffect(() => {
         onClose(click);
         setClick(true);
-    })
+    }, [onClose, click])
     
     return (
         <Nav change={clicked}>

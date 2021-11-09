@@ -104,7 +104,7 @@ const Navigation = ({ backgroundColorStyle }: NavigationProps) => {
         } else if (backgroundColorStyle === 'blue') {
             setIsBlue(true);
         }
-    });
+    }, [backgroundColorStyle]);
 
     return (
         <div>

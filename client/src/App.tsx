@@ -1,16 +1,13 @@
 import React from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
-import { GET_ALL_FAMILYMEMBERS, GET_FAMILY_MEMBER_BY_ID } from './graphql/familyMembers';
-import {
-    Button
-} from './components/buttons';
+// import { useLazyQuery, useQuery } from '@apollo/client';
+// import { GET_ALL_FAMILYMEMBERS, GET_FAMILY_MEMBER_BY_ID } from './graphql/familyMembers';
 
 // ROUTER
-import { BrowserRouter, Route, Switch, RouteComponentProps, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
 
 // import { Wrapper } from './App.styles';
-import { FamilyMembersData } from './interfaces';
-import { gql } from "@apollo/client";
+// import { FamilyMembersData } from './interfaces';
+// import { gql } from "@apollo/client";
 import routes from './config/routes';
 import GlobalStyle from './globalStyle';
 
