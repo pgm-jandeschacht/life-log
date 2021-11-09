@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Colors } from '../../variables';
+import { Colors, Breakpoint } from '../../variables';
 import MenuItem from './MenuItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage, faUsers, faCalendarAlt, faUserAlt,faPencilAlt, faCog, faQuestionCircle, faHome, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -21,13 +21,27 @@ const Nav = styled.nav<NavProps>`
     top: 0;
     left: 0;
     display: ${(NavProps) => (NavProps.change ? 'block' : 'none')};
-    padding: 5rem 4rem;
+    padding: 2.5rem 2rem;
     width: 100%;
 
+    @media (min-width: ${Breakpoint.small}) {
+        padding: 4rem 3rem
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        padding: 5rem 4rem
+    }
+    
     h2 {
-        font-size: 4rem;
+        font-size: 2.5rem;
         color: ${Colors.secondary};
         font-weight: 900;
+        
+        @media (min-width: ${Breakpoint.small}) {
+            font-size: 3rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            font-size: 4rem;
+        }
     }
     
     ul {
@@ -37,10 +51,17 @@ const Nav = styled.nav<NavProps>`
     `
     
 const Container = styled.div`
-    margin-bottom: 5rem;
+    margin-bottom: 3.75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    
+    @media (min-width: ${Breakpoint.small}) {
+        margin-bottom: 4.5rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 5rem;
+    }
 `
 
 const Menu = ({ clicked, onClose }: MenuProps) => {

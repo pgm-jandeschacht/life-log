@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { Colors } from '../../variables';
+import { Colors, Breakpoint } from '../../variables';
 
 interface ButtonIconProps {
     children: React.ReactNode,
@@ -9,14 +9,27 @@ interface ButtonIconProps {
 
 const StyledButton = styled.button`
     background: ${Colors.secondary};
-    padding: 0.77rem 1.25rem;
+    padding: 0.5625rem 0.875rem;
     border-radius: 50%;
+    
+    @media (min-width: ${Breakpoint.small}) {
+        padding: 0.6875rem 1rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        padding: 0.77rem 1.25rem;
+    }
 
     svg {
         color: ${Colors.primary};
-        // font-size: 2rem;
-        width: 2rem !important;
+        width: 1.3rem !important;
         height: auto;
+        
+        @media (min-width: ${Breakpoint.small}) {
+            width: 1.5rem !important;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            width: 2rem !important;
+        }
     }
 `
 

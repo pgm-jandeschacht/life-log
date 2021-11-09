@@ -1,15 +1,21 @@
-import React from 'react'
-import Navigation from './Navigation'
+import React from 'react';
+import Navigation from './Navigation';
+import styled from 'styled-components';
 
 interface FooterProps {
     backgroundColor: string
 }
 
+const StyledFooter = styled.footer`
+    max-width: 80rem;
+    margin: auto;
+`
+
 const Footer = ({ backgroundColor }: FooterProps) => {
     return (
-        <footer>
+        <StyledFooter>
             <Navigation backgroundColorStyle={backgroundColor}/>
-        </footer>
+        </StyledFooter>
     )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Colors, Transition } from '../../variables'
+import { Colors, Transition, Breakpoint } from '../../variables'
 
 interface ButtenNavProps {
     children: React.ReactNode,
@@ -15,14 +15,23 @@ interface StyledButtonNavProps {
 }
 
 const StyledButtonNav = styled.button<StyledButtonNavProps>`
-    width: 100%;
+    width: 66%;
     background: ${(StyledButtonNavProps) => (StyledButtonNavProps.buttonColor ? Colors.secondary : Colors.primary)};
-        color: ${(StyledButtonNavProps) => (StyledButtonNavProps.buttonColor ? Colors.primary : Colors.secondary)};
-    font-size: 2rem;
+    color: ${(StyledButtonNavProps) => (StyledButtonNavProps.buttonColor ? Colors.primary : Colors.secondary)};
+    font-size: 1.25rem;
     font-weight: 700;
-    padding: 1.25rem 0;
+    padding: 0.75rem 0;
     border-radius: 10px;
     transition: ${Transition.normal};
+
+    @media (min-width: ${Breakpoint.small}) {
+        padding: 1rem 0;
+        font-size: 1.75rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        padding: 1.25rem 0;
+        font-size: 2rem;
+    }
 
     &:hover {
         transform: translateY(-5px);
