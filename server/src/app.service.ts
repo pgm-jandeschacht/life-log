@@ -149,7 +149,7 @@ export class AppService {
         await this.familyMemberRepository.query(`TRUNCATE "family_member" RESTART IDENTITY CASCADE`);
         await this.wishListItemRepository.query(`TRUNCATE "wish_list_item" RESTART IDENTITY CASCADE`);
         await this.agendaItemRepository.query(`TRUNCATE "agenda_item" RESTART IDENTITY CASCADE`);
-        await this.albumItemRepository.query(`TRUNCATE "album_imte" RESTART IDENTITY CASCADE`);
+        await this.albumItemRepository.query(`TRUNCATE "album_item" RESTART IDENTITY CASCADE`);
         await this.noteRepository.query(`TRUNCATE "note" RESTART IDENTITY CASCADE`);
     }
 }
