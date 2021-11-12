@@ -10,7 +10,7 @@ export class CreateAlbumItemInput {
 
     //date
 
-    @Field(type => Int)
-    uploaderId: number;
+    // @Field(type => Int)
+    // uploaderId: number;
 
 }

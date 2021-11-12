@@ -18,9 +18,9 @@ export class AlbumItem {
 
     //date
 
-    @Column()
-    @Field(type => Int, { nullable: true })
-    uploaderId?: number;
+    // @Column()
+    // @Field(type => Int, { nullable: true })
+    // uploaderId?: number;
 
     @ManyToOne(() => FamilyMember, uploader => uploader.albumItems, { onDelete: 'SET NULL' })
     @Field(type => FamilyMember, { description: 'Uploader of this picture' })

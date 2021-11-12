@@ -1,5 +1,6 @@
 //import { Query } from '@nestjs/common';
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { User } from 'src/users/entities/user.entity';
 import { CreateFamilyMemberInput } from './dto/create-family-member.input';
 import { UpdateFamilyMemberInput } from './dto/update-family-member.input';
 import { FamilyMember } from './entities/family-member.entity';
@@ -29,6 +30,15 @@ export class FamilyMembersResolver {
     updateFamilyMember(@Args('id', { type: () => Int }) id: number, @Args('updateFamilyMemberInput') updateFamilyMemberInput: UpdateFamilyMemberInput) : Promise<FamilyMember> {
         return this.familyMemberService.update(id, updateFamilyMemberInput);
     }
+
+    @ResolveField(returns => User)
+    user(@Parent() familyMember: FamilyMember): Promise<User> {
+    console.log('USER RESOLVER');  
+    // console.log(note);
+      return this.familyMemberService.getUser(familyMember.user.id);
+  }
+
+  
 
     //?? Add checks if note is not in database, can't return entity if not in db??
     @Mutation(returns => FamilyMember)

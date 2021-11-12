@@ -10,7 +10,6 @@ type AlbumItem {
 
   """What is there to say about this picture"""
   description: String
-  uploaderId: Int
 
   """Uploader of this picture"""
   uploader: FamilyMember!
@@ -22,7 +21,8 @@ type AlbumItem {
 type Note {
   id: Int!
   content: String!
-  authorId: Int
+
+  """The author of the note"""
   author: FamilyMember!
   createdOn: DateTime!
 }
@@ -53,7 +53,6 @@ type WishListItem {
   """Content of this wish"""
   content: String!
   completed: Boolean!
-  authorId: Int
 
   """Who craeted this wish"""
   author: FamilyMember!
@@ -121,7 +120,6 @@ type AgendaItem {
 
   """Name of the agenda-item"""
   title: String!
-  authorId: Int
 
   """Author of this agenda-item"""
   author: FamilyMember!
@@ -133,6 +131,8 @@ type AgendaItem {
 type Query {
   familyMembers: [FamilyMember!]!
   familyMemberById(id: Int!): FamilyMember!
+  users: [User!]!
+  user(id: Int!): User!
   notes: [Note!]!
   note(id: Int!): Note!
   agendaItems: [AgendaItem!]!
@@ -141,14 +141,15 @@ type Query {
   albumItem(id: Int!): AlbumItem!
   wishListItems: [WishListItem!]!
   wishListItem(id: Int!): WishListItem!
-  users: [User!]!
-  user(id: Int!): User!
 }
 
 type Mutation {
   createFamilyMember(createFamilyMemberInput: CreateFamilyMemberInput!): FamilyMember!
   updateFamilyMember(updateFamilyMemberInput: UpdateFamilyMemberInput!, id: Int!): FamilyMember!
   deleteFamilyMemberById(id: Int!): FamilyMember!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!, id: Int!): User!
+  removeUser(id: Int!): User!
   createNote(createNoteInput: CreateNoteInput!): Note!
   updateNote(updateNoteInput: UpdateNoteInput!, id: Int!): Note!
   deleteNote(id: Int!): Note!
@@ -161,9 +162,6 @@ type Mutation {
   createWishListItem(createWishListItemInput: CreateWishListItemInput!): WishListItem!
   updateWishListItem(updateWishListItemInput: UpdateWishListItemInput!, id: Int!): WishListItem!
   deleteWishListItem(id: Int!): WishListItem!
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!, id: Int!): User!
-  removeUser(id: Int!): User!
 }
 
 input CreateFamilyMemberInput {
@@ -172,6 +170,7 @@ input CreateFamilyMemberInput {
   gender: String!
   isAlive: Boolean
   bio: String
+  userId: Int!
   isSender: Boolean
 }
 
@@ -181,61 +180,8 @@ input UpdateFamilyMemberInput {
   gender: String
   isAlive: Boolean
   bio: String
+  userId: Int!
   isSender: Boolean
-}
-
-input CreateNoteInput {
-  content: String!
-  authorId: Int!
-}
-
-input UpdateNoteInput {
-  content: String!
-  authorId: Int
-}
-
-input CreateAgendaItemInput {
-  """Name of the agenda-item"""
-  title: String!
-  authorId: Int!
-}
-
-input UpdateAgendaItemInput {
-  """Name of the agenda-item"""
-  title: String!
-  authorId: Int!
-}
-
-input CreateAlbumItemInput {
-  """Location where this picture is taken"""
-  location: String
-
-  """What is there to say about this picture"""
-  description: String
-  uploaderId: Int!
-}
-
-input UpdateAlbumItemInput {
-  """Location where this picture is taken"""
-  location: String
-
-  """What is there to say about this picture"""
-  description: String
-  uploaderId: Int
-}
-
-input CreateWishListItemInput {
-  """Content of this wish"""
-  content: String!
-  completed: Boolean = false
-  authorId: Int
-}
-
-input UpdateWishListItemInput {
-  """Content of this wish"""
-  content: String!
-  completed: Boolean = false
-  authorId: Int
 }
 
 input CreateUserInput {
@@ -248,4 +194,50 @@ input UpdateUserInput {
   username: String!
   email: String!
   password: String!
+}
+
+input CreateNoteInput {
+  content: String!
+}
+
+input UpdateNoteInput {
+  content: String!
+}
+
+input CreateAgendaItemInput {
+  """Name of the agenda-item"""
+  title: String!
+}
+
+input UpdateAgendaItemInput {
+  """Name of the agenda-item"""
+  title: String!
+}
+
+input CreateAlbumItemInput {
+  """Location where this picture is taken"""
+  location: String
+
+  """What is there to say about this picture"""
+  description: String
+}
+
+input UpdateAlbumItemInput {
+  """Location where this picture is taken"""
+  location: String
+
+  """What is there to say about this picture"""
+  description: String
+}
+
+input CreateWishListItemInput {
+  """Content of this wish"""
+  content: String!
+  completed: Boolean = false
+}
+
+input UpdateWishListItemInput {
+  """Content of this wish"""
+  content: String!
+  completed: Boolean = false
 }

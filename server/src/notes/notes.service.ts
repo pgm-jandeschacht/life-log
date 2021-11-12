@@ -9,7 +9,11 @@ import { Note } from './entities/note.entity';
 
 @Injectable()
 export class NotesService {
-    constructor(@InjectRepository(Note) private noteRepository: Repository<Note>, private familyMemberService: FamilyMembersService) {};
+    constructor(
+        @InjectRepository(Note) 
+        private noteRepository: Repository<Note>, 
+        private familyMemberService: FamilyMembersService
+    ) {};
   
     create(createNoteInput: CreateNoteInput): Promise<Note> {
         const newNote = this.noteRepository.create(createNoteInput);

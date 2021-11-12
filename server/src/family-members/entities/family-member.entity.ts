@@ -39,9 +39,12 @@ export class FamilyMember {
 
     
     
-    @OneToOne(type => User, user => user.familyMember)
+    // @Column()
+    // @Field(type => Int, {nullable: true})
+    // userId?: number;
+
+    @OneToOne(type => User, user => user.familyMember, { cascade: true, eager: true })
     @JoinColumn()
-    
     @Field(type => User, { nullable: true, description: 'The user that is linked to the family member'})
     user?: User;
 
@@ -71,20 +74,20 @@ export class FamilyMember {
     children?: FamilyMember[];
 
     // CHECK DOCUMENTATION FOR CASCADING...
-    @OneToMany(() => Note, note => note.author, {eager: true})
+    @OneToMany(() => Note, note => note.author, {eager: true, cascade: true})
     @Field(type => [Note], {nullable: true, description: 'List of notes made by the family member' })
     notes?: Note[];
 
-    @OneToMany(() => AlbumItem, albumItem => albumItem.uploader, { eager: true })
+    @OneToMany(() => AlbumItem, albumItem => albumItem.uploader, { eager: true, cascade: true})
     @Field(type => [AlbumItem], { nullable: true, description: 'List of album-items uploaded by this family member'})
     albumItems?: AlbumItem[];
 
-    @ManyToMany(() => AlbumItem, albumItem => albumItem.inPicture, { eager: true })
+    @ManyToMany(() => AlbumItem, albumItem => albumItem.inPicture, { eager: true, cascade: true })
     @JoinTable()
     inAlbumItems?: AlbumItem[];
     
     // CHECK DOCUMENTATION FOR CASCADING...
-    @OneToMany(() => AgendaItem, agendaItem => agendaItem.author, {eager: true})
+    @OneToMany(() => AgendaItem, agendaItem => agendaItem.author, {eager: true, cascade: true})
     @Field(type => [AgendaItem], {nullable: true, description: 'List of agenda items made by the family member' })
     agendaItems?: AgendaItem[]
     
@@ -95,7 +98,7 @@ export class FamilyMember {
     invitedAgendaItems?: AgendaItem[]
 
     // CHECK DOCUMENTATION FOR CASCADING...
-    @OneToMany(() => WishListItem, wishListItem => wishListItem.author, {eager: true})
+    @OneToMany(() => WishListItem, wishListItem => wishListItem.author, {eager: true, cascade: true})
     @Field(type => [WishListItem], {nullable: true, description: 'List of agenda items made by the family member' })
     wishListItems?: WishListItem[]
     

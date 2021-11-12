@@ -33,6 +33,7 @@ import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
         password: 'Fvh89cxn',
         database: 'lifelog',
         entities: ['dist/**/*.entity{.ts,.js}'],
+        // seeds: ['src/seeds/**/*{.ts,.js}'],
         synchronize: true,
         // logging: true
       }),

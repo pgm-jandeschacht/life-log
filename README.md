@@ -39,6 +39,23 @@ You can access a graphql playground on [http://localhost:3000/graphql](http://lo
 
 This will run the **React**-app on the next available port which will be [http://localhost:3001](http://localhost:3001).
 
+## Seeding the database
+Seed the database by surfing to the following URL with optional amount:  
+http://localhost:3000/seed/{amount}
+This seeds to following tables:
+- user
+- familyMember
+- wishListItem
+- agendaItem
+- albumItem
+- Notes
+
+## Clear database
+To empty the database surf to the following url:
+[http://localhost:3000/clear_database](http://localhost:3000/clear_database).
+
+
+
 ## Technical Details of app
 The Front-end is build on "create-react-app" with Typescript.  
 The Back-end is build in **NestJs**, with a **PostGres**-database.
