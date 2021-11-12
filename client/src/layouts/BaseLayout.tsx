@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
-import { Header, Footer } from '../components/layout'
+import { Header, Footer } from '../Components/layout'
 import { Breakpoint } from '../variables'
 
 interface BaseLayoutProps {

@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { AuthService } from './auth/auth.service';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { AuthenticatedGuard } from './auth/authenticated.guard';
 // import { UsersService } from './users/users.service';
 
 @Controller()
@@ -20,14 +21,19 @@ export class AppController {
     @Post('login')
     login(@Request() req): any {
         // going to return the details of that user
-        return this.authService.login(req.user);
+        // return this.authService.login(req.user);
         // return req.user;
         // return req.user;
+        return {msg: 'Logged in!'};
     }
 
     // it goes to the guard, triggers 'jwt-strategy.ts', so it FAILS & gives 401
     // if there is a JWT, it goes to the guard, triggers 'jwt-strategy.ts', so it SUCCEEDS & gives 200
-    @UseGuards(JwtAuthGuard)
+
+    // enkel met JWT
+    // @UseGuards(JwtAuthGuard)
+    
+    @UseGuards(AuthenticatedGuard)
     @Get('protected')
     getHello(@Request() req): string {
         return req.user;

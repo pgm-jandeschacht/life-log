@@ -101,8 +101,9 @@ export class AppService {
     const user = await this.userRepository.create({
       username : faker.internet.userName(),
       email : faker.internet.email(),
-      password: this.hashPassword(faker.internet.password()),
-    //   password : faker.internet.password(),
+      //TODO enable later
+    //   password: this.hashPassword(faker.internet.password()),
+      password : faker.internet.password(),
     });
     return user;
   }
