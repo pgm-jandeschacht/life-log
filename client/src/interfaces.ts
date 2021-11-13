@@ -35,9 +35,18 @@ export interface FamilyMember {
     inWishListItem?: WishListItem[];
 }
 
+// export interface FamilyMembersData {
+//     familyMemberByUserId: FamilyMember[]
+// }
 export interface FamilyMembersData {
     familyMembers: FamilyMember[]
 }
+export interface FamilyMemberData {
+    familyMemberByUserId: FamilyMember
+}
+// export interface FamilyMemberData {
+//     familyMemberById: FamilyMember
+// }
 
 export interface Note {
     id: number;
