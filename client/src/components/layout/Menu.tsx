@@ -69,13 +69,12 @@ const Menu = ({ clicked, onClose }: MenuProps) => {
 
     const handleClicking = () => {
         setClick(false);
-        console.log("Clicked close")
     }
 
     useEffect(() => {
         onClose(click);
         setClick(true);
-    }, [onClose, click])
+    }, [onClose, click]);
     
     return (
         <Nav change={clicked}>

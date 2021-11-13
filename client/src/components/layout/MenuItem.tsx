@@ -8,7 +8,7 @@ interface MenuItemProps {
     to: string,
     children: React.ReactNode,
     styleColor: string,
-    alt: boolean,
+    alt: boolean
 }
 
 interface LiProps {

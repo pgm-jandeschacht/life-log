@@ -71,7 +71,6 @@ const Navigation = ({ backgroundColorStyle }: NavigationProps) => {
     const [isClicked, setIsClicked] = useState(false);
 
     const handleClick = () => {
-        console.log("Clicked open");
         setIsClicked(true);
     }
     
