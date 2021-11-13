@@ -2,6 +2,14 @@ import React, { useState} from 'react'
 // import PropTypes from 'prop-types'
 import './Login.css'
 
+import { useQuery } from '@apollo/client';
+
+
+// import useFamilyMember from '../../hooks/useFamilyMember';
+import { GET_FAMILYMEMBER_BY_USERID } from '../../graphql/familyMembers';
+// '../../graphql/queries';
+import { FamilyMemberData } from '../../interfaces';
+
 async function loginUser(credentials: any) {
     return fetch('http://localhost:3000/login', {
         method: 'POST',
@@ -39,10 +47,11 @@ async function loginUser(credentials: any) {
 
 
 interface LoginProps {
-    setToken: any
+    setToken: any,
+    setFamilyMember: any
 }
 
-export const Login = ({ setToken }:LoginProps) => {
+export const Login = ({ setToken, setFamilyMember }:LoginProps) => {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword] = useState('');
 
@@ -55,6 +64,21 @@ export const Login = ({ setToken }:LoginProps) => {
 
         if(!token?.msg ) {
             setToken(token);
+
+            // Query for familyMember
+            const { loading, error, data } = useQuery<FamilyMemberData>(GET_FAMILYMEMBER_BY_USERID, {
+                fetchPolicy: 'cache-first',
+                variables: {
+                    id: token.user.id
+                }
+            });
+
+            if(loading) console.log("loading ...");
+            if(error) console.log("ERRRORRR!!");
+            
+            if(data){
+                setFamilyMember(data);
+            }
         }
         // if(token?.acces_token) {
         //     console.log('token',token.acccess_token);

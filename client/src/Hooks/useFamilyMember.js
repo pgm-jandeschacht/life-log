@@ -6,7 +6,7 @@ export default function useFamilyMember() {
     const familyMemberString = localStorage.getItem('familyMember');
     const familyMember = JSON.parse(familyMemberString);
 
-    return familyMember?.id;
+    return familyMember;
   };
   const [familyMember, setFamilyMember] = useState(getFamilyMember());
 
@@ -14,7 +14,7 @@ export default function useFamilyMember() {
     // sessionStorage.setItem('token', JSON.stringify(userToken));
     localStorage.setItem('familyMember', JSON.stringify(familyMember));
     // setFamilyMember(familyMember.familyMemberById);
-    setFamilyMember(familyMember.id);
+    setFamilyMember(familyMember);
   }
 
   return {
