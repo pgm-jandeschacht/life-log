@@ -8,7 +8,10 @@ import { AuthenticatedGuard } from './auth/authenticated.guard';
 
 @Controller()
 export class AppController {
-  constructor(private readonly authService: AuthService,private readonly appService: AppService) {}
+  constructor(
+      private readonly authService: AuthService,
+      private readonly appService: AppService
+    ) {}
 //   constructor(private readonly appService: AppService) {}
   
   @Get('seed')
@@ -24,16 +27,23 @@ export class AppController {
         // return this.authService.login(req.user);
         // return req.user;
         // return req.user;
-        return {msg: 'Logged in!'};
+        
+        // with session
+        // return {msg: 'Logged in!'};
+
+        // with jwt
+        return this.authService.login(req.user);
     }
 
     // it goes to the guard, triggers 'jwt-strategy.ts', so it FAILS & gives 401
     // if there is a JWT, it goes to the guard, triggers 'jwt-strategy.ts', so it SUCCEEDS & gives 200
 
-    // enkel met JWT
-    // @UseGuards(JwtAuthGuard)
     
-    @UseGuards(AuthenticatedGuard)
+    // Session cookie
+    // @UseGuards(AuthenticatedGuard)
+
+    // enkel met JWT
+    @UseGuards(JwtAuthGuard)
     @Get('protected')
     getHello(@Request() req): string {
         return req.user;

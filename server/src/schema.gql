@@ -131,6 +131,7 @@ type AgendaItem {
 type Query {
   familyMembers: [FamilyMember!]!
   familyMemberById(id: Int!): FamilyMember!
+  familyMemberByUserId(userId: Int!): FamilyMember!
   users: [User!]!
   user(id: Int!): User!
   notes: [Note!]!

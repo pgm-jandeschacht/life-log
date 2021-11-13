@@ -10,6 +10,8 @@ async function bootstrap() {
     // With Express
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+    app.enableCors();
+
     app.useGlobalPipes(new ValidationPipe());
 
     // add session
