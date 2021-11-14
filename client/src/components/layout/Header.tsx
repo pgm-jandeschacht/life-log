@@ -1,15 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Breakpoint } from '../../variables';
+import { Breakpoint, Colors, Transition } from '../../variables';
+import { Link } from 'react-router-dom';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface headerProps {
-    title: string
+    title: string,
+    button: boolean,
+    backgroundColor: string,
+    link?: string
 }
 
-const StyledHeader = styled.header`
+interface HeaderProps {
+    background: string
+}
+
+const StyledHeader = styled.header<HeaderProps>`
     padding: 2.5rem 2rem;
     max-width: 80rem;
     margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     
     @media (min-width: ${Breakpoint.small}) {
         padding: 4rem 3rem;
@@ -29,14 +42,37 @@ const StyledHeader = styled.header`
             font-size: 4rem;
         }
     }
+
+    a {
+        background: ${(HeaderProps) => HeaderProps.background};
+        padding: 1.1rem 1.25rem;
+        border-radius: 50%;
+        transition: ${Transition.normal};
+
+        svg {
+            transition: ${Transition.normal};
+            width: 2rem !important;
+            height: auto;
+        }
+
+        &:hover {
+            background: ${Colors.primary};
+
+            svg {
+                color: ${(HeaderProps) => HeaderProps.background};;
+            }
+        }
+    }
 `
 
-const Header = ({ title }: headerProps) => {
+const Header = ({ title, button, backgroundColor, link }: headerProps) => {
     return (
-        <StyledHeader>
+        <StyledHeader background={backgroundColor}>
             <h1>
                 {title}
             </h1>
+
+            { (button && link !== undefined) ? <Link to={link} title="Add item to agenda"><FontAwesomeIcon icon={faPlus} /></Link> : '' }
         </StyledHeader>
     )
 }

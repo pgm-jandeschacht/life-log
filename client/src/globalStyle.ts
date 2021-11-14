@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
         outline: 0;
         box-sizing: border-box;
-        font-family: 'Lato';
+        font-family: 'Lato', sans-serif;
     }
     
     #root {

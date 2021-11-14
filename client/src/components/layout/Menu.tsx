@@ -17,7 +17,7 @@ interface NavProps {
 
 const Nav = styled.nav<NavProps>`
     background: ${Colors.primary};
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: ${(NavProps) => (NavProps.change ? 'block' : 'none')};
@@ -69,13 +69,12 @@ const Menu = ({ clicked, onClose }: MenuProps) => {
 
     const handleClicking = () => {
         setClick(false);
-        console.log("Clicked close")
     }
 
     useEffect(() => {
         onClose(click);
         setClick(true);
-    }, [onClose, click])
+    }, [onClose, click]);
     
     return (
         <Nav change={clicked}>
@@ -90,8 +89,8 @@ const Menu = ({ clicked, onClose }: MenuProps) => {
                 <MenuItem alt={false} styleColor={"#FEDDBE"} to={"/my-pictures"} title={"My pictures"}><FontAwesomeIcon icon={faImage} /></MenuItem>
                 <MenuItem alt={false} styleColor={"#B1DFD4"} to={"/my-family"} title={"My family"}><FontAwesomeIcon icon={faUsers} /></MenuItem>
                 <MenuItem alt={false} styleColor={"#FFECB0"} to={"/my-agenda"} title={"My agenda"}><FontAwesomeIcon icon={faCalendarAlt} /></MenuItem>
-                <MenuItem alt={false} styleColor={"#FFB2AB"} to={"/about-me"} title={"About me"}><FontAwesomeIcon icon={faUserAlt} /></MenuItem>
-                <MenuItem alt={false} styleColor={"#C4E0EB"} to={"/my-wishlist"} title={"My wishlist"}><FontAwesomeIcon icon={faPencilAlt} /></MenuItem>
+                <MenuItem alt={false} styleColor={"#C4E0EB"} to={"/about-me"} title={"About me"}><FontAwesomeIcon icon={faUserAlt} /></MenuItem>
+                <MenuItem alt={false} styleColor={"#FFB2AB"} to={"/my-wishlist"} title={"My wishlist"}><FontAwesomeIcon icon={faPencilAlt} /></MenuItem>
                 <MenuItem alt={false} styleColor={"#F2F2F2"} to={"/settings"} title={"Settings"}><FontAwesomeIcon icon={faCog} /></MenuItem>
                 
                 <MenuItem alt={true} styleColor={"#0A213A"} to={"/help"} title={"Help"}><FontAwesomeIcon icon={faQuestionCircle} /></MenuItem>

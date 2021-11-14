@@ -2,6 +2,7 @@ import React, { useState, useEffect, ReactNode } from 'react'
 import styled from 'styled-components'
 import { Header, Footer } from '../components/layout'
 import { Breakpoint } from '../variables'
+import { Colors } from '../variables'
 
 import { useQuery, useLazyQuery } from '@apollo/client';
 
@@ -19,6 +20,8 @@ interface BaseLayoutProps {
     children: React.ReactNode,
     PageTitle: string,
     backgroundStyle?: string,
+    altButton?: boolean,
+    altLink?: string
 }
 
 const Main = styled.main`
@@ -33,18 +36,41 @@ const Main = styled.main`
         padding: 0 4rem 13.25rem 4rem;
     }
 `;
-
-
-const BaseLayout = ({ children, PageTitle , backgroundStyle = 'blue' } : BaseLayoutProps) => {
-
-    const {  token, setToken } = useToken();
-    const { familyMemberId, setFamilyMemberId } = useFamilyMember();
     
+    const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton = false, altLink } : BaseLayoutProps) => {
+        
+        // Change background color of navigation according to the page
+        const [background, setBackground] = useState(Colors.primary)
+        const [isBlue, setIsBlue] = useState(true)
+
+        const {  token, setToken } = useToken();
+        const { familyMemberId, setFamilyMemberId } = useFamilyMember();
+
+    useEffect(() => {
+        if(backgroundStyle === 'accent1') {
+            setBackground(Colors.accent1);
+            setIsBlue(false);
+        } else if(backgroundStyle === 'accent2') {
+            setBackground(Colors.accent2);
+            setIsBlue(false);
+        } else if(backgroundStyle === 'accent3') {
+            setBackground(Colors.accent3);
+            setIsBlue(false);
+        } else if(backgroundStyle === 'accent4') {
+            setBackground(Colors.accent4);
+            setIsBlue(false);
+        } else if(backgroundStyle === 'accent5') {
+            setBackground(Colors.accent5);
+            setIsBlue(false);
+        } else if (backgroundStyle === 'blue') {
+            setIsBlue(true);
+        }
+    }, [backgroundStyle]);
 
     return (
         <>
-            <Header title={PageTitle} />
-            
+            <Header link={altLink} button={altButton} title={PageTitle} backgroundColor={background} />
+
             <Main>
                 
             {( !token  ) ? (
@@ -56,7 +82,8 @@ const BaseLayout = ({ children, PageTitle , backgroundStyle = 'blue' } : BaseLay
                 )}
         
             </Main>
-            <Footer backgroundColor={backgroundStyle} />
+
+            <Footer blue={isBlue} backgroundColor={background} />
         </>
     )
 }
