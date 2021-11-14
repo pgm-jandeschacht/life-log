@@ -3,7 +3,7 @@ import { AboutMe } from "../components/about-me";
 import Ipage from '../interfaces/page';
 import { BaseLayout } from "../layouts";
 
-// example object agenda
+// example object user
 const user = {
     id: 1,
     firstName: "Anna",
@@ -14,16 +14,15 @@ const user = {
     partner: "John mcCafé",
     nursingHome: "Maynard Nursing Home",
     carreer: "Risk Analist at IBM",
-    activeLocation: "Toronto, Canada",
-    image: ""
+    location: "Toronto, Canada",
+    image: "anna_boloise.jpg"
 }
 
 
 const AboutMePage: React.FunctionComponent<Ipage> = props => {
-
     return (
         <BaseLayout backgroundStyle={"accent4"} PageTitle={`About ${user.firstName}`} >
-           <AboutMe/>
+           <AboutMe profile={user}/>
         </BaseLayout>
     )
 }
