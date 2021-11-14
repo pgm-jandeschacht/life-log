@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface headerProps {
     title: string,
-    alt: boolean,
-    backgroundColor: string
+    button: boolean,
+    backgroundColor: string,
+    link?: string
 }
 
 interface HeaderProps {
@@ -64,14 +65,14 @@ const StyledHeader = styled.header<HeaderProps>`
     }
 `
 
-const Header = ({ title, alt, backgroundColor }: headerProps) => {
+const Header = ({ title, button, backgroundColor, link }: headerProps) => {
     return (
         <StyledHeader background={backgroundColor}>
             <h1>
                 {title}
             </h1>
 
-            { alt ? <Link to="/my-agenda/add" title="Add item to agenda"><FontAwesomeIcon icon={faPlus} /></Link> : '' }
+            { (button && link !== undefined) ? <Link to={link} title="Add item to agenda"><FontAwesomeIcon icon={faPlus} /></Link> : '' }
         </StyledHeader>
     )
 }

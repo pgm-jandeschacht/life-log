@@ -8,7 +8,8 @@ interface BaseLayoutProps {
     children: React.ReactNode,
     PageTitle: string,
     backgroundStyle?: string,
-    altPage?: boolean
+    altButton?: boolean,
+    altLink?: string
 }
 
 const Main = styled.main`
@@ -24,7 +25,7 @@ const Main = styled.main`
     }
 ` 
 
-const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altPage = false } : BaseLayoutProps) => {
+const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton = false, altLink } : BaseLayoutProps) => {
     
     // Change background color of navigation according to the page
     const [background, setBackground] = useState(Colors.primary)
@@ -53,7 +54,7 @@ const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altPage = f
 
     return (
         <>
-            <Header alt={altPage} title={PageTitle} backgroundColor={background} />
+            <Header link={altLink} button={altButton} title={PageTitle} backgroundColor={background} />
 
             <Main>
                 { children }
