@@ -16,13 +16,15 @@ export class AuthService {
         // user = "error" if not found by username
         // user from service is the one from db
         const user = await this.usersService.findOneByUsername(username);
-        const familyMember = await this
 
         // this will only return id & email
         if(user && user.password === password){
             const { password, username, ...rest } = user;
+                const familyMember = await this.usersService.findFamilyMemberByUserId(user.id);
+                console.log('FAMILYMEMBER', familyMember);
             // console.log(rest);
-            return rest;
+            // return { rest, familyMember.id};
+            return [ rest, familyMember.id];
         }
         console.log('USER GEFAILED', user);
         return null;
@@ -30,10 +32,16 @@ export class AuthService {
 
     async login(user: any) {
         const payload = { name: user.username, sub: user.id };
+        console.log('payload', user);
         console.log('USER:', user);
+
+            const familyMember = await this.usersService.findFamilyMemberByUserId(user.id);
+            console.log('FAMILYMEMBER in LOGIN', familyMember);
+
         return {
             token: this.jwtService.sign(payload),
-            user: user
+            user: user,
+            familyMemberId: familyMember.id
         };
     }
 }

@@ -13,6 +13,8 @@ export class UsersService {
     constructor(
         @InjectRepository(User) 
         private userRepository: Repository<User>,
+        @InjectRepository(FamilyMember) 
+        private familyMemberRepository: Repository<FamilyMember>
 
     ) {}
   
@@ -55,14 +57,36 @@ export class UsersService {
       }
   }
 
-//   async findFamilyMemberByUserId(userId: number): Promise<FamilyMember> | undefined {
+//   async findFamilyMemberByUserId(userId: number): Promise<FamilyMemberz> | undefined {
+//   async findFamilyMemberByUserId(userId: number): Promise<any> {
 //       try {
-//           const familyMember = await this.userRepository.findOneOrFail({ where: { userId: userId } });
-//           return familyMember;
+//         //   const familyMember = await this.userRepository.findOneOrFail({ where: { userId: userId } });
+//         //   return familyMember;
+//         const familyMemer = await this.userRepository
+//         .createQueryBuilder("familyMember")
+//         .leftJoinAndSelect("familyMember.user", "user")
+//         .where("user.id = :userId", { userId: userId })
+//         .getOne();
+        
 //       } catch(error) {
 //           throw error;
 //       }
 //   }
+  async findFamilyMemberByUserId(userId: number) : Promise<any> {
+      try {
+        const familyMembers = await this.familyMemberRepository
+        .createQueryBuilder("familyMember")
+        .leftJoinAndSelect("familyMember.user", "user")
+        .where("user.id = :id", { id: userId })
+        .getOne();
+
+        // const familyMembers = await this.familyMemberRepository.findOneOrFail({ where: { userId: 5 } });
+        return familyMembers
+      } catch(error) {
+          console.log('ERROR', error);
+          throw error;
+      }
+  }
 
   update(id: number, updateUserInput: UpdateUserInput) : Promise<User> {
       return this.userRepository.save({ id: id, ... updateUserInput });

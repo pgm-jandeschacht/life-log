@@ -2,7 +2,7 @@
  * All Familymembers related stuff
  */
 
-import { gql } from "@apollo/client";
+import { gql, useQuery, useLazyQuery } from "@apollo/client";
 
 /**
  * Queries
@@ -41,11 +41,12 @@ query getFamilyMemberById($id: Int!){
     familyMemberById(id: $id) {
       id
       firstname
+      lastname
+      gender
+      isAlive
+      bio
+      isSender
     }
   }
   
 `;
-
-
-// export const GET_NOTES = gql`
-// `;

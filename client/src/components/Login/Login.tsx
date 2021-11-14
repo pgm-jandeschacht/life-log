@@ -1,14 +1,5 @@
-import React, { useState} from 'react'
-// import PropTypes from 'prop-types'
+import React, { useState, useEffect} from 'react'
 import './Login.css'
-
-import { useQuery } from '@apollo/client';
-
-
-// import useFamilyMember from '../../hooks/useFamilyMember';
-import { GET_FAMILYMEMBER_BY_USERID } from '../../graphql/familyMembers';
-// '../../graphql/queries';
-import { FamilyMemberData } from '../../interfaces';
 
 async function loginUser(credentials: any) {
     return fetch('http://localhost:3000/login', {
@@ -48,48 +39,32 @@ async function loginUser(credentials: any) {
 
 interface LoginProps {
     setToken: any,
-    setFamilyMember: any
+    setFamilyMemberId: any
 }
 
-export const Login = ({ setToken, setFamilyMember }:LoginProps) => {
+export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword] = useState('');
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const token = await loginUser ({
             username,
             password
         });
 
         if(!token?.msg ) {
+            // Token has 
+            // {
+            //     token: '....'
+            //     user: { id, email }
+            //     familyMemberId: "..."
+            // }
+
             setToken(token);
-
-            // Query for familyMember
-            const { loading, error, data } = useQuery<FamilyMemberData>(GET_FAMILYMEMBER_BY_USERID, {
-                fetchPolicy: 'cache-first',
-                variables: {
-                    id: token.user.id
-                }
-            });
-
-            if(loading) console.log("loading ...");
-            if(error) console.log("ERRRORRR!!");
-            
-            if(data){
-                setFamilyMember(data);
-            }
+            setFamilyMemberId(token.familyMemberId);
         }
-        // if(token?.acces_token) {
-        //     console.log('token',token.acccess_token);
-        //     setToken(true);
-        // } else {
-        //     console.log('NOT TOKEN');
-        //     setToken(false)
-        // }
-        // console.log('token in login', token);
-
-        // setUserStatus(true);
     }
     
     return (

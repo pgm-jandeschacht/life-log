@@ -22,6 +22,7 @@ export interface FamilyMember {
     gender: string;
     bio: string;
     isSender?: boolean;
+    isAlive?: boolean;
     father?: FamilyMember;
     mother?: FamilyMember;
     partner?: FamilyMember;
@@ -42,7 +43,7 @@ export interface FamilyMembersData {
     familyMembers: FamilyMember[]
 }
 export interface FamilyMemberData {
-    familyMemberByUserId: FamilyMember
+    familyMemberById: FamilyMember
 }
 // export interface FamilyMemberData {
 //     familyMemberById: FamilyMember

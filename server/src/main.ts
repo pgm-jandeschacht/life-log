@@ -20,7 +20,7 @@ async function bootstrap() {
         secret: 'lifelog secret', // put in .env
         resave: false,
         saveUninitialized: false,
-        cookie: { maxAge: 3600000} // 1h in ms, also other settings for security
+        cookie: { maxAge: 3600000} // 1h in ms, also other settings for security,
         })
     );
 

@@ -2,23 +2,22 @@ import { useState } from 'react';
 
 export default function useFamilyMember() {
   const getFamilyMember = () => {
-    // const tokenString = sessionStorage.getItem('token');
-    const familyMemberString = localStorage.getItem('familyMember');
-    const familyMember = JSON.parse(familyMemberString);
+    const familyMemberString = localStorage.getItem('familyMemberId');
+    const familyMemberId = JSON.parse(familyMemberString);
 
-    return familyMember;
+    return familyMemberId;
   };
-  const [familyMember, setFamilyMember] = useState(getFamilyMember());
+  const [familyMemberId, setFamilyMemberId] = useState(getFamilyMember());
 
-  const saveFamilyMember = userToken => {
+  const saveFamilyMember = familyMemberId => {
     // sessionStorage.setItem('token', JSON.stringify(userToken));
-    localStorage.setItem('familyMember', JSON.stringify(familyMember));
+    localStorage.setItem('familyMemberId', JSON.stringify(familyMemberId));
     // setFamilyMember(familyMember.familyMemberById);
-    setFamilyMember(familyMember);
+    setFamilyMemberId(familyMemberId);
   }
 
   return {
-    setFamilyMember: saveFamilyMember,
-    familyMember
+    setFamilyMemberId: saveFamilyMember,
+    familyMemberId
   }
 }
