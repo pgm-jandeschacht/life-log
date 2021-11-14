@@ -5,7 +5,7 @@ export class CreateNoteInput {
     @Field()
     content: string;
 
-    // @Field(type => Int)
-    // authorId: number;
+    @Field(type => Int)
+    authorId: number;
 
 }

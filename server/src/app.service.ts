@@ -10,6 +10,8 @@ import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
 import * as faker from 'faker';
 import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
+import { RelationType } from './relation-types/entities/relation-type.entity';
+import { FamilyRelation } from './family-relations/entities/family-relation.entity';
 
 
 @Injectable()
@@ -26,11 +28,71 @@ export class AppService {
         @InjectRepository(AlbumItem)
         private albumItemRepository: Repository<AlbumItem>,
         @InjectRepository(Note)
-        private noteRepository: Repository<Note>
+        private noteRepository: Repository<Note>,
+        @InjectRepository(RelationType)
+        private relationTypeRepository: Repository<RelationType>,
+        @InjectRepository(FamilyRelation)
+        private familyRelationRepository: Repository<FamilyRelation>,
     ) {}
     // constructor(@InjectRepository(FamilyMember) private familyMemberRepository: Repository<FamilyMember>) {};
   getHello(): string {
     return 'Hello World!';
+  }
+
+  createRelationTypes() {
+    const relationTypes = [
+        "grandparent",
+        "grandfather",
+        "grandmother",
+        "mother",
+        "father",
+        "aunt",
+        "uncle",
+        "child",
+        "daughter",
+        "son",
+        "sister",
+        "brother",
+        "niece",
+        "nephew",
+        "cousin",
+        "grandson",
+        "granddaughter",
+        "grandchild",
+        "partner"
+    ];   
+
+    relationTypes.forEach(relation => {
+        const relationType = this.relationTypeRepository.create({
+            name: relation,
+        })
+        //relationTypesForDb.push(relationType);
+        this.relationTypeRepository.save(relationType);
+    });
+      
+  }
+
+  async createFamilyRelations() {
+    // const familyRelations = [];
+
+    // list of ALL family members
+    const familyMembers = await this.familyMemberRepository.find();
+
+    // list of ALL relation Types
+    const relationTypes = await this.relationTypeRepository.find();
+
+    for(let i = 0; i < familyMembers.length; i++) {
+      const familyRelation = await this.familyRelationRepository.create({
+        familyMember: familyMembers[i],
+        relationType: relationTypes[faker.datatype.number({min: 0, max: relationTypes.length - 1})],
+        relatedFamilyMember: familyMembers[faker.datatype.number({min: 0, max: familyMembers.length - 1})],
+      })
+    //   familyRelations.push(familyRelation);
+        await this.familyRelationRepository.save(familyRelation);
+    }
+
+    // await this.relationTypeRepository.save(familyRelations);
+    // return familyRelations;
   }
 
   async createWishListItems(amount: number): Promise<WishListItem[]> {
@@ -111,6 +173,8 @@ export class AppService {
   // save somewhere else, put SALT ROUNDS in .env
 
   async seedDatabase(amount: number = 5) {
+
+    this.createRelationTypes();
     //   const amountOfUsers = 3;
     console.log(amount);
 
@@ -141,7 +205,10 @@ export class AppService {
         }
 
       }
+
+      this.createFamilyRelations();
     }
+
 
     // Clear all tables, cascade & restart count
     async emptyDatabase() {
