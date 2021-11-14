@@ -1,12 +1,14 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Header, Footer } from '../components/layout'
 import { Breakpoint } from '../variables'
+import { Colors } from '../variables'
 
 interface BaseLayoutProps {
     children: React.ReactNode,
     PageTitle: string,
-    backgroundStyle?: string
+    backgroundStyle?: string,
+    altPage?: boolean
 }
 
 const Main = styled.main`
@@ -22,16 +24,42 @@ const Main = styled.main`
     }
 ` 
 
-const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue' } : BaseLayoutProps) => {
+const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altPage = false } : BaseLayoutProps) => {
+    
+    // Change background color of navigation according to the page
+    const [background, setBackground] = useState(Colors.primary)
+    const [isBlue, setIsBlue] = useState(true)
+
+    useEffect(() => {
+        if(backgroundStyle === 'accent1') {
+            setBackground(Colors.accent1);
+            setIsBlue(false);
+        } else if(backgroundStyle === 'accent2') {
+            setBackground(Colors.accent2);
+            setIsBlue(false);
+        } else if(backgroundStyle === 'accent3') {
+            setBackground(Colors.accent3);
+            setIsBlue(false);
+        } else if(backgroundStyle === 'accent4') {
+            setBackground(Colors.accent4);
+            setIsBlue(false);
+        } else if(backgroundStyle === 'accent5') {
+            setBackground(Colors.accent5);
+            setIsBlue(false);
+        } else if (backgroundStyle === 'blue') {
+            setIsBlue(true);
+        }
+    }, [backgroundStyle]);
+
     return (
         <>
-            <Header title={PageTitle} />
+            <Header alt={altPage} title={PageTitle} backgroundColor={background} />
 
             <Main>
                 { children }
             </Main>
 
-            <Footer backgroundColor={backgroundStyle} />
+            <Footer blue={isBlue} backgroundColor={background} />
         </>
     )
 }

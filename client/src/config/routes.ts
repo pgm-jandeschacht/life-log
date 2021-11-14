@@ -8,6 +8,7 @@ import MyFamilyPage from "../pages/my-family";
 import WishlistPage from "../pages/my-wishlist";
 import SettingsPage from "../pages/Settings";
 import HelpPage from "../pages/Help";
+import MyAgendaAdd from "../pages/my-agenda_Add";
 
 const routes: IRoute[] = [
     {
@@ -63,6 +64,13 @@ const routes: IRoute[] = [
         path: '/help',
         name: 'Help Page',
         component: HelpPage,
+        exact: true
+        
+    },
+    {
+        path: '/my-agenda/add',
+        name: 'Add item to agenda page',
+        component: MyAgendaAdd,
         exact: true
         
     },

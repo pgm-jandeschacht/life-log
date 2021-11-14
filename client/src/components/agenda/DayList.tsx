@@ -1,29 +1,51 @@
 import React from 'react';
 import styled from 'styled-components';
 import DayItem from './DayItem';
+import { Colors, Shadow } from '../../variables'
+import { render } from '@testing-library/react';
 
-interface Props {
-    
+interface DayListProps {
+    keyId: number | string,
+    test: any,
 }
 
 const StyledLi = styled.li`
     width: 100%;
-    background: black;
+    background: ${Colors.secondary};
     margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
+    border-radius: 10px;
+    box-shadow: ${Shadow.small};
+
+    ul {
+        padding: 0 2rem;
+    }
 `
 
-const DayList = (props: Props) => {
+const StyledDayTitle = styled.div`
+    padding: 1rem 2rem;
+    background: ${Colors.accent3};
+    border-radius: 10px;
+    font-size: 2rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+`
+
+const DayList = ({ keyId, test }: DayListProps) => {
     return (
-        <StyledLi>
+        <StyledLi key={`day${keyId}`}>
+            <StyledDayTitle>
+                <p>
+                    {test.date}
+                </p>
+            </StyledDayTitle>
+
             <ul>
-                <DayItem/>
-                <DayItem/>
-                <DayItem/>
-                <DayItem/>
-                <DayItem/>
-                <DayItem/>
+                { test.content.map((testItem: string)=> (
+                     <DayItem content={testItem}/>
+                )) }
             </ul>
         </StyledLi>
     )

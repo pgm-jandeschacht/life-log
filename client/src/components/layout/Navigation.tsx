@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Menu from './Menu';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,8 @@ import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface NavigationProps {
-    backgroundColorStyle: string
+    backgroundColorAccent: string,
+    setBlue: boolean
 }
 
 interface DivProps {
@@ -67,7 +68,7 @@ const Div = styled.div<DivProps>`
     }
 `
 
-const Navigation = ({ backgroundColorStyle }: NavigationProps) => {
+const Navigation = ({ backgroundColorAccent, setBlue }: NavigationProps) => {
     const [isClicked, setIsClicked] = useState(false);
 
     const handleClick = () => {
@@ -80,37 +81,12 @@ const Navigation = ({ backgroundColorStyle }: NavigationProps) => {
         }
     }
 
-    // Change background color of navigation according to the URL
-    const [background, setBackground] = useState(Colors.primary)
-    const [isBlue, setIsBlue] = useState(true)
-
-    useEffect(() => {
-        if(backgroundColorStyle === 'accent1') {
-            setBackground(Colors.accent1);
-            setIsBlue(false);
-        } else if(backgroundColorStyle === 'accent2') {
-            setBackground(Colors.accent2);
-            setIsBlue(false);
-        } else if(backgroundColorStyle === 'accent3') {
-            setBackground(Colors.accent3);
-            setIsBlue(false);
-        } else if(backgroundColorStyle === 'accent4') {
-            setBackground(Colors.accent4);
-            setIsBlue(false);
-        } else if(backgroundColorStyle === 'accent5') {
-            setBackground(Colors.accent5);
-            setIsBlue(false);
-        } else if (backgroundColorStyle === 'blue') {
-            setIsBlue(true);
-        }
-    }, [backgroundColorStyle]);
-
     return (
         <div>
-            <Div buttonColor={isBlue} backgroundColor={background}>
+            <Div buttonColor={setBlue} backgroundColor={backgroundColorAccent}>
                 <Link to={'/help'} title={'Help'}>Help</Link>
 
-                <ButtonNav onClick={handleClick} backgroundColorButton={background} buttonColorButton={isBlue}>
+                <ButtonNav onClick={handleClick} backgroundColorButton={backgroundColorAccent} buttonColorButton={setBlue}>
                     Open menu<FontAwesomeIcon icon={faChevronUp} />
                 </ButtonNav>
             </Div>

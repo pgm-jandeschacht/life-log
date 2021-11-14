@@ -5,7 +5,7 @@ import { AgendaList } from "../components/agenda";
 
 const MyAgendaPage: React.FunctionComponent<Ipage> = props => {
     return (
-        <BaseLayout backgroundStyle={"accent3"} PageTitle={"My agenda"}>
+        <BaseLayout altPage={true} backgroundStyle={"accent3"} PageTitle={"My agenda"}>
             <AgendaList/>
         </BaseLayout>
     )}
