@@ -35,7 +35,7 @@ import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
         entities: ['dist/**/*.entity{.ts,.js}'],
         // seeds: ['src/seeds/**/*{.ts,.js}'],
         synchronize: true,
-        // logging: true
+        logging: true
       }),
       TypeOrmModule.forFeature([FamilyMember, User, Note, AgendaItem, AlbumItem, WishListItem]),
     FamilyMembersModule,

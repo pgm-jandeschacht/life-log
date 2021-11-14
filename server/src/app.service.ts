@@ -121,7 +121,7 @@ export class AppService {
 
         const alsoFamilyMember = faker.datatype.boolean();
 
-        if(alsoFamilyMember) {
+        if(true) {
           const familyMember = await this.createFamilyMember();
 
           familyMember.wishListItems = await this.createWishListItems(5);

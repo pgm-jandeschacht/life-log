@@ -10,6 +10,8 @@ async function bootstrap() {
     // With Express
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+    app.enableCors();
+
     app.useGlobalPipes(new ValidationPipe());
 
     // add session
@@ -18,7 +20,7 @@ async function bootstrap() {
         secret: 'lifelog secret', // put in .env
         resave: false,
         saveUninitialized: false,
-        cookie: { maxAge: 3600000} // 1h in ms, also other settings for security
+        cookie: { maxAge: 3600000} // 1h in ms, also other settings for security,
         })
     );
 

@@ -25,6 +25,11 @@ export class FamilyMembersResolver {
         return this.familyMemberService.findOneById(id)
     }
 
+    @Query(returns => FamilyMember)
+    familyMemberByUserId(@Args('userId', { type: () => Int }) userId: number) : Promise<FamilyMember> {
+        return this.familyMemberService.findFamilyMemberByUserId(userId)
+    }
+
 
     @Mutation(returns => FamilyMember)
     updateFamilyMember(@Args('id', { type: () => Int }) id: number, @Args('updateFamilyMemberInput') updateFamilyMemberInput: UpdateFamilyMemberInput) : Promise<FamilyMember> {

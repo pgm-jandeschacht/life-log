@@ -1,39 +1,15 @@
-import React from 'react';
-// import { useLazyQuery, useQuery } from '@apollo/client';
-// import { GET_ALL_FAMILYMEMBERS, GET_FAMILY_MEMBER_BY_ID } from './graphql/familyMembers';
+import React, { useEffect, useState} from 'react';
 
 // ROUTER
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
 
-// import { Wrapper } from './App.styles';
-// import { FamilyMembersData } from './interfaces';
-// import { gql } from "@apollo/client";
 import routes from './config/routes';
 import GlobalStyle from './globalStyle';
 
-
+// import { Login } from './components/Login';
 
 function App() {
-    // const { loading, error, data } = useQuery<FamilyMembersData>(GET_ALL_FAMILYMEMBERS, {
-    //     fetchPolicy: "cache-first"
-    // });
-    // const {
-    //     data,
-    //     loading,
-    //     error
-    // } = useQuery(GET_ALL_FAMILYMEMBERS);
-
-
     
-
-
-    // if(loading) return <p>"loading ..."</p>;
-    // if(error) return <p>"ERRRORRR!!"</p>;
-
-    // const familyMembers = data?.familyMembers;
-    // console.log(familyMembers);
-
-
     return (
     <>
         <GlobalStyle />
@@ -57,25 +33,11 @@ function App() {
                     );
                 } ) }
             </Switch>
+            
 
-            {/* <Wrapper> */}
-                {/* <div className="App">
-                    <nav>
-                        
-                    </nav>
-                    <Button onClick={e => console.log("Clicked")}>
-                        Click me!
-                    </Button>
-                    <ul>
-                        <pre> */}
-                        {/* { JSON.stringify(familyMembers, null, " ") } */}
-                        {/* </pre>
-                        
-                    </ul>
-                </div> */}
-                
-            {/* </Wrapper> */}
+
         </BrowserRouter>
+
         
     </>
   );
