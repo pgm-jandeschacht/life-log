@@ -17,7 +17,7 @@ interface NavProps {
 
 const Nav = styled.nav<NavProps>`
     background: ${Colors.primary};
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: ${(NavProps) => (NavProps.change ? 'block' : 'none')};
