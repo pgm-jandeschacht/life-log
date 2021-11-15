@@ -4,16 +4,21 @@ import { Breakpoint, Colors, Transition } from '../../variables';
 import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { ButtonIcon } from '../buttons';
+
 
 interface headerProps {
     title: string,
     button: boolean,
     backgroundColor: string,
-    link?: string
+    link?: string,
+    form?: boolean
 }
 
 interface HeaderProps {
-    background: string
+    background: string,
+    hide?: boolean
 }
 
 const StyledHeader = styled.header<HeaderProps>`
@@ -39,7 +44,7 @@ const StyledHeader = styled.header<HeaderProps>`
             font-size: 3rem;
         }
         @media (min-width: ${Breakpoint.medium}) {
-            font-size: 4rem;
+            font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 3.25 : 4)}rem;
         }
     }
 
@@ -65,12 +70,18 @@ const StyledHeader = styled.header<HeaderProps>`
     }
 `
 
-const Header = ({ title, button, backgroundColor, link }: headerProps) => {
+const Header = ({ title, button, backgroundColor, link, form }: headerProps) => {
+
+    const handleClicking = () => {
+        window.history.back();
+    }
     return (
-        <StyledHeader background={backgroundColor}>
+        <StyledHeader hide={form} background={backgroundColor}>
             <h1>
                 {title}
             </h1>
+
+            { (form) ? <ButtonIcon background={backgroundColor} onClick={handleClicking} ><FontAwesomeIcon icon={faTimes} /></ButtonIcon> : '' }
 
             { (button && link !== undefined) ? <Link to={link} title="Add item to agenda"><FontAwesomeIcon icon={faPlus} /></Link> : '' }
         </StyledHeader>

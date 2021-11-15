@@ -32,7 +32,7 @@ const StyledDiv = styled.div<StyledDivProps>`
         display: flex;
         width: 100%;
 
-        button {
+        a {
             background: ${Colors.ternary};
             color: ${Colors.primary};
             box-shadow: ${Shadow.small};
@@ -45,6 +45,7 @@ const StyledDiv = styled.div<StyledDivProps>`
             transition: ${Transition.normal};
             width: 100%;
             margin-right: 1rem;
+            text-align: center;
             
             &:last-of-type {
                 background: ${Colors.accent5};
@@ -66,6 +67,11 @@ const StyledDiv = styled.div<StyledDivProps>`
 `
 
 const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish }) => {
+
+    const handleClicking = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        e.preventDefault();
+    }
+
     return (
         <StyledDiv expand={clicked}>
             I want
@@ -76,12 +82,12 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
             <span>{wish.dueDate}</span>
 
             <div>
-                <button>
+                <a onClick={handleClicking} href="/">
                     Delete Wish
-                </button>
-                <button>
+                </a>
+                <a href="my-wishlist/edit">
                     Edit Wish
-                </button>
+                </a>
             </div>
         </StyledDiv>
     )
