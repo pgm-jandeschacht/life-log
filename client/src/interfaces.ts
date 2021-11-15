@@ -4,6 +4,7 @@ export interface AgendaItem {
     authorId?: number;
     author: FamilyMember;
     with?: FamilyMember[];
+    date: Date;
 }
 
 export interface AlbumItem {

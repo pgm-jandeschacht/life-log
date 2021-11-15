@@ -150,12 +150,16 @@ type AgendaItem {
 
   """Name of the agenda-item"""
   title: String!
+  authorId: Int
 
   """Author of this agenda-item"""
   author: FamilyMember!
 
   """List of family members invited for this agenda-item"""
   with: FamilyMember
+  createdOn: DateTime!
+  updatedOn: DateTime!
+  date: DateTime!
 }
 
 type Query {
@@ -247,11 +251,17 @@ input UpdateNoteInput {
 input CreateAgendaItemInput {
   """Name of the agenda-item"""
   title: String!
+
+  """Date of the agenda-item"""
+  date: DateTime!
 }
 
 input UpdateAgendaItemInput {
   """Name of the agenda-item"""
   title: String!
+
+  """Date of the agenda-item"""
+  date: DateTime
 }
 
 input CreateAlbumItemInput {

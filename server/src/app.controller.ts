@@ -57,8 +57,14 @@ export class AppController {
         this.appService.seedDatabase(amount);
         return `Seeded ${amount} users`;
         // return amount;
-        
     }
+
+    @Get('seedAgenda')
+    seedAgenda(@Request() req,): any {
+        this.appService.addFamilyMemberToAgendaItem();
+        return `Seeded agenda`;
+    }
+
     @Get('clear_database')
     emptyDatabase() {
         this.appService.emptyDatabase();

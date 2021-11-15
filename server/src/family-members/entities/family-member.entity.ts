@@ -81,7 +81,7 @@ export class FamilyMember {
     
     // CHECK DOCUMENTATION FOR CASCADING...
     
-    @ManyToMany(() => AgendaItem, agendaItem => agendaItem.with,  {eager: true})
+    @ManyToMany(() => AgendaItem, agendaItem => agendaItem.with,  {eager: true, cascade: true})
     @JoinTable()
     invitedAgendaItems?: AgendaItem[]
 
@@ -92,7 +92,7 @@ export class FamilyMember {
     
     // CHECK DOCUMENTATION FOR CASCADING...
     
-    @ManyToMany(() => WishListItem, wishListItem => wishListItem.for,  {eager: true})
+    @ManyToMany(() => WishListItem, wishListItem => wishListItem.for,  {eager: true, cascade: true})
     @JoinTable()
     inWishListItem?: WishListItem[]
     

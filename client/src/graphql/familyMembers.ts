@@ -50,3 +50,17 @@ query getFamilyMemberById($id: Int!){
   }
   
 `;
+
+export const GET_AGENDAITEMS_BY_FAMILYMEMBER_ID = gql`
+query getFamilyMemberById($id: Int!) {
+    familyMemberById(id: $id) {
+        id
+        agendaItems {
+            id
+            title
+            date
+        }
+
+    }
+}
+`

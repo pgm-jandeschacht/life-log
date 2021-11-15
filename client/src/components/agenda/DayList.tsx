@@ -34,18 +34,20 @@ const StyledDayTitle = styled.div`
 `
 
 const DayList = ({ keyId, test }: DayListProps) => {
+    //  console.log(test);
     return (
         <StyledLi key={`day${keyId}`}>
             <StyledDayTitle>
                 <p>
-                    {test.date}
+                    {new Date(test.date).toLocaleDateString()}
                 </p>
             </StyledDayTitle>
 
             <ul>
-                { test.content.map((testItem: string)=> (
+                { test.title}
+                {/* { test.content.map((testItem: string)=> (
                      <DayItem content={testItem}/>
-                )) }
+                )) } */}
             </ul>
         </StyledLi>
     )

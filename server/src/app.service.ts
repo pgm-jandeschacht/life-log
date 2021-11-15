@@ -111,7 +111,9 @@ export class AppService {
       let agendaItems = [];
       for(let i= 0; i < amount; i++) {
         const agendaItem = await this.agendaItemRepository.create({
-            title: faker.lorem.sentence()
+            title: faker.lorem.sentence(),
+            createdOn: faker.date.past(),
+            date: faker.date.between(new Date(2021, 9, 1), new Date(2021, 12, 29)),
         })
         agendaItems.push(agendaItem);
     }
@@ -170,6 +172,85 @@ export class AppService {
     return user;
   }
 
+
+
+  async addFamilyMemberToAgendaItem() {
+    // All agendaItems
+    const agendaItems = await this.agendaItemRepository.find();
+
+    // All familyMembers
+    const familyMembers = await this.familyMemberRepository.find();
+
+    familyMembers.forEach(familyMember => {
+       const inAgendaItems = faker.datatype.boolean();
+
+       if(inAgendaItems) {
+        const randomAmount = this.generateRandomArrayOfNumbers(agendaItems.length-1, 5);
+
+        randomAmount.forEach(randomNumber => {
+            familyMember.invitedAgendaItems.push(agendaItems[randomNumber]);
+        })
+        this.familyMemberRepository.save(familyMember);
+    }
+       
+    })
+}
+
+generateRandomArrayOfNumbers(amount: number, max: number): number[] {
+    let array = [];
+    for(let i = 0; i < amount; i++) {
+        const randomNumber = faker.datatype.number({min: 0, max: max});
+        if(!array.includes(randomNumber)) {
+            array.push(randomNumber);
+        }
+    }
+    return array;
+}
+
+// generateArrayOfRandomNumbers(limit: number, amount:number = 3, not: number) {
+//     let array = [];
+
+//     for(let i = 0; i < amount; i++) {
+//         let random = faker.datatype.number({min: 0, max: limit});
+//         if(!array.includes(random) && random !== not) {
+//             array.push(random);
+//         // } else {
+//         // }
+//     }
+//     return array;
+
+
+// }
+
+
+//   async addFamilyMemberToAgendaItem() {
+
+//     // list of ALL family members
+//     const familyMembers = await this.familyMemberRepository.find();
+
+//     // list of ALL Agenda Items
+//     const agendaItems = await this.agendaItemRepository.find();
+
+//     agendaItems.forEach(agendaItem => {
+//         const withFamilyMember = faker.datatype.boolean();
+
+//         if(withFamilyMember) {
+//             const amountOfFamilyMembers = faker.datatype.number({min: 1, max: 3});
+
+//             // let familyMembersForAgendaItem = [];
+//             for(let i = 0; i < amountOfFamilyMembers; i++) {
+//                 const familyMember = familyMembers[faker.datatype.number({min: 0, max: familyMembers.length - 1})];
+//                 if(familyMember.id !== agendaItem.author.id) {
+//                     agendaItem.with.push(familyMember);
+//                     // familyMembersForAgendaItem.push(familyMember)
+//                 }
+//             }
+//             this.agendaItemRepository.save(agendaItem);
+//             console.log(agendaItem);
+//         }
+//     })
+// }
+
   // save somewhere else, put SALT ROUNDS in .env
 
   async seedDatabase(amount: number = 5) {
@@ -207,6 +288,8 @@ export class AppService {
       }
 
       this.createFamilyRelations();
+    //   this.addFamilyMemberToAgendaItem();
+    this.addFamilyMemberToAgendaItem();
     }
 
 
