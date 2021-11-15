@@ -40,7 +40,7 @@ const FamilyDetailButtons: React.FC<FamilyDetailButtonsProps> = ({ name }) => {
     return (
         <StyledDiv>
             <StyledAnchor href="/my-pictures" color={"#FEDDBE"}>Pictures from {name}</StyledAnchor>
-            <StyledAnchor href="/my-wishlist" color={"#FFB2AB"}>Ask {name} to bring something</StyledAnchor>
+            <StyledAnchor href="/my-wishlist/add" color={"#FFB2AB"}>Ask {name} to bring something</StyledAnchor>
         </StyledDiv>
     )
 }
