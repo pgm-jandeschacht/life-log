@@ -2,6 +2,9 @@ import React, { useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { Colors, Shadow, Transition } from '../../variables'
 import logo from '../../assets/images/logo.png'
+import { Formik, Field } from 'formik'
+import { TextField, PasswordField } from '../forms'
+import { ButtonForm } from '../buttons'
 
 async function loginUser(credentials: any) {
     return fetch('http://localhost:3000/login', {
@@ -102,6 +105,12 @@ const StyledForm = styled.form`
             font-size: 2rem;
             font-weight: 500;
             color: ${Colors.primary};
+            transition: ${Transition.normal};
+
+            &:focus {
+                background: ${Colors.white};
+                transform: translateY(-5px);
+            }
         }
     }
 `
@@ -144,31 +153,7 @@ const StyledButtons = styled.div`
     }
 `
 
-export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {
-    const [ username, setUsername ] = useState('');
-    const [ password, setPassword] = useState('');
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const token = await loginUser ({
-            username,
-            password
-        });
-
-        if(!token?.msg ) {
-            // Token has 
-            // {
-            //     token: '....'
-            //     user: { id, email }
-            //     familyMemberId: "..."
-            // }
-
-            setToken(token);
-            setFamilyMemberId(token.familyMemberId);
-        }
-    }
-    
+export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {    
     return (
         <StyledDiv>
 
@@ -178,8 +163,67 @@ export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {
 
             <StyledContainer>
                 <h2>Please sign in</h2>
+                
+                <Formik
+                    initialValues={{
+                        username: '',
+                        password: '',
+                    }}
+                    onSubmit={async (data, { setSubmitting }) => {
+                        setSubmitting(true);
 
-                <StyledForm onSubmit={handleSubmit}>
+                        const username = data.username;
+                        const password = data.password;
+                        
+                        const token = await loginUser ({
+                            username,
+                            password
+                        });
+                        console.log(token)
+                
+                        if(!token?.msg ) {
+                            // Token has 
+                            // {
+                            //     token: '....'
+                            //     user: { id, email }
+                            //     familyMemberId: "..."
+                            // }
+                
+                            setToken(token);
+                            setFamilyMemberId(token.familyMemberId);
+                        }
+
+                        // console.log(data);
+                        setSubmitting(false);
+                      }}
+                    >
+
+                    {({values, errors, isSubmitting, handleChange, handleBlur, handleSubmit}) => (
+                        <StyledForm onSubmit={handleSubmit}>
+                            <label>
+                                Username
+                                <Field  placeholder="username" name="username" as={TextField} type="input" />
+                                {/* <input required type="text" onChange={e => setUsername(e.target.value)}/> */}
+                            </label>
+                            <label>
+                                Password
+                                <Field  placeholder="password" name="password" as={PasswordField} type="input" />
+                                {/* <input required type="password" onChange={ e=> setPassword(e.target.value) } /> */}
+                            </label>
+                            <StyledButtons>
+                                <a href="/">Register</a>
+                                <ButtonForm disabled={isSubmitting} type="submit">Sign in</ButtonForm>
+                            </StyledButtons>
+                        </StyledForm>
+                    )}
+                    </Formik>
+            </StyledContainer>
+        </StyledDiv>
+
+    )
+}
+
+{/* <StyledForm onSubmit={handleSubmit}>
                     <label>
                         Username
                         <input required type="text" onChange={e => setUsername(e.target.value)}/>
@@ -192,9 +236,25 @@ export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {
                         <a href="/">Register</a>
                         <button type="submit">Sign in</button>
                     </StyledButtons>
-                </StyledForm>
-            </StyledContainer>
-        </StyledDiv>
-    )
-}
+                </StyledForm> */}
 
+                // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+                //     e.preventDefault();
+            
+                //     const token = await loginUser ({
+                //         username,
+                //         password
+                //     });
+            
+                //     if(!token?.msg ) {
+                //         // Token has 
+                //         // {
+                //         //     token: '....'
+                //         //     user: { id, email }
+                //         //     familyMemberId: "..."
+                //         // }
+            
+                //         setToken(token);
+                //         setFamilyMemberId(token.familyMemberId);
+                //     }
+                // }
