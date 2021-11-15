@@ -28,7 +28,7 @@ export class AlbumItemsResolver {
   uploader(@Parent() albumItem: AlbumItem): Promise<FamilyMember> {
     //console.log('AUTHOR RESOLVER');  
     //console.log(note);
-      return this.albumItemsService.getUploader(albumItem.uploaderId);
+      return this.albumItemsService.getUploader(albumItem.uploader.id);
   }
 
   @Mutation(() => AlbumItem)

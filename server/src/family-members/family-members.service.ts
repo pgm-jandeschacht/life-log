@@ -1,14 +1,22 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthService } from 'src/auth/auth.service';
+import { User } from 'src/users/entities/user.entity';
+import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
 import { threadId } from 'worker_threads';
 import { CreateFamilyMemberInput } from './dto/create-family-member.input';
 import { UpdateFamilyMemberInput } from './dto/update-family-member.input';
 import { FamilyMember } from './entities/family-member.entity';
+import {getConnection} from "typeorm";
 
 @Injectable()
 export class FamilyMembersService {
-    constructor(@InjectRepository(FamilyMember) private familyMemberRepository: Repository<FamilyMember>) {};
+    constructor(
+        @InjectRepository(FamilyMember) 
+        private familyMemberRepository: Repository<FamilyMember>,
+        private userService: UsersService,
+    ) {};
 
     create(createFamilyMemberInput: CreateFamilyMemberInput) : Promise<FamilyMember> {
         const newFamilyMember = this.familyMemberRepository.create(createFamilyMemberInput);
@@ -35,6 +43,17 @@ export class FamilyMembersService {
         }
     }
 
+    async findFamilyMemberByUserId(userId: number) : Promise<any> {
+        console.log(userId);
+        try {
+            const familyMember = await this.familyMemberRepository.createQueryBuilder().select("familyMember").from(FamilyMember, "familyMember").where("familyMember.user.id = :id", { id: userId }).getOne();
+            return familyMember;
+        } catch(error) {
+            // handle error
+            throw error;
+        }
+    }
+
 
     async update(id: number, updateFamilyMemberInput: UpdateFamilyMemberInput){
         return this.familyMemberRepository.save({id: id, ...updateFamilyMemberInput});
@@ -44,6 +63,10 @@ export class FamilyMembersService {
         const familyMember = await this.findOneById(id);
 
         return this.familyMemberRepository.remove(familyMember);
+    }
+
+    getUser(userId: number) :Promise<User> {
+        return this.userService.findUserById(userId);
     }
 
 

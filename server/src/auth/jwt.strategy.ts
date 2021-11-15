@@ -1,10 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
+import { UsersService } from "src/users/users.service";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
+  constructor(
+      private usersService: UsersService
+  ) {
     super({
         // extract the token from the header
         // & do its validation
@@ -25,9 +28,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         // More information about the user from the database?
         // f.e. :
         // const user = await this.userService.getById(payload.sub);
+        const familyMember = await this.usersService.findFamilyMemberByUserId(payload.sub);
+        console.log('FAMILYMEMBER', familyMember);
         return { 
             userId: payload.sub, 
             username: payload.username,
+            familyMember: familyMember
             // add optional user
             // ...user
         };

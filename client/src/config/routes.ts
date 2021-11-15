@@ -1,12 +1,18 @@
 import IRoute from "../interfaces/route";
-import AboutPage from "../pages/about";
+// import AboutPage from "../pages/about";
 import AboutMePage from "../pages/about-me";
 import HomePage from "../pages/home";
 import MyAgendaPage from "../pages/my-agenda";
-import MyAlbumPage from "../pages/my-album";
+import MyPicturesPage from "../pages/my-pictures";
 import MyFamilyPage from "../pages/my-family";
-import MyNotesPage from "../pages/my-notes";
-import WishlistPage from "../pages/wishlist";
+import WishlistPage from "../pages/my-wishlist";
+import SettingsPage from "../pages/Settings";
+import HelpPage from "../pages/Help";
+import MyAgendaAdd from "../pages/my-agenda_Add";
+import MyWishlistAdd from "../pages/my-wishlist_Add";
+import MyWishListEdit from "../pages/my-wishlist_Edit";
+import MyFamilyDetail from "../pages/my-family_detail";
+import ProfileSettingsPage from "../pages/ProfileSettings";
 
 const routes: IRoute[] = [
     {
@@ -24,13 +30,6 @@ const routes: IRoute[] = [
         
     },
     {
-        path: '/my-notes',
-        name: 'My Notes',
-        component: MyNotesPage,
-        exact: true
-        
-    },
-    {
         path: '/my-agenda',
         name: 'My Agenda',
         component: MyAgendaPage,
@@ -38,15 +37,15 @@ const routes: IRoute[] = [
         
     },
     {
-        path: '/my-album',
-        name: 'My Album Page',
-        component: MyAlbumPage,
+        path: '/my-pictures',
+        name: 'My Pictures Page',
+        component: MyPicturesPage,
         exact: true
         
     },
     {
-        path: '/wishlist',
-        name: 'WishList Page',
+        path: '/my-wishlist',
+        name: 'My WishList Page',
         component: WishlistPage,
         exact: true
         
@@ -57,6 +56,55 @@ const routes: IRoute[] = [
         component: MyFamilyPage,
         exact: true
         
+    },
+    {
+        path: '/settings',
+        name: 'Settings Page',
+        component: SettingsPage,
+        exact: true
+        
+    },
+    {
+        path: '/help',
+        name: 'Help Page',
+        component: HelpPage,
+        exact: true
+        
+    },
+    {
+        path: '/my-agenda/add',
+        name: 'Add item to agenda page',
+        component: MyAgendaAdd,
+        exact: true
+        
+    },
+    {
+        path: '/my-wishlist/add',
+        name: 'Add item to wishlist page',
+        component: MyWishlistAdd,
+        exact: true
+        
+    },
+    {
+        path: '/my-family/detail',
+        name: 'Detail page family member',
+        component: MyFamilyDetail,
+        exact: true
+
+    },
+    {
+        path: '/my-wishlist/edit',
+        name: 'Edit page wishlist',
+        component: MyWishListEdit,
+        exact: true
+
+    },
+    {
+        path: '/settings/profile',
+        name: 'Profile settings page',
+        component: ProfileSettingsPage,
+        exact: true
+
     },
 ]
 

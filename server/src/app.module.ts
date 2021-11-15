@@ -17,6 +17,10 @@ import { Note } from './notes/entities/note.entity';
 import { AgendaItem } from './agenda-items/entities/agenda-item.entity';
 import { AlbumItem } from './album-items/entities/album-item.entity';
 import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
+import { RelationTypesModule } from './relation-types/relation-types.module';
+import { FamilyRelationsModule } from './family-relations/family-relations.module';
+import { FamilyRelation } from './family-relations/entities/family-relation.entity';
+import { RelationType } from './relation-types/entities/relation-type.entity';
 
 @Module({
   imports: [
@@ -33,10 +37,12 @@ import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
         password: 'Fvh89cxn',
         database: 'lifelog',
         entities: ['dist/**/*.entity{.ts,.js}'],
+        // seeds: ['src/seeds/**/*{.ts,.js}'],
+        autoLoadEntities: true,
         synchronize: true,
-        // logging: true
+        logging: true
       }),
-      TypeOrmModule.forFeature([FamilyMember, User, Note, AgendaItem, AlbumItem, WishListItem]),
+      TypeOrmModule.forFeature([FamilyMember, User, Note, AgendaItem, AlbumItem, WishListItem, FamilyRelation, RelationType]),
     FamilyMembersModule,
     NotesModule,
     AgendaItemsModule,
@@ -44,6 +50,8 @@ import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
     WishListItemsModule,
     UsersModule,
     AuthModule,
+    RelationTypesModule,
+    FamilyRelationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

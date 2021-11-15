@@ -43,8 +43,33 @@ export class AgendaItemsService {
     }
 
     getAuthor(authorId: number) : Promise<FamilyMember> {
+        console.log('AUTHOR ID in service', authorId);
         return this.familyMemberService.findOneById(authorId);
     }
+
+    getInvitedFamilyMembers(id: number): Promise<FamilyMember[] | any[]> {
+        const famMembers = this.agendaItemRepository.find({
+            where: {
+                id: id
+            },
+            relations: ['with']
+        })
+            
+        
+            console.log(famMembers);
+            return famMembers;
+            // .createQueryBuilder('agendaItem')
+            // .leftJoinAndSelect( 'agendaItem.with','familyMember')
+            // .getMany();
+        
+            // console.log(famMembers);
+            // return famMembers;
+
+    }
+
+    // getMembers(agendaItemIt: number) : Promise<FamilyMember> {
+    //     return this.familyMemberService.findAll({where : {}})
+    // }
 
     // getInvitedFamilyMembers(): Promise<FamilyMember[]> {
 

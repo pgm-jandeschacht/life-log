@@ -28,8 +28,28 @@ export class AgendaItemsResolver {
   author(@Parent() agendaItem: AgendaItem): Promise<FamilyMember> {
     //console.log('AUTHOR RESOLVER');  
     //console.log(note);
+    console.log('AUTHOR ID', agendaItem);
       return this.agendaItemsService.getAuthor(agendaItem.authorId);
   }
+
+  @ResolveField(returns => [FamilyMember])
+  with(
+      @Parent()
+      agendaItem: AgendaItem): Promise<FamilyMember[]> {
+      
+    return this.agendaItemsService.getInvitedFamilyMembers(agendaItem.id);
+
+}
+
+//   @ResolveField(returns => [FamilyMember])
+//   with(
+//       @Parent()
+//       agendaItem: AgendaItem
+//     ): Promise<FamilyMember[]> {
+//       return this.agendaItemsService.getMembers(agendaItem.id);
+//         // return this.agendaItemsService.getAuthor(agendaItem.author.id);
+//   }
+
 
 //   @ResolveField(returns => FamilyMember[])
 //   invitedFamilyMembers(@Parent() agendaItem: AgendaItem): Promise<FamilyMember> {

@@ -4,6 +4,7 @@ export interface AgendaItem {
     authorId?: number;
     author: FamilyMember;
     with?: FamilyMember[];
+    date: Date;
 }
 
 export interface AlbumItem {
@@ -21,7 +22,14 @@ export interface FamilyMember {
     lastname: string;
     gender: string;
     bio: string;
+    image: string;
+    dob: string;
+    occupation: string;
+    country: string;
+    city: string;
+
     isSender?: boolean;
+    isAlive?: boolean;
     father?: FamilyMember;
     mother?: FamilyMember;
     partner?: FamilyMember;
@@ -33,11 +41,33 @@ export interface FamilyMember {
     invitedAgendaItems?: AgendaItem[];
     wishListItems?: WishListItem[];
     inWishListItem?: WishListItem[];
+
 }
 
+// export interface FamilyMembersData {
+//     familyMemberByUserId: FamilyMember[]
+// }
 export interface FamilyMembersData {
     familyMembers: FamilyMember[]
 }
+export interface FamilyMemberData {
+    familyMemberById: FamilyMember
+}
+
+export interface FamilyRelationData {
+    familyRelationsByFamilyMemberId: FamilyRelation[]
+}
+
+
+export interface FamilyRelation {
+    id: number
+    familyMember: FamilyMember
+    relationType: RelationType
+    relatedFamilyMember: FamilyMember
+}
+// export interface FamilyMemberData {
+//     familyMemberById: FamilyMember
+// }
 
 export interface Note {
     id: number;
@@ -52,6 +82,14 @@ export interface WishListItem {
     content: string;
     completed: boolean;
     authorId?: number;
+    duedate?: Date;
     author: FamilyMember;
     for?: FamilyMember[];
 }
+
+export interface RelationType {
+    id: number;
+    name: string
+}
+
+

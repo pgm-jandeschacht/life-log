@@ -10,7 +10,6 @@ type AlbumItem {
 
   """What is there to say about this picture"""
   description: String
-  uploaderId: Int
 
   """Uploader of this picture"""
   uploader: FamilyMember!
@@ -19,10 +18,46 @@ type AlbumItem {
   inPicture: FamilyMember
 }
 
+type RelationType {
+  """The ID of the Relation type"""
+  id: Int!
+
+  """The name of the Relation type"""
+  name: String!
+
+  """The Family Relations to a specific Family Member"""
+  familyRelations: [FamilyRelation!]!
+}
+
+type FamilyRelation {
+  """The ID of the family member"""
+  id: Int!
+
+  """The family member"""
+  familyMember: FamilyMember!
+
+  """The relation to the other familyMember"""
+  relationType: RelationType!
+
+  """The related family member"""
+  relatedFamilyMember: FamilyMember!
+
+  """The ID of the family member"""
+  familyMemberId: Int!
+
+  """The ID of the relation type"""
+  relationTypeId: Int!
+
+  """The ID of the related family member"""
+  relatedFamilyMemberId: Int!
+}
+
 type Note {
   id: Int!
   content: String!
   authorId: Int
+
+  """The author of the note"""
   author: FamilyMember!
   createdOn: DateTime!
 }
@@ -59,8 +94,9 @@ type WishListItem {
   author: FamilyMember!
 
   """Who is this wish for"""
-  for: [FamilyMember!]
-  uploader: FamilyMember!
+  inWishListItem: [FamilyMember!]
+  dueDate: DateTime!
+  createdOn: DateTime!
 }
 
 type FamilyMember {
@@ -82,6 +118,19 @@ type FamilyMember {
   """A small bio about the family member"""
   bio: String
 
+  """Url to imageUrl"""
+  image: String
+  dob: DateTime!
+
+  """Name of occupation"""
+  occupation: String
+
+  """Country of FamilyMember"""
+  country: String
+
+  """City of FamilyMember"""
+  city: String
+
   """The user that is linked to the family member"""
   user: User
 
@@ -90,23 +139,19 @@ type FamilyMember {
   """
   isSender: Boolean
 
-  """Father of this family member"""
-  father: FamilyMember
-
-  """Mother of this family member"""
-  mother: FamilyMember
-
-  """Partner of this family member"""
-  partner: FamilyMember
-
-  """Father of this family member"""
-  children: [FamilyMember!]
-
   """List of notes made by the family member"""
   notes: [Note!]
 
   """List of album-items uploaded by this family member"""
   albumItems: [AlbumItem!]
+
+  """List of family relations this family member is involved in"""
+  familyRelationsTo: [FamilyRelation!]
+
+  """
+  List of family relations this family member is involved in (other side)
+  """
+  familyRelationsFrom: [FamilyRelation!]
 
   """List of agenda items made by the family member"""
   agendaItems: [AgendaItem!]
@@ -128,11 +173,17 @@ type AgendaItem {
 
   """List of family members invited for this agenda-item"""
   with: FamilyMember
+  createdOn: DateTime!
+  updatedOn: DateTime!
+  date: DateTime!
 }
 
 type Query {
   familyMembers: [FamilyMember!]!
   familyMemberById(id: Int!): FamilyMember!
+  familyMemberByUserId(userId: Int!): FamilyMember!
+  users: [User!]!
+  user(id: Int!): User!
   notes: [Note!]!
   note(id: Int!): Note!
   agendaItems: [AgendaItem!]!
@@ -141,14 +192,19 @@ type Query {
   albumItem(id: Int!): AlbumItem!
   wishListItems: [WishListItem!]!
   wishListItem(id: Int!): WishListItem!
-  users: [User!]!
-  user(id: Int!): User!
+  relationTypes: [RelationType!]!
+  relationType(id: Int!): FamilyRelation!
+  familyRelations: [FamilyRelation!]!
+  familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
 }
 
 type Mutation {
   createFamilyMember(createFamilyMemberInput: CreateFamilyMemberInput!): FamilyMember!
   updateFamilyMember(updateFamilyMemberInput: UpdateFamilyMemberInput!, id: Int!): FamilyMember!
   deleteFamilyMemberById(id: Int!): FamilyMember!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!, id: Int!): User!
+  removeUser(id: Int!): User!
   createNote(createNoteInput: CreateNoteInput!): Note!
   updateNote(updateNoteInput: UpdateNoteInput!, id: Int!): Note!
   deleteNote(id: Int!): Note!
@@ -161,9 +217,10 @@ type Mutation {
   createWishListItem(createWishListItemInput: CreateWishListItemInput!): WishListItem!
   updateWishListItem(updateWishListItemInput: UpdateWishListItemInput!, id: Int!): WishListItem!
   deleteWishListItem(id: Int!): WishListItem!
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!, id: Int!): User!
-  removeUser(id: Int!): User!
+  createRelationType(createRelationTypeInput: CreateRelationTypeInput!): RelationType!
+  updateRelationType(updateFamilyRelationInput: UpdateFamilyRelationInput!, id: Int!): FamilyRelation!
+  removeRelationType(id: Int!): FamilyRelation!
+  createFamilyRelation(createFamilyRelationInput: CreateFamilyRelationInput!): FamilyRelation!
 }
 
 input CreateFamilyMemberInput {
@@ -172,6 +229,22 @@ input CreateFamilyMemberInput {
   gender: String!
   isAlive: Boolean
   bio: String
+
+  """Url to imageUrl"""
+  image: String
+
+  """Date of birth"""
+  dob: String!
+
+  """Occupation"""
+  occupation: String!
+
+  """Country of FamilyMember"""
+  country: String
+
+  """City of FamilyMember"""
+  city: String
+  userId: Int!
   isSender: Boolean
 }
 
@@ -181,7 +254,35 @@ input UpdateFamilyMemberInput {
   gender: String
   isAlive: Boolean
   bio: String
+  userId: Int!
   isSender: Boolean
+
+  """Url to imageUrl"""
+  image: String
+
+  """Date of birth"""
+  dob: String!
+
+  """Occupation"""
+  occupation: String!
+
+  """Country of FamilyMember"""
+  country: String
+
+  """City of FamilyMember"""
+  city: String
+}
+
+input CreateUserInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  username: String!
+  email: String!
+  password: String!
 }
 
 input CreateNoteInput {
@@ -197,13 +298,17 @@ input UpdateNoteInput {
 input CreateAgendaItemInput {
   """Name of the agenda-item"""
   title: String!
-  authorId: Int!
+
+  """Date of the agenda-item"""
+  date: DateTime!
 }
 
 input UpdateAgendaItemInput {
   """Name of the agenda-item"""
   title: String!
-  authorId: Int!
+
+  """Date of the agenda-item"""
+  date: DateTime
 }
 
 input CreateAlbumItemInput {
@@ -212,7 +317,6 @@ input CreateAlbumItemInput {
 
   """What is there to say about this picture"""
   description: String
-  uploaderId: Int!
 }
 
 input UpdateAlbumItemInput {
@@ -221,31 +325,37 @@ input UpdateAlbumItemInput {
 
   """What is there to say about this picture"""
   description: String
-  uploaderId: Int
 }
 
 input CreateWishListItemInput {
   """Content of this wish"""
   content: String!
   completed: Boolean = false
-  authorId: Int
 }
 
 input UpdateWishListItemInput {
   """Content of this wish"""
   content: String!
   completed: Boolean = false
-  authorId: Int
 }
 
-input CreateUserInput {
-  username: String!
-  email: String!
-  password: String!
+input CreateRelationTypeInput {
+  name: String!
 }
 
-input UpdateUserInput {
-  username: String!
-  email: String!
-  password: String!
+input UpdateFamilyRelationInput {
+  """Example field (placeholder)"""
+  familyMemberId: Int!
+
+  """Example field (placeholder)"""
+  relationTypeId: Int!
+
+  """Example field (placeholder)"""
+  relatedFamilyMemberId: Int!
+}
+
+input CreateFamilyRelationInput {
+  familyMemberId: Int!
+  relationTypeId: Int!
+  relatedFamilyMemberId: Int!
 }

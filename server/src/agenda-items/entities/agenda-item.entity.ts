@@ -1,8 +1,10 @@
 import { ObjectType, Field, Int, ArrayElement } from '@nestjs/graphql';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
-import { Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-@Entity()
+@Entity({ orderBy: {
+    date: 'DESC',
+}})
 @ObjectType()
 export class AgendaItem {
     @PrimaryGeneratedColumn()
@@ -16,6 +18,8 @@ export class AgendaItem {
     @Column()
     @Field({description: 'Name of the agenda-item'})
     title: string;
+
+
 
     // @Column()
     // // @Field({ nullable: true, description: 'Extra information about agenda-item'})
@@ -33,5 +37,19 @@ export class AgendaItem {
     @ManyToMany(() => FamilyMember, familyMember => familyMember.invitedAgendaItems, { onDelete: 'SET NULL' })
     @Field(type => FamilyMember, { nullable: true, description: 'List of family members invited for this agenda-item' })
     with?: FamilyMember[];
+
+    @Column({ type: 'timestamp', nullable: true })
+    // @CreateDateColumn()
+    @Field()
+    createdOn: Date;
+
+    @Column({ type: 'timestamp', nullable: true })
+    // @UpdateDateColumn()
+    @Field()
+    updatedOn: Date;
+
+    @Column({ type: 'timestamp', nullable: true })
+    @Field()
+    date: Date;
 
 }
