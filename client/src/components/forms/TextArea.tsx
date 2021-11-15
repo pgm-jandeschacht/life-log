@@ -1,38 +1,28 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Colors, Shadow } from '../../variables'
+import React, {useState} from 'react'
 
-interface TextAreaProps {
-    placeholder: string,
-    children: string
+export interface TextAreaProps {
+    name: string,
+    value: string,
+    placeholder?: string,
+    onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void,
+    onBlur?: (e: React.FocusEvent<HTMLTextAreaElement>) => void  
 }
 
-const StyledLabel = styled.label`
-    display: flex;
-    flex-direction: column;
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin-bottom: 2rem;
-
-    textarea {
-        margin-top: 2rem;
-        border: 3px solid ${Colors.primary};
-        border-radius: 10px;
-        box-shadow: ${Shadow.small};
-        background: ${Colors.secondary};
-        padding: 1.5rem;
-        font-size: 2rem;
-        font-weight: 500;
-        color: ${Colors.primary};
-    }
-`
-
-const TextArea: React.FC<TextAreaProps> = ({ placeholder, children }) => {
+const TextArea: React.FC<TextAreaProps> = ({ placeholder, value, name, onChange, onBlur }) => {
+    const [ currentValue, setCurrentValue ] = useState(value);
+    
     return (
-        <StyledLabel>
-            {children}
-            <textarea required id="agenda_content" rows={5} name="agenda_content" placeholder={placeholder}></textarea>
-        </StyledLabel>
+        <textarea
+        rows={5}
+        name={name}
+        placeholder={placeholder}
+        value={currentValue}
+        onChange={(e) => {
+            if(onChange) onChange(e);
+            setCurrentValue(e.currentTarget.value)
+        }}
+        onBlur={onBlur}
+        ></textarea>
     )
 }
 

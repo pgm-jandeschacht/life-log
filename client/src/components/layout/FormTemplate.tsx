@@ -1,10 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Colors, Shadow, Transition } from '../../variables'
+import { ButtonForm } from '../buttons'
 
 interface FormTemplateProps {
     page: string,
-    color: string
+    color: string,
+    submitting: boolean
 }
 
 interface StyledButtonProps {
@@ -49,7 +51,7 @@ const StyledButtons = styled.div<StyledButtonProps>`
 }
 `
 
-const FormTemplate: React.FC<FormTemplateProps> = ({ page, color }) => {
+const FormTemplate: React.FC<FormTemplateProps> = ({ page, color, submitting }) => {
 
     const handleClicking = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
@@ -60,7 +62,7 @@ const FormTemplate: React.FC<FormTemplateProps> = ({ page, color }) => {
         <StyledButtons colorCode={color}>
             <a href="/" onClick={handleClicking}>Cancel</a>
             {/* onClick is added but just because there is no query yet */}
-            <button type="submit">Add to {page}</button>
+            <ButtonForm disabled={submitting} type="submit">Add to {page}</ButtonForm>
         </StyledButtons>
     )
 }

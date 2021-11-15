@@ -1,14 +1,7 @@
 import React, { useState } from 'react'
+import { TextFieldProps } from './TextField'
 
-interface PasswordFieldProps {
-    value: string
-    name: string
-    placeholder?: string
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void  
-}
-
-const PasswordField: React.FC<PasswordFieldProps> = ({value, name, placeholder, onBlur, onChange}) => {
+const PasswordField: React.FC<TextFieldProps> = ({ value, name, placeholder, onBlur, onChange }) => {
     const [ currentValue, setCurrentValue ] = useState(value);
 
     return (

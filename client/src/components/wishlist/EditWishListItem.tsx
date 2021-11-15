@@ -1,7 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TextArea, DropDown } from '../forms'
 import { FormTemplate } from '../layout'
+import { TextAreaError, DropDownError } from '../forms'
+import { Formik, Field } from 'formik'
+import * as yup from 'yup';
+import { Colors, Shadow } from '../../variables'
 
 const example = [
     {
@@ -63,19 +66,97 @@ const StyledForm = styled.form`
     }
 `
 
+const StyledLabel = styled.label`
+    display: flex;
+    flex-direction: column;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+
+    span {
+            color: ${Colors.red};
+        }
+
+    textarea {
+        margin-top: 2rem;
+        border: 3px solid ${Colors.primary};
+        border-radius: 10px;
+        box-shadow: ${Shadow.small};
+        background: ${Colors.secondary};
+        padding: 1.5rem;
+        font-size: 2rem;
+        font-weight: 500;
+        color: ${Colors.primary};
+    }
+`
+
+const StyledLabelSelect = styled.label`
+    display: flex;
+    flex-direction: column;
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 2rem;
+
+    span {
+            color: ${Colors.red};
+        }
+
+    select {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        border: 3px solid ${Colors.primary};
+        border-radius: 10px;
+        box-shadow: ${Shadow.small};
+        font-size: 2rem;
+        font-weight: 700;
+        color: ${Colors.primary};
+        background: ${Colors.secondary};
+        cursor: pointer;
+    }
+`
+
+const validationSchema = yup.object({
+    date: yup.string().required(),
+    wish: yup.string().required(),
+    user: yup.string().required()
+})
+
 const EditWishListItem = () => {
     return (
-        <StyledForm>
-            {/* Send the options to the dropdown with props */}
-            <DropDown dummyText={example}>Who do you want to this to?</DropDown> 
-            
-            <TextArea placeholder={"Write here what you did today"}>What do they need to bring?</TextArea>
+        <Formik
+            initialValues={{
+                date: '',
+                wish: '',
+                user: '',
+            }}
+            validationSchema={validationSchema}
+            onSubmit={(data, { setSubmitting }) => {
+                setSubmitting(true);
 
-            {/* Send the options to the dropdown with props */}
-            <DropDown dummyText={example2}>When do they have to bring it?</DropDown> 
-        
-            <FormTemplate page={"wishlist"} color={"#FFB2AB"}/>
-        </StyledForm>
+                setSubmitting(false);
+                }}
+            >
+
+            {({values, errors, isSubmitting, handleChange, handleBlur, handleSubmit}) => (
+                <StyledForm onSubmit={handleSubmit}>
+                    <StyledLabelSelect>
+                        <p>Who do you want to bring it? <span>*</span></p>
+                        <DropDownError dummyText={example} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
+                    </StyledLabelSelect>
+                    
+                    <StyledLabel>
+                        <p>What do they need to bring? <span>*</span></p>
+                        <Field  placeholder="Write here what you want" name={"wish"} as={TextAreaError} type="textarea" />
+                    </StyledLabel>
+                    <StyledLabelSelect>
+                        <p>When do they have to bring it? <span>*</span></p>
+                        <DropDownError dummyText={example2} name={"date"} onChange={handleChange} onBlur={handleBlur} /> 
+                    </StyledLabelSelect>
+
+                    <FormTemplate submitting={isSubmitting} page={"agenda"} color={"#FFB2AB"} />
+                </StyledForm>
+        )}
+        </Formik>
     )
 }
 

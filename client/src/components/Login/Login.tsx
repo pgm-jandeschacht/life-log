@@ -1,10 +1,11 @@
-import React, { useState, useEffect} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Colors, Shadow, Transition } from '../../variables'
 import logo from '../../assets/images/logo.png'
 import { Formik, Field } from 'formik'
-import { TextField, PasswordField } from '../forms'
+import { TextFieldError, PasswordFieldError } from '../forms'
 import { ButtonForm } from '../buttons'
+import * as yup from 'yup';
 
 async function loginUser(credentials: any) {
     return fetch('http://localhost:3000/login', {
@@ -40,8 +41,6 @@ async function loginUser(credentials: any) {
     })
 }
 
-
-
 interface LoginProps {
     setToken: any,
     setFamilyMemberId: any
@@ -62,7 +61,6 @@ const StyledDiv = styled.div`
         margin-bottom: 5rem;
     }
 `
-
 
 const StyledLogo = styled.div`
     background: ${Colors.primary};
@@ -94,6 +92,10 @@ const StyledForm = styled.form`
         font-size: 2.5rem;
         font-weight: 900;
         margin-bottom: 2rem;
+
+        span {
+            color: ${Colors.red};
+        }
 
         input {
             margin-top: 2rem;
@@ -138,7 +140,6 @@ const StyledButtons = styled.div`
             background: ${Colors.primary};
             color: ${Colors.secondary};
         }
-        
     }
     
     button {
@@ -153,10 +154,14 @@ const StyledButtons = styled.div`
     }
 `
 
-export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {    
+const validationSchema = yup.object({
+    username: yup.string().required(),
+    password: yup.string().required()
+})
+
+export const Login: React.FC<LoginProps> = ({ setToken, setFamilyMemberId }) => {    
     return (
         <StyledDiv>
-
             <StyledLogo>
                 <img src={logo} alt="Logo of Life log" />
             </StyledLogo>
@@ -169,6 +174,7 @@ export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {
                         username: '',
                         password: '',
                     }}
+                    validationSchema={validationSchema}
                     onSubmit={async (data, { setSubmitting }) => {
                         setSubmitting(true);
 
@@ -179,21 +185,12 @@ export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {
                             username,
                             password
                         });
-                        console.log(token)
                 
-                        if(!token?.msg ) {
-                            // Token has 
-                            // {
-                            //     token: '....'
-                            //     user: { id, email }
-                            //     familyMemberId: "..."
-                            // }
-                
+                        if(!token?.msg ) {                
                             setToken(token);
                             setFamilyMemberId(token.familyMemberId);
                         }
 
-                        // console.log(data);
                         setSubmitting(false);
                       }}
                     >
@@ -201,14 +198,12 @@ export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {
                     {({values, errors, isSubmitting, handleChange, handleBlur, handleSubmit}) => (
                         <StyledForm onSubmit={handleSubmit}>
                             <label>
-                                Username
-                                <Field  placeholder="username" name="username" as={TextField} type="input" />
-                                {/* <input required type="text" onChange={e => setUsername(e.target.value)}/> */}
+                                <p>Username <span>*</span></p>
+                                <Field  placeholder="username" name="username" as={TextFieldError} type="input" />
                             </label>
                             <label>
-                                Password
-                                <Field  placeholder="password" name="password" as={PasswordField} type="input" />
-                                {/* <input required type="password" onChange={ e=> setPassword(e.target.value) } /> */}
+                                <p>Password <span>*</span></p>
+                                <Field  placeholder="password" name="password" as={PasswordFieldError} type="input" />
                             </label>
                             <StyledButtons>
                                 <a href="/">Register</a>
@@ -222,39 +217,3 @@ export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {
 
     )
 }
-
-{/* <StyledForm onSubmit={handleSubmit}>
-                    <label>
-                        Username
-                        <input required type="text" onChange={e => setUsername(e.target.value)}/>
-                    </label>
-                    <label>
-                        Password
-                        <input required type="password" onChange={ e=> setPassword(e.target.value) } />
-                    </label>
-                    <StyledButtons>
-                        <a href="/">Register</a>
-                        <button type="submit">Sign in</button>
-                    </StyledButtons>
-                </StyledForm> */}
-
-                // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-                //     e.preventDefault();
-            
-                //     const token = await loginUser ({
-                //         username,
-                //         password
-                //     });
-            
-                //     if(!token?.msg ) {
-                //         // Token has 
-                //         // {
-                //         //     token: '....'
-                //         //     user: { id, email }
-                //         //     familyMemberId: "..."
-                //         // }
-            
-                //         setToken(token);
-                //         setFamilyMemberId(token.familyMemberId);
-                //     }
-                // }
