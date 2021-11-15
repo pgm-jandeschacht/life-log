@@ -9,19 +9,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface NavigationProps {
     backgroundColorAccent: string,
-    setBlue: boolean
+    setBlue: boolean,
+    isForm?: boolean
 }
 
-interface DivProps {
+interface StyledDivProps {
     backgroundColor: string,
-    buttonColor: boolean
+    buttonColor: boolean,
+    hide?: boolean
 }
 
-const Div = styled.div<DivProps>`
+const StyledDiv = styled.div<StyledDivProps>`
     position: fixed;
     bottom: 0;
-    display: flex;
-    background: ${(DivProps) => (DivProps.backgroundColor)};
+    display: ${(StyledDivProps) => (StyledDivProps.hide ? "none" : "flex")};
+    background: ${(StyledDivProps) => (StyledDivProps.backgroundColor)};
     width: 100%;
     max-width: 80rem;
     padding: 1.5rem 1.5rem;
@@ -41,8 +43,8 @@ const Div = styled.div<DivProps>`
         text-align: center;
         margin-right: 1rem;
         width: 33%;
-        background: ${(DivProps) => (DivProps.buttonColor ? Colors.secondary : Colors.primary)};
-        color: ${(DivProps) => (DivProps.buttonColor ? Colors.primary : Colors.secondary)};
+        background: ${(StyledDivProps) => (StyledDivProps.buttonColor ? Colors.secondary : Colors.primary)};
+        color: ${(StyledDivProps) => (StyledDivProps.buttonColor ? Colors.primary : Colors.secondary)};
         font-size: 1.25rem;
         font-weight: 700;
         padding: 0.75rem 0;
@@ -62,13 +64,13 @@ const Div = styled.div<DivProps>`
 
         &:hover {
             transform: translateY(-5px);
-            background: ${(DivProps) => (DivProps.buttonColor ? Colors.ternary : Colors.secondary)};
-            color: ${(DivProps) => (DivProps.buttonColor ? Colors.primary : Colors.primary)};
+            background: ${(StyledDivProps) => (StyledDivProps.buttonColor ? Colors.ternary : Colors.secondary)};
+            color: ${(StyledDivProps) => (StyledDivProps.buttonColor ? Colors.primary : Colors.primary)};
         }
     }
 `
 
-const Navigation = ({ backgroundColorAccent, setBlue }: NavigationProps) => {
+const Navigation = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps) => {
     const [isClicked, setIsClicked] = useState(false);
 
     const handleClick = () => {
@@ -83,13 +85,13 @@ const Navigation = ({ backgroundColorAccent, setBlue }: NavigationProps) => {
 
     return (
         <div>
-            <Div buttonColor={setBlue} backgroundColor={backgroundColorAccent}>
+            <StyledDiv hide={isForm} buttonColor={setBlue} backgroundColor={backgroundColorAccent}>
                 <Link to={'/help'} title={'Help'}>Help</Link>
 
                 <ButtonNav onClick={handleClick} backgroundColorButton={backgroundColorAccent} buttonColorButton={setBlue}>
                     Open menu<FontAwesomeIcon icon={faChevronUp} />
                 </ButtonNav>
-            </Div>
+            </StyledDiv>
 
            <Menu clicked={isClicked} onClose={handleClosing} />
         </div>

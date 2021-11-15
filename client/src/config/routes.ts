@@ -9,7 +9,9 @@ import WishlistPage from "../pages/my-wishlist";
 import SettingsPage from "../pages/Settings";
 import HelpPage from "../pages/Help";
 import MyAgendaAdd from "../pages/my-agenda_Add";
-import MyWishList from "../pages/my-wishlist_Add";
+import MyWishlistAdd from "../pages/my-wishlist_Add";
+import MyWishListEdit from "../pages/my-wishlist_Edit";
+import MyFamilyDetail from "../pages/my-family_detail";
 
 const routes: IRoute[] = [
     {
@@ -78,9 +80,23 @@ const routes: IRoute[] = [
     {
         path: '/my-wishlist/add',
         name: 'Add item to wishlist page',
-        component: MyWishList,
+        component: MyWishlistAdd,
         exact: true
         
+    },
+    {
+        path: '/my-family/detail',
+        name: 'Detail page family member',
+        component: MyFamilyDetail,
+        exact: true
+
+    },
+    {
+        path: '/my-wishlist/edit',
+        name: 'Edit page wishlist',
+        component: MyWishListEdit,
+        exact: true
+
     },
 ]
 

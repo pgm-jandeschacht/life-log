@@ -81,6 +81,7 @@ query getFamilyMemberById($id: Int!) {
 export const GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID = gql`
 query getFamilyRelationsByFamilyMemberId($id: Int!){
     familyRelationsByFamilyMemberId(familyMemberId: $id) {
+      id
       relationType {
         name
       }

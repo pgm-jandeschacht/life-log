@@ -21,7 +21,8 @@ interface BaseLayoutProps {
     PageTitle: string,
     backgroundStyle?: string,
     altButton?: boolean,
-    altLink?: string
+    altLink?: string,
+    formPage?: boolean
 }
 
 const Main = styled.main`
@@ -35,16 +36,16 @@ const Main = styled.main`
     @media (min-width: ${Breakpoint.medium}) {
         padding: 0 4rem 13.25rem 4rem;
     }
-`;
+`
     
-    const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton = false, altLink } : BaseLayoutProps) => {
-        
-        // Change background color of navigation according to the page
-        const [background, setBackground] = useState(Colors.primary)
-        const [isBlue, setIsBlue] = useState(true)
+const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton = false, altLink, formPage = false } : BaseLayoutProps) => {
+    
+    // Change background color of navigation according to the page
+    const [background, setBackground] = useState(Colors.primary)
+    const [isBlue, setIsBlue] = useState(true)
 
-        const {  token, setToken } = useToken();
-        const { familyMemberId, setFamilyMemberId } = useFamilyMember();
+    const {  token, setToken } = useToken();
+    const { familyMemberId, setFamilyMemberId } = useFamilyMember();
 
     useEffect(() => {
         if(backgroundStyle === 'accent1') {
@@ -69,7 +70,7 @@ const Main = styled.main`
 
     return (
         <>
-            <Header link={altLink} button={altButton} title={PageTitle} backgroundColor={background} />
+            <Header form={formPage} link={altLink} button={altButton} title={PageTitle} backgroundColor={background} />
 
             <Main>
                 
@@ -83,7 +84,7 @@ const Main = styled.main`
         
             </Main>
 
-            <Footer blue={isBlue} backgroundColor={background} />
+            <Footer form={formPage} blue={isBlue} backgroundColor={background} />
         </>
     )
 }

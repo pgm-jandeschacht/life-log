@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 interface FooterProps {
     backgroundColor: string,
-    blue: boolean
+    blue: boolean,
+    form?: boolean
 }
 
 const StyledFooter = styled.footer`
@@ -12,10 +13,10 @@ const StyledFooter = styled.footer`
     margin: auto;
 `
 
-const Footer = ({ backgroundColor, blue }: FooterProps) => {
+const Footer = ({ backgroundColor, blue, form }: FooterProps) => {
     return (
         <StyledFooter>
-            <Navigation setBlue={blue} backgroundColorAccent={backgroundColor}/>
+            <Navigation isForm={form} setBlue={blue} backgroundColorAccent={backgroundColor}/>
         </StyledFooter>
     )
 }

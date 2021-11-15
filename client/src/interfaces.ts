@@ -53,6 +53,7 @@ export interface FamilyRelationData {
 
 
 export interface FamilyRelation {
+    id: number
     familyMember: FamilyMember
     relationType: RelationType
     relatedFamilyMember: FamilyMember
