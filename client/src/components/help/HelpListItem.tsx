@@ -39,7 +39,7 @@ const StyledLi = styled.li<StyledLiProps>`
             transform: translateY(-5px) scale(1.02);
         }
     }
-    `
+`
 
 const StyledDiv = styled.div`
     display: flex;

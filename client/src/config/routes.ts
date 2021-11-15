@@ -12,6 +12,7 @@ import MyAgendaAdd from "../pages/my-agenda_Add";
 import MyWishlistAdd from "../pages/my-wishlist_Add";
 import MyWishListEdit from "../pages/my-wishlist_Edit";
 import MyFamilyDetail from "../pages/my-family_detail";
+import ProfileSettingsPage from "../pages/ProfileSettings";
 
 const routes: IRoute[] = [
     {
@@ -95,6 +96,13 @@ const routes: IRoute[] = [
         path: '/my-wishlist/edit',
         name: 'Edit page wishlist',
         component: MyWishListEdit,
+        exact: true
+
+    },
+    {
+        path: '/settings/profile',
+        name: 'Profile settings page',
+        component: ProfileSettingsPage,
         exact: true
 
     },
