@@ -28,7 +28,7 @@ export class NotesResolver {
   author(@Parent() note: Note): Promise<FamilyMember> {
     console.log('AUTHOR RESOLVER');  
     console.log(note);
-      return this.notesService.getAuthor(note.author.id);
+      return this.notesService.getAuthor(note.authorId);
   }
 
 

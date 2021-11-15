@@ -24,16 +24,23 @@ export class CreateFamilyMemberInput {
     @Field({ nullable: true })
     bio?: string;
 
-    // @Field(type => User, { nullable: true, description: 'The user that is linked to the family member'})
-    // user?: User;
+    @Field({ nullable: true, description: 'Url to imageUrl'})
+    image?:string
+
+    @Field({description: 'Date of birth'})
+    dob: string
+
+    @Field({description: 'Occupation'})
+    occupation?: string
+
+    @Field({ nullable: true, description: 'Country of FamilyMember'})
+    country?:string
+    
+    @Field({ nullable: true, description: 'City of FamilyMember'})
+    city?: string
 
     @Field(type => Int)
     userId?: number;
-
-    // user?: User;
-
-    // @Field()
-    // dob: Date;
     
     @IsBoolean()
     @Field({ nullable: true })

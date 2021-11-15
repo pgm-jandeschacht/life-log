@@ -38,4 +38,19 @@ export class UpdateFamilyMemberInput {
     // @IsBoolean()
     @Field({ nullable: true })
     isSender?: boolean;
+
+    @Field({ nullable: true, description: 'Url to imageUrl'})
+    image?:string
+
+    @Field({description: 'Date of birth'})
+    dob?: string
+    
+    @Field({description: 'Occupation'})
+    occupation?: string
+
+    @Field({ nullable: true, description: 'Country of FamilyMember'})
+    country?:string
+    
+    @Field({ nullable: true, description: 'City of FamilyMember'})
+    city?: string
 }

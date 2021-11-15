@@ -13,6 +13,11 @@ export class AppController {
       private readonly appService: AppService
     ) {}
 //   constructor(private readonly appService: AppService) {}
+
+@Get('hello')
+getHelloTest(): void {
+    this.appService.getHello();
+}
   
   @Get('seed')
   seedUsers(): void {
@@ -59,10 +64,10 @@ export class AppController {
         // return amount;
     }
 
-    @Get('seedAgenda')
+    @Get('seedRelations')
     seedAgenda(@Request() req,): any {
-        this.appService.addFamilyMemberToAgendaItem();
-        return `Seeded agenda`;
+        this.appService.createFamilyRelations();
+        return `Seeded relations`;
     }
 
     @Get('clear_database')

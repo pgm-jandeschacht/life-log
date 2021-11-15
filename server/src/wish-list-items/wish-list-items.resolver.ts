@@ -25,10 +25,21 @@ export class WishListItemsResolver {
   }
 
   @ResolveField(returns => FamilyMember)
-  uploader(@Parent() wishListItem: WishListItem): Promise<FamilyMember> {
+  author(@Parent() wishListItem: WishListItem): Promise<FamilyMember> {
     //console.log('AUTHOR RESOLVER');  
     //console.log(note);
-      return this.wishListItemsService.getUploader(wishListItem.author.id);
+      return this.wishListItemsService.getAuthor(wishListItem.authorId);
+  }
+
+  @ResolveField(returns => [FamilyMember] )
+  inWishListItem(
+      @Parent() 
+      wishListItem: WishListItem, 
+    //   @Args('familyMemberId', { type: () => Int }) 
+    //   familyMemberId: number
+      ) {
+    // return this.wishListItemsService.inWishList(wishListItem.id, familyMemberId);
+    return this.wishListItemsService.inWishList(wishListItem.id);
   }
 
   @Mutation(() => WishListItem)

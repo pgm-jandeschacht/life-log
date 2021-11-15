@@ -38,6 +38,7 @@ import { RelationType } from './relation-types/entities/relation-type.entity';
         database: 'lifelog',
         entities: ['dist/**/*.entity{.ts,.js}'],
         // seeds: ['src/seeds/**/*{.ts,.js}'],
+        autoLoadEntities: true,
         synchronize: true,
         logging: true
       }),

@@ -13,9 +13,9 @@ export class Note {
     @Field()
     content: string;
 
-    // @Column()
-    // @Field(type => Int, { nullable: true })
-    // authorId?: number;
+    @Column()
+    @Field(type => Int, { nullable: true })
+    authorId?: number;
 
     @ManyToOne(() => FamilyMember, author => author.notes, { onDelete: 'CASCADE'})
     @Field(type => FamilyMember, { description: 'The author of the note' })

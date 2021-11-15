@@ -3,8 +3,13 @@ import styled from 'styled-components'
 import img from '../../assets/images/karina_cox.jpg'
 import { Colors, Shadow, Transition } from '../../variables'
 
+import { useQuery } from "@apollo/client";
+import { GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
+
+import { FamilyRelationData, FamilyRelation } from '../../interfaces';
+
 interface FamilyListProps {
-    profiles: any
+    // profiles: any
 }
 
 const StyledUl = styled.ul`
@@ -61,19 +66,33 @@ const StyledDiv = styled.div`
     }
 `
 
-const FamilyList: React.FC<FamilyListProps> = ({ profiles }) => {
+const FamilyList: React.FC<FamilyListProps> = ( ) => {
+
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
+
+    // const { data, loading, error } = useQuery<FamilyRelationData >(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
+    const { data, loading, error } = useQuery<FamilyRelationData>(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
+        variables: {
+            id: parseInt(familyMemberId)
+        }
+    })
+
+    if(loading) return <p>"loading ..."</p>;
+    if(error) return <p>"ERRRORRR!!"</p>;
+
+
     return (
         <StyledUl>
-            { profiles.map((profile: any) => (
-                <li>
+            { data?.familyRelationsByFamilyMemberId.map((familyRelation: FamilyRelation) => (
+                <li key={familyRelation.id}>
                     <a href="/my-family/detail">
                         <StyledImg>
-                            <img src={img} alt={`${profile.firstName} ${profile.lastName}`} />
+                            <img src={familyRelation.relatedFamilyMember.image} alt={`${familyRelation.relatedFamilyMember.firstname} ${familyRelation.relatedFamilyMember.lastname}`} />
                         </StyledImg>
 
                         <StyledDiv>
-                            <p>{profile.firstName} {profile.lastName}</p>
-                            <p>{profile.familyMember}</p>
+                            <p>{familyRelation.relatedFamilyMember.firstname} {familyRelation.relatedFamilyMember.lastname}</p>
+                            <p>{familyRelation.relationType.name}</p>
                         </StyledDiv>
                     </a>
                 </li>

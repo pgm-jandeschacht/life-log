@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
 import { FamilyMembersService } from 'src/family-members/family-members.service';
-import { Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { CreateWishListItemInput } from './dto/create-wish-list-item.input';
 import { UpdateWishListItemInput } from './dto/update-wish-list-item.input';
 import { WishListItem } from './entities/wish-list-item.entity';
@@ -35,7 +35,20 @@ export class WishListItemsService {
         return this.wishListItemRepository.remove(albumItem);
     }
 
-    getUploader(uploaderId: number): Promise<FamilyMember> {
-        return this.familyMemberService.findOneById(uploaderId);
+    getAuthor(authorId: number): Promise<FamilyMember> {
+        return this.familyMemberService.findOneById(authorId);
+    }
+
+    // async inWishList(wishListItemId: number): Promise<FamilyMember[] | any[]> {
+            async inWishList(wishListItemId: number): Promise<FamilyMember[]> {
+        const familyMembers = await getRepository(FamilyMember)
+        .createQueryBuilder('familyMember')
+        .leftJoinAndSelect('familyMember.wishListItems.inWishListItem.familyMember', 'familyMember')
+        .where("wishListItems.id = :id", { id: wishListItemId })
+        .getMany();
+
+        console.log(familyMembers);
+        return familyMembers;
+
     }
 }

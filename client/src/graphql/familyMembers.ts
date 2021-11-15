@@ -46,6 +46,11 @@ query getFamilyMemberById($id: Int!){
       isAlive
       bio
       isSender
+      image
+      dob
+      city
+      country
+      occupation
     }
   }
   
@@ -64,3 +69,32 @@ query getFamilyMemberById($id: Int!) {
     }
 }
 `
+export const GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID = gql`
+query getFamilyMemberById($id: Int!) {
+    familyMemberById(id: $id) {
+        id
+        wishListItems {
+            id
+            content
+            completed
+            dueDate
+        }
+    }
+}
+`
+
+export const GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID = gql`
+query getFamilyRelationsByFamilyMemberId($id: Int!){
+    familyRelationsByFamilyMemberId(familyMemberId: $id) {
+      id
+      relationType {
+        name
+      }
+      relatedFamilyMember {
+        firstname
+        lastname
+        image
+      }
+    }
+  }
+`  

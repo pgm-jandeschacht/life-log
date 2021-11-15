@@ -8,6 +8,7 @@ import { RelationType } from './entities/relation-type.entity';
     imports: [
         TypeOrmModule.forFeature([RelationType])
     ],
-    providers: [RelationTypesResolver, RelationTypesService]
+    providers: [RelationTypesResolver, RelationTypesService],
+    exports: [RelationTypesService]
 })
 export class RelationTypesModule {}

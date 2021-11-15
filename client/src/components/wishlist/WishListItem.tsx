@@ -53,7 +53,8 @@ const WishListItem: React.FC<WishListItemProps> = ({ wishContent, keyId }) => {
     console.log(wishContent)
 
     return (
-        <StyledLi key={`wish${keyId}`}>
+        <StyledLi key={keyId}>
+        {/* <StyledLi key={`wish${keyId}`}> */}
             <StyledButton rotate={isClicked} onClick={buttonHandler}>
                 {wishContent.content}
 

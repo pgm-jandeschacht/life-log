@@ -79,7 +79,7 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
             to bring me
             <span>{wish.content}</span>
             when they visit me
-            <span>{wish.dueDate}</span>
+            <span>{new Date(wish.dueDate).toLocaleDateString()}</span>
 
             <div>
                 <a onClick={handleClicking} href="/">
