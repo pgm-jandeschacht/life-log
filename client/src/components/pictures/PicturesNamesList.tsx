@@ -61,7 +61,7 @@ const PicturesNamesList: React.FC<PicturesNamesListProps> = ({ usersList }) => {
     return (
         <StyledUl>
             {usersList.map((user: any) => (
-                <StyledLi>
+                <StyledLi key={user.id}>
                     <a href="/my-pictures">
                         {/* <img src={`../../assets/images/${user.image}`} alt={`${user.firstName} ${user.lastName}`} /> */}
                         <div>
