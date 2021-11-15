@@ -66,7 +66,7 @@ const FamilyList: React.FC<FamilyListProps> = ({ profiles }) => {
         <StyledUl>
             { profiles.map((profile: any) => (
                 <li>
-                    <a href="/my-family">
+                    <a href="/my-family/detail">
                         <StyledImg>
                             <img src={img} alt={`${profile.firstName} ${profile.lastName}`} />
                         </StyledImg>
