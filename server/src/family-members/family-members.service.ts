@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AuthService } from 'src/auth/auth.service';
 import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { Repository } from 'typeorm';
@@ -7,13 +8,14 @@ import { threadId } from 'worker_threads';
 import { CreateFamilyMemberInput } from './dto/create-family-member.input';
 import { UpdateFamilyMemberInput } from './dto/update-family-member.input';
 import { FamilyMember } from './entities/family-member.entity';
+import {getConnection} from "typeorm";
 
 @Injectable()
 export class FamilyMembersService {
     constructor(
         @InjectRepository(FamilyMember) 
         private familyMemberRepository: Repository<FamilyMember>,
-        private userService: UsersService
+        private userService: UsersService,
     ) {};
 
     create(createFamilyMemberInput: CreateFamilyMemberInput) : Promise<FamilyMember> {
@@ -35,6 +37,17 @@ export class FamilyMembersService {
         try {
             const familymember = await this.familyMemberRepository.findOneOrFail(id);
             return familymember;
+        } catch(error) {
+            // handle error
+            throw error;
+        }
+    }
+
+    async findFamilyMemberByUserId(userId: number) : Promise<any> {
+        console.log(userId);
+        try {
+            const familyMember = await this.familyMemberRepository.createQueryBuilder().select("familyMember").from(FamilyMember, "familyMember").where("familyMember.user.id = :id", { id: userId }).getOne();
+            return familyMember;
         } catch(error) {
             // handle error
             throw error;

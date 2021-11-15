@@ -4,6 +4,7 @@ export interface AgendaItem {
     authorId?: number;
     author: FamilyMember;
     with?: FamilyMember[];
+    date: Date;
 }
 
 export interface AlbumItem {
@@ -22,6 +23,7 @@ export interface FamilyMember {
     gender: string;
     bio: string;
     isSender?: boolean;
+    isAlive?: boolean;
     father?: FamilyMember;
     mother?: FamilyMember;
     partner?: FamilyMember;
@@ -35,9 +37,18 @@ export interface FamilyMember {
     inWishListItem?: WishListItem[];
 }
 
+// export interface FamilyMembersData {
+//     familyMemberByUserId: FamilyMember[]
+// }
 export interface FamilyMembersData {
     familyMembers: FamilyMember[]
 }
+export interface FamilyMemberData {
+    familyMemberById: FamilyMember
+}
+// export interface FamilyMemberData {
+//     familyMemberById: FamilyMember
+// }
 
 export interface Note {
     id: number;

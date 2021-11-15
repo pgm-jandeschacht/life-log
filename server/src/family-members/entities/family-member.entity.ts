@@ -1,6 +1,7 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { AgendaItem } from 'src/agenda-items/entities/agenda-item.entity';
 import { AlbumItem } from 'src/album-items/entities/album-item.entity';
+import { FamilyRelation } from 'src/family-relations/entities/family-relation.entity';
 import { Note } from 'src/notes/entities/note.entity';
 import { User } from 'src/users/entities/user.entity';
 import { WishListItem } from 'src/wish-list-items/entities/wish-list-item.entity';
@@ -52,27 +53,6 @@ export class FamilyMember {
     @Field({ nullable: true,  defaultValue:true, description: 'Boolean representation if the family member is going to send information as well'})
     isSender?: boolean;
 
-    
-    @OneToOne(() => FamilyMember, familyMember => familyMember.father)
-    // @OneToOne(() => FamilyMember, familyMember => familyMember.father, { eager: true})
-    @Field(type => FamilyMember, { nullable: true, description: 'Father of this family member' })
-    father?: FamilyMember;
-
-    @OneToOne(() => FamilyMember, familyMember => familyMember.mother)
-    // @OneToOne(() => FamilyMember, familyMember => familyMember.mother, { eager: true})
-    @Field(type => FamilyMember, { nullable: true, description: 'Mother of this family member' })
-    mother?: FamilyMember;
-    
-    @OneToOne(() => FamilyMember, familyMember => familyMember.partner)
-    // @OneToOne(() => FamilyMember, familyMember => familyMember.partner, { eager: true})
-    @Field(type => FamilyMember, { nullable: true, description: 'Partner of this family member' })
-    partner?: FamilyMember;
-    
-    @OneToMany(() => FamilyMember, familyMember => familyMember.children)
-    // @OneToMany(() => FamilyMember, familyMember => familyMember.children, { eager: true})
-    @Field(type => [FamilyMember], { nullable: true, description: 'Father of this family member' })
-    children?: FamilyMember[];
-
     // CHECK DOCUMENTATION FOR CASCADING...
     @OneToMany(() => Note, note => note.author, {eager: true, cascade: true})
     @Field(type => [Note], {nullable: true, description: 'List of notes made by the family member' })
@@ -81,6 +61,14 @@ export class FamilyMember {
     @OneToMany(() => AlbumItem, albumItem => albumItem.uploader, { eager: true, cascade: true})
     @Field(type => [AlbumItem], { nullable: true, description: 'List of album-items uploaded by this family member'})
     albumItems?: AlbumItem[];
+
+    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.familyMember, { eager: true, cascade: true})
+    @Field(type => [FamilyRelation], { nullable: true, description: 'List of family relations this family member is involved in'})
+    familyRelationsTo: FamilyRelation[];
+
+    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.relatedFamilyMember, { eager: true, cascade: true})
+    @Field(type => [FamilyRelation], { nullable: true, description: 'List of family relations this family member is involved in (other side)'})
+    familyRelationsFrom: FamilyRelation[];
 
     @ManyToMany(() => AlbumItem, albumItem => albumItem.inPicture, { eager: true, cascade: true })
     @JoinTable()
@@ -93,7 +81,7 @@ export class FamilyMember {
     
     // CHECK DOCUMENTATION FOR CASCADING...
     
-    @ManyToMany(() => AgendaItem, agendaItem => agendaItem.with,  {eager: true})
+    @ManyToMany(() => AgendaItem, agendaItem => agendaItem.with,  {eager: true, cascade: true})
     @JoinTable()
     invitedAgendaItems?: AgendaItem[]
 
@@ -104,7 +92,7 @@ export class FamilyMember {
     
     // CHECK DOCUMENTATION FOR CASCADING...
     
-    @ManyToMany(() => WishListItem, wishListItem => wishListItem.for,  {eager: true})
+    @ManyToMany(() => WishListItem, wishListItem => wishListItem.for,  {eager: true, cascade: true})
     @JoinTable()
     inWishListItem?: WishListItem[]
     

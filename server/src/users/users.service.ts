@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FamilyMember } from 'src/family-members/entities/family-member.entity';
+import { FamilyMembersService } from 'src/family-members/family-members.service';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
@@ -8,7 +10,13 @@ const faker = require('faker');
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
+    constructor(
+        @InjectRepository(User) 
+        private userRepository: Repository<User>,
+        @InjectRepository(FamilyMember) 
+        private familyMemberRepository: Repository<FamilyMember>
+
+    ) {}
   
     create(createUserInput: CreateUserInput): Promise<User> {
     const newUser = this.userRepository.create(createUserInput);
@@ -44,6 +52,38 @@ export class UsersService {
           const user = await this.userRepository.findOneOrFail({ where: { username: username } });
           return user;
       } catch(error) {
+          console.log('ERROR', error);
+          throw error;
+      }
+  }
+
+//   async findFamilyMemberByUserId(userId: number): Promise<FamilyMemberz> | undefined {
+//   async findFamilyMemberByUserId(userId: number): Promise<any> {
+//       try {
+//         //   const familyMember = await this.userRepository.findOneOrFail({ where: { userId: userId } });
+//         //   return familyMember;
+//         const familyMemer = await this.userRepository
+//         .createQueryBuilder("familyMember")
+//         .leftJoinAndSelect("familyMember.user", "user")
+//         .where("user.id = :userId", { userId: userId })
+//         .getOne();
+        
+//       } catch(error) {
+//           throw error;
+//       }
+//   }
+  async findFamilyMemberByUserId(userId: number) : Promise<any> {
+      try {
+        const familyMembers = await this.familyMemberRepository
+        .createQueryBuilder("familyMember")
+        .leftJoinAndSelect("familyMember.user", "user")
+        .where("user.id = :id", { id: userId })
+        .getOne();
+
+        // const familyMembers = await this.familyMemberRepository.findOneOrFail({ where: { userId: 5 } });
+        return familyMembers
+      } catch(error) {
+          console.log('ERROR', error);
           throw error;
       }
   }

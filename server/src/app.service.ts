@@ -10,6 +10,8 @@ import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
 import * as faker from 'faker';
 import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
+import { RelationType } from './relation-types/entities/relation-type.entity';
+import { FamilyRelation } from './family-relations/entities/family-relation.entity';
 
 
 @Injectable()
@@ -26,11 +28,71 @@ export class AppService {
         @InjectRepository(AlbumItem)
         private albumItemRepository: Repository<AlbumItem>,
         @InjectRepository(Note)
-        private noteRepository: Repository<Note>
+        private noteRepository: Repository<Note>,
+        @InjectRepository(RelationType)
+        private relationTypeRepository: Repository<RelationType>,
+        @InjectRepository(FamilyRelation)
+        private familyRelationRepository: Repository<FamilyRelation>,
     ) {}
     // constructor(@InjectRepository(FamilyMember) private familyMemberRepository: Repository<FamilyMember>) {};
   getHello(): string {
     return 'Hello World!';
+  }
+
+  createRelationTypes() {
+    const relationTypes = [
+        "grandparent",
+        "grandfather",
+        "grandmother",
+        "mother",
+        "father",
+        "aunt",
+        "uncle",
+        "child",
+        "daughter",
+        "son",
+        "sister",
+        "brother",
+        "niece",
+        "nephew",
+        "cousin",
+        "grandson",
+        "granddaughter",
+        "grandchild",
+        "partner"
+    ];   
+
+    relationTypes.forEach(relation => {
+        const relationType = this.relationTypeRepository.create({
+            name: relation,
+        })
+        //relationTypesForDb.push(relationType);
+        this.relationTypeRepository.save(relationType);
+    });
+      
+  }
+
+  async createFamilyRelations() {
+    // const familyRelations = [];
+
+    // list of ALL family members
+    const familyMembers = await this.familyMemberRepository.find();
+
+    // list of ALL relation Types
+    const relationTypes = await this.relationTypeRepository.find();
+
+    for(let i = 0; i < familyMembers.length; i++) {
+      const familyRelation = await this.familyRelationRepository.create({
+        familyMember: familyMembers[i],
+        relationType: relationTypes[faker.datatype.number({min: 0, max: relationTypes.length - 1})],
+        relatedFamilyMember: familyMembers[faker.datatype.number({min: 0, max: familyMembers.length - 1})],
+      })
+    //   familyRelations.push(familyRelation);
+        await this.familyRelationRepository.save(familyRelation);
+    }
+
+    // await this.relationTypeRepository.save(familyRelations);
+    // return familyRelations;
   }
 
   async createWishListItems(amount: number): Promise<WishListItem[]> {
@@ -49,7 +111,9 @@ export class AppService {
       let agendaItems = [];
       for(let i= 0; i < amount; i++) {
         const agendaItem = await this.agendaItemRepository.create({
-            title: faker.lorem.sentence()
+            title: faker.lorem.sentence(),
+            createdOn: faker.date.past(),
+            date: faker.date.between(new Date(2021, 9, 1), new Date(2021, 12, 29)),
         })
         agendaItems.push(agendaItem);
     }
@@ -108,9 +172,90 @@ export class AppService {
     return user;
   }
 
+
+
+  async addFamilyMemberToAgendaItem() {
+    // All agendaItems
+    const agendaItems = await this.agendaItemRepository.find();
+
+    // All familyMembers
+    const familyMembers = await this.familyMemberRepository.find();
+
+    familyMembers.forEach(familyMember => {
+       const inAgendaItems = faker.datatype.boolean();
+
+       if(inAgendaItems) {
+        const randomAmount = this.generateRandomArrayOfNumbers(agendaItems.length-1, 5);
+
+        randomAmount.forEach(randomNumber => {
+            familyMember.invitedAgendaItems.push(agendaItems[randomNumber]);
+        })
+        this.familyMemberRepository.save(familyMember);
+    }
+       
+    })
+}
+
+generateRandomArrayOfNumbers(amount: number, max: number): number[] {
+    let array = [];
+    for(let i = 0; i < amount; i++) {
+        const randomNumber = faker.datatype.number({min: 0, max: max});
+        if(!array.includes(randomNumber)) {
+            array.push(randomNumber);
+        }
+    }
+    return array;
+}
+
+// generateArrayOfRandomNumbers(limit: number, amount:number = 3, not: number) {
+//     let array = [];
+
+//     for(let i = 0; i < amount; i++) {
+//         let random = faker.datatype.number({min: 0, max: limit});
+//         if(!array.includes(random) && random !== not) {
+//             array.push(random);
+//         // } else {
+//         // }
+//     }
+//     return array;
+
+
+// }
+
+
+//   async addFamilyMemberToAgendaItem() {
+
+//     // list of ALL family members
+//     const familyMembers = await this.familyMemberRepository.find();
+
+//     // list of ALL Agenda Items
+//     const agendaItems = await this.agendaItemRepository.find();
+
+//     agendaItems.forEach(agendaItem => {
+//         const withFamilyMember = faker.datatype.boolean();
+
+//         if(withFamilyMember) {
+//             const amountOfFamilyMembers = faker.datatype.number({min: 1, max: 3});
+
+//             // let familyMembersForAgendaItem = [];
+//             for(let i = 0; i < amountOfFamilyMembers; i++) {
+//                 const familyMember = familyMembers[faker.datatype.number({min: 0, max: familyMembers.length - 1})];
+//                 if(familyMember.id !== agendaItem.author.id) {
+//                     agendaItem.with.push(familyMember);
+//                     // familyMembersForAgendaItem.push(familyMember)
+//                 }
+//             }
+//             this.agendaItemRepository.save(agendaItem);
+//             console.log(agendaItem);
+//         }
+//     })
+// }
+
   // save somewhere else, put SALT ROUNDS in .env
 
   async seedDatabase(amount: number = 5) {
+
+    this.createRelationTypes();
     //   const amountOfUsers = 3;
     console.log(amount);
 
@@ -121,7 +266,7 @@ export class AppService {
 
         const alsoFamilyMember = faker.datatype.boolean();
 
-        if(alsoFamilyMember) {
+        if(true) {
           const familyMember = await this.createFamilyMember();
 
           familyMember.wishListItems = await this.createWishListItems(5);
@@ -141,7 +286,12 @@ export class AppService {
         }
 
       }
+
+      this.createFamilyRelations();
+    //   this.addFamilyMemberToAgendaItem();
+    this.addFamilyMemberToAgendaItem();
     }
+
 
     // Clear all tables, cascade & restart count
     async emptyDatabase() {

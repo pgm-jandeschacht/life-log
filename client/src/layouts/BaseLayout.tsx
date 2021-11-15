@@ -1,8 +1,20 @@
-import React, { ReactNode, useState, useEffect } from 'react'
+import React, { useState, useEffect, ReactNode } from 'react'
 import styled from 'styled-components'
 import { Header, Footer } from '../components/layout'
 import { Breakpoint } from '../variables'
 import { Colors } from '../variables'
+
+import { useQuery, useLazyQuery } from '@apollo/client';
+
+import useToken from '../Hooks/useToken';
+import useFamilyMember from '../Hooks/useFamilyMember';
+
+import { Login } from '../components/Login';
+import { FamilyMemberData } from '../interfaces';
+
+// import { GET_FAMILYMEMBER_BY_USERID } from '../graphql/familyMembers';
+
+import { GET_FAMILYMEMBER_BY_USERID }   from '../graphql/familyMembers';
 
 interface BaseLayoutProps {
     children: React.ReactNode,
@@ -24,13 +36,16 @@ const Main = styled.main`
     @media (min-width: ${Breakpoint.medium}) {
         padding: 0 4rem 13.25rem 4rem;
     }
-` 
-
+`
+    
 const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton = false, altLink, formPage = false } : BaseLayoutProps) => {
     
     // Change background color of navigation according to the page
     const [background, setBackground] = useState(Colors.primary)
     const [isBlue, setIsBlue] = useState(true)
+
+    const {  token, setToken } = useToken();
+    const { familyMemberId, setFamilyMemberId } = useFamilyMember();
 
     useEffect(() => {
         if(backgroundStyle === 'accent1') {
@@ -58,7 +73,15 @@ const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton =
             <Header form={formPage} link={altLink} button={altButton} title={PageTitle} backgroundColor={background} />
 
             <Main>
-                { children }
+                
+            {( !token  ) ? (
+                <Login setToken={setToken} setFamilyMemberId={setFamilyMemberId}   />
+            ) : (
+                <>        
+                    { children }
+                </>
+                )}
+        
             </Main>
 
             <Footer form={formPage} blue={isBlue} backgroundColor={background} />
