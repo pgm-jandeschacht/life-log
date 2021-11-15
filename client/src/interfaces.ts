@@ -46,6 +46,17 @@ export interface FamilyMembersData {
 export interface FamilyMemberData {
     familyMemberById: FamilyMember
 }
+
+export interface FamilyRelationData {
+    familyRelationsByFamilyMemberId: FamilyRelation[]
+}
+
+
+export interface FamilyRelation {
+    familyMember: FamilyMember
+    relationType: RelationType
+    relatedFamilyMember: FamilyMember
+}
 // export interface FamilyMemberData {
 //     familyMemberById: FamilyMember
 // }
@@ -63,6 +74,14 @@ export interface WishListItem {
     content: string;
     completed: boolean;
     authorId?: number;
+    duedate?: Date;
     author: FamilyMember;
     for?: FamilyMember[];
 }
+
+export interface RelationType {
+    id: number;
+    name: string
+}
+
+

@@ -59,10 +59,10 @@ export class AppController {
         // return amount;
     }
 
-    @Get('seedAgenda')
+    @Get('seedRelations')
     seedAgenda(@Request() req,): any {
-        this.appService.addFamilyMemberToAgendaItem();
-        return `Seeded agenda`;
+        this.appService.createFamilyRelations();
+        return `Seeded relations`;
     }
 
     @Get('clear_database')

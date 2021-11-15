@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Colors } from '../../variables'
-import WishListItem from './WishListItem'
+import WishListItem from './WishListItem';
+
+import { useQuery } from '@apollo/client';
+import { GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
+import { FamilyMemberData } from '../../interfaces';
+import _ from 'lodash';
 
 // example object wishlist
 const wishlist = [
@@ -26,11 +31,27 @@ const StyledUl = styled.div`
 `
 
 const WishList = () => {
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
+
+    const { data, loading, error } = useQuery<FamilyMemberData >(GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID, {
+        variables: {
+            id: parseInt(familyMemberId)
+        }
+    });
+
+    if(loading) return <p>"loading ..."</p>;
+    if(error) return <p>"ERRRORRR!!"</p>;
+    const wishListItems = data?.familyMemberById.wishListItems || [];
+    const sortedWishListItems = (_.sortBy(wishListItems, ['dueDate'])).reverse();
+
     return (
         <StyledUl>
-            { wishlist.map((wish, index) => (
-                <WishListItem wishContent={wish} keyId={index}/>
+            { sortedWishListItems.map((wish) => (
+                <WishListItem wishContent={wish} keyId={wish.id}/>
             )) }
+            {/* { wishlist.map((wish, index) => (
+                <WishListItem wishContent={wish} keyId={index}/>
+            )) } */}
         </StyledUl>
     )
 }

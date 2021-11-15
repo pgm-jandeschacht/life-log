@@ -13,7 +13,7 @@ export class RelationType {
     @Field({ description: 'The name of the Relation type' })
     name: string;
 
-    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.relationType)
+    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.relationType, {eager: true, cascade: true})
     @Field(type => [FamilyRelation], { description: 'The Family Relations to a specific Family Member' })
     familyRelations: FamilyRelation[];
 }

@@ -92,7 +92,7 @@ export class FamilyMember {
     
     // CHECK DOCUMENTATION FOR CASCADING...
     
-    @ManyToMany(() => WishListItem, wishListItem => wishListItem.for,  {eager: true, cascade: true})
+    @ManyToMany(() => WishListItem, wishListItem => wishListItem.inWishListItem,  {eager: true, cascade: true})
     @JoinTable()
     inWishListItem?: WishListItem[]
     

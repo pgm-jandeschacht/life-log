@@ -72,28 +72,51 @@ export class AppService {
       
   }
 
-  async createFamilyRelations() {
-    // const familyRelations = [];
 
+  async createFamilyRelations() {
     // list of ALL family members
     const familyMembers = await this.familyMemberRepository.find();
 
     // list of ALL relation Types
     const relationTypes = await this.relationTypeRepository.find();
 
-    for(let i = 0; i < familyMembers.length; i++) {
-      const familyRelation = await this.familyRelationRepository.create({
-        familyMember: familyMembers[i],
-        relationType: relationTypes[faker.datatype.number({min: 0, max: relationTypes.length - 1})],
-        relatedFamilyMember: familyMembers[faker.datatype.number({min: 0, max: familyMembers.length - 1})],
-      })
-    //   familyRelations.push(familyRelation);
-        await this.familyRelationRepository.save(familyRelation);
-    }
+    familyMembers.forEach(familyMember => {
+        // max amount of relations for each family member
+        const amountOfRelations = faker.datatype.number({min:1, max:10});
+        
+        const randomRelations = this.generateRandomArrayOfNumbers(amountOfRelations, familyMembers.length-1, familyMember.id);
+        
+        randomRelations.forEach(relation => {
+            const familyRelation = this.familyRelationRepository.create({
+                familyMember: familyMember,
+                relationType: relationTypes[faker.datatype.number({min: 0, max: relationTypes.length -1})],
+                relatedFamilyMember: familyMembers[relation],
+            });
+            this.familyRelationRepository.save(familyRelation);
+        });
+    })
+}
+    
+
+
+    // familyMembers.forEach(familyMember => {
+    
+    //     const amountOfRelations = this.generateRandomArrayOfNumbers(1, familyMembers.length);
+        
+    //     amountOfRelations.foreach(relation => {
+    //         const familyRelation = this.familyRelationRepository.create({
+    //             familyMember: familyMember,
+    //             relationType: relationTypes[relation],
+    //             relatedFamilyMember: familyMembers[relation],
+    //         })
+    //         this.familyRelationRepository.save(familyRelation);
+    //     })
+    
+    // })
+    // }
 
     // await this.relationTypeRepository.save(familyRelations);
     // return familyRelations;
-  }
 
   async createWishListItems(amount: number): Promise<WishListItem[]> {
     let wishes = [];
@@ -101,6 +124,8 @@ export class AppService {
         const wish = await this.wishListItemRepository.create({
             content: faker.lorem.sentence(),
             completed: faker.datatype.boolean(),
+            createdOn: faker.date.past(),
+            dueDate: faker.date.between(new Date(), new Date(2021, 12, 29)),
         })
         wishes.push(wish);
     }
@@ -185,7 +210,7 @@ export class AppService {
        const inAgendaItems = faker.datatype.boolean();
 
        if(inAgendaItems) {
-        const randomAmount = this.generateRandomArrayOfNumbers(agendaItems.length-1, 5);
+        const randomAmount = this.generateRandomArrayOfNumbers(5, agendaItems.length-1, -1);
 
         randomAmount.forEach(randomNumber => {
             familyMember.invitedAgendaItems.push(agendaItems[randomNumber]);
@@ -196,11 +221,34 @@ export class AppService {
     })
 }
 
-generateRandomArrayOfNumbers(amount: number, max: number): number[] {
+async addFamilyMemberToWishListItem() {
+    // All wishListItems
+    const wishListItems = await this.wishListItemRepository.find();
+
+    // All familyMembers
+    const familyMembers = await this.familyMemberRepository.find();
+
+    familyMembers.forEach(familyMember => {
+       const inWishListItems = faker.datatype.boolean();
+
+       if(inWishListItems) {
+        const randomAmount = this.generateRandomArrayOfNumbers(5, wishListItems.length-1,-1);
+
+        randomAmount.forEach(randomNumber => {
+            familyMember.inWishListItem.push(wishListItems[randomNumber]);
+            // wishListItem.for.push(wishListItems[randomNumber]);
+        })
+        this.familyMemberRepository.save(familyMember);
+    }
+       
+    })
+}
+
+generateRandomArrayOfNumbers(amount: number, max: number, not:number = -1): number[] {
     let array = [];
     for(let i = 0; i < amount; i++) {
         const randomNumber = faker.datatype.number({min: 0, max: max});
-        if(!array.includes(randomNumber)) {
+        if(!array.includes(randomNumber) && randomNumber !== not) {
             array.push(randomNumber);
         }
     }
@@ -287,9 +335,9 @@ generateRandomArrayOfNumbers(amount: number, max: number): number[] {
 
       }
 
+      this.addFamilyMemberToAgendaItem();
+      this.addFamilyMemberToWishListItem();
       this.createFamilyRelations();
-    //   this.addFamilyMemberToAgendaItem();
-    this.addFamilyMemberToAgendaItem();
     }
 
 
@@ -301,5 +349,6 @@ generateRandomArrayOfNumbers(amount: number, max: number): number[] {
         await this.agendaItemRepository.query(`TRUNCATE "agenda_item" RESTART IDENTITY CASCADE`);
         await this.albumItemRepository.query(`TRUNCATE "album_item" RESTART IDENTITY CASCADE`);
         await this.noteRepository.query(`TRUNCATE "note" RESTART IDENTITY CASCADE`);
+        await this.relationTypeRepository.query(`TRUNCATE "relation_type" RESTART IDENTITY CASCADE`);
     }
 }

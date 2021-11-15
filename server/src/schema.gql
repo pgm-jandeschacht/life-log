@@ -55,6 +55,7 @@ type FamilyRelation {
 type Note {
   id: Int!
   content: String!
+  authorId: Int
 
   """The author of the note"""
   author: FamilyMember!
@@ -87,13 +88,15 @@ type WishListItem {
   """Content of this wish"""
   content: String!
   completed: Boolean!
+  authorId: Int
 
   """Who craeted this wish"""
   author: FamilyMember!
 
   """Who is this wish for"""
-  for: [FamilyMember!]
-  uploader: FamilyMember!
+  inWishListItem: [FamilyMember!]
+  dueDate: DateTime!
+  createdOn: DateTime!
 }
 
 type FamilyMember {
@@ -179,6 +182,7 @@ type Query {
   relationTypes: [RelationType!]!
   relationType(id: Int!): FamilyRelation!
   familyRelations: [FamilyRelation!]!
+  familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
 }
 
 type Mutation {
@@ -297,10 +301,14 @@ input CreateRelationTypeInput {
 }
 
 input UpdateFamilyRelationInput {
-  familyMemberId: Int
-  relationTypeId: Int
-  relatedFamilyMemberId: Int
-  id: Int!
+  """Example field (placeholder)"""
+  familyMemberId: Int!
+
+  """Example field (placeholder)"""
+  relationTypeId: Int!
+
+  """Example field (placeholder)"""
+  relatedFamilyMemberId: Int!
 }
 
 input CreateFamilyRelationInput {
