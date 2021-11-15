@@ -40,7 +40,7 @@ const StyledUl = styled.ul`
 `
 
 const AgendaList = () => {
-    agenda.map(agendaItem => console.log(agendaItem.id))
+    // agenda.map(agendaItem => console.log(agendaItem.id))
     
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 

@@ -40,11 +40,13 @@ const DayList = ({ keyId, test }: DayListProps) => {
             <StyledDayTitle>
                 <p>
                     {new Date(test.date).toLocaleDateString()}
+                    {/* { test.date } */}
                 </p>
             </StyledDayTitle>
 
             <ul>
-                { test.title}
+
+                <DayItem content={test.title}/>
                 {/* { test.content.map((testItem: string)=> (
                      <DayItem content={testItem}/>
                 )) } */}
