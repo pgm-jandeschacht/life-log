@@ -1,16 +1,23 @@
 import React from 'react'
 import styled from 'styled-components';
-import { Colors, Breakpoint } from '../../variables';
+import { Colors, Breakpoint, Transition } from '../../variables';
 
 interface ButtonIconProps {
     children: React.ReactNode,
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
+    background?: string
 }
 
-const StyledButton = styled.button`
-    background: ${Colors.secondary};
+interface StyledButtonProps {
+    backgroundColor?: string
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
+    background: ${(StyledButtonProps) => (StyledButtonProps.backgroundColor !== undefined ? StyledButtonProps.backgroundColor : Colors.secondary)};
     padding: 0.5625rem 0.875rem;
     border-radius: 50%;
+    transition: ${Transition.normal};
+    color: ${Colors.primary};
     
     @media (min-width: ${Breakpoint.small}) {
         padding: 0.6875rem 1rem;
@@ -19,8 +26,12 @@ const StyledButton = styled.button`
         padding: 0.77rem 1.25rem;
     }
 
+    &:hover {
+        background: ${(StyledButtonProps) => (StyledButtonProps.backgroundColor !== undefined ? Colors.primary : Colors.primary)};
+        color: ${(StyledButtonProps) => (StyledButtonProps.backgroundColor !== undefined ? StyledButtonProps.backgroundColor : Colors.secondary)};
+    }
+
     svg {
-        color: ${Colors.primary};
         width: 1.3rem !important;
         height: auto;
         
@@ -33,9 +44,10 @@ const StyledButton = styled.button`
     }
 `
 
-const ButtonIcon = ({ children, onClick }: ButtonIconProps) => {
+const ButtonIcon = ({ children, onClick, background }: ButtonIconProps) => {
+    console.log(background)
     return (
-        <StyledButton onClick={onClick}>
+        <StyledButton backgroundColor={background} onClick={onClick}>
             {children}
         </StyledButton>
     )
