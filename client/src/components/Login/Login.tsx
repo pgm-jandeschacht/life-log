@@ -1,5 +1,11 @@
-import React, { useState, useEffect} from 'react'
-import './Login.css'
+import React from 'react'
+import styled from 'styled-components'
+import { Colors, Shadow, Transition } from '../../variables'
+import logo from '../../assets/images/logo.png'
+import { Formik, Field } from 'formik'
+import { TextFieldError, PasswordFieldError } from '../forms'
+import { ButtonForm } from '../buttons'
+import * as yup from 'yup';
 
 async function loginUser(credentials: any) {
     return fetch('http://localhost:3000/login', {
@@ -35,55 +41,179 @@ async function loginUser(credentials: any) {
     })
 }
 
-
-
 interface LoginProps {
     setToken: any,
     setFamilyMemberId: any
 }
 
-export const Login = ({ setToken, setFamilyMemberId }:LoginProps) => {
-    const [ username, setUsername ] = useState('');
-    const [ password, setPassword] = useState('');
+const StyledDiv = styled.div`
+    position: fixed;
+    z-index: 1;
+    background: ${Colors.primary};
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    h2 {
+        font-size: 4rem;
+        font-weight: 900;
+        margin-bottom: 5rem;
+    }
+`
 
-        const token = await loginUser ({
-            username,
-            password
-        });
+const StyledLogo = styled.div`
+    background: ${Colors.primary};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 6rem 4rem;
+    
+    img {
+        width: 100%;
+        max-width: 25rem;
+    }
+`
 
-        if(!token?.msg ) {
-            // Token has 
-            // {
-            //     token: '....'
-            //     user: { id, email }
-            //     familyMemberId: "..."
-            // }
+const StyledContainer = styled.div`
+    background: ${Colors.secondary};
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 20px 20px 0 0 ;
+    padding: 4rem 2rem;
+`
 
-            setToken(token);
-            setFamilyMemberId(token.familyMemberId);
+const StyledForm = styled.form`
+    
+    label {
+        display: flex;
+        flex-direction: column;
+        font-size: 2.5rem;
+        font-weight: 900;
+        margin-bottom: 2rem;
+
+        span {
+            color: ${Colors.red};
+        }
+
+        input {
+            margin-top: 2rem;
+            border: 3px solid ${Colors.primary};
+            border-radius: 10px;
+            box-shadow: ${Shadow.small};
+            background: ${Colors.secondary};
+            padding: 1.5rem;
+            font-size: 2rem;
+            font-weight: 500;
+            color: ${Colors.primary};
+            transition: ${Transition.normal};
+
+            &:focus {
+                background: ${Colors.white};
+                transform: translateY(-5px);
+            }
+        }
+    }
+`
+
+const StyledButtons = styled.div`
+    display: flex;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    margin-top: 3rem;
+
+    button, a {
+        width: 100%;
+        padding: 1.5rem;
+        background: ${Colors.ternary};
+        border-radius: 10px;
+        box-shadow: ${Shadow.altSmall};
+        transition: ${Transition.normal};
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        
+        &:hover {
+            transform: translateY(-5px);
+            background: ${Colors.primary};
+            color: ${Colors.secondary};
         }
     }
     
+    button {
+        color: ${Colors.secondary};
+        margin-left: 1.5rem;
+        background: ${Colors.primary};
+        
+        &:hover {
+            background: ${Colors.ternary};
+            color: ${Colors.primary};
+        }
+    }
+`
+
+const validationSchema = yup.object({
+    username: yup.string().required(),
+    password: yup.string().required()
+})
+
+export const Login: React.FC<LoginProps> = ({ setToken, setFamilyMemberId }) => {    
     return (
-        <div className="login-wrapper">
-            <h1>Please Log In</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    <p>Username</p>
-                    <input type="text" onChange={e => setUsername(e.target.value)}/>
-                </label>
-                <label>
-                    <p>Password</p>
-                    <input type="password" onChange={ e=> setPassword(e.target.value) } />
-                </label>
-                <div>
-                    <button type="submit">Submit</button>
-                </div>
-            </form>
-        </div>
+        <StyledDiv>
+            <StyledLogo>
+                <img src={logo} alt="Logo of Life log" />
+            </StyledLogo>
+
+            <StyledContainer>
+                <h2>Please sign in</h2>
+                
+                <Formik
+                    initialValues={{
+                        username: '',
+                        password: '',
+                    }}
+                    validationSchema={validationSchema}
+                    onSubmit={async (data, { setSubmitting }) => {
+                        setSubmitting(true);
+
+                        const username = data.username;
+                        const password = data.password;
+                        
+                        const token = await loginUser ({
+                            username,
+                            password
+                        });
+                
+                        if(!token?.msg ) {                
+                            setToken(token);
+                            setFamilyMemberId(token.familyMemberId);
+                        }
+
+                        setSubmitting(false);
+                      }}
+                    >
+
+                    {({values, errors, isSubmitting, handleChange, handleBlur, handleSubmit}) => (
+                        <StyledForm onSubmit={handleSubmit}>
+                            <label>
+                                <p>Username <span>*</span></p>
+                                <Field  placeholder="username" name="username" as={TextFieldError} type="input" />
+                            </label>
+                            <label>
+                                <p>Password <span>*</span></p>
+                                <Field  placeholder="password" name="password" as={PasswordFieldError} type="input" />
+                            </label>
+                            <StyledButtons>
+                                <a href="/">Register</a>
+                                <ButtonForm disabled={isSubmitting} type="submit">Sign in</ButtonForm>
+                            </StyledButtons>
+                        </StyledForm>
+                    )}
+                    </Formik>
+            </StyledContainer>
+        </StyledDiv>
+
     )
 }
-

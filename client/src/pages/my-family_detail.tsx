@@ -17,7 +17,7 @@ const user = {
     children: [
         {
             name: 'Maria Kox',
-
+            
         },
         {
             name: 'Oscar Kox',

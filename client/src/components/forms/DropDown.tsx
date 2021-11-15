@@ -1,43 +1,29 @@
-import React from 'react'
-import styled from 'styled-components'
-import { Colors, Shadow } from '../../variables'
+import React, {useState} from 'react'
 
-interface DropDownProps {
-    children: string
-    dummyText: any
+export interface DropDownProps {
+    dummyText: any,
+    name: string,
+    value?: string,
+    onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void,
+    onBlur?: (e: React.FocusEvent<HTMLSelectElement>) => void  
 }
 
-const StyledLabel = styled.label`
-    display: flex;
-    flex-direction: column;
-    font-size: 2.5rem;
-    font-weight: 900;
-    margin-bottom: 2rem;
-
-    select {
-        margin-top: 2rem;
-        padding: 1.5rem;
-        border: 3px solid ${Colors.primary};
-        border-radius: 10px;
-        box-shadow: ${Shadow.small};
-        font-size: 2rem;
-        font-weight: 700;
-        color: ${Colors.primary};
-        background: ${Colors.secondary};
-        cursor: pointer;
-    }
-`
-
-const DropDown: React.FC<DropDownProps> = ({ children, dummyText }) => {
+const DropDown: React.FC<DropDownProps> = ({ dummyText, name, value, onChange, onBlur }) => {
+    const [ currentValue, setCurrentValue ] = useState(value);
     return (
-        <StyledLabel>
-            {children}
-            <select required name="select_familymember" id="select_familymember">
-                {dummyText.map((optionItem: any) => (
-                    <option value={optionItem.id}>{optionItem.value}</option>
-                ))}
-            </select>
-        </StyledLabel>
+        <select 
+        name={name}
+        value={currentValue}
+        onChange={(e) => {
+            if(onChange) onChange(e);
+            setCurrentValue(e.currentTarget.value)
+        }}
+        onBlur={onBlur}
+        >
+            {dummyText.map((optionItem: any) => (
+                <option value={optionItem.id}>{optionItem.value}</option>
+            ))}
+        </select>
     )
 }
 
