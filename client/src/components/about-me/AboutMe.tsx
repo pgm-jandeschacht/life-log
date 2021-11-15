@@ -3,9 +3,13 @@ import styled from 'styled-components'
 import fallback from '../../assets/images/anna_boloise.jpg'
 import { Colors, Shadow } from '../../variables'
 
-interface AboutMeProps {
-    profile: any
-}
+import { useQuery } from '@apollo/client'
+import { GET_FAMILYMEMBER_BY_ID } from '../../graphql/familyMembers';
+import { FamilyMemberData, FamilyMember } from '../../interfaces';
+
+// interface AboutMeProps {
+//     profile: FamilyMemberData
+// }
 
 const StyledDiv = styled.div `
     display: flex;
@@ -86,47 +90,62 @@ const SpecialLi = styled.li`
     }
 `
 
-const AboutMe: React.FC<AboutMeProps> = ({profile}) => {
+const AboutMe: React.FC = () => {
+
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
+
+    // const { data, loading, error } = useQuery<FamilyRelationData >(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
+    const { data, loading, error } = useQuery<FamilyMemberData>(GET_FAMILYMEMBER_BY_ID, {
+        variables: {
+            id: parseInt(familyMemberId)
+        }
+    })
+
+    if(loading) return <p>"loading ..."</p>;
+    if(error) return <p>"ERRRORRR!!"</p>;
+    console.log(data);
     return (
         <StyledDiv>
             {/* <img src={`../../assets/images/${profile.image}`} alt={`${profile.firstName} ${profile.lastName}`} /> */}
             <StyledImg>
-                <img src={fallback} alt={`${profile.firstName} ${profile.lastName}`} />
+                <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
             </StyledImg>
 
-            <h2>{profile.firstName} {profile.lastName}</h2>
+            <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
 
             <StyledUl>
                 <SpecialLi>
                     <div>
                         <p>Date of birth</p>
-                        <p>{profile.dob}</p>
+                        <p>{ data?.familyMemberById.dob }</p>
                     </div>
 
                     <div>
                         <p>Gender</p>
-                        <p>{profile.gender}</p>
+                        <p>{data?.familyMemberById.gender}</p>
                     </div>
                 </SpecialLi>
 
                 <li>
                     <p>Status</p>
-                    <p>{profile.maritalStatus} of {profile.partner}</p>
+                    {/* <p>{profile.maritalStatus} of {profile.partner}</p> */}
                 </li>
 
                 <li>
                     <p>Nursing home</p>
-                    <p>{profile.nursingHome}</p>
+                    {/* <p>{profile.nursingHome}</p> */}
                 </li>
 
                 <li>
                     <p>Location</p>
-                    <p>{profile.location}</p>
+                    <p>{ data?.familyMemberById.city } , { data?.familyMemberById.country }</p>
+                    {/* <p>{profile.location}</p> */}
                 </li>
 
                 <li>
                     <p>Carreer</p>
-                    <p>{profile.carreer}</p>
+                    <p>{ data?.familyMemberById.occupation }</p>
+                    {/* <p>{profile.carreer}</p> */}
                 </li>
             </StyledUl>
         </StyledDiv>

@@ -13,6 +13,11 @@ export class AppController {
       private readonly appService: AppService
     ) {}
 //   constructor(private readonly appService: AppService) {}
+
+@Get('hello')
+getHelloTest(): void {
+    this.appService.getHello();
+}
   
   @Get('seed')
   seedUsers(): void {

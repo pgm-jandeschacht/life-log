@@ -22,6 +22,12 @@ export interface FamilyMember {
     lastname: string;
     gender: string;
     bio: string;
+    image: string;
+    dob: string;
+    occupation: string;
+    country: string;
+    city: string;
+
     isSender?: boolean;
     isAlive?: boolean;
     father?: FamilyMember;
@@ -35,6 +41,7 @@ export interface FamilyMember {
     invitedAgendaItems?: AgendaItem[];
     wishListItems?: WishListItem[];
     inWishListItem?: WishListItem[];
+
 }
 
 // export interface FamilyMembersData {

@@ -1,4 +1,4 @@
-import FamilyList from './FamilyList';
+import FamilyList from './FamilyList'
 
 export {
     FamilyList

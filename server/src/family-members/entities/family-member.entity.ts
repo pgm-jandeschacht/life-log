@@ -33,12 +33,31 @@ export class FamilyMember {
     @Column()
     @Field({ nullable: true, description: 'A small bio about the family member'})
     bio?: string;
-
-    // @Column()
-    // @Field()
-    // dob: Date;
-
     
+    @Column()
+    @Field({ nullable: true, description: 'Url to imageUrl'})
+    image?:string
+
+    @Column({ type: 'timestamp', nullable: true })
+    @Field()
+    dob: Date;
+
+    @Column()
+    @Field({ nullable: true, description: 'Name of occupation'})
+    occupation?: string;
+
+    @Column()
+    @Field({ nullable: true, description: 'Country of FamilyMember'})
+    country?:string
+    
+    @Column()
+    @Field({ nullable: true, description: 'City of FamilyMember'})
+    city?: string
+
+
+
+
+
     
     // @Column()
     // @Field(type => Int, {nullable: true})

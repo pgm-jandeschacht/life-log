@@ -35,8 +35,9 @@ export class AppService {
         private familyRelationRepository: Repository<FamilyRelation>,
     ) {}
     // constructor(@InjectRepository(FamilyMember) private familyMemberRepository: Repository<FamilyMember>) {};
-  getHello(): string {
-    return 'Hello World!';
+  getHello(): void {
+    // return 'Hello World!';
+
   }
 
   createRelationTypes() {
@@ -175,6 +176,11 @@ export class AppService {
           isSender: true,
           isAlive : true,
           bio : faker.lorem.sentences(),
+          image: faker.image.avatar(),
+          dob: faker.date.past(),
+          occupation: faker.name.jobTitle(),
+          country: faker.address.country(),
+          city: faker.address.city(),
         });
         return familyMember;
   }

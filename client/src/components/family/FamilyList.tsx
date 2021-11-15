@@ -87,7 +87,7 @@ const FamilyList: React.FC<FamilyListProps> = ( ) => {
                 <li key={familyRelation.id}>
                     <a href="/my-family/detail">
                         <StyledImg>
-                            <img src='/' alt={`${familyRelation.relatedFamilyMember.firstname} ${familyRelation.relatedFamilyMember.lastname}`} />
+                            <img src={familyRelation.relatedFamilyMember.image} alt={`${familyRelation.relatedFamilyMember.firstname} ${familyRelation.relatedFamilyMember.lastname}`} />
                         </StyledImg>
 
                         <StyledDiv>

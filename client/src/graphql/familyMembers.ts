@@ -46,6 +46,11 @@ query getFamilyMemberById($id: Int!){
       isAlive
       bio
       isSender
+      image
+      dob
+      city
+      country
+      occupation
     }
   }
   
@@ -88,6 +93,7 @@ query getFamilyRelationsByFamilyMemberId($id: Int!){
       relatedFamilyMember {
         firstname
         lastname
+        image
       }
     }
   }
