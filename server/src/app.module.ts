@@ -21,27 +21,39 @@ import { RelationTypesModule } from './relation-types/relation-types.module';
 import { FamilyRelationsModule } from './family-relations/family-relations.module';
 import { FamilyRelation } from './family-relations/entities/family-relation.entity';
 import { RelationType } from './relation-types/entities/relation-type.entity';
+import { ConfigModule } from '@nestjs/config';
+import { config } from './config';
+import { DatabaseConfig } from './database.config';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-        playground: true,
-        introspection: true,
-        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-    }),
-    TypeOrmModule.forRoot({
-        type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: 'Fvh89cxn',
-        database: 'lifelog',
-        entities: ['dist/**/*.entity{.ts,.js}'],
-        // seeds: ['src/seeds/**/*{.ts,.js}'],
-        autoLoadEntities: true,
-        synchronize: true,
-        logging: true
+      GraphQLModule.forRoot({
+          playground: true,
+          introspection: true,
+          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       }),
+      TypeOrmModule.forRootAsync({
+          imports: [(ConfigModule)],
+          useClass: DatabaseConfig
+      }),
+    // TypeOrmModule.forRoot({
+    //     type: 'postgres',
+    //     host: 'localhost',
+    //     port: 5432,
+    //     username: 'postgres',
+    //     password: 'Fvh89cxn',
+    //     database: 'lifelog',
+    //     entities: ['dist/**/*.entity{.ts,.js}'],
+    //     // seeds: ['src/seeds/**/*{.ts,.js}'],
+    //     autoLoadEntities: true,
+    //     synchronize: true,
+    //     logging: true
+    //   }),
+    ConfigModule.forRoot({
+        isGlobal: true,
+        load: [config]
+    }),
+    
       TypeOrmModule.forFeature([FamilyMember, User, Note, AgendaItem, AlbumItem, WishListItem, FamilyRelation, RelationType]),
     FamilyMembersModule,
     NotesModule,
