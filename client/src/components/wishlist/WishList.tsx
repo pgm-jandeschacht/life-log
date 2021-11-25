@@ -49,9 +49,6 @@ const WishList = () => {
             { sortedWishListItems.map((wish) => (
                 <WishListItem wishContent={wish} keyId={wish.id}/>
             )) }
-            {/* { wishlist.map((wish, index) => (
-                <WishListItem wishContent={wish} keyId={index}/>
-            )) } */}
         </StyledUl>
     )
 }

@@ -2,36 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AlbumItem {
-  id: Int!
-
-  """Location where this picture is taken"""
-  location: String
-
-  """What is there to say about this picture"""
-  description: String
-
-  """Uploader of this picture"""
-  uploader: FamilyMember!
-
-  """List of family members in this picture"""
-  inPicture: FamilyMember
-}
-
-type RelationType {
-  """The ID of the Relation type"""
-  id: Int!
-
-  """The name of the Relation type"""
-  name: String!
-
-  """The Family Relations to a specific Family Member"""
-  familyRelations: [FamilyRelation!]!
-}
-
 type FamilyRelation {
-  """The ID of the family member"""
+  """The ID of the family relation"""
   id: Int!
+
+  """Hide pictures from this relation"""
+  hidePictures: Boolean
 
   """The family member"""
   familyMember: FamilyMember!
@@ -52,6 +28,90 @@ type FamilyRelation {
   relatedFamilyMemberId: Int!
 }
 
+type RelationType {
+  """The ID of the Relation type"""
+  id: Int!
+
+  """The name of the Relation type"""
+  name: String!
+
+  """The Family Relations to a specific Family Member"""
+  familyRelations: [FamilyRelation!]!
+}
+
+type FamilyMemberInAlbumItem {
+  """The ID"""
+  id: Int!
+
+  """The family member"""
+  familyMember: FamilyMember!
+
+  """The related agenda item"""
+  albumItem: AlbumItem!
+
+  """The ID of the family member"""
+  familyMemberId: Int!
+
+  """The ID of the album item"""
+  albumItemId: Int!
+}
+
+type AlbumItem {
+  id: Int!
+
+  """Location where this picture is taken"""
+  location: String
+
+  """What is there to say about this picture"""
+  description: String
+
+  """Uploader of this picture"""
+  uploader: FamilyMember!
+
+  """List of albumItels where a family member is in"""
+  albumItemWithFamilyMemberIn: [FamilyMemberInAlbumItem!]
+}
+
+type WishListItem {
+  id: Int!
+
+  """Content of this wish"""
+  content: String!
+  completed: Boolean!
+  authorId: Int
+
+  """Who craeted this wish"""
+  author: FamilyMember!
+  dueDate: DateTime!
+  createdOn: DateTime!
+
+  """List of wishlistItems where a family member is linked in"""
+  wishlistWithInvitedFamilyMembers: [FamilyMemberInWishListItem!]
+  inWishListItem: [FamilyMember!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type FamilyMemberInWishListItem {
+  """The ID"""
+  id: Int!
+
+  """The family member"""
+  familyMember: FamilyMember!
+
+  """The related wishlist item"""
+  wishListItem: WishListItem!
+
+  """The ID of the family member"""
+  familyMemberId: Int!
+
+  """The ID of the wishlist item"""
+  wishListItemId: Int!
+}
+
 type Note {
   id: Int!
   content: String!
@@ -61,11 +121,6 @@ type Note {
   author: FamilyMember!
   createdOn: DateTime!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type User {
   """The ID of the user"""
@@ -80,23 +135,6 @@ type User {
   """The password of the user"""
   password: String!
   familyMember: FamilyMember
-}
-
-type WishListItem {
-  id: Int!
-
-  """Content of this wish"""
-  content: String!
-  completed: Boolean!
-  authorId: Int
-
-  """Who craeted this wish"""
-  author: FamilyMember!
-
-  """Who is this wish for"""
-  inWishListItem: [FamilyMember!]
-  dueDate: DateTime!
-  createdOn: DateTime!
 }
 
 type FamilyMember {
@@ -131,19 +169,25 @@ type FamilyMember {
   """City of FamilyMember"""
   city: String
 
-  """The user that is linked to the family member"""
-  user: User
-
   """
   Boolean representation if the family member is going to send information as well
   """
   isSender: Boolean
+
+  """The user that is linked to the family member"""
+  user: User
 
   """List of notes made by the family member"""
   notes: [Note!]
 
   """List of album-items uploaded by this family member"""
   albumItems: [AlbumItem!]
+
+  """List of agenda items made by the family member"""
+  agendaItems: [AgendaItem!]
+
+  """List of agenda items made by the family member"""
+  wishListItems: [WishListItem!]
 
   """List of family relations this family member is involved in"""
   familyRelationsTo: [FamilyRelation!]
@@ -153,11 +197,35 @@ type FamilyMember {
   """
   familyRelationsFrom: [FamilyRelation!]
 
-  """List of agenda items made by the family member"""
-  agendaItems: [AgendaItem!]
+  """
+  List of family members in wishlistitems this family member is involved in
+  """
+  FamilyMemberInWishListItems: [FamilyMemberInWishListItem!]
 
-  """List of agenda items made by the family member"""
-  wishListItems: [WishListItem!]
+  """
+  List of family members in agendaitems this family member is involved in
+  """
+  FamilyMemberInAgendaItem: [FamilyMemberInAgendaItem!]
+
+  """List of family members in albumitems this family member is involved in"""
+  FamilyMemberInAlbumItem: [FamilyMemberInAlbumItem!]
+}
+
+type FamilyMemberInAgendaItem {
+  """The ID"""
+  id: Int!
+
+  """The family member"""
+  familyMember: FamilyMember!
+
+  """The related agenda item"""
+  agendaItem: AgendaItem!
+
+  """The ID of the family member"""
+  familyMemberId: Int!
+
+  """The ID of the agenda item"""
+  agendaItemId: Int!
 }
 
 type AgendaItem {
@@ -170,12 +238,12 @@ type AgendaItem {
 
   """Author of this agenda-item"""
   author: FamilyMember!
-
-  """List of family members invited for this agenda-item"""
-  with: FamilyMember
   createdOn: DateTime!
   updatedOn: DateTime!
   date: DateTime!
+
+  """List of agendaItems where a family member is linked in"""
+  agendaItemWithInvitedFamilyMembers: [FamilyMemberInAgendaItem!]
 }
 
 type Query {
@@ -196,6 +264,11 @@ type Query {
   relationType(id: Int!): FamilyRelation!
   familyRelations: [FamilyRelation!]!
   familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
+  FamilyMemberInWishListItem(id: Int!): FamilyMemberInWishListItem!
+  FamilyMemberInAgendaItems: [FamilyMemberInAgendaItem!]!
+  FamilyMemberInAgendaItem(id: Int!): FamilyMemberInAgendaItem!
+  FamilyMemberInAlbumItems: [FamilyMemberInAlbumItem!]!
+  FamilyMemberInAlbumItem(id: Int!): FamilyMemberInAlbumItem!
 }
 
 type Mutation {
@@ -221,6 +294,12 @@ type Mutation {
   updateRelationType(updateFamilyRelationInput: UpdateFamilyRelationInput!, id: Int!): FamilyRelation!
   removeRelationType(id: Int!): FamilyRelation!
   createFamilyRelation(createFamilyRelationInput: CreateFamilyRelationInput!): FamilyRelation!
+  createFamilyMemberInWishListItem(createFamilyMemberInWishListItemInput: CreateFamilyMemberInWishListItemInput!): FamilyMemberInWishListItem!
+  removeFamilyMemberInWishListItem(id: Int!): FamilyMemberInWishListItem!
+  createFamilyMemberInAgendaItem(createFamilyMemberInAgendaItemInput: CreateFamilyMemberInAgendaItemInput!): FamilyMemberInAgendaItem!
+  removeFamilyMemberInAgendaItem(id: Int!): FamilyMemberInAgendaItem!
+  createFamilyMemberInAlbumItem(createFamilyMemberInAlbumItemInput: CreateFamilyMemberInAlbumItemInput!): FamilyMemberInAlbumItem!
+  removeFamilyMemberInAlbumItem(id: Int!): FamilyMemberInAlbumItem!
 }
 
 input CreateFamilyMemberInput {
@@ -358,4 +437,28 @@ input CreateFamilyRelationInput {
   familyMemberId: Int!
   relationTypeId: Int!
   relatedFamilyMemberId: Int!
+}
+
+input CreateFamilyMemberInWishListItemInput {
+  """The ID of the family member"""
+  familyMemberId: Int!
+
+  """The ID of the wishlist item"""
+  wishListItemId: Int!
+}
+
+input CreateFamilyMemberInAgendaItemInput {
+  """The ID of the family member"""
+  familyMemberId: Int!
+
+  """The ID of the agenda item"""
+  agendaItemId: Int!
+}
+
+input CreateFamilyMemberInAlbumItemInput {
+  """The ID of the family member"""
+  familyMemberId: Int!
+
+  """The ID of the album item"""
+  albumItemId: Int!
 }

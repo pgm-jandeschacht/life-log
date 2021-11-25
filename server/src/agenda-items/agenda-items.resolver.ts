@@ -32,14 +32,14 @@ export class AgendaItemsResolver {
       return this.agendaItemsService.getAuthor(agendaItem.authorId);
   }
 
-  @ResolveField(returns => [FamilyMember])
-  with(
-      @Parent()
-      agendaItem: AgendaItem): Promise<FamilyMember[]> {
+//   @ResolveField(returns => [FamilyMember])
+//   with(
+//       @Parent()
+//       agendaItem: AgendaItem): Promise<FamilyMember[]> {
       
-    return this.agendaItemsService.getInvitedFamilyMembers(agendaItem.id);
+//     return this.agendaItemsService.getInvitedFamilyMembers(agendaItem.id);
 
-}
+// }
 
 //   @ResolveField(returns => [FamilyMember])
 //   with(
