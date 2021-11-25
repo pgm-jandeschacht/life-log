@@ -61,7 +61,18 @@ import { FamilyMemberInAlbumItemsModule } from './family-member-in-album-items/f
         load: [config]
     }),
     
-      TypeOrmModule.forFeature([FamilyMember, User, Note, AgendaItem, AlbumItem, WishListItem, FamilyRelation, RelationType, FamilyMemberInAlbumItem, FamilyMemberInWishListItem, FamilyMemberInAgendaItem]),
+      TypeOrmModule.forFeature([
+          FamilyMember, 
+          User, 
+          Note, 
+          AgendaItem, 
+          AlbumItem, 
+          WishListItem, 
+          FamilyRelation, 
+          RelationType, 
+          FamilyMemberInAlbumItem, 
+          FamilyMemberInWishListItem, 
+          FamilyMemberInAgendaItem]),
     FamilyMembersModule,
     NotesModule,
     AgendaItemsModule,
