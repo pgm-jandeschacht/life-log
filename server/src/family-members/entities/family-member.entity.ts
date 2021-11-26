@@ -89,26 +89,31 @@ export class FamilyMember {
     
     // Many to Many
     // Family Relations
-    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.familyMember, { eager: true, cascade: true})
+    // @OneToMany(() => FamilyRelation, familyRelation => familyRelation.familyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.familyMember, { cascade: true})
     @Field(type => [FamilyRelation], { nullable: true, description: 'List of family relations this family member is involved in'})
     familyRelationsTo: FamilyRelation[];
 
-    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.relatedFamilyMember, { eager: true, cascade: true})
+    // @OneToMany(() => FamilyRelation, familyRelation => familyRelation.relatedFamilyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.relatedFamilyMember, { cascade: true})
     @Field(type => [FamilyRelation], { nullable: true, description: 'List of family relations this family member is involved in (other side)'})
     familyRelationsFrom: FamilyRelation[];
 
     // In Wishlist Items
-    @OneToMany(() => FamilyMemberInWishListItem, FamilyMemberInWishListItem => FamilyMemberInWishListItem.familyMember, { eager: true, cascade: true})
+    // @OneToMany(() => FamilyMemberInWishListItem, FamilyMemberInWishListItem => FamilyMemberInWishListItem.familyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyMemberInWishListItem, FamilyMemberInWishListItem => FamilyMemberInWishListItem.familyMember, { cascade: true})
     @Field(type => [FamilyMemberInWishListItem], { nullable: true, description: 'List of family members in wishlistitems this family member is involved in'})
     FamilyMemberInWishListItems: FamilyMemberInWishListItem[];
     
     // In Agenda Items
-    @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.familyMember, { eager: true, cascade: true})
+    // @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.familyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.familyMember, { cascade: true})
     @Field(type => [FamilyMemberInAgendaItem], { nullable: true, description: 'List of family members in agendaitems this family member is involved in'})
     FamilyMemberInAgendaItem: FamilyMemberInAgendaItem[];
     
     // In Album Items
-    @OneToMany(() => FamilyMemberInAlbumItem, FamilyMemberInAlbumItem => FamilyMemberInAlbumItem.familyMember, { eager: true, cascade: true})
+    // @OneToMany(() => FamilyMemberInAlbumItem, FamilyMemberInAlbumItem => FamilyMemberInAlbumItem.familyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyMemberInAlbumItem, FamilyMemberInAlbumItem => FamilyMemberInAlbumItem.familyMember, { cascade: true})
     @Field(type => [FamilyMemberInAlbumItem], { nullable: true, description: 'List of family members in albumitems this family member is involved in'})
     FamilyMemberInAlbumItem: FamilyMemberInAlbumItem[];
 }

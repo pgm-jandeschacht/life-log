@@ -14,7 +14,7 @@ export class FamilyMemberInAgendaItem {
     @Field(type => FamilyMember, { description: 'The family member' })
     familyMember: FamilyMember;
 
-    @ManyToOne(() => AgendaItem, agendaItem => agendaItem.agendaItemWithInvitedFamilyMembers, { onDelete: 'SET NULL' })
+    @ManyToOne(() => AgendaItem, agendaItem => agendaItem.inAgendaItem, { onDelete: 'SET NULL' })
     @Field(type => AgendaItem, { description: 'The related agenda item' })
     agendaItem: AgendaItem;
 

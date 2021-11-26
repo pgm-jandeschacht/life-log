@@ -243,7 +243,7 @@ type AgendaItem {
   date: DateTime!
 
   """List of agendaItems where a family member is linked in"""
-  agendaItemWithInvitedFamilyMembers: [FamilyMemberInAgendaItem!]
+  inAgendaItem: [FamilyMemberInAgendaItem!]
 }
 
 type Query {
@@ -256,6 +256,7 @@ type Query {
   note(id: Int!): Note!
   agendaItems: [AgendaItem!]!
   agendaItem(id: Int!): AgendaItem!
+  agendaItemsByAuthor(authorId: Int!): [AgendaItem!]!
   albumItems: [AlbumItem!]!
   albumItem(id: Int!): AlbumItem!
   wishListItems: [WishListItem!]!

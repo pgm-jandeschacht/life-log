@@ -24,6 +24,11 @@ export class AgendaItemsResolver {
     return this.agendaItemsService.findOneById(id);
   }
 
+  @Query(returns => [AgendaItem], { name: 'agendaItemsByAuthor' })
+  agendaItemsByAuthor(@Args('authorId', { type: () => Int }) authorId: number) {
+    return this.agendaItemsService.findAllByAuthor(authorId);
+  }
+
   @ResolveField(returns => FamilyMember)
   author(@Parent() agendaItem: AgendaItem): Promise<FamilyMember> {
     //console.log('AUTHOR RESOLVER');  
@@ -31,6 +36,36 @@ export class AgendaItemsResolver {
     console.log('AUTHOR ID', agendaItem);
       return this.agendaItemsService.getAuthor(agendaItem.authorId);
   }
+
+  @ResolveField(returns => [FamilyMember])
+//   @ResolveField(returns => [FamilyMember])
+  inAgendaItem(@Parent() agendaItem: AgendaItem): Promise<any> {
+//   inAgendaItem(@Parent() agendaItem: AgendaItem): Promise<FamilyMember[]> {
+    
+    // let familyMembers: any = [];
+    // familyMembers =  agendaItem.inAgendaItem.map(familyMember => {
+    //     // console.log(this.agendaItemsService.getAuthor(familyMember.familyMemberId));
+    //     return this.agendaItemsService.getAuthor(familyMember.familyMemberId);
+    //     // return familyMember.familyMemberId;
+    // });
+    // console.log(familyMembers);
+    // return familyMembers;
+    
+    // console.log( this.agendaItemsService.getInvitedFamilyMembers(agendaItem));
+    console.log('^^^^^');
+    console.log(agendaItem);
+    console.log('++++');
+    const result = this.agendaItemsService.getInvitedFamilyMembers(agendaItem)
+    console.log(result);
+    if (result) return this.agendaItemsService.getInvitedFamilyMembers(agendaItem)
+    else return null;
+    
+    // return this.agendaItemsService.getInvitedFamilyMembers(agendaItem);
+    
+
+  }
+
+
 
 //   @ResolveField(returns => [FamilyMember])
 //   with(

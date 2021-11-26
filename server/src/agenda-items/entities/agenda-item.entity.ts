@@ -52,6 +52,6 @@ export class AgendaItem {
     // Many to Many
     @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.agendaItem, { eager: true, cascade: true})
     @Field(type => [FamilyMemberInAgendaItem], { nullable: true, description: 'List of agendaItems where a family member is linked in'})
-    agendaItemWithInvitedFamilyMembers: FamilyMemberInAgendaItem[];
+    inAgendaItem: FamilyMemberInAgendaItem[];
 
 }
