@@ -8,7 +8,7 @@ import { ButtonForm } from '../buttons'
 import * as yup from 'yup';
 
 async function loginUser(credentials: any) {
-    return fetch('http://localhost:3000/login', {
+    return fetch('' + process.env.REACT_APP_AUTH_DOMAIN, {
         method: 'POST',
         mode: 'cors',
         headers: {
