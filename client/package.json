@@ -31,7 +31,7 @@
   "scripts": {
     "start": "env-cmd -f .env.dev  react-scripts start",
     "start:prod": " env-cmd -f .env.prod react-scripts start",
-    "start:prod:render": "react-scripts start",
+    "start:prod:render": "node --max-old-space-size=256 dist/main",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
