@@ -83,15 +83,38 @@ The Back-end is build in **NestJs**, with a **PostGres**-database.
 
 ## Server
 
+### `.env.dev`
 ```
 PORT = 4000
 SECRET = 'test'
-HOST_RENDER = 'frankfurt-postgres.render.com'
-USERNAME_RENDER = 'lifelog_l9w0_user'
-PASSWORD_RENDER = 'ZmZOUj9f9JWQ87ly8D3ARyzLfHna9RxB'
-DATABASE_RENDER = 'lifelog_l9w0'
-HOST_LOCAL = 'localhost'
-USERNAME_LOCAL = 'postgres'
-PASSWORD_LOCAL = 'Fvh89cxn'
-DATABASE_LOCAL = 'lifelog'
+HOST = 'localhost'
+USERNAME = 'postgres'
+PASSWORD = 'Fvh89cxn'
+DATABASE = 'lifelog'
+```
+
+### `.env.prod`
+```
+PORT = 4000
+SECRET = 'test'
+HOST = 'frankfurt-postgres.render.com'
+USERNAME = 'lifelog_l9w0_user'
+PASSWORD = 'ZmZOUj9f9JWQ87ly8D3ARyzLfHna9RxB'
+DATABASE = 'lifelog_l9w0'
+```
+
+## Client
+
+### `.env.dev`
+```
+REACT_APP_AUTH_DOMAIN= 'http://localhost:3000/login'
+REACT_APP_GRAPHQL= 'http://localhost:3000/graphql'
+SKIP_PREFLIGHT_CHECK = true
+```
+
+### `.env.prod`
+```
+REACT_APP_AUTH_DOMAIN= 'https://lifelog-backend.onrender.com/login'
+REACT_APP_GRAPHQL= 'https://lifelog-backend.onrender.com/graphql'
+SKIP_PREFLIGHT_CHECK = true
 ```
