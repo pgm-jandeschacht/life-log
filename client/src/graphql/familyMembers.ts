@@ -8,6 +8,32 @@ import { gql, useQuery, useLazyQuery } from "@apollo/client";
  * Queries
  */
 
+// Info for Home-page
+export const GET_FAMILYMEMBERINFO_BY_ID = gql`
+query getFamilyMemberInfoById($id: Int!) {
+    familyMemberById(id: $id) {
+        id
+        firstname,
+        image
+        isSender
+        agendaItems {
+            id
+        }
+    }    
+}
+`;
+
+// AgendaItems by FamilyMemberId
+export const GET_AGENDAITEMS_BY_AUTHORID = gql`
+query getAgendaItemsByAuthor($id: Int!) {
+    agendaItemsByAuthor(authorId: $id) {
+        id
+        title
+    }    
+}
+`;
+
+
 export const GET_ALL_FAMILYMEMBERS = gql`
 query {
     familyMembers {
