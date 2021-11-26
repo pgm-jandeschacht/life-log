@@ -39,6 +39,11 @@ In the project directory you can run:
 This will run the **NestJS**-server in development mode.  
 You can access a graphql playground on [http://localhost:3000/graphql](http://localhost:3000/graphql).
 
+### `npm run server:prod`
+
+This will run the **NestJS**-server in development mode with external database, so no need for seeding when using this one. Don't forget to add the .env-values from below
+You can access a graphql playground on [http://localhost:3000/graphql](http://localhost:3000/graphql).
+
 ### `npm run client:start`
 
 This will run the **React**-app on the next available port which will be [http://localhost:3001](http://localhost:3001).
@@ -73,3 +78,43 @@ The Back-end is build in **NestJs**, with a **PostGres**-database.
 ### Queries
 
 ...
+
+# Environment variables
+
+## Server
+
+### `.env.dev`
+```
+PORT = 4000
+SECRET = 'test'
+HOST = 'localhost'
+USERNAME = 'postgres'
+PASSWORD = 'Fvh89cxn'
+DATABASE = 'lifelog'
+```
+
+### `.env.prod`
+```
+PORT = 4000
+SECRET = 'test'
+HOST = 'frankfurt-postgres.render.com'
+USERNAME = 'lifelog_l9w0_user'
+PASSWORD = 'ZmZOUj9f9JWQ87ly8D3ARyzLfHna9RxB'
+DATABASE = 'lifelog_l9w0'
+```
+
+## Client
+
+### `.env.dev`
+```
+REACT_APP_AUTH_DOMAIN= 'http://localhost:3000/login'
+REACT_APP_GRAPHQL= 'http://localhost:3000/graphql'
+SKIP_PREFLIGHT_CHECK = true
+```
+
+### `.env.prod`
+```
+REACT_APP_AUTH_DOMAIN= 'https://lifelog-backend.onrender.com/login'
+REACT_APP_GRAPHQL= 'https://lifelog-backend.onrender.com/graphql'
+SKIP_PREFLIGHT_CHECK = true
+```

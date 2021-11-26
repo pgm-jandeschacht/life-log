@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server:dev": "npm run -w server start:dev",
-    "server:prod": "npm run -w server start:prod",
     "client:dev": "npm run -w client start",
-    "client:prod": "npm run -w client start:prod"
+    "client:prod": "npm run -w client start:prod",
+    "server:dev": "npm run -w server start:dev",
+    "server:prod": "npm run -w server start:prod"
   },
   "repository": {
     "type": "git",

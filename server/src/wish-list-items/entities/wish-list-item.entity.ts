@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { FamilyMemberInWishListItem } from 'src/family-member-in-wish-list-item/entities/family-members-in-wish-list-item.entity';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -25,12 +26,17 @@ export class WishListItem {
     @Field(type => FamilyMember, { description: 'Who craeted this wish' })
     author: FamilyMember;
 
+    
+
     //due
     
     
-    @ManyToMany(() => FamilyMember, FamilyMember => FamilyMember.inWishListItem, { onDelete: 'SET NULL' })
-    @Field(type => [FamilyMember], { nullable: true, description: 'Who is this wish for'})
-    inWishListItem?: FamilyMember[];
+    // @ManyToMany(() => FamilyMember, FamilyMember => FamilyMember.inWishListItem, { onDelete: 'SET NULL' })
+    // @Field(type => [FamilyMember], { nullable: true, description: 'Who is this wish for'})
+    // inWishListItem?: FamilyMember[];
+
+
+
 
     @Column({ type: 'timestamp', nullable: true })
     @Field()
@@ -40,4 +46,9 @@ export class WishListItem {
     @Column({ type: 'timestamp', nullable: true })
     @Field()
     createdOn: Date;
+
+    // Many to Many
+    @OneToMany(() => FamilyMemberInWishListItem, FamilyMemberInWishListItem => FamilyMemberInWishListItem.wishListItem, { eager: true, cascade: true})
+    @Field(type => [FamilyMemberInWishListItem], { nullable: true, description: 'List of wishlistItems where a family member is linked in'})
+    wishlistWithInvitedFamilyMembers: FamilyMemberInWishListItem[];
 }

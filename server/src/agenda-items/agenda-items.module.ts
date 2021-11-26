@@ -8,6 +8,7 @@ import { FamilyMembersModule } from 'src/family-members/family-members.module';
 @Module({
     imports: [TypeOrmModule.forFeature([AgendaItem]),
 FamilyMembersModule],
-  providers: [AgendaItemsResolver, AgendaItemsService]
+  providers: [AgendaItemsResolver, AgendaItemsService],
+  exports: [AgendaItemsService]
 })
 export class AgendaItemsModule {}

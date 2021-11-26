@@ -8,6 +8,7 @@ import { FamilyMembersModule } from 'src/family-members/family-members.module';
 @Module({
     imports: [TypeOrmModule.forFeature([AlbumItem]),
     FamilyMembersModule],
-  providers: [AlbumItemsResolver, AlbumItemsService]
+  providers: [AlbumItemsResolver, AlbumItemsService],
+  exports: [AlbumItemsService]
 })
 export class AlbumItemsModule {}
