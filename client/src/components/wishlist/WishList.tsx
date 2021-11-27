@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/client';
 import { GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
 import { FamilyMemberData } from '../../interfaces';
 import _ from 'lodash';
+import { Loading } from '../alerts';
 
 // example object wishlist
 const wishlist = [
@@ -39,7 +40,7 @@ const WishList = () => {
         }
     });
 
-    if(loading) return <p>"loading ..."</p>;
+    if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRR!!"</p>;
     const wishListItems = data?.familyMemberById.wishListItems || [];
     const sortedWishListItems = (_.sortBy(wishListItems, ['dueDate'])).reverse();
