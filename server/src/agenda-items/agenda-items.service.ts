@@ -47,25 +47,67 @@ export class AgendaItemsService {
         return this.familyMemberService.findOneById(authorId);
     }
 
-    getInvitedFamilyMembers(id: number): Promise<FamilyMember[] | any[]> {
-        const famMembers = this.agendaItemRepository.find({
+    // iedere ker is het "een agenda item"
+    // AgendaItem {
+    //     id: 3,
+    //     title: 'Unde ut dolor quam et consequuntur voluptatem qui quo rem.',
+    //     authorId: 1,
+    //     createdOn: 2020-12-25T04:10:12.246Z,
+    //     updatedOn: null,
+    //     date: 2022-01-22T17:34:04.373Z,
+    //     inAgendaItem: [
+    //       FamilyMemberInAgendaItem {
+    //         id: 1,
+    //         familyMemberId: 9,
+    //         agendaItemId: 3
+    //       },
+    //       FamilyMemberInAgendaItem {
+    //         id: 3,
+    //         familyMemberId: 5,
+    //         agendaItemId: 3
+    //       }
+    //     ]
+    async getInvitedFamilyMembers(agendaItem: AgendaItem) : Promise<any> {
+        // console.log('--------------');
+        // console.log(agendaItem.inAgendaItem);
+        if(agendaItem.inAgendaItem.length > 0) {
+            return agendaItem.inAgendaItem.map(familyMember => {
+                // console.log('familyMemberId::', familyMember.familyMemberId);
+                // console.log( this.familyMemberService.findOneById(familyMember.familyMemberId));
+                return this.familyMemberService.findOneById(familyMember.familyMemberId);
+            });
+        } else return null
+        // console.log('AUTHOR ID in service', authorId);
+        // return this.familyMemberService.findOneById(authorId);
+    }
+
+    findAllByAuthor(authorId: number): Promise<AgendaItem[]> {
+        return this.agendaItemRepository.find({
             where: {
-                id: id
-            },
-            relations: ['with']
-        })
+                authorId: authorId
+            }
+        });
+    }
+
+    // getInvitedFamilyMembers(id: number): Promise<FamilyMember[] | any[]> {
+    //     const famMembers = this.agendaItemRepository.find({
+    //         where: {
+    //             id: id
+    //         },
+    //         relations: ['with']
+    //     })
             
         
-            console.log(famMembers);
-            return famMembers;
-            // .createQueryBuilder('agendaItem')
-            // .leftJoinAndSelect( 'agendaItem.with','familyMember')
-            // .getMany();
+    //         console.log(famMembers);
+    //         return famMembers;
+    //         // .createQueryBuilder('agendaItem')
+    //         // .leftJoinAndSelect( 'agendaItem.with','familyMember')
+    //         // .getMany();
         
-            // console.log(famMembers);
-            // return famMembers;
+    //         // console.log(famMembers);
+    //         // return famMembers;
 
-    }
+    // }
 
     // getMembers(agendaItemIt: number) : Promise<FamilyMember> {
     //     return this.familyMemberService.findAll({where : {}})

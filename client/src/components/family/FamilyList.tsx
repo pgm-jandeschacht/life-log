@@ -70,7 +70,6 @@ const FamilyList: React.FC<FamilyListProps> = ( ) => {
 
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
-    // const { data, loading, error } = useQuery<FamilyRelationData >(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
     const { data, loading, error } = useQuery<FamilyRelationData>(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
         variables: {
             id: parseInt(familyMemberId)
