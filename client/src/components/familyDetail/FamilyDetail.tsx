@@ -8,7 +8,8 @@ import { Shadow } from '../../variables'
 import FamilyDetailButtons from './FamilyDetailButtons'
 
 interface FamilyDetailProps {
-    profile: any
+    profile: any,
+    id: number
 }
 
 interface StyledImgProps {
@@ -118,9 +119,10 @@ margin-bottom: 4rem;
     }
 `
 
-const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile }) => {
+const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, id }) => {
     return (
         <div>
+            {id}
             <DetailTitle>
                 <StyledImg size={15}>
                     <img src={karina} alt={`${profile.firstName} ${profile.lastName}`} />

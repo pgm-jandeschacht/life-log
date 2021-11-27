@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import img from '../../assets/images/karina_cox.jpg'
 import { Colors, Shadow, Transition } from '../../variables'
+import { Link } from 'react-router-dom';
+import { Loading } from '../alerts'
 
 import { useQuery } from "@apollo/client";
 import { GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
@@ -75,8 +77,9 @@ const FamilyList: React.FC<FamilyListProps> = ( ) => {
             id: parseInt(familyMemberId)
         }
     })
+    console.log(data)
 
-    if(loading) return <p>"loading ..."</p>;
+    if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRR!!"</p>;
 
 
@@ -84,7 +87,7 @@ const FamilyList: React.FC<FamilyListProps> = ( ) => {
         <StyledUl>
             { data?.familyRelationsByFamilyMemberId.map((familyRelation: FamilyRelation) => (
                 <li key={familyRelation.id}>
-                    <a href="/my-family/detail">
+                    <Link to={`/my-family/${familyRelation.id}`} title={`${familyRelation.relatedFamilyMember.firstname} ${familyRelation.relatedFamilyMember.lastname}`}>
                         <StyledImg>
                             <img src={familyRelation.relatedFamilyMember.image} alt={`${familyRelation.relatedFamilyMember.firstname} ${familyRelation.relatedFamilyMember.lastname}`} />
                         </StyledImg>
@@ -93,7 +96,7 @@ const FamilyList: React.FC<FamilyListProps> = ( ) => {
                             <p>{familyRelation.relatedFamilyMember.firstname} {familyRelation.relatedFamilyMember.lastname}</p>
                             <p>{familyRelation.relationType.name}</p>
                         </StyledDiv>
-                    </a>
+                    </Link>
                 </li>
             )) }
         </StyledUl>
