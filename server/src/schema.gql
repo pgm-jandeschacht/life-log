@@ -266,6 +266,7 @@ type Query {
   familyRelations: [FamilyRelation!]!
   familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
   FamilyMemberInWishListItem(id: Int!): FamilyMemberInWishListItem!
+  FamilyMembersInvolvedInWishListItem(id: Int!): [FamilyMemberInWishListItem!]!
   FamilyMemberInAgendaItems: [FamilyMemberInAgendaItem!]!
   FamilyMemberInAgendaItem(id: Int!): FamilyMemberInAgendaItem!
   FamilyMemberInAlbumItems: [FamilyMemberInAlbumItem!]!

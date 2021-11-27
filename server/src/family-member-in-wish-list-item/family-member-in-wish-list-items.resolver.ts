@@ -3,6 +3,7 @@ import { FamilyMemberInWishListItemsService } from './family-member-in-wish-list
 import { FamilyMemberInWishListItem } from './entities/family-members-in-wish-list-item.entity';
 import { CreateFamilyMemberInWishListItemInput } from './dto/create-family-member-in-wish-list-item.input';
 import { UpdateFamilyMemberInWishListItemInput } from './dto/update-family-member-in-wish-list-item.input';
+import { FamilyMember } from 'src/family-members/entities/family-member.entity';
 
 @Resolver(() => FamilyMemberInWishListItem)
 export class FamilyMemberInWishListItemsResolver {
@@ -22,6 +23,11 @@ export class FamilyMemberInWishListItemsResolver {
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.FamilyMemberInWishListItemService.findOne(id);
   }
+  @Query(() => [FamilyMemberInWishListItem], { name: 'FamilyMembersInvolvedInWishListItem' })
+    findFamilyMembersInvolvedInWishListItem(@Args('id', { type: () => Int }) id: number) {
+        console.log('TEST');
+        return this.FamilyMemberInWishListItemService.getInvolvedFamilyMembers(id)
+}
 
 //   @Mutation(() => FamilyMemberInWishListItem)
 //   updateFamilyMemberInWishListItem(@Args('updateFamilyMemberInWishListItemInput') updateFamilyMemberInWishListItemInput: UpdateFamilyMemberInWishListItemInput) {
@@ -30,6 +36,6 @@ export class FamilyMemberInWishListItemsResolver {
 
   @Mutation(() => FamilyMemberInWishListItem)
   removeFamilyMemberInWishListItem(@Args('id', { type: () => Int }) id: number) {
-    return this.FamilyMemberInWishListItemService.remove(id);
+    return this.FamilyMemberInWishListItemService.getInvolvedFamilyMembers(id);
   }
 }

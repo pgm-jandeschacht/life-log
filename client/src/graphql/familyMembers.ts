@@ -1,8 +1,9 @@
+import { gql, useQuery, useLazyQuery } from "@apollo/client";
+
 /**
- * All Familymembers related stuff
+ * All Familymembers related queries
  */
 
-import { gql, useQuery, useLazyQuery } from "@apollo/client";
 
 /**
  * Queries
@@ -22,6 +23,42 @@ query getFamilyMemberInfoById($id: Int!) {
     }    
 }
 `;
+
+// Info for About me page
+export const GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID = gql`
+query getFamilyMemberInfoById($id: Int!) {
+    familyMemberById(id: $id) {
+        id
+        firstname,
+        lastname,
+        gender,
+        bio,
+        image,
+        dob,
+        occupation,
+        country,
+        city,
+    }    
+}
+`;
+
+// Info for detail WishlistItem
+export const GET_FAMILYMEMBERS_INCLUDED_IN_WISHLISTITEM_BY_ID = gql`
+query getFamilyMembersFromWishListItem($id: Int!) {
+    findFamilyMembersInvolvedInWishListItem(whisListId: $id) {
+        id
+        familyMemberId
+        familyMember {
+            id
+            firstname
+        }
+    }    
+}
+`;
+
+
+
+
 
 // AgendaItems by FamilyMemberId
 export const GET_AGENDAITEMS_BY_AUTHORID = gql`

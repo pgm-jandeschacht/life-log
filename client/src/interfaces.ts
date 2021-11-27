@@ -7,6 +7,10 @@ export interface AgendaItem {
     date: Date;
 }
 
+export interface AgendaItemsData {
+    agendaItemsByAuthor: AgendaItem[];
+}
+
 export interface AlbumItem {
     id: number;
     location?: string;
