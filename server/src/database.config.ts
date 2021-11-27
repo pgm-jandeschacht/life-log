@@ -16,8 +16,8 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
             return this.configService.get('databaseProd');
         } else {
             console.log('DEVELOPMENT');
-            console.log( this.configService.get('database'))
-            return this.configService.get('database');
+            console.log( this.configService.get('databaseTEST'))
+            return this.configService.get('databaseTEST');
         }
     }
 }

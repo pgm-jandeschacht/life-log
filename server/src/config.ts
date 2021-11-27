@@ -12,7 +12,7 @@ export const config = () => ({
         logging:true,
         ssl: true,
     },
-    database: {  
+    databaseTEST: {  
         type: 'postgres',
         host: process.env.HOST,
         port: 5432,
