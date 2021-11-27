@@ -7,6 +7,7 @@ import { FamilyMembersModule } from 'src/family-members/family-members.module';
 
 @Module({
     imports: [TypeOrmModule.forFeature([WishListItem]), FamilyMembersModule],
-    providers: [WishListItemsResolver, WishListItemsService]
+    providers: [WishListItemsResolver, WishListItemsService],
+    exports: [WishListItemsService],
 })
 export class WishListItemsModule {}

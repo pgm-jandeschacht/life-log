@@ -20,29 +20,59 @@ import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
 import { RelationTypesModule } from './relation-types/relation-types.module';
 import { FamilyRelationsModule } from './family-relations/family-relations.module';
 import { FamilyRelation } from './family-relations/entities/family-relation.entity';
+import { FamilyMemberInAgendaItem } from './family-member-in-agenda-items/entities/family-member-in-agenda-item.entity';
+import { FamilyMemberInAlbumItem } from './family-member-in-album-items/entities/family-member-in-album-item.entity';
+import { FamilyMemberInWishListItem } from './family-member-in-wish-list-item/entities/family-members-in-wish-list-item.entity';
 import { RelationType } from './relation-types/entities/relation-type.entity';
+
+import { ConfigModule } from '@nestjs/config';
+import { config } from './config';
+import { DatabaseConfig } from './database.config';
+import { FamilyMemberInWishListItemsModule } from './family-member-in-wish-list-item/family-member-in-wish-list-items.module';
+import { FamilyMemberInAgendaItemsModule } from './family-member-in-agenda-items/family-member-in-agenda-items.module';
+import { FamilyMemberInAlbumItemsModule } from './family-member-in-album-items/family-member-in-album-items.module';
 
 @Module({
   imports: [
-    GraphQLModule.forRoot({
-        playground: true,
-        introspection: true,
-        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-    }),
-    TypeOrmModule.forRoot({
-        type: 'postgres',
-        host: 'localhost',
-        port: 5432,
-        username: 'postgres',
-        password: 'Fvh89cxn',
-        database: 'lifelog',
-        entities: ['dist/**/*.entity{.ts,.js}'],
-        // seeds: ['src/seeds/**/*{.ts,.js}'],
-        autoLoadEntities: true,
-        synchronize: true,
-        logging: true
+      GraphQLModule.forRoot({
+          playground: true,
+          introspection: true,
+          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       }),
-      TypeOrmModule.forFeature([FamilyMember, User, Note, AgendaItem, AlbumItem, WishListItem, FamilyRelation, RelationType]),
+      TypeOrmModule.forRootAsync({
+          imports: [(ConfigModule)],
+          useClass: DatabaseConfig
+      }),
+    // TypeOrmModule.forRoot({
+    //     type: 'postgres',
+    //     host: 'localhost',
+    //     port: 5432,
+    //     username: 'postgres',
+    //     password: 'Fvh89cxn',
+    //     database: 'lifelog',
+    //     entities: ['dist/**/*.entity{.ts,.js}'],
+    //     // seeds: ['src/seeds/**/*{.ts,.js}'],
+    //     autoLoadEntities: true,
+    //     synchronize: true,
+    //     logging: true
+    //   }),
+    ConfigModule.forRoot({
+        isGlobal: true,
+        load: [config]
+    }),
+    
+      TypeOrmModule.forFeature([
+          FamilyMember, 
+          User, 
+          Note, 
+          AgendaItem, 
+          AlbumItem, 
+          WishListItem, 
+          FamilyRelation, 
+          RelationType, 
+          FamilyMemberInAlbumItem, 
+          FamilyMemberInWishListItem, 
+          FamilyMemberInAgendaItem]),
     FamilyMembersModule,
     NotesModule,
     AgendaItemsModule,
@@ -52,6 +82,9 @@ import { RelationType } from './relation-types/entities/relation-type.entity';
     AuthModule,
     RelationTypesModule,
     FamilyRelationsModule,
+    FamilyMemberInWishListItemsModule,
+    FamilyMemberInAgendaItemsModule,
+    FamilyMemberInAlbumItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

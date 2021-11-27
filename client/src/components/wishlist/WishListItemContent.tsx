@@ -67,6 +67,8 @@ const StyledDiv = styled.div<StyledDivProps>`
 `
 
 const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish }) => {
+// TODO: ADD query: GET_FAMILYMEMBERS_INCLUDED_IN_WISHLISTITEM_BY_ID 
+    
 
     const handleClicking = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();

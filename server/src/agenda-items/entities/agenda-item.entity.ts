@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int, ArrayElement } from '@nestjs/graphql';
+import { FamilyMemberInAgendaItem } from 'src/family-member-in-agenda-items/entities/family-member-in-agenda-item.entity';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
-import { Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 
 @Entity({ orderBy: {
     date: 'DESC',
@@ -34,10 +35,6 @@ export class AgendaItem {
     @Field(type => FamilyMember, { description: 'Author of this agenda-item' })
     author: FamilyMember;
 
-    @ManyToMany(() => FamilyMember, familyMember => familyMember.invitedAgendaItems, { onDelete: 'SET NULL' })
-    @Field(type => FamilyMember, { nullable: true, description: 'List of family members invited for this agenda-item' })
-    with?: FamilyMember[];
-
     @Column({ type: 'timestamp', nullable: true })
     // @CreateDateColumn()
     @Field()
@@ -51,5 +48,10 @@ export class AgendaItem {
     @Column({ type: 'timestamp', nullable: true })
     @Field()
     date: Date;
+
+    // Many to Many
+    @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.agendaItem, { eager: true, cascade: true})
+    @Field(type => [FamilyMemberInAgendaItem], { nullable: true, description: 'List of agendaItems where a family member is linked in'})
+    inAgendaItem: FamilyMemberInAgendaItem[];
 
 }

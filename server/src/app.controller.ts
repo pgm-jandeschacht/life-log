@@ -15,8 +15,10 @@ export class AppController {
 //   constructor(private readonly appService: AppService) {}
 
 @Get('hello')
-getHelloTest(): void {
-    this.appService.getHello();
+getHelloTest(): string {
+    // this.appService.getHello();
+    
+    return 'Hello';
 }
   
   @Get('seed')

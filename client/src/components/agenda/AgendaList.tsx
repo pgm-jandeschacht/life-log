@@ -3,8 +3,9 @@ import DayList from './DayList';
 import styled from 'styled-components';
 
 import { useQuery } from "@apollo/client";
-import { GET_AGENDAITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
-import { FamilyMemberData } from '../../interfaces';
+// import { GET_AGENDAITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
+import { GET_AGENDAITEMS_BY_FAMILYMEMBER_ID} from '../../graphql/agendaItems';
+import { FamilyMemberData, AgendaItemsData } from '../../interfaces';
 import _ from 'lodash';
 
 
@@ -44,7 +45,7 @@ const AgendaList = () => {
     
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
-    const { data, loading, error } = useQuery<FamilyMemberData >(GET_AGENDAITEMS_BY_FAMILYMEMBER_ID, {
+    const { data, loading, error } = useQuery<AgendaItemsData >(GET_AGENDAITEMS_BY_FAMILYMEMBER_ID, {
         variables: {
             id: parseInt(familyMemberId)
         }
@@ -53,7 +54,7 @@ const AgendaList = () => {
     if(loading) return <p>"loading ..."</p>;
     if(error) return <p>"ERRRORRR!!"</p>;
     
-    const agendaItems = data?.familyMemberById.agendaItems || [];
+    const agendaItems = data?.agendaItemsByAuthor || [];
     const sortedAgendaItems = _.sortBy(agendaItems, ['date']);
     const reverseAgenda = sortedAgendaItems.reverse();
     // const sortedAgendaItems = _.groupBy(agendaItems, 'date');

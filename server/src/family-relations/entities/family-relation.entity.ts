@@ -7,8 +7,12 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 @ObjectType()
 export class FamilyRelation {
     @PrimaryGeneratedColumn()
-    @Field(type => Int, { description: 'The ID of the family member' })
+    @Field(type => Int, { description: 'The ID of the family relation' })
     id: number;
+
+    @Column({ nullable: true })
+    @Field({ nullable: true, defaultValue:false, description: 'Hide pictures from this relation' })
+    hidePictures?: boolean;
 
     @ManyToOne(() => FamilyMember, familyMember => familyMember.familyRelationsTo, { onDelete: 'CASCADE' })
     @Field(type => FamilyMember, { description: 'The family member' })

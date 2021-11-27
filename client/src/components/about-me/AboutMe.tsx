@@ -4,7 +4,7 @@ import fallback from '../../assets/images/anna_boloise.jpg'
 import { Colors, Shadow } from '../../variables'
 
 import { useQuery } from '@apollo/client'
-import { GET_FAMILYMEMBER_BY_ID } from '../../graphql/familyMembers';
+import { GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID } from '../../graphql/familyMembers';
 import { FamilyMemberData, FamilyMember } from '../../interfaces';
 
 // interface AboutMeProps {
@@ -95,7 +95,7 @@ const AboutMe: React.FC = () => {
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
     // const { data, loading, error } = useQuery<FamilyRelationData >(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
-    const { data, loading, error } = useQuery<FamilyMemberData>(GET_FAMILYMEMBER_BY_ID, {
+    const { data, loading, error } = useQuery<FamilyMemberData>(GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID, {
         variables: {
             id: parseInt(familyMemberId)
         }

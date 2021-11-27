@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { FamilyMemberInAlbumItem } from 'src/family-member-in-album-items/entities/family-member-in-album-item.entity';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -26,7 +27,9 @@ export class AlbumItem {
     @Field(type => FamilyMember, { description: 'Uploader of this picture' })
     uploader: FamilyMember;
 
-    @ManyToMany(() => FamilyMember, FamilyMember => FamilyMember.inAlbumItems, { onDelete: 'SET NULL' })
-    @Field(type => FamilyMember, { nullable: true, description: 'List of family members in this picture' })
-    inPicture?: FamilyMember[];
+    // Many to Many
+    @OneToMany(() => FamilyMemberInAlbumItem, FamilyMemberInAlbumItem => FamilyMemberInAlbumItem.albumItem, { eager: true, cascade: true})
+    @Field(type => [FamilyMemberInAlbumItem], { nullable: true, description: 'List of albumItels where a family member is in'})
+    albumItemWithFamilyMemberIn: FamilyMemberInAlbumItem[];
+
 }

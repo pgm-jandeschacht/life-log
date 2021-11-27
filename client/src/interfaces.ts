@@ -7,6 +7,10 @@ export interface AgendaItem {
     date: Date;
 }
 
+export interface AgendaItemsData {
+    agendaItemsByAuthor: AgendaItem[];
+}
+
 export interface AlbumItem {
     id: number;
     location?: string;
@@ -27,21 +31,21 @@ export interface FamilyMember {
     occupation: string;
     country: string;
     city: string;
-
     isSender?: boolean;
     isAlive?: boolean;
+    notes?: Note[];
+    wishListItems?: WishListItem[];
+    albumitems?: AlbumItem[];
+    agendaItems?: AgendaItem[];
+    
     father?: FamilyMember;
     mother?: FamilyMember;
     partner?: FamilyMember;
     children?: FamilyMember[];
-    notes?: Note[];
-    albumitems?: AlbumItem[];
+    
     inAlbumItems?: AlbumItem[];
-    agendaItems?: AgendaItem[];
     invitedAgendaItems?: AgendaItem[];
-    wishListItems?: WishListItem[];
     inWishListItem?: WishListItem[];
-
 }
 
 // export interface FamilyMembersData {

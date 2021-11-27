@@ -1,6 +1,9 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { AgendaItem } from 'src/agenda-items/entities/agenda-item.entity';
 import { AlbumItem } from 'src/album-items/entities/album-item.entity';
+import { FamilyMemberInAgendaItem } from 'src/family-member-in-agenda-items/entities/family-member-in-agenda-item.entity';
+import { FamilyMemberInAlbumItem } from 'src/family-member-in-album-items/entities/family-member-in-album-item.entity';
+import { FamilyMemberInWishListItem } from 'src/family-member-in-wish-list-item/entities/family-members-in-wish-list-item.entity';
 import { FamilyRelation } from 'src/family-relations/entities/family-relation.entity';
 import { Note } from 'src/notes/entities/note.entity';
 import { User } from 'src/users/entities/user.entity';
@@ -54,23 +57,17 @@ export class FamilyMember {
     @Field({ nullable: true, description: 'City of FamilyMember'})
     city?: string
 
-
-
-
-
+    @Column({ nullable: true })
+    @Field({ nullable: true,  defaultValue:true, description: 'Boolean representation if the family member is going to send information as well'})
+    isSender?: boolean;
     
-    // @Column()
-    // @Field(type => Int, {nullable: true})
-    // userId?: number;
-
+    
+    
+    // Relations
     @OneToOne(type => User, user => user.familyMember, { cascade: true, eager: true })
     @JoinColumn()
     @Field(type => User, { nullable: true, description: 'The user that is linked to the family member'})
     user?: User;
-
-    @Column({ nullable: true })
-    @Field({ nullable: true,  defaultValue:true, description: 'Boolean representation if the family member is going to send information as well'})
-    isSender?: boolean;
 
     // CHECK DOCUMENTATION FOR CASCADING...
     @OneToMany(() => Note, note => note.author, {eager: true, cascade: true})
@@ -81,41 +78,42 @@ export class FamilyMember {
     @Field(type => [AlbumItem], { nullable: true, description: 'List of album-items uploaded by this family member'})
     albumItems?: AlbumItem[];
 
-    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.familyMember, { eager: true, cascade: true})
-    @Field(type => [FamilyRelation], { nullable: true, description: 'List of family relations this family member is involved in'})
-    familyRelationsTo: FamilyRelation[];
-
-    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.relatedFamilyMember, { eager: true, cascade: true})
-    @Field(type => [FamilyRelation], { nullable: true, description: 'List of family relations this family member is involved in (other side)'})
-    familyRelationsFrom: FamilyRelation[];
-
-    @ManyToMany(() => AlbumItem, albumItem => albumItem.inPicture, { eager: true, cascade: true })
-    @JoinTable()
-    inAlbumItems?: AlbumItem[];
-    
-    // CHECK DOCUMENTATION FOR CASCADING...
     @OneToMany(() => AgendaItem, agendaItem => agendaItem.author, {eager: true, cascade: true})
     @Field(type => [AgendaItem], {nullable: true, description: 'List of agenda items made by the family member' })
     agendaItems?: AgendaItem[]
-    
-    // CHECK DOCUMENTATION FOR CASCADING...
-    
-    @ManyToMany(() => AgendaItem, agendaItem => agendaItem.with,  {eager: true, cascade: true})
-    @JoinTable()
-    invitedAgendaItems?: AgendaItem[]
 
-    // CHECK DOCUMENTATION FOR CASCADING...
     @OneToMany(() => WishListItem, wishListItem => wishListItem.author, {eager: true, cascade: true})
     @Field(type => [WishListItem], {nullable: true, description: 'List of agenda items made by the family member' })
     wishListItems?: WishListItem[]
-    
-    // CHECK DOCUMENTATION FOR CASCADING...
-    
-    @ManyToMany(() => WishListItem, wishListItem => wishListItem.inWishListItem,  {eager: true, cascade: true})
-    @JoinTable()
-    inWishListItem?: WishListItem[]
-    
-    
 
-    //invitedAgendaItems: AgendaItem[]
+    
+    // Many to Many
+    // Family Relations
+    // @OneToMany(() => FamilyRelation, familyRelation => familyRelation.familyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.familyMember, { cascade: true})
+    @Field(type => [FamilyRelation], { nullable: true, description: 'List of family relations this family member is involved in'})
+    familyRelationsTo: FamilyRelation[];
+
+    // @OneToMany(() => FamilyRelation, familyRelation => familyRelation.relatedFamilyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyRelation, familyRelation => familyRelation.relatedFamilyMember, { cascade: true})
+    @Field(type => [FamilyRelation], { nullable: true, description: 'List of family relations this family member is involved in (other side)'})
+    familyRelationsFrom: FamilyRelation[];
+
+    // In Wishlist Items
+    // @OneToMany(() => FamilyMemberInWishListItem, FamilyMemberInWishListItem => FamilyMemberInWishListItem.familyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyMemberInWishListItem, FamilyMemberInWishListItem => FamilyMemberInWishListItem.familyMember, { cascade: true})
+    @Field(type => [FamilyMemberInWishListItem], { nullable: true, description: 'List of family members in wishlistitems this family member is involved in'})
+    FamilyMemberInWishListItems: FamilyMemberInWishListItem[];
+    
+    // In Agenda Items
+    // @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.familyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.familyMember, { cascade: true})
+    @Field(type => [FamilyMemberInAgendaItem], { nullable: true, description: 'List of family members in agendaitems this family member is involved in'})
+    FamilyMemberInAgendaItem: FamilyMemberInAgendaItem[];
+    
+    // In Album Items
+    // @OneToMany(() => FamilyMemberInAlbumItem, FamilyMemberInAlbumItem => FamilyMemberInAlbumItem.familyMember, { eager: true, cascade: true})
+    @OneToMany(() => FamilyMemberInAlbumItem, FamilyMemberInAlbumItem => FamilyMemberInAlbumItem.familyMember, { cascade: true})
+    @Field(type => [FamilyMemberInAlbumItem], { nullable: true, description: 'List of family members in albumitems this family member is involved in'})
+    FamilyMemberInAlbumItem: FamilyMemberInAlbumItem[];
 }

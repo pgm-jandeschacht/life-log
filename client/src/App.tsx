@@ -1,4 +1,6 @@
 import React, { useEffect, useState} from 'react';
+import { useLazyQuery, useQuery } from '@apollo/client';
+
 
 // ROUTER
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
@@ -9,7 +11,6 @@ import GlobalStyle from './globalStyle';
 // import { Login } from './components/Login';
 
 function App() {
-    
     return (
     <>
         <GlobalStyle />
