@@ -28,4 +28,5 @@ export const Breakpoint = {
     medium: '40rem',
     large: '65rem',
     extraLarge: '75rem',
+    max: '80rem',
 }

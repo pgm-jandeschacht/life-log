@@ -282,15 +282,16 @@ generateRandomArrayOfNumbers(amount: number, max: number, not:number = -1): numb
 
   async seedDatabase(amount: number = 5) {
 
-    this.createRelationTypes();
-    //   const amountOfUsers = 3;
+      
+      this.createRelationTypes();
+      //   const amountOfUsers = 3;
     console.log(amount);
-
-      let users=[];
-
-      for(let i=0; i<amount; i++) {
+    
+    let users=[];
+    
+    for(let i=0; i<amount; i++) {
         const user = await this.createUser();
-
+        
         const alsoFamilyMember = faker.datatype.boolean();
 
         if(true) {
