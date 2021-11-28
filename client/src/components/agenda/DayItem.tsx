@@ -33,7 +33,7 @@ const StyledLi = styled.li`
 
 const DayItem: React.FC<DayItemProps> = ({ content, inAgendaItem }) => {
 
-    const familyMembers = inAgendaItem.map( i =>  i.familyMember.firstname).join(',');
+    const familyMembers = inAgendaItem.map( i =>  i.familyMember.firstname).join(', ');
     // console.log(familyMembers);
     // const length = inAgendaItem.length;
     return (
