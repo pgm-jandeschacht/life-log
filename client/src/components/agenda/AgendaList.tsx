@@ -81,12 +81,12 @@ const AgendaList: React.FC = () => {
     // console.log(sortedAgendaItems['2021-10-27T18:48:22.281Z'])
     return (
         <StyledUl>
-            {/* {  reverseAgenda.map(agendaItem => (
+            {  reverseAgenda.map(agendaItem => (
                 <DayList test={agendaItem} keyId={agendaItem.id} />
-            )) } */}
-            { agenda.map(agendaItem => (
-                <DayList test={agendaItem.day} keyId={agendaItem.id} />
             )) }
+            {/* { agenda.map(agendaItem => (
+                <DayList test={agendaItem.day} keyId={agendaItem.id} />
+            )) } */}
         </StyledUl>
     )
 }

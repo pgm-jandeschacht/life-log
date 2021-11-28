@@ -81,10 +81,10 @@ const DayList: React.FC<DayListProps> = ({ keyId, test }) => {
 
             <ul>
 
-                {/* <DayItem content={test.title}/> */}
-                { test.content.map((testItem: string)=> (
+                <DayItem content={test.title}/>
+                {/* { test.content.map((testItem: string)=> (
                      <DayItem content={testItem}/>
-                )) }
+                )) } */}
             </ul>
         </StyledLi>
     )
