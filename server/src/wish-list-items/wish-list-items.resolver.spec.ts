@@ -1,4 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { 
+  Test, 
+  TestingModule 
+} from '@nestjs/testing';
 import { WishListItemsResolver } from './wish-list-items.resolver';
 import { WishListItemsService } from './wish-list-items.service';
 

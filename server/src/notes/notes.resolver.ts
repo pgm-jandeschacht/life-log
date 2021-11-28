@@ -1,4 +1,12 @@
-import { Resolver, Query, Mutation, Args, Int, Parent, ResolveField } from '@nestjs/graphql';
+import { 
+  Resolver, 
+  Query, 
+  Mutation, 
+  Args, 
+  Int, 
+  Parent, 
+  ResolveField 
+} from '@nestjs/graphql';
 import { NotesService } from './notes.service';
 import { Note } from './entities/note.entity';
 import { CreateNoteInput } from './dto/create-note.input';
@@ -7,7 +15,9 @@ import { FamilyMember } from 'src/family-members/entities/family-member.entity';
 
 @Resolver((of) => Note)
 export class NotesResolver {
-  constructor(private readonly notesService: NotesService) {}
+  constructor(
+    private readonly notesService: NotesService
+  ) {}
 
   @Mutation(() => Note)
   createNote(@Args('createNoteInput') createNoteInput: CreateNoteInput) {
@@ -26,17 +36,18 @@ export class NotesResolver {
 
   @ResolveField(returns => FamilyMember)
   author(@Parent() note: Note): Promise<FamilyMember> {
-    console.log('AUTHOR RESOLVER');  
-    console.log(note);
-      return this.notesService.getAuthor(note.authorId);
+    return this.notesService.getAuthor(note.authorId);
   }
 
 
   //?? Return doesn't have all the options? f.e. authorId is not visible if not given
   @Mutation(() => Note)
-  updateNote(@Args('id', { type: () => Int }) id: number, @Args('updateNoteInput') updateNoteInput: UpdateNoteInput) : Promise<Note>{
-    // console.log('ID', id);
-    // console.log('updated element', updateNoteInput);
+  updateNote(
+    @Args('id', { type: () => Int }) 
+    id: number, 
+    @Args('updateNoteInput') 
+    updateNoteInput: UpdateNoteInput
+  ) : Promise<Note>{
     return this.notesService.update(id, updateNoteInput);
   }
 
@@ -50,6 +61,5 @@ export class NotesResolver {
     } else {
         return null;
     }
-    
   }
 }

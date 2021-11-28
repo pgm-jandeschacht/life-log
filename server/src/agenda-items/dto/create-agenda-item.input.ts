@@ -1,23 +1,31 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
-import { FamilyMember } from 'src/family-members/entities/family-member.entity';
-import { CreateDateColumn } from 'typeorm';
+import { 
+  InputType, 
+  Int, 
+  Field 
+} from '@nestjs/graphql';
+import { 
+  IsDate, 
+  IsString 
+} from 'class-validator';
 
 @InputType()
 export class CreateAgendaItemInput {
-    // @CreateDateColumn()
-    @Field({description: 'Name of the agenda-item'})
-    title: string;
+  @IsString()
+  @Field({description: 'Content of the agenda-item'})
+  content: string;
 
-    // @CreateDateColumn()
-    @Field({description: 'Date of the agenda-item'})
-    date: Date;
+  @Field(type => Int)
+  authorId?: number;
+  
+  @IsDate()
+  @Field()
+  date?:Date;
 
-
-
-    // @Field({ nullable: true})
-    // // @Field({ nullable: true, description: 'Extra information about agenda-item'})
-    // content?: string;
-
-    // @Field(type => Int)
-    // authorId: number;
+  @IsDate()
+  @Field()
+  created_at: Date;
+  
+  @IsDate()
+  @Field()
+  updated_at: Date;
 }

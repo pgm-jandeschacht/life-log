@@ -1,10 +1,12 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { 
+  InputType,
+  Field 
+} from '@nestjs/graphql';
 import { IsAlpha } from 'class-validator';
 
 @InputType()
 export class CreateRelationTypeInput {
-
-    @IsAlpha()
-    @Field()
-    name: string;
+  @IsAlpha()
+  @Field()
+  name: string;
 }

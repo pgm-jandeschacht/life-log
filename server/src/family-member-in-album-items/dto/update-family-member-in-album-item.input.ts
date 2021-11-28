@@ -1,5 +1,10 @@
 import { CreateFamilyMemberInAlbumItemInput } from './create-family-member-in-album-item.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { 
+  InputType, 
+  Field, 
+  Int, 
+  PartialType 
+} from '@nestjs/graphql';
 
 @InputType()
 export class UpdateFamilyMemberInAlbumItemInput extends PartialType(CreateFamilyMemberInAlbumItemInput) {

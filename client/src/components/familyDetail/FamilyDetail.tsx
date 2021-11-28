@@ -7,12 +7,15 @@ import styled from 'styled-components'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 import FamilyDetailButtons from './FamilyDetailButtons'
 import { useQuery } from '@apollo/client'
-import { FamilyMemberData } from "../../interfaces";
+import { FamilyMemberData, FamilyRelationData } from "../../interfaces";
 import { GET_FAMILYMEMBER_BY_ID } from "../../graphql/familyMembers";
 import { Loading } from '../alerts'
 import { parseInt } from 'lodash'
 import { doTypesOverlap } from 'graphql'
 import { Link } from 'react-router-dom'
+import { GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations';
+
+import FamilyDetailRelation  from './FamilyDetailRelation';
 
 
 
@@ -323,6 +326,21 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
     if(loading) return <Loading/>;
     if(error) return <p>{error.message}</p>;
 
+
+    // const { data: familyRelationsData , loading: familyRelationsLoading, error:familyRelationsError } = useQuery<FamilyRelationData>(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
+    //     variables: {
+    //         id: parseInt(userId)
+    //     }
+    // });
+
+    // if(familyRelationsLoading) return <Loading/>;
+    // if(familyRelationsError) return <p>{familyRelationsError.message}</p>;
+
+    // if(!familyRelationsLoading && !familyRelationsError) {
+    //     console.log(familyRelationsData);
+    // }
+    
+
     const calculateAge = (dobMember?: string) => {
         var dob = new Date(`${dobMember}`);  
         var month_diff = Date.now() - dob.getTime();  
@@ -359,7 +377,9 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
                 <p>{data?.familyMemberById.bio}</p>
             </Bio>
 
-            <Married>
+            <FamilyDetailRelation userId={userId} />
+
+            {/* <Married>
                 <SubTitle>{profile.maritalStatus} with</SubTitle>
                 <DetailSmallContainer>
                     <Link to={'/my-family'}>
@@ -395,9 +415,9 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
                         </li>
                     )) }
                 </ul>
-            </Children>
+            </Children> */}
 
-            <FamilyDetailButtons id={userId} name={data?.familyMemberById.firstname}/>
+            {/* <FamilyDetailButtons id={userId} name={data?.familyMemberById.firstname}/> */}
         </div>
     )
 }

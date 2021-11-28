@@ -1,16 +1,25 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { 
+  Resolver, 
+  Query, 
+  Mutation, 
+  Args, 
+  Int 
+} from '@nestjs/graphql';
 import { FamilyMemberInWishListItemsService } from './family-member-in-wish-list-items.service';
 import { FamilyMemberInWishListItem } from './entities/family-members-in-wish-list-item.entity';
 import { CreateFamilyMemberInWishListItemInput } from './dto/create-family-member-in-wish-list-item.input';
-import { UpdateFamilyMemberInWishListItemInput } from './dto/update-family-member-in-wish-list-item.input';
-import { FamilyMember } from 'src/family-members/entities/family-member.entity';
 
 @Resolver(() => FamilyMemberInWishListItem)
 export class FamilyMemberInWishListItemsResolver {
-  constructor(private readonly FamilyMemberInWishListItemService: FamilyMemberInWishListItemsService) {}
+  constructor(
+    private readonly FamilyMemberInWishListItemService: FamilyMemberInWishListItemsService
+  ) {}
 
   @Mutation(() => FamilyMemberInWishListItem)
-  createFamilyMemberInWishListItem(@Args('createFamilyMemberInWishListItemInput') createFamilyMemberInWishListItemInput: CreateFamilyMemberInWishListItemInput) {
+  createFamilyMemberInWishListItem(
+    @Args('createFamilyMemberInWishListItemInput') 
+    createFamilyMemberInWishListItemInput: CreateFamilyMemberInWishListItemInput
+  ) {
     return this.FamilyMemberInWishListItemService.create(createFamilyMemberInWishListItemInput);
   }
 
@@ -20,13 +29,20 @@ export class FamilyMemberInWishListItemsResolver {
   }
 
   @Query(() => FamilyMemberInWishListItem, { name: 'FamilyMemberInWishListItem' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.FamilyMemberInWishListItemService.findOne(id);
+  findOne(
+    @Args('id', { type: () => Int }) 
+    id: number
+  ) {
+    return this.FamilyMemberInWishListItemService.findOneById(id);
   }
+
+  // Check if it works?
   @Query(() => [FamilyMemberInWishListItem], { name: 'FamilyMembersInvolvedInWishListItem' })
-    findFamilyMembersInvolvedInWishListItem(@Args('id', { type: () => Int }) id: number) {
-        console.log('TEST');
-        return this.FamilyMemberInWishListItemService.getInvolvedFamilyMembers(id)
+  findFamilyMembersInvolvedInWishListItem(
+    @Args('id', { type: () => Int }) 
+    id: number
+  ) {
+    return this.FamilyMemberInWishListItemService.getInvolvedFamilyMembers(id)
 }
 
 //   @Mutation(() => FamilyMemberInWishListItem)
@@ -36,6 +52,6 @@ export class FamilyMemberInWishListItemsResolver {
 
   @Mutation(() => FamilyMemberInWishListItem)
   removeFamilyMemberInWishListItem(@Args('id', { type: () => Int }) id: number) {
-    return this.FamilyMemberInWishListItemService.getInvolvedFamilyMembers(id);
+    return this.FamilyMemberInWishListItemService.delete(id);
   }
 }

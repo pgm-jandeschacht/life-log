@@ -1,10 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
+import { Colors, Shadow, Transition, Breakpoint } from '../../variables'
+import { InWishListItem, WishListItemType } from '../../interfaces';
 
 interface WishListItemContentProps {
     clicked: boolean,
-    wish: any
+    wish: WishListItemType
 }
 
 interface StyledDivProps {
@@ -128,9 +129,21 @@ const StyledDiv = styled.div<StyledDivProps>`
 `
 
 const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish }) => {
-// TODO: ADD query: GET_FAMILYMEMBERS_INCLUDED_IN_WISHLISTITEM_BY_ID 
-    
+    //TODO: add completed yes/no?
 
+    let visitDate = '';
+    if(wish.dueDate !== null) {
+        visitDate = 'on the: ' +  wish.dueDate;
+    } else {
+        visitDate = 'next time';
+    }
+
+    // create list of involved familymembers
+    let inWishList:string = '';
+    if(wish.inWishListItem.length > 0) {
+        inWishList = wish.inWishListItem.map(inWish => inWish.familyMember.firstname).join(' or ');
+    }
+    
     const handleClicking = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
     }
@@ -138,11 +151,12 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
     return (
         <StyledDiv expand={clicked}>
             I want
-            <span>{wish.for}</span>
+            {/* <span>{wish.for}</span> */}
+            <span>{inWishList}</span>
             to bring me
             <span>{wish.content}</span>
             when they visit me
-            <span>{new Date(wish.dueDate).toLocaleDateString()}</span>
+            <span>{visitDate}</span>
 
             <div>
                 <a onClick={handleClicking} href="/">

@@ -24,7 +24,6 @@ import { FamilyMemberInAgendaItem } from './family-member-in-agenda-items/entiti
 import { FamilyMemberInAlbumItem } from './family-member-in-album-items/entities/family-member-in-album-item.entity';
 import { FamilyMemberInWishListItem } from './family-member-in-wish-list-item/entities/family-members-in-wish-list-item.entity';
 import { RelationType } from './relation-types/entities/relation-type.entity';
-
 import { ConfigModule } from '@nestjs/config';
 import { config } from './config';
 import { DatabaseConfig } from './database.config';
@@ -34,45 +33,33 @@ import { FamilyMemberInAlbumItemsModule } from './family-member-in-album-items/f
 
 @Module({
   imports: [
-      GraphQLModule.forRoot({
-          playground: true,
-          introspection: true,
-          autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
-      }),
-      TypeOrmModule.forRootAsync({
-          imports: [(ConfigModule)],
-          useClass: DatabaseConfig
-      }),
-    // TypeOrmModule.forRoot({
-    //     type: 'postgres',
-    //     host: 'localhost',
-    //     port: 5432,
-    //     username: 'postgres',
-    //     password: 'Fvh89cxn',
-    //     database: 'lifelog',
-    //     entities: ['dist/**/*.entity{.ts,.js}'],
-    //     // seeds: ['src/seeds/**/*{.ts,.js}'],
-    //     autoLoadEntities: true,
-    //     synchronize: true,
-    //     logging: true
-    //   }),
-    ConfigModule.forRoot({
-        isGlobal: true,
-        load: [config]
+    GraphQLModule.forRoot({
+      playground: true,
+        introspection: true,
+        autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
-    
-      TypeOrmModule.forFeature([
-          FamilyMember, 
-          User, 
-          Note, 
-          AgendaItem, 
-          AlbumItem, 
-          WishListItem, 
-          FamilyRelation, 
-          RelationType, 
-          FamilyMemberInAlbumItem, 
-          FamilyMemberInWishListItem, 
-          FamilyMemberInAgendaItem]),
+    TypeOrmModule.forRootAsync({
+      imports: [(ConfigModule)],
+      useClass: DatabaseConfig
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config]
+    }),
+    TypeOrmModule.forFeature(
+    [
+      FamilyMember, 
+      User, 
+      Note, 
+      AgendaItem, 
+      AlbumItem, 
+      WishListItem, 
+      FamilyRelation, 
+      RelationType, 
+      FamilyMemberInAlbumItem, 
+      FamilyMemberInWishListItem, 
+      FamilyMemberInAgendaItem
+    ]),
     FamilyMembersModule,
     NotesModule,
     AgendaItemsModule,
@@ -89,6 +76,4 @@ import { FamilyMemberInAlbumItemsModule } from './family-member-in-album-items/f
   controllers: [AppController],
   providers: [AppService],
 })
-// Add middleware here
-// for specific routes or specific controllers
 export class AppModule {}

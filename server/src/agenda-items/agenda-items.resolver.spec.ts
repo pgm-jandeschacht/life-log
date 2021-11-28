@@ -1,4 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { 
+  Test, 
+  TestingModule 
+} from '@nestjs/testing';
 import { AgendaItemsResolver } from './agenda-items.resolver';
 import { AgendaItemsService } from './agenda-items.service';
 

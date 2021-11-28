@@ -9,7 +9,6 @@ export const config = () => ({
         entities: ['dist/**/*.entity{.ts,.js}'],
         autoLoadEntities: true,
         synchronize: true,
-        logging:true,
         ssl: true,
     },
     databaseTEST: {  
@@ -22,5 +21,6 @@ export const config = () => ({
         entities: ['dist/**/*.entity{.ts,.js}'],
         autoLoadEntities: true,
         synchronize: true,
+        logging:true
     }
 });

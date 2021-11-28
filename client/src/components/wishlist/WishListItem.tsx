@@ -4,9 +4,10 @@ import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 import WishListItemContent from './WishListItemContent'
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { WishListItemType } from '../../interfaces';
 
 interface WishListItemProps {
-    wishContent: any,
+    wishContent: WishListItemType,
     keyId: number
 }
 
@@ -76,7 +77,7 @@ const WishListItem: React.FC<WishListItemProps> = ({ wishContent, keyId }) => {
         setIsClicked(!isClicked)
     }
 
-    console.log(wishContent)
+    // console.log(wishContent)
 
     return (
         <StyledLi key={keyId}>

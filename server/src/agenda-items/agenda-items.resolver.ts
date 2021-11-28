@@ -1,111 +1,77 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
-import { AgendaItemsService } from './agenda-items.service';
-import { AgendaItem } from './entities/agenda-item.entity';
-import { CreateAgendaItemInput } from './dto/create-agenda-item.input';
-import { UpdateAgendaItemInput } from './dto/update-agenda-item.input';
-import { FamilyMember } from 'src/family-members/entities/family-member.entity';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  ResolveField,
+  Parent,
+} from "@nestjs/graphql";
+import { AgendaItemsService } from "./agenda-items.service";
+import { AgendaItem } from "./entities/agenda-item.entity";
+import { CreateAgendaItemInput } from "./dto/create-agenda-item.input";
+import { UpdateAgendaItemInput } from "./dto/update-agenda-item.input";
+import { FamilyMember } from "src/family-members/entities/family-member.entity";
+import { FamilyMemberInAgendaItem } from "src/family-member-in-agenda-items/entities/family-member-in-agenda-item.entity";
 
 @Resolver((of) => AgendaItem)
 export class AgendaItemsResolver {
-  constructor(private readonly agendaItemsService: AgendaItemsService) {}
+  constructor(
+    private readonly agendaItemsService: AgendaItemsService
+  ) {}
 
   @Mutation(() => AgendaItem)
-  createAgendaItem(@Args('createAgendaItemInput') createAgendaItemInput: CreateAgendaItemInput) {
+  createAgendaItem(
+    @Args("createAgendaItemInput") 
+    createAgendaItemInput: CreateAgendaItemInput
+  ) {
     return this.agendaItemsService.create(createAgendaItemInput);
   }
 
-  @Query(() => [AgendaItem], { name: 'agendaItems' })
+  @Query(() => [AgendaItem], { name: "agendaItems" })
   agendaItems() {
     return this.agendaItemsService.findAll();
   }
 
-  @Query(() => AgendaItem, { name: 'agendaItem' })
-  agendaItemById(@Args('id', { type: () => Int }) id: number) {
+  @Query(() => AgendaItem, { name: "agendaItem" })
+  agendaItemById(@Args("id", { type: () => Int }) id: number) {
     return this.agendaItemsService.findOneById(id);
   }
 
-  @Query(returns => [AgendaItem], { name: 'agendaItemsByAuthor' })
-  agendaItemsByAuthor(@Args('authorId', { type: () => Int }) authorId: number) {
+  @Query((returns) => [AgendaItem], { name: "agendaItemsByAuthor" })
+  agendaItemsByAuthor(@Args("authorId", { type: () => Int }) authorId: number) {
     return this.agendaItemsService.findAllByAuthor(authorId);
   }
 
-  @ResolveField(returns => FamilyMember)
+  @ResolveField((returns) => FamilyMember)
   author(@Parent() agendaItem: AgendaItem): Promise<FamilyMember> {
-    //console.log('AUTHOR RESOLVER');  
-    //console.log(note);
-    console.log('AUTHOR ID', agendaItem);
-      return this.agendaItemsService.getAuthor(agendaItem.authorId);
+    return this.agendaItemsService.getAuthor(agendaItem.authorId);
   }
 
-  @ResolveField(returns => [FamilyMember])
-//   @ResolveField(returns => [FamilyMember])
-  inAgendaItem(@Parent() agendaItem: AgendaItem): Promise<any> {
-//   inAgendaItem(@Parent() agendaItem: AgendaItem): Promise<FamilyMember[]> {
-    
-    // let familyMembers: any = [];
-    // familyMembers =  agendaItem.inAgendaItem.map(familyMember => {
-    //     // console.log(this.agendaItemsService.getAuthor(familyMember.familyMemberId));
-    //     return this.agendaItemsService.getAuthor(familyMember.familyMemberId);
-    //     // return familyMember.familyMemberId;
-    // });
-    // console.log(familyMembers);
-    // return familyMembers;
-    
-    // console.log( this.agendaItemsService.getInvitedFamilyMembers(agendaItem));
-    console.log('^^^^^');
-    console.log(agendaItem);
-    console.log('++++');
-    const result = this.agendaItemsService.getInvitedFamilyMembers(agendaItem)
-    console.log(result);
-    if (result) return this.agendaItemsService.getInvitedFamilyMembers(agendaItem)
-    else return null;
-    
-    // return this.agendaItemsService.getInvitedFamilyMembers(agendaItem);
-    
-
+  @ResolveField((returns) => [FamilyMemberInAgendaItem ])
+  inAgendaItem( @Parent() agendaItem: AgendaItem ): Promise<any> {
+    return this.agendaItemsService.getInvitedFamilyMembers(agendaItem.authorId);
   }
-
-
-
-//   @ResolveField(returns => [FamilyMember])
-//   with(
-//       @Parent()
-//       agendaItem: AgendaItem): Promise<FamilyMember[]> {
-      
-//     return this.agendaItemsService.getInvitedFamilyMembers(agendaItem.id);
-
-// }
-
-//   @ResolveField(returns => [FamilyMember])
-//   with(
-//       @Parent()
-//       agendaItem: AgendaItem
-//     ): Promise<FamilyMember[]> {
-//       return this.agendaItemsService.getMembers(agendaItem.id);
-//         // return this.agendaItemsService.getAuthor(agendaItem.author.id);
-//   }
-
-
-//   @ResolveField(returns => FamilyMember[])
-//   invitedFamilyMembers(@Parent() agendaItem: AgendaItem): Promise<FamilyMember> {
-//     return this.agenda
-//   }
-
 
   @Mutation(() => AgendaItem)
-  updateAgendaItem(@Args('id', { type: () => Int }) id: number, @Args('updateAgendaItemInput') updateAgendaItemInput: UpdateAgendaItemInput) {
+  updateAgendaItem(
+    @Args("id", { type: () => Int }) 
+    id: number,
+    @Args("updateAgendaItemInput") 
+    updateAgendaItemInput: UpdateAgendaItemInput
+  ) {
     return this.agendaItemsService.update(id, updateAgendaItemInput);
   }
 
   @Mutation(() => AgendaItem)
-  deleteAgendaItem(@Args('id', { type: () => Int }) id: number) {
+  deleteAgendaItem(@Args("id", { type: () => Int }) id: number) {
     // return this.agendaItemsService.remove(id);
     const toBeDeletedAgendaItem = this.agendaItemsService.findOneById(id);
-    if(toBeDeletedAgendaItem) {
-        this.agendaItemsService.delete(id);
-        return toBeDeletedAgendaItem;
+    if (toBeDeletedAgendaItem) {
+      this.agendaItemsService.delete(id);
+      return toBeDeletedAgendaItem;
     } else {
-        return null;
+      return null;
     }
   }
 }

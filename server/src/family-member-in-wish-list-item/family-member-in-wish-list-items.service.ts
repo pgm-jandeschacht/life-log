@@ -8,34 +8,47 @@ import { FamilyMemberInWishListItem } from './entities/family-members-in-wish-li
 
 @Injectable()
 export class FamilyMemberInWishListItemsService {
-    constructor(
-        @InjectRepository(FamilyMemberInWishListItem)
-        private readonly familyMemberInWishListItemRepository: Repository<FamilyMemberInWishListItem>,
-        private familyMembersService: FamilyMembersService,
+  constructor(
+      @InjectRepository(FamilyMemberInWishListItem)
+      private readonly familyMemberInWishListItemRepository: Repository<FamilyMemberInWishListItem>,
+      private familyMembersService: FamilyMembersService,
+  ){}
 
-    ){}
-  create(createFamilyMemberInWishListItemInput: CreateFamilyMemberInWishListItemInput) {
-    return 'This action adds a new FamilyMemberInWishListItem';
+  create(createFamilyMemberInWishListItemInput: CreateFamilyMemberInWishListItemInput): Promise<FamilyMemberInWishListItem> {
+    const newFamFamilyMemberInWishListItem = this.familyMemberInWishListItemRepository.create(createFamilyMemberInWishListItemInput);
+    return this.familyMemberInWishListItemRepository.save(newFamFamilyMemberInWishListItem);
   }
 
-  findAll() {
-    return `This action returns all FamilyMemberInWishListItem`;
+  findAll(): Promise<FamilyMemberInWishListItem[]> {
+    return this.familyMemberInWishListItemRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} FamilyMemberInWishListItem`;
+  findOneById(id: number): Promise<FamilyMemberInWishListItem> {
+    return this.familyMemberInWishListItemRepository.findOneOrFail(id);
   }
 
-  update(id: number, updateFamilyMemberInWishListItemInput: UpdateFamilyMemberInWishListItemInput) {
-    return `This action updates a #${id} FamilyMemberInWishListItem`;
+  // Get all familyMembers related to a wishlist item
+  async findAllByWishListItemId(wishListItemId: number): Promise<FamilyMemberInWishListItem[]> {
+    return this.familyMemberInWishListItemRepository.find({
+      where: {
+        wishListItemId: wishListItemId
+      },
+      relations: ['familyMember']
+    })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} FamilyMemberInWishListItem`;
+  // Get all wishlist Items where a familyMember Appears in
+  async findAllByFamilyMemberId(familyMemberId: number): Promise <FamilyMemberInWishListItem[]> {
+    return this.familyMemberInWishListItemRepository.find({
+      where: {
+        familyMemberId: familyMemberId
+      },
+      relations: ['wishListItem']
+    })
   }
 
+  // CHECK if this is double??
   async getInvolvedFamilyMembers(id: number): Promise<any> {
-    //return `This action returns all family members involved in wish list item #${wishListId}`;
     const familyMembers = this.familyMemberInWishListItemRepository.find({
         where: {
             wishListItemId: id
@@ -44,6 +57,21 @@ export class FamilyMemberInWishListItemsService {
     })
     return familyMembers;
   }
+
+  update(id: number, updateFamilyMemberInWishListItemInput: UpdateFamilyMemberInWishListItemInput): Promise<FamilyMemberInWishListItem> {
+    return this.familyMemberInWishListItemRepository.save(
+      {
+        id: id,
+        ...updateFamilyMemberInWishListItemInput
+      }
+    )
+  }
+
+  async delete(id: number) {
+    const familyMemberInWishListItem = await this.findOneById(id);
+    return this.familyMemberInWishListItemRepository.remove(familyMemberInWishListItem);
+  }
+
 
 
   // getInvitedFamilyMembers(id: number): Promise<FamilyMember[] | any[]> {
