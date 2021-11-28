@@ -48,28 +48,6 @@ const StyledImg = styled.div`
         height: 100%;
         object-fit: cover;
     }
-    `
-
-const StyledImgSmall = styled.div`
-    width: 5rem;
-    height: 5rem;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: ${Shadow.small};
-    @media (min-width: ${Breakpoint.small}) {
-        width: 6.5rem;
-        height: 6.5rem;
-    }
-    @media (min-width: ${Breakpoint.medium}) {
-        width: 8rem;
-        height: 8rem;
-    }
-    
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
 `
 
 const DetailTitle = styled.div`
@@ -81,7 +59,7 @@ const DetailTitle = styled.div`
         flex-direction: row;
         margin-bottom: 3rem;
     }
-    `
+`
 
 const DetailInfo = styled.div`
     align-self: flex-start;
@@ -195,125 +173,6 @@ const Bio = styled.div`
             width: 50%;
         }
     }
-    `
-
-const Married = styled.div`
-    margin-bottom: 1.5rem;
-    @media (min-width: ${Breakpoint.small}) {
-        margin-bottom: 2rem;
-    }
-    @media (min-width: ${Breakpoint.medium}) {
-        margin-bottom: 3rem;
-    }
-    @media (min-width: ${Breakpoint.large}) {
-        margin-bottom: 2rem;
-    }
-    `
-
-const DetailSmallContainer = styled.div`
-    @media (min-width: ${Breakpoint.large}) {
-        width: 50%;
-    }
-    a {
-        padding: 1rem;
-        display: flex;
-        align-items: center;
-        background: ${Colors.secondary};
-        transition: ${Transition.normal};
-        border-radius: 5px;
-        
-        &:hover {
-            transform: translateY(-5px);
-            border-radius: 10px;
-            background: ${Colors.accent2};
-        }
-    }
-`
-
-const DetailSmall = styled.div`
-    margin-left: 2rem;
-    
-    &:last-of-type {
-        margin-bottom: 0;
-    }
-    
-    p:first-of-type {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        @media (min-width: ${Breakpoint.small}) {
-            font-size: 1.75rem;
-            margin-bottom: 0.75rem;
-        }
-        @media (min-width: ${Breakpoint.medium}) {
-            font-size: 2.25rem;
-            margin-bottom: 1rem;
-        }
-        @media (min-width: ${Breakpoint.large}) {
-            font-size: 1.75rem;
-            margin-bottom: 0.75rem;
-        }
-    }
-    
-    p:last-of-type {
-        font-size: 1.2rem;
-        font-weight: 500;
-        @media (min-width: ${Breakpoint.small}) {
-            font-size: 1.5rem;
-        }
-        @media (min-width: ${Breakpoint.medium}) {
-            font-size: 2rem;
-        }
-        @media (min-width: ${Breakpoint.large}) {
-            font-size: 1.5rem;
-        }
-    }
-`
-
-const Children = styled.div`
-    margin-bottom: 2rem;
-    @media (min-width: ${Breakpoint.small}) {
-        margin-bottom: 3rem;
-    }
-    @media (min-width: ${Breakpoint.medium}) {
-        margin-bottom: 4rem;
-    }
-    @media (min-width: ${Breakpoint.large}) {
-        margin-bottom: 3rem;
-    }
-    
-    ul {
-        display: flex;
-        flex-direction: column;
-        @media (min-width: ${Breakpoint.large}) {
-            flex-direction: row;
-        }
-        
-        li {
-            margin-bottom: 1rem;
-            @media (min-width: ${Breakpoint.medium}) {
-                margin-bottom: 1.5rem;
-            }
-            @media (min-width: ${Breakpoint.large}) {
-                width: 100%;
-                margin-bottom: 0;
-                &:nth-of-type(odd) {
-                    margin-right: 1rem;
-                }
-                div {
-                    width: 100%;
-                    a {
-                        width: 100%;
-                    }
-                }
-            }
-            
-            &:last-of-type {
-                margin-bottom: 0;
-            }
-        }
-    }
-    
 `
 
 const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
@@ -378,46 +237,6 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
             </Bio>
 
             <FamilyDetailRelation userId={userId} />
-
-            {/* <Married>
-                <SubTitle>{profile.maritalStatus} with</SubTitle>
-                <DetailSmallContainer>
-                    <Link to={'/my-family'}>
-                        <StyledImgSmall >
-                            <img src={peter} alt={profile.partner} />
-                        </StyledImgSmall>
-
-                        <DetailSmall>
-                            <p>{profile.partner}</p>
-                            <p>37 years old</p>
-                        </DetailSmall>
-                    </Link>
-                </DetailSmallContainer>
-            </Married>
-
-            <Children>
-                <SubTitle>Children</SubTitle>
-                <ul>
-                    {profile.children.map((child: any) => (
-                        <li>
-                            <DetailSmallContainer>
-                                <Link to={'/my-family'}>
-                                    <StyledImgSmall >
-                                        <img src={maria} alt={child.name} />
-                                    </StyledImgSmall>
-
-                                    <DetailSmall>
-                                        <p>{child.name}</p>
-                                        <p>5 years old</p>
-                                    </DetailSmall>
-                                </Link>
-                            </DetailSmallContainer>
-                        </li>
-                    )) }
-                </ul>
-            </Children> */}
-
-            {/* <FamilyDetailButtons id={userId} name={data?.familyMemberById.firstname}/> */}
         </div>
     )
 }

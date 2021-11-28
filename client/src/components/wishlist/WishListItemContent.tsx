@@ -148,6 +148,14 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
         e.preventDefault();
     }
 
+    const beautifyDob = (dobMember?: any) => {
+        var split = dobMember?.split('on the: ');
+        var newDob = split.join('');
+        var dob = new Date(`${newDob}`);  
+        const date = `${dob.getUTCDay()}/${dob.getUTCMonth()}/${dob.getUTCFullYear()}`;
+        return date;
+    }
+
     return (
         <StyledDiv expand={clicked}>
             I want
@@ -156,7 +164,7 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
             to bring me
             <span>{wish.content}</span>
             when they visit me
-            <span>{visitDate}</span>
+            <span>{beautifyDob(visitDate)}</span>
 
             <div>
                 <a onClick={handleClicking} href="/">
