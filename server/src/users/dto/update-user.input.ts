@@ -15,7 +15,4 @@ export class UpdateUserInput extends PartialType(CreateUserInput) {
 
     @Field()
     password: string;
-
-    
-    // familyMember?: FamilyMember;
 }

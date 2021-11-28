@@ -1,6 +1,10 @@
-// import { CreateFamilyMemberInAgendaItemInput } from './create-family-member-in-agenda-item.input';
 import { CreateFamilyMemberInAgendaItemInput } from './create-family-member-in-agenda-item.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { 
+  InputType, 
+  Field, 
+  Int, 
+  PartialType 
+} from '@nestjs/graphql';
 
 @InputType()
 export class UpdateFamilyMemberInAgendaItemInput extends PartialType(CreateFamilyMemberInAgendaItemInput) {

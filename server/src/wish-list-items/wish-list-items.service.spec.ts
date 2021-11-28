@@ -1,4 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { 
+  Test, 
+  TestingModule 
+} from '@nestjs/testing';
 import { WishListItemsService } from './wish-list-items.service';
 
 describe('WishListItemsService', () => {

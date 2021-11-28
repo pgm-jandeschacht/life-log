@@ -6,7 +6,10 @@ import { FamilyMember } from './entities/family-member.entity';
 import { UsersModule } from 'src/users/users.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([FamilyMember]), UsersModule],
+  imports: [
+    TypeOrmModule.forFeature([FamilyMember]), 
+    UsersModule
+  ],
   providers: [FamilyMembersService, FamilyMembersResolver],
   exports: [FamilyMembersService]
 })

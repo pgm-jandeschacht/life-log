@@ -4,10 +4,14 @@ import { AlbumItemsResolver } from './album-items.resolver';
 import { AlbumItem } from './entities/album-item.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FamilyMembersModule } from 'src/family-members/family-members.module';
+import { FamilyMemberInAlbumItemsModule } from 'src/family-member-in-album-items/family-member-in-album-items.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([AlbumItem]),
-    FamilyMembersModule],
+  imports: [
+    TypeOrmModule.forFeature([AlbumItem]),
+    FamilyMembersModule,
+    FamilyMemberInAlbumItemsModule  
+  ],
   providers: [AlbumItemsResolver, AlbumItemsService],
   exports: [AlbumItemsService]
 })

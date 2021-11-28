@@ -9,37 +9,35 @@ import { Note } from './entities/note.entity';
 
 @Injectable()
 export class NotesService {
-    constructor(
-        @InjectRepository(Note) 
-        private noteRepository: Repository<Note>, 
-        private familyMemberService: FamilyMembersService
-    ) {};
+  constructor(
+    @InjectRepository(Note) 
+    private noteRepository: Repository<Note>, 
+    private familyMemberService: FamilyMembersService
+  ) {};
+
+  create(createNoteInput: CreateNoteInput): Promise<Note> {
+    const newNote = this.noteRepository.create(createNoteInput);
+    return this.noteRepository.save(newNote);
+  }
+
+  findAll(): Promise<Note[]> {
+    return this.noteRepository.find();
+  }
+
+  findOneById(id: number): Promise<Note> {
+    return this.noteRepository.findOneOrFail(id);
+  }
   
-    create(createNoteInput: CreateNoteInput): Promise<Note> {
-        const newNote = this.noteRepository.create(createNoteInput);
+  async update(id: number, updateNoteInput: UpdateNoteInput): Promise<Note> {
+    return this.noteRepository.save({id: id, ...updateNoteInput});
+  }
 
-        return this.noteRepository.save(newNote);
-    }
+  async delete(id: number): Promise<Note> {
+    const note = await this.findOneById(id);
+    return this.noteRepository.remove(note);
+  }
 
-    findAll(): Promise<Note[]> {
-        return this.noteRepository.find();
-    }
-
-    findOneById(id: number): Promise<Note> {
-        return this.noteRepository.findOneOrFail(id);
-    }
-    
-    async update(id: number, updateNoteInput: UpdateNoteInput): Promise<Note> {
-        return this.noteRepository.save({id: id, ...updateNoteInput});
-    }
-
-    async delete(id: number): Promise<Note> {
-        const note = await this.findOneById(id);
-
-        return this.noteRepository.remove(note);
-    }
-
-    getAuthor(authorId: number) : Promise<FamilyMember> {
-        return this.familyMemberService.findOneById(authorId);
-    }
+  getAuthor(authorId: number) : Promise<FamilyMember> {
+    return this.familyMemberService.findOneById(authorId);
+  }
 }

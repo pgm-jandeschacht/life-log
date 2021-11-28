@@ -1,16 +1,36 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { 
+  InputType, 
+  Int, 
+  Field 
+} from '@nestjs/graphql';
+import { 
+  IsBoolean, 
+  IsString, 
+  IsDate 
+} from 'class-validator';
 
 @InputType()
 export class CreateWishListItemInput {
-    
-    @Field({ description: "Content of this wish" })
-    content: string;
+  @IsString()
+  @Field({ description: "Content of this wish" })
+  content: string;
 
-    
-    @Field({ defaultValue: false })
-    completed: boolean;
+  @IsBoolean()
+  @Field({ defaultValue: false })
+  completed: boolean;
 
-    
-    // @Field(type => Int, { nullable: true })
-    // authorId?: number;
+  @Field(type => Int, { nullable: true })
+  authorId?: number;
+
+  @IsDate()  
+  @Field()
+  dueDate?: Date;
+
+  @IsDate()
+  @Field()
+  created_at: Date;
+  
+  @IsDate()
+  @Field()
+  updated_at: Date;
 }

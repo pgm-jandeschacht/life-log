@@ -1,4 +1,10 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { 
+  Resolver, 
+  Query, 
+  Mutation, 
+  Args, 
+  Int 
+} from '@nestjs/graphql';
 import { RelationTypesService } from './relation-types.service';
 import { RelationType } from './entities/relation-type.entity';
 import { CreateRelationTypeInput } from './dto/create-relation-type.input';
@@ -6,7 +12,9 @@ import { UpdateRelationTypeInput } from './dto/update-relation-type.input';
 
 @Resolver(() => RelationType)
 export class RelationTypesResolver {
-  constructor(private readonly relationTypesService: RelationTypesService) {}
+  constructor(
+    private readonly relationTypesService: RelationTypesService
+  ) {}
 
   @Mutation(() => RelationType)
   createRelationType(@Args('createRelationTypeInput') createRelationTypeInput: CreateRelationTypeInput) {
@@ -20,15 +28,16 @@ export class RelationTypesResolver {
 
   @Query(() => RelationType, { name: 'relationType' })
   relationTypeById(@Args('id', { type: () => Int }) id: number): Promise<RelationType> {
-        return this.relationTypesService.findOneById(id);
+    return this.relationTypesService.findOneById(id);
   }
 
   @Mutation(() => RelationType)
   updateRelationType(
-      @Args('id', { type: () => Int }) 
-      id: number,
-      @Args('updateRelationTypeInput') 
-      updateRelationTypeInput: UpdateRelationTypeInput) {
+    @Args('id', { type: () => Int }) 
+    id: number,
+    @Args('updateRelationTypeInput') 
+    updateRelationTypeInput: UpdateRelationTypeInput
+  ) {
     return this.relationTypesService.update(id, updateRelationTypeInput);
   }
 
