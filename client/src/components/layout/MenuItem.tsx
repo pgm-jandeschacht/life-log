@@ -28,6 +28,7 @@ const Li = styled.li<LiProps>`
     &:hover {
         transform: translateY(-5px);
         a {
+            border-color: ${(LiProps) => (LiProps.alternative ? '' : `${LiProps.backgroundColor}`)};
             background: ${(LiProps) => (LiProps.alternative ? `${Colors.ternary}` : `${Colors.primary}` )};
 
             svg {
@@ -57,6 +58,7 @@ const Li = styled.li<LiProps>`
     }
     
     a {
+        border: 4px solid transparent;
         transition: ${Transition.normal};
         width: 100%;
         box-shadow: ${Shadow.small};

@@ -37,7 +37,7 @@ const StyledDiv = styled.div<StyledDivProps>`
         padding-bottom: 1.25rem;
     }
     @media (min-width: ${Breakpoint.large}) {
-        padding: 1.5rem 1.5rem;
+        padding: 1.5rem 4rem;
         padding-bottom: 1rem;
     }
     

@@ -18,6 +18,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     border-radius: 50%;
     transition: ${Transition.normal};
     color: ${Colors.primary};
+    border: 4px solid transparent;
     
     @media (min-width: ${Breakpoint.small}) {
         padding: 0.6875rem 1rem;
@@ -30,6 +31,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     }
 
     &:hover {
+        border-color: ${(StyledButtonProps) => (StyledButtonProps.backgroundColor !== undefined ? StyledButtonProps.backgroundColor : Colors.secondary)};
         background: ${(StyledButtonProps) => (StyledButtonProps.backgroundColor !== undefined ? Colors.primary : Colors.primary)};
         color: ${(StyledButtonProps) => (StyledButtonProps.backgroundColor !== undefined ? StyledButtonProps.backgroundColor : Colors.secondary)};
     }

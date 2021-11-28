@@ -25,12 +25,13 @@ const StyledLi = styled.li<StyledLiProps>`
         margin-bottom: 1.5rem;
     }
     @media (min-width: ${Breakpoint.large}) {
-        width: calc(50% - 0.75rem);
+        margin-bottom: 1rem;
+        width: calc(50% - 0.5rem);
     }
 
     &:nth-of-type(odd) {
         @media (min-width: ${Breakpoint.large}) {
-            margin-right: 1.5rem;
+            margin-right: 1rem;
         }
     }
     
@@ -42,7 +43,6 @@ const StyledLi = styled.li<StyledLiProps>`
         display: flex;
         align-items: center;
         justify-content: space-between;
-        /* max-height: 12rem; */
         padding: 1.2rem 1.5rem;
         font-size: 1.5rem ;
         font-weight: 900;
@@ -56,6 +56,10 @@ const StyledLi = styled.li<StyledLiProps>`
             max-height: 12rem;
             padding: 2rem 2.5rem;
         }
+        @media (min-width: ${Breakpoint.large}) {
+            font-size: 2rem ;
+            padding: 1.5rem 2rem;
+        }
         
         &:hover {
             box-shadow: ${Shadow.medium};
@@ -67,17 +71,21 @@ const StyledLi = styled.li<StyledLiProps>`
 const StyledDiv = styled.div`
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    width: 100%;
     
     p {
         font-size: 1.5rem ;
-        margin-left: 2rem;
+        margin-left: 1.5rem;
         @media (min-width: ${Breakpoint.small}) {
-            margin-left: 3rem;
+            margin-left: 2rem;
             font-size: 2rem ;
         }
         @media (min-width: ${Breakpoint.medium}) {
-            margin-left: 4rem;
             font-size: 3rem ;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            font-size: 2rem ;
         }
     }
     
@@ -91,6 +99,10 @@ const StyledDiv = styled.div`
         @media (min-width: ${Breakpoint.medium}) {
             width: 30% !important;
             height: 12rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            width: 20% !important;
+            height: 4rem;
         }
     }
 `
