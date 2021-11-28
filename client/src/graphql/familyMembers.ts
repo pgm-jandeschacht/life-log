@@ -154,6 +154,7 @@ query getFamilyRelationsByFamilyMemberId($id: Int!){
         name
       }
       relatedFamilyMember {
+        id
         firstname
         lastname
         image

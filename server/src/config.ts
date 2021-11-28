@@ -11,7 +11,7 @@ export const config = () => ({
         synchronize: true,
         ssl: true,
     },
-    database: {  
+    databaseTEST: {  
         type: 'postgres',
         host: process.env.HOST,
         port: 5432,

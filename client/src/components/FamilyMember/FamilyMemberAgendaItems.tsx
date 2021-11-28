@@ -4,6 +4,7 @@ import { GET_AGENDAITEMS_BY_FAMILYMEMBER_ID } from "../../graphql/familyMembers"
 import { FamilyMember, FamilyMemberData, FamilyMembersData } from "../../interfaces";
 
 import { useQuery, useLazyQuery } from "@apollo/client";
+import { Loading } from '../alerts';
 
 interface FamilyMemberAgendaItemsProps {
     
@@ -19,7 +20,7 @@ function FamilyMemberAgendaItems({}: FamilyMemberAgendaItemsProps): ReactElement
         }
     });
 
-    if(loading) return <p>"loading ..."</p>;
+    if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRRAAA!!"</p>;
     // console.log(data);
     return (

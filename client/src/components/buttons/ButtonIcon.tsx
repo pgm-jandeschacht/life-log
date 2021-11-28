@@ -45,7 +45,6 @@ const StyledButton = styled.button<StyledButtonProps>`
 `
 
 const ButtonIcon = ({ children, onClick, background }: ButtonIconProps) => {
-    console.log(background)
     return (
         <StyledButton backgroundColor={background} onClick={onClick}>
             {children}

@@ -175,7 +175,7 @@ export class AppService {
       isAlive : true,
       bio : faker.lorem.sentences(),
       image: faker.image.avatar(),
-      dob: faker.date.past(),
+      dob: faker.date.between('1920-01-01', '2021-12-31'),
       occupation: faker.name.jobTitle(),
       country: faker.address.country(),
       city: faker.address.city(),

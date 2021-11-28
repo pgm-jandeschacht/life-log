@@ -154,7 +154,7 @@ const AddWishListItem = () => {
                         <DropDownError dummyText={example2} name={"date"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
 
-                    <FormTemplate submitting={isSubmitting} page={"agenda"} color={"#FFB2AB"} />
+                    <FormTemplate submitting={isSubmitting} page={"wishlist"} color={"#FFB2AB"} />
                 </StyledForm>
         )}
         </Formik>

@@ -62,7 +62,6 @@ export interface FamilyRelationData {
     familyRelationsByFamilyMemberId: FamilyRelation[]
 }
 
-
 export interface FamilyRelation {
     id: number
     familyMember: FamilyMember
