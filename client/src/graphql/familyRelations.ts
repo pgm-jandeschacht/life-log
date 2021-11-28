@@ -32,3 +32,19 @@ query getFamilyRelationsByFamilyMemberId($id: Int!) {
   }
 }    
 `;
+
+// info for "My pictures"
+export const GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID = gql`
+query getRelatedFamilyMembersByFamilyMemberId($id: Int!) {
+  familyRelationsByFamilyMemberId(familyMemberId: $id) {
+    id
+    relatedFamilyMember {
+      id
+      firstname
+      lastname
+      dob
+      image
+    }
+  }
+}    
+`;
