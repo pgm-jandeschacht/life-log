@@ -22,14 +22,11 @@ const StyledLi = styled.li`
             margin-right: 1rem;
         }
     }
+
     &:first-of-type {
         a {
             margin-top: 0;
         }
-    }
-
-    &:last-of-type {
-        border: none;
     }
 
     a {
@@ -69,6 +66,7 @@ const StyledLi = styled.li`
 
         p {
             margin-left: 1.5rem;
+            word-break: break-word;
             font-size: 1.2rem;
             font-weight: 900;
             @media (min-width: ${Breakpoint.small}) {
@@ -76,7 +74,6 @@ const StyledLi = styled.li`
                 font-size: 1.5rem;
             }
             @media (min-width: ${Breakpoint.medium}) {
-                margin-left: 2rem;
                 font-size: 2rem;
             }
         }
