@@ -25,6 +25,9 @@ const StyledButton = styled.button<StyledButtonProps>`
     @media (min-width: ${Breakpoint.medium}) {
         padding: 0.77rem 1.25rem;
     }
+    @media (min-width: ${Breakpoint.large}) {
+        padding: 0.625rem 1rem;
+    }
 
     &:hover {
         background: ${(StyledButtonProps) => (StyledButtonProps.backgroundColor !== undefined ? Colors.primary : Colors.primary)};
@@ -40,6 +43,9 @@ const StyledButton = styled.button<StyledButtonProps>`
         }
         @media (min-width: ${Breakpoint.medium}) {
             width: 2rem !important;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            width: 1.5rem !important;
         }
     }
 `

@@ -22,11 +22,18 @@ const Li = styled.li<LiProps>`
     display: flex;
     
     @media (min-width: ${Breakpoint.extraLarge}) {
-        width: 33%;
+        width: 25%;
     }
 
     &:hover {
-        transform: ${(LiProps) => (!LiProps.alternative ? 'translateY(-5px)' : '')};
+        transform: translateY(-5px);
+        a {
+            background: ${(LiProps) => (LiProps.alternative ? `${Colors.ternary}` : `${Colors.primary}` )};
+
+            svg {
+                color: ${(LiProps) => (LiProps.alternative ? `${Colors.primary}` : `${LiProps.backgroundColor}` )};
+            }
+        }
     }
     
     &:nth-of-type(odd) {
@@ -49,35 +56,8 @@ const Li = styled.li<LiProps>`
         }
     }
     
-    // large screen 3x3 grid
-    &:nth-of-type(3n + 2) {
-        a {
-            @media (min-width: ${Breakpoint.extraLarge}) {
-                margin-left: 0.75rem;
-                margin-right: 0.75rem;
-            }
-        }
-    }
-    
-    &:nth-of-type(3n + 1) {
-        a {
-            @media (min-width: ${Breakpoint.extraLarge}) {
-                margin-left: 0;
-                margin-right: 0.75rem;
-            }
-        }
-    }
-    
-    &:nth-of-type(3n) {
-        a {
-            @media (min-width: ${Breakpoint.extraLarge}) {
-                margin-right: 0;
-                margin-left: 0.75rem;
-            }
-        }
-    }
-    
     a {
+        transition: ${Transition.normal};
         width: 100%;
         box-shadow: ${Shadow.small};
         background: ${(LiProps) => LiProps.backgroundColor};
@@ -97,10 +77,17 @@ const Li = styled.li<LiProps>`
         @media (min-width: ${Breakpoint.medium}) {
             padding: 3rem 0; 
         }
+        @media (min-width: ${Breakpoint.extraLarge}) {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            margin-right: 0.75rem;
+            margin-left: 0.75rem;
+        }
         
         svg {
+            transition: ${Transition.normal};
             width: 100% !important;
-            height: 5rem;
+            height: 4rem;
             color: ${(LiProps) => (LiProps.alternative ? `${Colors.secondary}` : `${Colors.primary}`)};
             
             @media (min-width: ${Breakpoint.small}) {

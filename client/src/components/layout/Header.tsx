@@ -35,6 +35,9 @@ const StyledHeader = styled.header<HeaderProps>`
     @media (min-width: ${Breakpoint.medium}) {
         padding: 5rem 4rem;
     }
+    @media (min-width: ${Breakpoint.large}) {
+        padding: 3rem 4rem;
+    }
 
     h1 {
         font-size: 2.5rem;
@@ -45,6 +48,9 @@ const StyledHeader = styled.header<HeaderProps>`
         }
         @media (min-width: ${Breakpoint.medium}) {
             font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 3.25 : 4)}rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 3 : 3.5)}rem;
         }
     }
 
