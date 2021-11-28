@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import fallback from '../../assets/images/anna_boloise.jpg'
-import { Colors, Shadow } from '../../variables'
+import { Breakpoint, Colors, Shadow } from '../../variables'
 
 import { useQuery } from '@apollo/client'
 import { GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID } from '../../graphql/familyMembers';
@@ -16,54 +16,131 @@ const StyledDiv = styled.div `
     display: flex;
     flex-direction: column;
     align-items: center;
+    @media (min-width: ${Breakpoint.large}) {
+        align-items: flex-start;
+        flex-direction: row;
+    }
 
     h2 {
-        font-size: 2.5rem;
+        font-size: 1.75rem;
         font-weight: 700;
-        margin-bottom: 2rem;
-    }
-`
-
-const StyledImg = styled.div`
-    overflow: hidden;
-    width: 16rem;
-    height: 16rem;
-    border-radius: 10px;
-    box-shadow: ${Shadow.small};
-    margin-bottom: 2rem;
-
-    img {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
+        margin-bottom: 1rem;
+        @media (min-width: ${Breakpoint.small}) {
+            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
     }
 `
 
 const StyledUl = styled.ul`
-    /* display: flex;
-    flex-direction: column; */
-    width: 100%;
-
+        width: 100%;
+    @media (min-width: ${Breakpoint.large}) {
+        width: 66.6%;
+    }
+    
     li {
         background: ${Colors.secondary};
         box-shadow: ${Shadow.small};
-        border-radius: 10px;
-        margin-bottom: 1.5rem;
-        padding: 1.5rem;
+        border-radius: 20px;
+        margin-bottom: 1rem;
+        padding: 1rem;
+        @media (min-width: ${Breakpoint.small}) {
+            padding: 1.25rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
         
         &:last-of-type {
             margin-bottom: 0;
         }
         
         p:first-of-type {
-            font-size: 1.5rem;
+            font-size: 1rem;
             font-weight: 500;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
+            @media (min-width: ${Breakpoint.small}) {
+                font-size: 1.25rem;
+            }
+            @media (min-width: ${Breakpoint.medium}) {
+                margin-bottom: 1rem;
+                font-size: 1.5rem;
+            }
+            @media (min-width: ${Breakpoint.large}) {
+                margin-bottom: 0.75rem;
+                font-size: 1.25rem;
+            }
         }
         
         p:last-of-type {
-            font-size: 2.5rem;
+            word-break: break-word;
+            font-size: 1.2rem;
             font-weight: 700;
+            @media (min-width: ${Breakpoint.small}) {
+                font-size: 1.75rem;
+            }
+            @media (min-width: ${Breakpoint.medium}) {
+                font-size: 2.5rem;
+            }
+            @media (min-width: ${Breakpoint.large}) {
+                font-size: 1.75rem;
+            }
+        }
+    }
+`
+
+const StyledLi = styled.div`
+    margin-bottom: 1rem;
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 1.5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-bottom: 1rem;
+    }
+`
+
+const StyledImg = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    @media (min-width: ${Breakpoint.large}) {
+        display: block;
+        width: 33.3%;
+        position: sticky;
+        top: 2rem;
+    }
+
+    div {
+        overflow: hidden;
+        width: 8rem;
+        height: 8rem;
+        border-radius: 20px;
+        box-shadow: ${Shadow.small};
+        margin-bottom: 1rem;
+        @media (min-width: ${Breakpoint.small}) {
+            margin-bottom: 1.5rem;
+            width: 12rem;
+            height: 12rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            margin-bottom: 2rem;
+            width: 16rem;
+            height: 16rem;
+        }
+        
+        img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
         }
     }
 `
@@ -77,30 +154,41 @@ const AboutMe: React.FC = () => {
         variables: {
             id: parseInt(familyMemberId)
         }
-    })
+    });
 
     if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRR!!"</p>;
     console.log(data);
+
+    const beautifyDob = (dobMember?: string) => {
+        var dob = new Date(`${dobMember}`);  
+        const date = `${dob.getUTCDay()}/${dob.getUTCMonth()}/${dob.getUTCFullYear()}`;
+        return date;
+    }
+
     return (
         <StyledDiv>
-            {/* <img src={`../../assets/images/${profile.image}`} alt={`${profile.firstName} ${profile.lastName}`} /> */}
             <StyledImg>
-                <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
+                <div>
+                    {/* <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} /> */}
+                    <img src={fallback} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
+                </div>
+
+                <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
             </StyledImg>
 
-            <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
-
             <StyledUl>
-                <li>
-                    <p>Date of birth</p>
-                    <p>{ data?.familyMemberById.dob }</p>
-                </li>
+                <StyledLi>
+                    <li>
+                        <p>Date of birth</p>
+                        <p>{ beautifyDob(data?.familyMemberById.dob) }</p>
+                    </li>
 
-                <li>
-                    <p>Date of birth</p>
-                    <p>{ data?.familyMemberById.gender }</p>
-                </li>
+                    <li>
+                        <p>Gender</p>
+                        <p>{ data?.familyMemberById.gender }</p>
+                    </li>
+                </StyledLi>
 
                 {/* <li>
                     <p>Status</p>

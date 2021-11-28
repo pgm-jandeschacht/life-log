@@ -136,9 +136,8 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
 
     if(loading) return <Loading/>;
     if(error) return <p>{error.message}</p>;
-    console.log(data?.familyMemberById);
 
-    function calculateAge (dobMember: string | undefined) {
+    const calculateAge = (dobMember?: string) => {
         var dob = new Date(`${dobMember}`);  
         var month_diff = Date.now() - dob.getTime();  
         var age_dt = new Date(month_diff);   
