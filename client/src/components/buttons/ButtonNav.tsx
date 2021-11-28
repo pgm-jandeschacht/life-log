@@ -15,7 +15,7 @@ interface StyledButtonNavProps {
 }
 
 const StyledButtonNav = styled.button<StyledButtonNavProps>`
-    width: 66%;
+    width: 66.6%;
     background: ${(StyledButtonNavProps) => (StyledButtonNavProps.buttonColor ? Colors.secondary : Colors.primary)};
     color: ${(StyledButtonNavProps) => (StyledButtonNavProps.buttonColor ? Colors.primary : Colors.secondary)};
     font-size: 1.25rem;
@@ -23,7 +23,7 @@ const StyledButtonNav = styled.button<StyledButtonNavProps>`
     padding: 0.75rem 0;
     border-radius: 10px;
     transition: ${Transition.normal};
-
+    
     @media (min-width: ${Breakpoint.small}) {
         padding: 1rem 0;
         font-size: 1.75rem;
@@ -31,6 +31,11 @@ const StyledButtonNav = styled.button<StyledButtonNavProps>`
     @media (min-width: ${Breakpoint.medium}) {
         padding: 1.25rem 0;
         font-size: 2rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        padding: 1rem 0;
+        font-size: 1.4rem;
+        width: 30%;
     }
 
     &:hover {

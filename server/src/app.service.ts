@@ -113,10 +113,10 @@ export class AppService {
     let wishes = [];
     for (let i = 0; i < amount; i++) {
         const wish = await this.wishListItemRepository.create({
-            content: faker.lorem.sentence(),
+            content: faker.commerce.productName(),
             completed: faker.datatype.boolean(),
             createdOn: faker.date.past(),
-            dueDate: faker.date.between(new Date(), new Date(2021, 12, 29)),
+            dueDate: faker.date.future(),
         })
         wishes.push(wish);
     }

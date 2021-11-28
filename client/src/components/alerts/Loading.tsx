@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import animation from '../../assets/animations/loadingAnimation.svg'
+import { Breakpoint } from '../../variables'
 
 const StyledImg = styled.div`
     position: absolute;
@@ -9,7 +10,16 @@ const StyledImg = styled.div`
     transform: translateX(-50%) translateY(-50%);
 
     img {
-        width: 10rem;
+        width: 5rem;
+        @media (min-width: ${Breakpoint.small}) {
+            width: 7.5rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            width: 10rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            width: 7.5rem;
+        }
     }
 `
 
