@@ -44,6 +44,14 @@ export class WishListItemsService {
     return this.familyMemberService.findOneById(authorId);
   }
 
+  findAllByAuthor(authorId: number): Promise<WishListItem[]> {
+    return this.wishListItemRepository.find({
+      where: {
+          authorId: authorId
+      }
+    });
+  }
+
   async getInvolvedFamilyMembers(wishListItemId: number): Promise<FamilyMemberInWishListItem[]> {
     return this.familyMemberInWishListItemService.findAllByWishListItemId(wishListItemId);
   }

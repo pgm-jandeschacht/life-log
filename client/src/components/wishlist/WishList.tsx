@@ -4,8 +4,8 @@ import { Colors } from '../../variables'
 import WishListItem from './WishListItem';
 
 import { useQuery } from '@apollo/client';
-import { GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
-import { FamilyMemberData } from '../../interfaces';
+import { GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/wishListItems';
+import { FamilyMemberData, WishListItemsData } from '../../interfaces';
 import _ from 'lodash';
 import { Loading } from '../alerts';
 
@@ -34,7 +34,7 @@ const StyledUl = styled.div`
 const WishList = () => {
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
-    const { data, loading, error } = useQuery<FamilyMemberData >(GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID, {
+    const { data, loading, error } = useQuery<WishListItemsData >(GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID, {
         variables: {
             id: parseInt(familyMemberId)
         }
@@ -42,7 +42,7 @@ const WishList = () => {
 
     if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRR!!"</p>;
-    const wishListItems = data?.familyMemberById.wishListItems || [];
+    const wishListItems = data?.wishListItemsByAuthor || [];
     const sortedWishListItems = (_.sortBy(wishListItems, ['dueDate'])).reverse();
 
     return (

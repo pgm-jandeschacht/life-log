@@ -35,6 +35,11 @@ export class WishListItemsResolver {
     return this.wishListItemsService.findOneById(id);
   }
 
+  @Query((returns) => [WishListItem], { name: "wishListItemsByAuthor" })
+  wishListItemsByAuthor(@Args("authorId", { type: () => Int }) authorId: number) {
+    return this.wishListItemsService.findAllByAuthor(authorId);
+  }
+
   @ResolveField(returns => FamilyMember)
   author(@Parent() wishListItem: WishListItem): Promise<FamilyMember> {
     return this.wishListItemsService.getAuthor(wishListItem.authorId);

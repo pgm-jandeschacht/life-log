@@ -211,16 +211,18 @@ export class AppService {
     const familyMembers = await this.familyMemberRepository.find();
 
     agendaItems.forEach(agendaItem => {
-      const amountOfFamilyMembers = faker.datatype.number({min:1, max:5});
-      const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, agendaItem.id);
-    
-      randomFamilyMembers.forEach(familyMember => {
-        const familyAgendaItem = this.familyMemberInAgendaItemRepository.create({
-          agendaItem: agendaItem,
-          familyMember: familyMembers[familyMember],
+      const amountOfFamilyMembers = faker.datatype.number({min:0, max:10});
+      if(amountOfFamilyMembers > 0) {
+        const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, agendaItem.authorId);
+      
+        randomFamilyMembers.forEach(familyMember => {
+          const familyAgendaItem = this.familyMemberInAgendaItemRepository.create({
+            agendaItem: agendaItem,
+            familyMember: familyMembers[familyMember],
+          });
+          this.familyMemberInAgendaItemRepository.save(familyAgendaItem);     
         });
-        this.familyMemberInAgendaItemRepository.save(familyAgendaItem);     
-      });
+      }
     });
   }
 
@@ -233,16 +235,18 @@ export class AppService {
     const familyMembers = await this.familyMemberRepository.find();
 
     albumItems.forEach(albumItem => {
-      const amountOfFamilyMembers = faker.datatype.number({min:1, max:5});
-      const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, albumItem.id);
-        
-      randomFamilyMembers.forEach(familyMember => {
-        const familyAlbumItem = this.familyMemberInAlbumItemRepository.create({
-          albumItem: albumItem,
-          familyMember: familyMembers[familyMember],
+      const amountOfFamilyMembers = faker.datatype.number({min:0, max:10});
+      if(amountOfFamilyMembers > 0) {
+        const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, albumItem.uploaderId);
+          
+        randomFamilyMembers.forEach(familyMember => {
+          const familyAlbumItem = this.familyMemberInAlbumItemRepository.create({
+            albumItem: albumItem,
+            familyMember: familyMembers[familyMember],
+          });
+          this.familyMemberInAlbumItemRepository.save(familyAlbumItem);     
         });
-        this.familyMemberInAlbumItemRepository.save(familyAlbumItem);     
-      });
+      }
     });
   }
 
@@ -255,16 +259,18 @@ export class AppService {
     const familyMembers = await this.familyMemberRepository.find();
 
     wishListItems.forEach(wishListItem => {
-      const amountOfFamilyMembers = faker.datatype.number({min:1, max:5});
-      const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, wishListItem.id);
-        
-      randomFamilyMembers.forEach(familyMember => {
-        const familyWishListItem = this.familyMemberInWishListItemRepository.create({
-          wishListItem: wishListItem,
-          familyMember: familyMembers[familyMember],
+      const amountOfFamilyMembers = faker.datatype.number({min:0, max:10});
+      if(amountOfFamilyMembers > 0) {
+        const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, wishListItem.authorId);
+          
+        randomFamilyMembers.forEach(familyMember => {
+          const familyWishListItem = this.familyMemberInWishListItemRepository.create({
+            wishListItem: wishListItem,
+            familyMember: familyMembers[familyMember],
+          });
+          this.familyMemberInWishListItemRepository.save(familyWishListItem);     
         });
-        this.familyMemberInWishListItemRepository.save(familyWishListItem);     
-      });
+      }
     });
   }
 

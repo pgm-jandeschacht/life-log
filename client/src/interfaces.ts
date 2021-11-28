@@ -3,12 +3,32 @@ export interface AgendaItem {
     title: string;
     authorId?: number;
     author: FamilyMember;
-    with?: FamilyMember[];
+    inAgendaItem?: InAgendaItem[];
     date: Date;
+}
+
+export interface InAgendaItem {
+  id: number;
+  familyMember: FamilyMember;
+  agendaItem: AgendaItem;
+}
+export interface InAlbumItem {
+  id: number;
+  familyMember: FamilyMember;
+  albumItem: AlbumItem;
+}
+export interface InWishListItem {
+  id: number;
+  familyMember: FamilyMember;
+  wishListItem: WishListItemType;
 }
 
 export interface AgendaItemsData {
     agendaItemsByAuthor: AgendaItem[];
+}
+
+export interface WishListItemsData {
+  wishListItemsByAuthor: WishListItemType[];
 }
 
 export interface AlbumItem {
@@ -18,6 +38,7 @@ export interface AlbumItem {
     uploaderId?: number;
     uploader: FamilyMember;
     inPicture: FamilyMember[];
+    inAlbumItem?: InAlbumItem[];
 }
 
 export interface FamilyMember {
@@ -34,7 +55,7 @@ export interface FamilyMember {
     isSender?: boolean;
     isAlive?: boolean;
     notes?: Note[];
-    wishListItems?: WishListItem[];
+    wishListItems?: WishListItemType[];
     albumitems?: AlbumItem[];
     agendaItems?: AgendaItem[];
     
@@ -45,7 +66,7 @@ export interface FamilyMember {
     
     inAlbumItems?: AlbumItem[];
     invitedAgendaItems?: AgendaItem[];
-    inWishListItem?: WishListItem[];
+    inWishListItem?: WishListItemType[];
 }
 
 // export interface FamilyMembersData {
@@ -80,14 +101,14 @@ export interface Note {
     createdOn: Date;
 }
 
-export interface WishListItem {
+export interface WishListItemType {
     id: number;
     content: string;
     completed: boolean;
     authorId?: number;
-    duedate?: Date;
+    dueDate?: Date;
     author: FamilyMember;
-    for?: FamilyMember[];
+    inWishListItem: InWishListItem[];
 }
 
 export interface RelationType {

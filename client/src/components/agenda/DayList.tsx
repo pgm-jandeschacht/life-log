@@ -46,7 +46,7 @@ const DayList = ({ keyId, test }: DayListProps) => {
 
             <ul>
 
-                <DayItem content={test.title}/>
+                <DayItem content={test.content} inAgendaItem ={test.inAgendaItem} />
                 {/* { test.content.map((testItem: string)=> (
                      <DayItem content={testItem}/>
                 )) } */}
