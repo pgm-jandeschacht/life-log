@@ -45,7 +45,7 @@ const StyledUl = styled.ul`
     li {
         background: ${Colors.secondary};
         box-shadow: ${Shadow.small};
-        border-radius: 20px;
+        border-radius: 10px;
         margin-bottom: 1rem;
         padding: 1rem;
         @media (min-width: ${Breakpoint.small}) {

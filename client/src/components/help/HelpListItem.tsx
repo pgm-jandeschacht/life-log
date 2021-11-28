@@ -63,7 +63,7 @@ const StyledLi = styled.li<StyledLiProps>`
         
         &:hover {
             box-shadow: ${Shadow.medium};
-            transform: translateY(-5px) scale(1.02);
+            transform: translateY(-5px);
         }
     }
     `

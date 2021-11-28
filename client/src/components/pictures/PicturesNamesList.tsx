@@ -1,18 +1,27 @@
 import React from 'react'
 import styled from 'styled-components'
 import fallback from '../../assets/images/lucia_mullen.jpg'
-import { Colors, Shadow, Transition } from '../../variables'
+import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 
 interface PicturesNamesListProps {
     usersList: any
 }
 
 const StyledUl = styled.ul`
+    @media (min-width: ${Breakpoint.large}) {
+        display: flex;
+        flex-wrap: wrap;
+    }
 `
 
 const StyledLi = styled.li`
-    border-bottom: 3px solid ${Colors.accent1};
-    
+    @media (min-width: ${Breakpoint.large}) {
+        width: calc(50% - 0.5rem);
+
+        &:nth-of-type(odd) {
+            margin-right: 1rem;
+        }
+    }
     &:first-of-type {
         a {
             margin-top: 0;
@@ -24,19 +33,32 @@ const StyledLi = styled.li`
     }
 
     a {
+        background: ${Colors.secondary};
         display: flex;
         align-items: center;
         transition: ${Transition.normal};
-        border-radius: 10px;
-        padding: 1rem;
-
-
+        border-radius: 2px;
+        padding: 0.75rem;
+        margin-bottom: 0.75rem;
+        @media (min-width: ${Breakpoint.small}) {
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
         div {
-            width: 6.25rem;
-            height: 6.25rem;
+            width: 4rem;
+            height: 4rem;
             overflow: hidden;
             border-radius: 10px;
             box-shadow: ${Shadow.small};
+            @media (min-width: ${Breakpoint.small}) {
+                width: 5rem;
+                height: 5rem;
+            }
+            @media (min-width: ${Breakpoint.medium}) {
+                width: 6.25rem;
+                height: 6.25rem;
+            }
 
             img {
                 object-fit: cover;
@@ -46,13 +68,23 @@ const StyledLi = styled.li`
         }
 
         p {
-            margin-left: 2rem;
-            font-size: 2rem;
+            margin-left: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 900;
+            @media (min-width: ${Breakpoint.small}) {
+                margin-left: 2rem;
+                font-size: 1.5rem;
+            }
+            @media (min-width: ${Breakpoint.medium}) {
+                margin-left: 2rem;
+                font-size: 2rem;
+            }
         }
 
         &:hover {
             background: ${Colors.accent1};
+            border-radius: 10px;
+            transform: translateY(-5px);
         }
     }
 `

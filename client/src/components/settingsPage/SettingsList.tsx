@@ -64,7 +64,7 @@ const StyledUl = styled.ul`
             
             &:hover {
                 box-shadow: ${Shadow.medium};
-                transform: translateY(-5px) scale(1.02);
+                transform: translateY(-5px);
                 background: ${Colors.primary};
                 color: ${Colors.secondary};
             }
