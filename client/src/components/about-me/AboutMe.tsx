@@ -6,6 +6,7 @@ import { Colors, Shadow } from '../../variables'
 import { useQuery } from '@apollo/client'
 import { GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID } from '../../graphql/familyMembers';
 import { FamilyMemberData, FamilyMember } from '../../interfaces';
+import { Loading } from '../alerts'
 
 // interface AboutMeProps {
 //     profile: FamilyMemberData
@@ -65,29 +66,6 @@ const StyledUl = styled.ul`
             font-weight: 700;
         }
     }
-    `
-
-const SpecialLi = styled.li`
-    padding: 0 !important;
-    display: flex;
-    background: ${Colors.white} !important;
-    box-shadow: none !important;
-    
-    div {
-        border-radius: 10px;
-        padding: 1.5rem;
-        background: ${Colors.secondary};
-        box-shadow: ${Shadow.small};
-        
-        &:first-of-type {
-            margin-right: 1.5rem;
-            width: 80%;
-        }
-        
-        &:last-of-type {
-            width: 20%;
-        }
-    }
 `
 
 const AboutMe: React.FC = () => {
@@ -101,7 +79,7 @@ const AboutMe: React.FC = () => {
         }
     })
 
-    if(loading) return <p>"loading ..."</p>;
+    if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRR!!"</p>;
     console.log(data);
     return (
@@ -114,27 +92,25 @@ const AboutMe: React.FC = () => {
             <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
 
             <StyledUl>
-                <SpecialLi>
-                    <div>
-                        <p>Date of birth</p>
-                        <p>{ data?.familyMemberById.dob }</p>
-                    </div>
-
-                    <div>
-                        <p>Gender</p>
-                        <p>{data?.familyMemberById.gender}</p>
-                    </div>
-                </SpecialLi>
+                <li>
+                    <p>Date of birth</p>
+                    <p>{ data?.familyMemberById.dob }</p>
+                </li>
 
                 <li>
+                    <p>Date of birth</p>
+                    <p>{ data?.familyMemberById.gender }</p>
+                </li>
+
+                {/* <li>
                     <p>Status</p>
-                    {/* <p>{profile.maritalStatus} of {profile.partner}</p> */}
+                    <p>{profile.maritalStatus} of {profile.partner}</p>
                 </li>
 
                 <li>
                     <p>Nursing home</p>
-                    {/* <p>{profile.nursingHome}</p> */}
-                </li>
+                    <p>{profile.nursingHome}</p>
+                </li> */}
 
                 <li>
                     <p>Location</p>

@@ -31,7 +31,7 @@ const MyFamilyDetail: React.FunctionComponent<Ipage> = ({ name }) => {
     console.log(userId)
     return (
         <BaseLayout backgroundStyle={"accent2"} PageTitle={"My family"}>
-           <FamilyDetail profile={user} id={userId}/>
+           <FamilyDetail profile={user} userId={userId}/>
         </BaseLayout>
     )
 }

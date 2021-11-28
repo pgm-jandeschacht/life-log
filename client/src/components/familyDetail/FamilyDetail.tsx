@@ -6,10 +6,18 @@ import maria from '../../assets/images/maria_kox.jpg'
 import styled from 'styled-components'
 import { Shadow } from '../../variables'
 import FamilyDetailButtons from './FamilyDetailButtons'
+import { useQuery } from '@apollo/client'
+import { FamilyMemberData } from "../../interfaces";
+import { GET_FAMILYMEMBER_BY_ID } from "../../graphql/familyMembers";
+import { Loading } from '../alerts'
+import { parseInt } from 'lodash'
+import { doTypesOverlap } from 'graphql'
+
+
 
 interface FamilyDetailProps {
     profile: any,
-    id: number
+    userId: string
 }
 
 interface StyledImgProps {
@@ -119,31 +127,50 @@ margin-bottom: 4rem;
     }
 `
 
-const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, id }) => {
+const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
+    const { data, loading, error } = useQuery<FamilyMemberData>(GET_FAMILYMEMBER_BY_ID, {
+        variables: {
+            id: parseInt(userId)
+        }
+    });
+
+    if(loading) return <Loading/>;
+    if(error) return <p>{error.message}</p>;
+    console.log(data?.familyMemberById);
+
+    function calculateAge (dobMember: string | undefined) {
+        var dob = new Date(`${dobMember}`);  
+        var month_diff = Date.now() - dob.getTime();  
+        var age_dt = new Date(month_diff);   
+        var year = age_dt.getUTCFullYear();  
+        var age = Math.abs(year - 1970); 
+        
+        return age;
+    }
+
     return (
         <div>
-            {id}
             <DetailTitle>
                 <StyledImg size={15}>
-                    <img src={karina} alt={`${profile.firstName} ${profile.lastName}`} />
+                    <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
                 </StyledImg>
                 
                 <DetailInfo>
                     <div>
-                        <h2>{profile.firstName} {profile.lastName}</h2>
+                        <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
                         <p>{profile.familyMember}</p>
                     </div>
 
                     <div>
-                        <p>{profile.age} years old</p>
-                        <p>Lives in {profile.city}</p>
+                        <p>{calculateAge(data?.familyMemberById.dob)} {(calculateAge(data?.familyMemberById.dob)) < 1 ? 'year' : 'years'} old</p>
+                        <p>Lives in {data?.familyMemberById.city}</p>
                     </div>
                 </DetailInfo>
             </DetailTitle>
 
             <Bio>
-                <SubTitle>About {profile.firstName}</SubTitle>
-                <p>{profile.bio}</p>
+                <SubTitle>About {data?.familyMemberById.firstname}</SubTitle>
+                <p>{data?.familyMemberById.bio}</p>
             </Bio>
 
             <Married>
@@ -180,7 +207,7 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, id }) => {
                 </ul>
             </Children>
 
-            <FamilyDetailButtons name={profile.firstName}/>
+            <FamilyDetailButtons id={userId} name={data?.familyMemberById.firstname}/>
         </div>
     )
 }

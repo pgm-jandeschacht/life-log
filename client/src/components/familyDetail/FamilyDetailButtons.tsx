@@ -3,7 +3,8 @@ import styled from 'styled-components'
 import { Colors, Shadow, Transition } from '../../variables'
 
 interface FamilyDetailButtonsProps {
-    name: string
+    name: string | undefined,
+    id: string
 }
 
 interface StyledButtonProps {
@@ -36,7 +37,8 @@ const StyledAnchor = styled.a<StyledButtonProps>`
     }
 `
 
-const FamilyDetailButtons: React.FC<FamilyDetailButtonsProps> = ({ name }) => {
+const FamilyDetailButtons: React.FC<FamilyDetailButtonsProps> = ({ name, id }) => {
+    console.log(id)
     return (
         <StyledDiv>
             <StyledAnchor href="/my-pictures" color={"#FEDDBE"}>Pictures from {name}</StyledAnchor>

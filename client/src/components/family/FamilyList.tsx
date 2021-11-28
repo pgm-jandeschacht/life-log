@@ -77,7 +77,6 @@ const FamilyList: React.FC<FamilyListProps> = ( ) => {
             id: parseInt(familyMemberId)
         }
     })
-    console.log(data)
 
     if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRR!!"</p>;
@@ -87,7 +86,7 @@ const FamilyList: React.FC<FamilyListProps> = ( ) => {
         <StyledUl>
             { data?.familyRelationsByFamilyMemberId.map((familyRelation: FamilyRelation) => (
                 <li key={familyRelation.id}>
-                    <Link to={`/my-family/${familyRelation.id}`} title={`${familyRelation.relatedFamilyMember.firstname} ${familyRelation.relatedFamilyMember.lastname}`}>
+                    <Link to={`/my-family/${familyRelation.relatedFamilyMember.id}`} title={`${familyRelation.relatedFamilyMember.firstname} ${familyRelation.relatedFamilyMember.lastname}`}>
                         <StyledImg>
                             <img src={familyRelation.relatedFamilyMember.image} alt={`${familyRelation.relatedFamilyMember.firstname} ${familyRelation.relatedFamilyMember.lastname}`} />
                         </StyledImg>
