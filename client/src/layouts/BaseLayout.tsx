@@ -28,6 +28,7 @@ interface BaseLayoutProps {
 const Main = styled.main`
     max-width: 80rem;
     margin: auto;
+    position: relative;
     padding: 0 2rem 13.25rem 2rem;
     
     @media (min-width: ${Breakpoint.small}) {

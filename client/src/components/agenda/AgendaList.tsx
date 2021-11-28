@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { GET_AGENDAITEMS_BY_FAMILYMEMBER_ID} from '../../graphql/agendaItems';
 import { FamilyMemberData, AgendaItemsData } from '../../interfaces';
 import _ from 'lodash';
+import { Loading } from '../alerts';
 
 
 // example object agenda
@@ -51,7 +52,7 @@ const AgendaList = () => {
         }
     });
 
-    if(loading) return <p>"loading ..."</p>;
+    if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRR!!"</p>;
     
     const agendaItems = data?.agendaItemsByAuthor || [];

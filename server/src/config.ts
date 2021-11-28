@@ -9,10 +9,9 @@ export const config = () => ({
         entities: ['dist/**/*.entity{.ts,.js}'],
         autoLoadEntities: true,
         synchronize: true,
-        logging:true,
         ssl: true,
     },
-    database: {  
+    databaseTEST: {  
         type: 'postgres',
         host: process.env.HOST,
         port: 5432,
@@ -22,5 +21,6 @@ export const config = () => ({
         entities: ['dist/**/*.entity{.ts,.js}'],
         autoLoadEntities: true,
         synchronize: true,
+        logging:true
     }
 });

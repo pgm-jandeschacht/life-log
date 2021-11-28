@@ -1,13 +1,24 @@
-import { Resolver, Query, Mutation, Args, Int, Parent, ResolveField } from '@nestjs/graphql';
+import { 
+  Resolver, 
+  Query, 
+  Mutation, 
+  Args, 
+  Int, 
+  Parent, 
+  ResolveField 
+} from '@nestjs/graphql';
 import { AlbumItemsService } from './album-items.service';
 import { AlbumItem } from './entities/album-item.entity';
 import { CreateAlbumItemInput } from './dto/create-album-item.input';
 import { UpdateAlbumItemInput } from './dto/update-album-item.input';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
+import { FamilyMemberInAlbumItem } from 'src/family-member-in-album-items/entities/family-member-in-album-item.entity';
 
 @Resolver((of) => AlbumItem)
 export class AlbumItemsResolver {
-  constructor(private readonly albumItemsService: AlbumItemsService) {}
+  constructor(
+    private readonly albumItemsService: AlbumItemsService
+  ) {}
 
   @Mutation(() => AlbumItem)
   createAlbumItem(@Args('createAlbumItemInput') createAlbumItemInput: CreateAlbumItemInput) {
@@ -26,9 +37,12 @@ export class AlbumItemsResolver {
 
   @ResolveField(returns => FamilyMember)
   uploader(@Parent() albumItem: AlbumItem): Promise<FamilyMember> {
-    //console.log('AUTHOR RESOLVER');  
-    //console.log(note);
-      return this.albumItemsService.getUploader(albumItem.uploader.id);
+      return this.albumItemsService.getUploader(albumItem.uploaderId);
+  }
+
+  @ResolveField((returns) => [FamilyMemberInAlbumItem])
+  inAlbumItem( @Parent() albumItem: AlbumItem): Promise<any> {
+    return this.albumItemsService.getInvolvedFamilyMembers(albumItem.uploaderId);
   }
 
   @Mutation(() => AlbumItem)

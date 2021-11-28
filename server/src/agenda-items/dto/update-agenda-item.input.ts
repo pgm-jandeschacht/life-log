@@ -1,16 +1,29 @@
 import { CreateAgendaItemInput } from './create-agenda-item.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
-import { FamilyMember } from 'src/family-members/entities/family-member.entity';
+import { 
+  InputType, 
+  Field, 
+  Int, 
+  PartialType 
+} from '@nestjs/graphql';
+import { 
+  IsDate, 
+  IsString 
+} from 'class-validator';
 
 @InputType()
 export class UpdateAgendaItemInput extends PartialType(CreateAgendaItemInput) {
-    @Field({description: 'Name of the agenda-item'})
-    title: string;
+    @IsString()
+    @Field({description: 'Content of the agenda-item'})
+    content: string;
 
-    // @Field({ nullable: true, description: 'Extra information about agenda-item'})
-    // content?: string;
-
-    // @Field(type => Int)
-    // authorId: number;
-
+    @Field(type => Int)
+    authorId?: number;
+    
+    @IsDate()
+    @Field()
+    date?:Date;
+    
+    @IsDate()
+    @Field()
+    updated_at: Date;
 }

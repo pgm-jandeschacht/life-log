@@ -4,6 +4,7 @@ import { GET_ALL_FAMILYMEMBERS, GET_FAMILYMEMBER_BY_ID, GET_FAMILYMEMBERINFO_BY_
 import { FamilyMember, FamilyMemberData, FamilyMembersData } from "../../interfaces";
 
 import { useQuery, useLazyQuery } from "@apollo/client";
+import { Loading } from '../alerts';
 
 interface FamilyMemberInfoProps {
     
@@ -28,7 +29,7 @@ function FamilyMemberInfo({}: FamilyMemberInfoProps): ReactElement {
         }
     });
 
-    if(loading) return <p>"loading ..."</p>;
+    if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRRAAA!!"</p>;
     console.log(data);
     return (

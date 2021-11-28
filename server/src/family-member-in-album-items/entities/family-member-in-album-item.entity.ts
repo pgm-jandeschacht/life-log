@@ -1,8 +1,12 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { AlbumItem } from 'src/album-items/entities/album-item.entity';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
-import { RelationType } from 'src/relation-types/entities/relation-type.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { 
+  Column,
+  Entity, 
+  ManyToOne, 
+  PrimaryGeneratedColumn 
+} from 'typeorm';
 
 
 @Entity()
@@ -12,14 +16,6 @@ export class FamilyMemberInAlbumItem {
     @Field(type => Int, { description: 'The ID' })
     id: number;
 
-    @ManyToOne(() => FamilyMember, familyMember => familyMember.FamilyMemberInAlbumItem, { onDelete: 'CASCADE' })
-    @Field(type => FamilyMember, { description: 'The family member' })
-    familyMember: FamilyMember;
-
-    @ManyToOne(() => AlbumItem, albumItem => albumItem.albumItemWithFamilyMemberIn, { onDelete: 'SET NULL' })
-    @Field(type => AlbumItem, { description: 'The related agenda item' })
-    albumItem: AlbumItem;
-
     @Column()
     @Field(type => Int, { description: 'The ID of the family member' })
     familyMemberId: number;
@@ -27,4 +23,12 @@ export class FamilyMemberInAlbumItem {
     @Column()
     @Field(type => Int, { description: 'The ID of the album item' })
     albumItemId: number;
+
+    @ManyToOne(() => FamilyMember, familyMember => familyMember.FamilyMemberInAlbumItem, { onDelete: 'CASCADE' })
+    @Field(type => FamilyMember, { description: 'The family member' })
+    familyMember: FamilyMember;
+
+    @ManyToOne(() => AlbumItem, albumItem => albumItem.albumItemWithFamilyMemberIn, { onDelete: 'SET NULL' })
+    @Field(type => AlbumItem, { description: 'The related agenda item' })
+    albumItem: AlbumItem;
 }

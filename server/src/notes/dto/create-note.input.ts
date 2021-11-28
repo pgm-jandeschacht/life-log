@@ -1,11 +1,31 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { 
+  InputType, 
+  Int, 
+  Field 
+} from '@nestjs/graphql';
+import { 
+  IsString, 
+  IsDate 
+} from 'class-validator';
 
 @InputType()
 export class CreateNoteInput {
-    @Field()
-    content: string;
+  @IsString()
+  @Field()
+  content: string;
 
-    @Field(type => Int)
-    authorId: number;
+  @IsDate()
+  @Field()
+  date: Date;
 
+  @Field(type => Int, { nullable: true })
+  authorId?: number;
+
+  @IsDate()
+  @Field()
+  created_at: Date;
+  
+  @IsDate()
+  @Field()
+  updated_at: Date;
 }

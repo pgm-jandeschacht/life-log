@@ -6,7 +6,10 @@ import { Note } from './entities/note.entity';
 import { FamilyMembersModule } from 'src/family-members/family-members.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Note]), FamilyMembersModule],
+  imports: [
+    TypeOrmModule.forFeature([Note]), 
+    FamilyMembersModule
+  ],
   providers: [NotesResolver, NotesService]
 })
 export class NotesModule {}

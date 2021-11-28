@@ -18,11 +18,14 @@ interface NavProps {
 const Nav = styled.nav<NavProps>`
     background: ${Colors.primary};
     position: fixed;
+    overflow-y: auto;
+    z-index: 1;
     top: 0;
     left: 0;
     display: ${(NavProps) => (NavProps.change ? 'block' : 'none')};
     padding: 2.5rem 2rem;
     width: 100%;
+    height: 100%;
 
     @media (min-width: ${Breakpoint.small}) {
         padding: 4rem 3rem

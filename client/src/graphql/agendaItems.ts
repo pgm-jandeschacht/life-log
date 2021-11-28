@@ -13,8 +13,15 @@ export const GET_AGENDAITEMS_BY_FAMILYMEMBER_ID = gql`
 query getAgendaItemsByFamilyMemberId($id: Int!) {
     agendaItemsByAuthor(authorId: $id) {
         id
-        title
+        content
         date
+        inAgendaItem {
+          id
+          familyMember {
+            id
+            firstname
+          }
+        }
     }    
 }
 `;

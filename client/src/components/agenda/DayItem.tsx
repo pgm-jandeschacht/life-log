@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Colors } from '../../variables'
+import { InAgendaItem } from '../../interfaces';
 
 interface DayItemProps {
-    content: string
+    content: string,
+    inAgendaItem: InAgendaItem[]
 }
 
 const StyledLi = styled.li`
@@ -17,10 +19,22 @@ const StyledLi = styled.li`
     }
 `
 
-const DayItem = ({ content }: DayItemProps) => {
+const DayItem = ({ content, inAgendaItem }: DayItemProps) => {
+
+    const familyMembers = inAgendaItem.map( i =>  i.familyMember.firstname).join(',');
+    // console.log(familyMembers);
+    // const length = inAgendaItem.length;
     return (
         <StyledLi>
             {content}
+            <h3>With:</h3>
+            {
+                familyMembers
+            }
+            
+            {/* {inAgendaItem.foreach(item => {
+                return item.familyMember.firstname
+            })} */}
         </StyledLi>
     )
 }
