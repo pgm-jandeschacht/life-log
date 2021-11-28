@@ -33,6 +33,11 @@ const StyledDiv = styled.div `
             margin-bottom: 2rem;
             font-size: 2.5rem;
         }
+        @media (min-width: ${Breakpoint.large}) {
+            span {
+                display: block;
+            }
+        }
     }
 `
 
@@ -174,7 +179,7 @@ const AboutMe: React.FC = () => {
                     <img src={fallback} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
                 </div>
 
-                <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
+                <h2>{data?.familyMemberById.firstname} <span>{data?.familyMemberById.lastname}</span></h2>
             </StyledImg>
 
             <StyledUl>

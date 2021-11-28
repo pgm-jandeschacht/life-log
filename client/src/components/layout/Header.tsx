@@ -40,34 +40,54 @@ const StyledHeader = styled.header<HeaderProps>`
     }
 
     h1 {
-        font-size: 2.5rem;
         font-weight: 900;
+        font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 2 : 2.5)}rem;
         
         @media (min-width: ${Breakpoint.small}) {
-            font-size: 3rem;
+            font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 2.5 : 3)}rem;
         }
         @media (min-width: ${Breakpoint.medium}) {
             font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 3.25 : 4)}rem;
         }
         @media (min-width: ${Breakpoint.large}) {
-            font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 3 : 3.5)}rem;
+            font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 2.5 : 3)}rem;
         }
     }
 
     a {
         background: ${(HeaderProps) => HeaderProps.background};
-        padding: 1.1rem 1.25rem;
+        padding: 0.515rem 0.625rem;
         border-radius: 50%;
         transition: ${Transition.normal};
+        border: 4px solid transparent;
+        @media (min-width: ${Breakpoint.small}) {
+            padding: 0.64rem 0.75rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            padding: 0.89rem 1rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            padding: 0.64rem 0.75rem;
+        }
 
         svg {
             transition: ${Transition.normal};
-            width: 2rem !important;
+            width: 1.3rem !important;
             height: auto;
+            @media (min-width: ${Breakpoint.small}) {
+                width: 1.5rem !important;
+            }
+            @media (min-width: ${Breakpoint.medium}) {
+                width: 2rem !important;
+            }
+            @media (min-width: ${Breakpoint.large}) {
+                width: 1.5rem !important;
+            }
         }
 
         &:hover {
             background: ${Colors.primary};
+            border-color: ${(HeaderProps) => HeaderProps.background};
 
             svg {
                 color: ${(HeaderProps) => HeaderProps.background};;

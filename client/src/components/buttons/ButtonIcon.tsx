@@ -14,20 +14,20 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
     background: ${(StyledButtonProps) => (StyledButtonProps.backgroundColor !== undefined ? StyledButtonProps.backgroundColor : Colors.secondary)};
-    padding: 0.5625rem 0.875rem;
+    padding: 0.3125rem 0.625rem;
     border-radius: 50%;
     transition: ${Transition.normal};
     color: ${Colors.primary};
     border: 4px solid transparent;
     
     @media (min-width: ${Breakpoint.small}) {
-        padding: 0.6875rem 1rem;
+        padding: 0.375rem 0.75rem;
     }
     @media (min-width: ${Breakpoint.medium}) {
-        padding: 0.77rem 1.25rem;
+        padding: 0.52rem 1rem;
     }
     @media (min-width: ${Breakpoint.large}) {
-        padding: 0.625rem 1rem;
+        padding: 0.375rem 0.75rem;
     }
 
     &:hover {
@@ -39,7 +39,6 @@ const StyledButton = styled.button<StyledButtonProps>`
     svg {
         width: 1.3rem !important;
         height: auto;
-        
         @media (min-width: ${Breakpoint.small}) {
             width: 1.5rem !important;
         }
