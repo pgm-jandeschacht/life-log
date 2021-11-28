@@ -31,6 +31,10 @@ export interface WishListItemsData {
   wishListItemsByAuthor: WishListItemType[];
 }
 
+export interface FamilyRelationsData {
+  familyRelationsByFamilyMemberId: FamilyRelation[];
+}
+
 export interface AlbumItem {
     id: number;
     location?: string;
