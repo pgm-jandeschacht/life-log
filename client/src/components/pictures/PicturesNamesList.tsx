@@ -93,7 +93,7 @@ const PicturesNamesList: React.FC<PicturesNamesListProps> = ({ usersList }) => {
         <StyledUl>
             {usersList.map((user: any) => (
                 <StyledLi key={user.relatedFamilyMember.id}>
-                    <Link to={`/my-pictures/${user.relatedFamilyMember.id}`}>
+                    <Link to={`/my-pictures/user/${user.relatedFamilyMember.id}`}>
                         {/* <img src={`../../assets/images/${user.image}`} alt={`${user.firstName} ${user.lastName}`} /> */}
                         <div>
                             <img src={fallback} alt={`${user.relatedFamilyMember.firstname} ${user.relatedFamilyMember.lastname}`} />

@@ -10,7 +10,6 @@ import { BaseLayout } from "../layouts";
 
 const MyPicturesUserPage: React.FunctionComponent<Ipage> = props => {
     const { userId } = useParams<{ userId: any }>();
-    console.log(userId)
     const { data, loading, error } = useQuery<FamilyMemberData>(GET_FAMILYMEMBER_BY_ID, {
         variables: {
             id: parseInt(userId)
