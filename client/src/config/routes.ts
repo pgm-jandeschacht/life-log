@@ -13,6 +13,7 @@ import MyWishlistAdd from "../pages/my-wishlist_Add";
 import MyWishListEdit from "../pages/my-wishlist_Edit";
 import MyFamilyDetail from "../pages/my-family_detail";
 import ProfileSettingsPage from "../pages/ProfileSettings";
+import MyPicturesUserPage from "../pages/my-pictures_user";
 
 const routes: IRoute[] = [
     {
@@ -89,6 +90,13 @@ const routes: IRoute[] = [
         path: '/my-family/:userId',
         name: 'Detail page family member',
         component: MyFamilyDetail,
+        exact: true
+
+    },
+    {
+        path: '/my-pictures/:userId',
+        name: 'Detail page familymember pictures',
+        component: MyPicturesUserPage,
         exact: true
 
     },

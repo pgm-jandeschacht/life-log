@@ -26,7 +26,7 @@ const user = {
     ]
 }
 
-const MyFamilyDetail: React.FunctionComponent<Ipage> = ({ name }) => {
+const MyFamilyDetail: React.FunctionComponent<Ipage> = ({ }) => {
     const { userId } = useParams<{ userId: any }>();
     console.log(userId)
     return (
