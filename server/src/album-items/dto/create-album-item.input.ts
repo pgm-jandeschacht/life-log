@@ -1,16 +1,35 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { 
+  InputType, 
+  Int, 
+  Field 
+} from '@nestjs/graphql';
+import { 
+  IsDate, 
+  IsString 
+} from 'class-validator';
 
 @InputType()
 export class CreateAlbumItemInput {
-    @Field({nullable: true, description: 'Location where this picture is taken'})
-    location?: string;
+  @IsString()
+  @Field({nullable: true, description: 'Location where this picture is taken'})
+  location?: string;
 
-    @Field({nullable: true, description: 'What is there to say about this picture'})
-    description?: string;
+  @IsString()
+  @Field({nullable: true, description: 'What is there to say about this picture'})
+  description?: string;
 
-    //date
+  @IsDate()
+  @Field()
+  date: Date;
 
-    // @Field(type => Int)
-    // uploaderId: number;
+  @Field(type => Int, { nullable: true })
+  uploaderId?: number;
 
+  @IsDate()
+  @Field()
+  created_at: Date;
+  
+  @IsDate()
+  @Field()
+  updated_at: Date;
 }

@@ -1,13 +1,24 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { 
+  Resolver, 
+  Query, 
+  Mutation, 
+  Args, 
+  Int, 
+  ResolveField, 
+  Parent 
+} from '@nestjs/graphql';
 import { WishListItemsService } from './wish-list-items.service';
 import { WishListItem } from './entities/wish-list-item.entity';
 import { CreateWishListItemInput } from './dto/create-wish-list-item.input';
 import { UpdateWishListItemInput } from './dto/update-wish-list-item.input';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
+import { FamilyMemberInWishListItem } from 'src/family-member-in-wish-list-item/entities/family-members-in-wish-list-item.entity';
 
 @Resolver(() => WishListItem)
 export class WishListItemsResolver {
-  constructor(private readonly wishListItemsService: WishListItemsService) {}
+  constructor(
+    private readonly wishListItemsService: WishListItemsService
+  ) {}
 
   @Mutation(() => WishListItem)
   createWishListItem(@Args('createWishListItemInput') createWishListItemInput: CreateWishListItemInput) {
@@ -24,22 +35,19 @@ export class WishListItemsResolver {
     return this.wishListItemsService.findOneById(id);
   }
 
-  @ResolveField(returns => FamilyMember)
-  author(@Parent() wishListItem: WishListItem): Promise<FamilyMember> {
-    //console.log('AUTHOR RESOLVER');  
-    //console.log(note);
-      return this.wishListItemsService.getAuthor(wishListItem.authorId);
+  @Query((returns) => [WishListItem], { name: "wishListItemsByAuthor" })
+  wishListItemsByAuthor(@Args("authorId", { type: () => Int }) authorId: number) {
+    return this.wishListItemsService.findAllByAuthor(authorId);
   }
 
-  @ResolveField(returns => [FamilyMember] )
-  inWishListItem(
-      @Parent() 
-      wishListItem: WishListItem, 
-    //   @Args('familyMemberId', { type: () => Int }) 
-    //   familyMemberId: number
-      ) {
-    // return this.wishListItemsService.inWishList(wishListItem.id, familyMemberId);
-    return this.wishListItemsService.inWishList(wishListItem.id);
+  @ResolveField(returns => FamilyMember)
+  author(@Parent() wishListItem: WishListItem): Promise<FamilyMember> {
+    return this.wishListItemsService.getAuthor(wishListItem.authorId);
+  }
+
+  @ResolveField(returns => [FamilyMemberInWishListItem] )
+  inWishListItem( @Parent() wishListItem: WishListItem ): Promise<any> {
+    return this.wishListItemsService.getInvolvedFamilyMembers(wishListItem.authorId);
   }
 
   @Mutation(() => WishListItem)

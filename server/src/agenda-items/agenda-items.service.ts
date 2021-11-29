@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FamilyMemberInAgendaItem } from 'src/family-member-in-agenda-items/entities/family-member-in-agenda-item.entity';
+import { FamilyMemberInAgendaItemsService } from 'src/family-member-in-agenda-items/family-member-in-agenda-items.service';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
 import { FamilyMembersService } from 'src/family-members/family-members.service';
 import { Repository } from 'typeorm';
@@ -9,70 +11,48 @@ import { AgendaItem } from './entities/agenda-item.entity';
 
 @Injectable()
 export class AgendaItemsService {
-    constructor(@InjectRepository(AgendaItem) private agendaItemRepository: Repository<AgendaItem>, private familyMemberService: FamilyMembersService) {};
+  constructor(
+    @InjectRepository(AgendaItem) 
+    private agendaItemRepository: Repository<AgendaItem>, 
+    private familyMemberService: FamilyMembersService,
+    private familyMemberInAgendaItemService: FamilyMemberInAgendaItemsService
+  ) {};
 
-    create(createAgendaItemInput: CreateAgendaItemInput): Promise<AgendaItem> {
-        const newAgendaItem = this.agendaItemRepository.create(createAgendaItemInput);
-        
-        return this.agendaItemRepository.save(newAgendaItem);
-    }
+  create(createAgendaItemInput: CreateAgendaItemInput): Promise<AgendaItem> {
+    const newAgendaItem = this.agendaItemRepository.create(createAgendaItemInput);
+    return this.agendaItemRepository.save(newAgendaItem);
+  }
 
-    findAll(): Promise<AgendaItem[]> {
-        return this.agendaItemRepository.find();
-    }
+  findAll(): Promise<AgendaItem[]> {
+    return this.agendaItemRepository.find();
+  }
 
-    findOneById(id: number): Promise<AgendaItem> {
-        return this.agendaItemRepository.findOneOrFail(id);
-    }
+  findOneById(id: number): Promise<AgendaItem> {
+    return this.agendaItemRepository.findOneOrFail(id);
+  }
 
-    // getInvitedFamilyMembers(id: number) {
-    //     return this.agendaItemRepository
-    //     .createQueryBuilder('familyMember')
-    //     .leftJoinAndSelect('employee.invitedAgendaItems', 'invitedAgendaItems')
-    //     .leftJoinAndSelect()
-    // }
-    
-    async update(id: number, updateAgendaItemInput: UpdateAgendaItemInput): Promise<AgendaItem> {
-        return this.agendaItemRepository.save({id: id, ...updateAgendaItemInput});
-    }
+  getAuthor(authorId: number) : Promise<FamilyMember> {
+    return this.familyMemberService.findOneById(authorId);
+  }
 
-    async delete(id: number): Promise<AgendaItem> {
-        const note = await this.findOneById(id);
+  findAllByAuthor(authorId: number): Promise<AgendaItem[]> {
+    return this.agendaItemRepository.find({
+      where: {
+          authorId: authorId
+      }
+    });
+  }
+  
+  async getInvitedFamilyMembers(agendaItemId: number): Promise<FamilyMemberInAgendaItem[]> {
+    return this.familyMemberInAgendaItemService.findAllByAgendaItemId(agendaItemId);
+  }
+  
+  async update(id: number, updateAgendaItemInput: UpdateAgendaItemInput): Promise<AgendaItem> {
+    return this.agendaItemRepository.save({id: id, ...updateAgendaItemInput});
+  }
 
-        return this.agendaItemRepository.remove(note);
-    }
-
-    getAuthor(authorId: number) : Promise<FamilyMember> {
-        console.log('AUTHOR ID in service', authorId);
-        return this.familyMemberService.findOneById(authorId);
-    }
-
-    getInvitedFamilyMembers(id: number): Promise<FamilyMember[] | any[]> {
-        const famMembers = this.agendaItemRepository.find({
-            where: {
-                id: id
-            },
-            relations: ['with']
-        })
-            
-        
-            console.log(famMembers);
-            return famMembers;
-            // .createQueryBuilder('agendaItem')
-            // .leftJoinAndSelect( 'agendaItem.with','familyMember')
-            // .getMany();
-        
-            // console.log(famMembers);
-            // return famMembers;
-
-    }
-
-    // getMembers(agendaItemIt: number) : Promise<FamilyMember> {
-    //     return this.familyMemberService.findAll({where : {}})
-    // }
-
-    // getInvitedFamilyMembers(): Promise<FamilyMember[]> {
-
-    // }
-
+  async delete(id: number): Promise<AgendaItem> {
+    const note = await this.findOneById(id);
+    return this.agendaItemRepository.remove(note);
+  }
 }

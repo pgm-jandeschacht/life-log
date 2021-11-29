@@ -4,7 +4,7 @@ import { FormTemplate } from '../layout'
 import { TextAreaError, DropDownError } from '../forms'
 import { Formik, Field } from 'formik'
 import * as yup from 'yup';
-import { Colors, Shadow } from '../../variables'
+import { Breakpoint, Colors, Shadow } from '../../variables'
 
 
 const example = [
@@ -65,54 +65,116 @@ const StyledForm = styled.form`
     label:last-of-type {
         margin-bottom: 0;
     }
+    @media (min-width: ${Breakpoint.large}) {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+    }
 `
 
 const StyledLabel = styled.label`
     display: flex;
     flex-direction: column;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 900;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    @media (min-width: ${Breakpoint.small}) {
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        width: calc(50% - 0.75rem);
+    }
 
     span {
             color: ${Colors.red};
         }
 
     textarea {
-        margin-top: 2rem;
+        margin-top: 1rem;
         border: 3px solid ${Colors.primary};
         border-radius: 10px;
         box-shadow: ${Shadow.small};
         background: ${Colors.secondary};
-        padding: 1.5rem;
-        font-size: 2rem;
+        padding: 1rem;
+        font-size: 1.2rem;
         font-weight: 500;
         color: ${Colors.primary};
+        @media (min-width: ${Breakpoint.small}) {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            font-size: 2rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+        }
     }
 `
 
 const StyledLabelSelect = styled.label`
     display: flex;
     flex-direction: column;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 900;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    @media (min-width: ${Breakpoint.small}) {
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        width: calc(50% - 0.75rem);
+        margin-right: 1.5rem;
+    }
 
     span {
             color: ${Colors.red};
         }
 
     select {
-        margin-top: 2rem;
-        padding: 1.5rem;
+        margin-top: 1rem;
+        padding: 1rem;
         border: 3px solid ${Colors.primary};
         border-radius: 10px;
         box-shadow: ${Shadow.small};
-        font-size: 2rem;
+        font-size: 1.2rem;
         font-weight: 700;
         color: ${Colors.primary};
         background: ${Colors.secondary};
         cursor: pointer;
+        @media (min-width: ${Breakpoint.small}) {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            font-size: 2rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+        }
     }
 `
 
@@ -154,7 +216,7 @@ const AddWishListItem = () => {
                         <DropDownError dummyText={example2} name={"date"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
 
-                    <FormTemplate submitting={isSubmitting} page={"agenda"} color={"#FFB2AB"} />
+                    <FormTemplate submitting={isSubmitting} page={"wishlist"} color={"#FFB2AB"} />
                 </StyledForm>
         )}
         </Formik>

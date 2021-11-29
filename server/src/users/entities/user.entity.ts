@@ -1,6 +1,15 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { 
+  ObjectType, 
+  Field, 
+  Int 
+} from '@nestjs/graphql';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { 
+  Column, 
+  Entity,
+  OneToOne, 
+  PrimaryGeneratedColumn 
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
@@ -22,11 +31,7 @@ export class User {
     @Field({ description: 'The password of the user'})
     password: string;
 
-    
     @OneToOne(type => FamilyMember, familyMember => familyMember.user )
-    // @JoinColumn()
     @Field(type => FamilyMember, { nullable: true })
     familyMember?: FamilyMember;
-
-
 }

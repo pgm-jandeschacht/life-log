@@ -5,7 +5,7 @@ import { AddAgendaItem } from "../components/agenda";
 
 const MyAgendaAdd: React.FunctionComponent<Ipage> = props => {
     return (
-        <BaseLayout formPage={true} backgroundStyle={"accent3"} PageTitle={"Add item to agenda"}>
+        <BaseLayout formPage={true} backgroundStyle={"accent3"} PageTitle={"Add to agenda"}>
            <AddAgendaItem/>
         </BaseLayout>
     )

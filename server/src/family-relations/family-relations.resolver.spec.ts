@@ -1,4 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { 
+  Test, 
+  TestingModule 
+} from '@nestjs/testing';
 import { FamilyRelationsResolver } from './family-relations.resolver';
 import { FamilyRelationsService } from './family-relations.service';
 

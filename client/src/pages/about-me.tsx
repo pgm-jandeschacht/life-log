@@ -21,7 +21,7 @@ const user = {
 
 const AboutMePage: React.FunctionComponent<Ipage> = props => {
     return (
-        <BaseLayout backgroundStyle={"accent4"} PageTitle={`About ${user.firstName}`} >
+        <BaseLayout backgroundStyle={"accent4"} PageTitle={`About me`} >
            <AboutMe />
            {/* <AboutMe profile={user}/> */}
         </BaseLayout>

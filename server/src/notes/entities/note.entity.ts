@@ -1,27 +1,42 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { 
+  ObjectType, 
+  Field, 
+  Int 
+} from '@nestjs/graphql';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { 
+  Column, 
+  CreateDateColumn, 
+  Entity, 
+  ManyToOne, 
+  PrimaryGeneratedColumn, 
+  UpdateDateColumn 
+} from 'typeorm';
 
 @Entity()
 @ObjectType()
 export class Note {
-    @PrimaryGeneratedColumn()
-    @Field(type => Int)
-    id: number;
+  @PrimaryGeneratedColumn()
+  @Field(type => Int, { description: 'The ID of the Note' })
+  @Field(type => Int)
+  id: number;
 
-    @Column()
-    @Field()
-    content: string;
+  @CreateDateColumn({ name: 'created_at' }) 'created_at': Date;
+  @UpdateDateColumn({ name: 'updated_at' }) 'updated_at': Date;
 
-    @Column()
-    @Field(type => Int, { nullable: true })
-    authorId?: number;
+  @Column()
+  @Field()
+  content: string;
 
-    @ManyToOne(() => FamilyMember, author => author.notes, { onDelete: 'CASCADE'})
-    @Field(type => FamilyMember, { description: 'The author of the note' })
-    author: FamilyMember;
+  @Column({ type: 'timestamp', nullable: true })
+  @Field()
+  date: Date;
 
-    @Column({type: 'timestamp', nullable: true})
-    @Field()
-    createdOn: Date;
+  @Column()
+  @Field(type => Int, { nullable: true })
+  authorId?: number;
+
+  @ManyToOne(() => FamilyMember, author => author.notes, { onDelete: 'CASCADE'})
+  @Field(type => FamilyMember, { description: 'The author of the note' })
+  author: FamilyMember;
 }

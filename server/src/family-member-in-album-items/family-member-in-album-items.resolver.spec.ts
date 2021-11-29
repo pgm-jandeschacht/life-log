@@ -1,4 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { 
+  Test, 
+  TestingModule 
+} from '@nestjs/testing';
 import { FamilyMemberInAlbumItemsResolver } from './family-member-in-album-items.resolver';
 import { FamilyMemberInAlbumItemsService } from './family-member-in-album-items.service';
 

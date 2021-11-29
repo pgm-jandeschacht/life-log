@@ -2,6 +2,7 @@ import React from "react";
 import Ipage from '../interfaces/page';
 import { BaseLayout } from "../layouts";
 import { FamilyDetail } from '../components/familyDetail'
+import { useParams } from "react-router";
  
 const user = {
     id: 1,
@@ -25,10 +26,12 @@ const user = {
     ]
 }
 
-const MyFamilyDetail: React.FunctionComponent<Ipage> = props => {
+const MyFamilyDetail: React.FunctionComponent<Ipage> = ({ name }) => {
+    const { userId } = useParams<{ userId: any }>();
+    console.log(userId)
     return (
         <BaseLayout backgroundStyle={"accent2"} PageTitle={"My family"}>
-           <FamilyDetail profile={user}/>
+           <FamilyDetail profile={user} userId={userId}/>
         </BaseLayout>
     )
 }

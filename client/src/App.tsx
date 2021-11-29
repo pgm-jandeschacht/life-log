@@ -1,9 +1,6 @@
 import React, { useEffect, useState} from 'react';
 import { useLazyQuery, useQuery } from '@apollo/client';
-import { GET_ALL_FAMILYMEMBERS, GET_FAMILY_MEMBER_BY_ID } from './graphql/familyMembers';
-import {
-    Button
-} from './components';
+
 
 // ROUTER
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';

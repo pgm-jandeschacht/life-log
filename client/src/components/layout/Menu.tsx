@@ -18,17 +18,23 @@ interface NavProps {
 const Nav = styled.nav<NavProps>`
     background: ${Colors.primary};
     position: fixed;
+    overflow-y: auto;
+    z-index: 1;
     top: 0;
     left: 0;
     display: ${(NavProps) => (NavProps.change ? 'block' : 'none')};
     padding: 2.5rem 2rem;
     width: 100%;
+    height: 100%;
 
     @media (min-width: ${Breakpoint.small}) {
-        padding: 4rem 3rem
+        padding: 4rem 3rem;
     }
     @media (min-width: ${Breakpoint.medium}) {
-        padding: 5rem 4rem
+        padding: 5rem 4rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        padding: 3rem 4rem;
     }
     
     h2 {
@@ -42,15 +48,22 @@ const Nav = styled.nav<NavProps>`
         @media (min-width: ${Breakpoint.medium}) {
             font-size: 4rem;
         }
+        @media (min-width: ${Breakpoint.large}) {
+            font-size: 3.5rem;
+        }
     }
     
     ul {
         display: flex;
         flex-wrap: wrap;
+        max-width: 80rem;
+        margin: auto;
     }
     `
     
 const Container = styled.div`
+    max-width: 80rem;
+    margin: auto;
     margin-bottom: 3.75rem;
     display: flex;
     justify-content: space-between;
@@ -61,6 +74,9 @@ const Container = styled.div`
     }
     @media (min-width: ${Breakpoint.medium}) {
         margin-bottom: 5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-bottom: 3.5rem;
     }
 `
 

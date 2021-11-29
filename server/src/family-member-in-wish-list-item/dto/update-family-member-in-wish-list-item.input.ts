@@ -1,5 +1,10 @@
 import { CreateFamilyMemberInWishListItemInput } from './create-family-member-in-wish-list-item.input';
-import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
+import { 
+  InputType, 
+  Field, 
+  Int, 
+  PartialType 
+} from '@nestjs/graphql';
 
 @InputType()
 export class UpdateFamilyMemberInWishListItemInput extends PartialType(CreateFamilyMemberInWishListItemInput) {

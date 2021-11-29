@@ -7,11 +7,11 @@ import { FamilyMembersModule } from 'src/family-members/family-members.module';
 import { RelationTypesModule } from 'src/relation-types/relation-types.module';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([FamilyRelation]),
-        FamilyMembersModule,
-        RelationTypesModule
-    ],
+  imports: [
+    TypeOrmModule.forFeature([FamilyRelation]),
+    FamilyMembersModule,
+    RelationTypesModule
+  ],
   providers: [FamilyRelationsResolver, FamilyRelationsService]
 })
 export class FamilyRelationsModule {}

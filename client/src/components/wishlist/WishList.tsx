@@ -1,12 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Colors } from '../../variables'
+import { Breakpoint, Colors } from '../../variables'
 import WishListItem from './WishListItem';
 
 import { useQuery } from '@apollo/client';
-import { GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
-import { FamilyMemberData } from '../../interfaces';
+import { GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/wishListItems';
+import { FamilyMemberData, WishListItemsData } from '../../interfaces';
 import _ from 'lodash';
+import { Loading } from '../alerts';
 
 // example object wishlist
 const wishlist = [
@@ -27,21 +28,26 @@ const wishlist = [
     }
 ]
 
-const StyledUl = styled.div`
+const StyledUl = styled.ul`
+    @media (min-width: ${Breakpoint.large}) {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
 `
 
 const WishList = () => {
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
-    const { data, loading, error } = useQuery<FamilyMemberData >(GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID, {
+    const { data, loading, error } = useQuery<WishListItemsData >(GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID, {
         variables: {
             id: parseInt(familyMemberId)
         }
     });
 
-    if(loading) return <p>"loading ..."</p>;
+    if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRR!!"</p>;
-    const wishListItems = data?.familyMemberById.wishListItems || [];
+    const wishListItems = data?.wishListItemsByAuthor || [];
     const sortedWishListItems = (_.sortBy(wishListItems, ['dueDate'])).reverse();
 
     return (

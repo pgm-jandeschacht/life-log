@@ -1,31 +1,37 @@
-import { ObjectType, Field, Int, ArrayElement } from '@nestjs/graphql';
+import { 
+  ObjectType, 
+  Field, 
+  Int 
+} from '@nestjs/graphql';
 import { FamilyMemberInAgendaItem } from 'src/family-member-in-agenda-items/entities/family-member-in-agenda-item.entity';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
-import { Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, Column, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import { 
+  Entity, 
+  PrimaryGeneratedColumn, 
+  ManyToOne, 
+  Column, 
+  CreateDateColumn, 
+  UpdateDateColumn, 
+  OneToMany 
+} from 'typeorm';
 
-@Entity({ orderBy: {
-    date: 'DESC',
-}})
+@Entity()
 @ObjectType()
 export class AgendaItem {
     @PrimaryGeneratedColumn()
     @Field(type => Int, { description: 'The ID of the agenda-item' })
     id:number;
 
-    //date
-
-    //due
-
+    @CreateDateColumn({ name: 'created_at' }) 'created_at': Date;
+    @UpdateDateColumn({ name: 'updated_at' }) 'updated_at': Date;
+    
     @Column()
-    @Field({description: 'Name of the agenda-item'})
-    title: string;
+    @Field({description: 'Content of the agenda-item'})
+    content: string;
 
-
-
-    // @Column()
-    // // @Field({ nullable: true, description: 'Extra information about agenda-item'})
-    // @Field({ nullable: true})
-    // content?: string;
+    @Column({ type: 'timestamp', nullable: true })
+    @Field()
+    date: Date;
 
     @Column()
     @Field(type => Int, { nullable: true })
@@ -35,23 +41,8 @@ export class AgendaItem {
     @Field(type => FamilyMember, { description: 'Author of this agenda-item' })
     author: FamilyMember;
 
-    @Column({ type: 'timestamp', nullable: true })
-    // @CreateDateColumn()
-    @Field()
-    createdOn: Date;
-
-    @Column({ type: 'timestamp', nullable: true })
-    // @UpdateDateColumn()
-    @Field()
-    updatedOn: Date;
-
-    @Column({ type: 'timestamp', nullable: true })
-    @Field()
-    date: Date;
-
-    // Many to Many
-    @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.agendaItem, { eager: true, cascade: true})
+    // Many to Many, linked family members
+    @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.agendaItem, { cascade: true})
     @Field(type => [FamilyMemberInAgendaItem], { nullable: true, description: 'List of agendaItems where a family member is linked in'})
-    agendaItemWithInvitedFamilyMembers: FamilyMemberInAgendaItem[];
-
+    inAgendaItem: FamilyMemberInAgendaItem[];
 }

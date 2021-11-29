@@ -86,7 +86,7 @@ const routes: IRoute[] = [
         
     },
     {
-        path: '/my-family/detail',
+        path: '/my-family/:userId',
         name: 'Detail page family member',
         component: MyFamilyDetail,
         exact: true

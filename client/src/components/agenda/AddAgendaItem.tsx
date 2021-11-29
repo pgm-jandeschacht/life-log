@@ -4,7 +4,7 @@ import { TextAreaError, DropDownError } from '../forms'
 import { FormTemplate } from '../layout'
 import { Formik, Field } from 'formik'
 import * as yup from 'yup';
-import { Colors, Shadow } from '../../variables'
+import { Breakpoint, Colors, Shadow } from '../../variables'
 
 const example = [
     {
@@ -41,59 +41,120 @@ const StyledForm = styled.form`
     label:last-of-type {
         margin-bottom: 0;
     }
+    @media (min-width: ${Breakpoint.large}) {
+        display: flex;
+        width: 100%;
+    }
 `
 
 const StyledLabel = styled.label`
     display: flex;
     flex-direction: column;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 900;
-    margin-bottom: 2rem;
-
+    margin-bottom: 1rem;
+    @media (min-width: ${Breakpoint.small}) {
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        width: 100%;
+        margin-right: 1.5rem;
+    }
+    
     span {
-            color: ${Colors.red};
-        }
-
+        color: ${Colors.red};
+    }
+    
     textarea {
-        margin-top: 2rem;
+        margin-top: 1rem;
         border: 3px solid ${Colors.primary};
         border-radius: 10px;
         box-shadow: ${Shadow.small};
         background: ${Colors.secondary};
-        padding: 1.5rem;
-        font-size: 2rem;
+        padding: 1rem;
+        font-size: 1.2rem;
         font-weight: 500;
         color: ${Colors.primary};
+        @media (min-width: ${Breakpoint.small}) {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            font-size: 2rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+        }
     }
 `
 
 const StyledLabelSelect = styled.label`
     display: flex;
     flex-direction: column;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     font-weight: 900;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    @media (min-width: ${Breakpoint.small}) {
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        width: 100%;
+    }
 
     span {
             color: ${Colors.red};
         }
 
     select {
-        margin-top: 2rem;
-        padding: 1.5rem;
+        margin-top: 1rem;
+        padding: 1rem;
         border: 3px solid ${Colors.primary};
         border-radius: 10px;
         box-shadow: ${Shadow.small};
-        font-size: 2rem;
+        font-size: 1.2rem;
         font-weight: 700;
         color: ${Colors.primary};
         background: ${Colors.secondary};
         cursor: pointer;
+        @media (min-width: ${Breakpoint.small}) {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            font-size: 2rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            margin-top: 1.5rem;
+            padding: 1.25rem;
+            font-size: 1.5rem;
+        }
     }
 `
 
 const validationSchema = yup.object({
-    note: yup.string().required(),
+    agendaItem: yup.string().required(),
     user: yup.string().required()
 })
 
@@ -101,7 +162,7 @@ const AddAgendaItem = () => {
     return (
         <Formik
             initialValues={{
-                note: '',
+                agendaItem: '',
                 user: '',
             }}
             validationSchema={validationSchema}
@@ -116,7 +177,7 @@ const AddAgendaItem = () => {
                 <StyledForm onSubmit={handleSubmit}>
                     <StyledLabel>
                         <p>Today I <span>*</span></p>
-                        <Field  placeholder="Write here what you did today" name="note" as={TextAreaError} type="textarea" />
+                        <Field  placeholder="Write here what you did today" name="agendaItem" as={TextAreaError} type="textarea" />
                         {/* <TextArea placeholder={"Write here what you did today"}>Today I</TextArea> */}
                     </StyledLabel>
 

@@ -1,6 +1,9 @@
 import { Field, InputType, Int } from "@nestjs/graphql";
-import { Contains, IsAlpha, IsBoolean } from "class-validator";
-import { User } from "src/users/entities/user.entity";
+import { 
+  Contains, 
+  IsAlpha, 
+  IsBoolean 
+} from "class-validator";
 
 @InputType()
 export class CreateFamilyMemberInput {
@@ -13,7 +16,6 @@ export class CreateFamilyMemberInput {
     @Field({ nullable: true })
     lastname?: string;
     
-    @Contains('male' || 'female' || 'other')
     @Field()
     gender: string;
     
