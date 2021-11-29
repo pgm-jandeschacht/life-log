@@ -203,6 +203,7 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
     const grandChildren = data?.familyRelationsByFamilyMemberId.filter(i => i.relationType.name === 'grandson' || i.relationType.name === 'granddaughter' || i.relationType.name === 'grandchild');
     console.log('partner', partner);
     console.log('children', children);
+    console.log(grandChildren);
     
 
     function calculateAge (dobMember: string | undefined) {
@@ -221,13 +222,13 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
                 <SubTitle>{partner && (partner?.length > 0) ? 'Married with:'  : 'Single' }</SubTitle>
                 {partner && (partner?.length > 0) ? 
                     <DetailSmallContainer>
-                        <Link to={'my-family'}>
+                        <Link to={`/my-family/${partner[0].relatedFamilyMember.id}`} title={`${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}`}>
                             <StyledImgSmall>
-                                {/* <img src={peter} alt={profile.partner} /> */}
+                                <img src={peter} alt={`${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}`} />
                             </StyledImgSmall>
 
                             <DetailSmall>
-                                <p>{(partner && (partner?.length > 0)) ? partner[0].relatedFamilyMember.firstname : '' }</p>
+                                <p>{(partner && (partner?.length > 0)) ? `${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}` : '' }</p>
                             </DetailSmall>
                         </Link>
                     </DetailSmallContainer>
@@ -241,13 +242,13 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
                         {children?.map((child: any) => (
                             <li>
                                 <DetailSmallContainer>
-                                    <Link to={'my-family'}>
+                                    <Link to={`/my-family/${child.relatedFamilyMember.id}`} title={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`}>
                                         <StyledImgSmall>
-                                            <img src={maria} alt={child.relatedFamilyMember.firstname} />
+                                            <img src={maria} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
                                         </StyledImgSmall>
 
                                         <DetailSmall>
-                                            <p>{child.relatedFamilyMember.firstname}</p>
+                                            <p>{child.relatedFamilyMember.firstname} {child.relatedFamilyMember.lastname}</p>
                                             <p>{ calculateAge(child.relatedFamilyMember.dob) } years old</p>
                                         </DetailSmall>
                                     </Link>
@@ -265,13 +266,13 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
                         {grandChildren?.map((child: any) => (
                             <li>
                                 <DetailSmallContainer>
-                                    <Link to={'my-family'}>
+                                    <Link to={`/my-family/${child.relatedFamilyMember.id}`} title={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`}>
                                         <StyledImgSmall>
-                                            <img src={maria} alt={child.relatedFamilyMember.firstname} />
+                                            <img src={maria} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
                                         </StyledImgSmall>
 
                                         <DetailSmall>
-                                            <p>{child.relatedFamilyMember.firstname}</p>
+                                            <p>{child.relatedFamilyMember.firstname} {child.relatedFamilyMember.lastname}</p>
                                             <p>{ calculateAge(child.relatedFamilyMember.dob) } years old</p>
                                         </DetailSmall>
                                     </Link>

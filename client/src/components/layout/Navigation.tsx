@@ -41,7 +41,7 @@ const StyledDiv = styled.div<StyledDivProps>`
         padding-bottom: 1rem;
     }
     
-    a {
+    & > a {
         text-align: center;
         margin-right: 1rem;
         width: 33.3%;
@@ -86,8 +86,10 @@ const StyledLogo = styled.div`
         align-items: center;
         display: flex;
     }
-    img {
-        width: 7.5rem;
+    a {
+        img {
+            width: 7.5rem;
+        }
     }
 `
 
@@ -107,11 +109,12 @@ const Navigation = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps)
     return (
         <div>
             <StyledDiv hide={isForm} buttonColor={setBlue} backgroundColor={backgroundColorAccent}>
-                
                 <Link to={'/help'} title={'Help'}>Help</Link>
 
                 <StyledLogo>
-                    <img src={(setBlue ? logo : logoBlue)} alt="Life Log" />
+                    <Link to={'/'} title={'Home'}>
+                        <img src={(setBlue ? logo : logoBlue)} alt="Life Log" />
+                    </Link>
                 </StyledLogo>
 
                 <ButtonNav onClick={handleClick} backgroundColorButton={backgroundColorAccent} buttonColorButton={setBlue}>
