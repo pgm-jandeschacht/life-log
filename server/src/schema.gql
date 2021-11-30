@@ -265,6 +265,7 @@ type Query {
   albumItemsByAuthor(authorId: Int!): [AlbumItem!]!
   FamilyMemberInAlbumItems: [FamilyMemberInAlbumItem!]!
   FamilyMemberInAlbumItem(id: Int!): FamilyMemberInAlbumItem!
+  FamilyMemberInAlbumItemsByFamilyMemberId(familyMemberId: Int!): [FamilyMemberInAlbumItem!]!
   wishListItems: [WishListItem!]!
   wishListItem(id: Int!): WishListItem!
   wishListItemsByAuthor(authorId: Int!): [WishListItem!]!
