@@ -43,6 +43,7 @@ query getAllAlbumItemsWhereFamilyMemberIdIn($id: Int!) {
     id
     albumItem {
       id
+      image
       location
     }
   }

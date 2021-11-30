@@ -5,7 +5,7 @@ import vacationImg from '../../assets/images/vacation.jpg'
 import { Breakpoint, Shadow, Transition } from '../../variables'
 
 interface PicturesListItemProps {
-    pic?: any
+    pics?: any
 }
 
 const StyledLi = styled.li`
@@ -60,12 +60,13 @@ const StyledImg = styled.div`
     }
 `
 
-const PicturesListItem: React.FC<PicturesListItemProps> = ({ pic }) => {
+const PicturesListItem: React.FC<PicturesListItemProps> = ({ pics }) => {
+    console.log(pics.albumItem.id)
     return (
-        <StyledLi>
-            <Link to={`/my-pictures/detail/${(pic ? pic.id : 1)}`} title={"Picture detail"}>
+        <StyledLi key={pics.albumItem.id}>
+            <Link to={`/my-pictures/detail/${(pics ? pics.albumItem.id : 1)}`} title={"Picture detail"}>
                 <StyledImg>
-                    <img src={pic.image} alt="Vacation" />
+                    <img src={pics.albumItem.image} alt={`${pics.albumItem.location}`} />
                 </StyledImg>
             </Link>
         </StyledLi>
