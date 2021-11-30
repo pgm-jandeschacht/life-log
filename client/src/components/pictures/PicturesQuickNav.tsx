@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClock, faHeart } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 const StyledDiv = styled.div`
     display: flex;
@@ -78,17 +79,17 @@ const StyledDiv = styled.div`
 const PicturesQuickNav: React.FC = () => {
     return (
         <StyledDiv>
-            <a href="/my-pictures">
+            <Link to={"/my-pictures/recent"} title={"Recently added pictures"}>
                 <FontAwesomeIcon icon={faClock}/>
 
                 <span>Recent pictures</span>
-            </a>
+            </Link>
 
-            <a href="/my-pictures">
+            <Link to={"/my-pictures/liked"} title={"Liked pictures"}>
                 <FontAwesomeIcon icon={faHeart}/>
 
                 <span>Pictures I liked</span>
-            </a>
+            </Link>
         </StyledDiv>
     )
 }

@@ -28,6 +28,9 @@ type AlbumItem {
 
   """What is there to say about this picture"""
   description: String
+
+  """Url of image"""
+  image: String
   date: DateTime!
   uploaderId: Int
 
@@ -418,6 +421,9 @@ input CreateAlbumItemInput {
 
   """What is there to say about this picture"""
   description: String
+
+  """Url of image"""
+  image: String
   date: DateTime!
   uploaderId: Int
   created_at: DateTime!
@@ -430,6 +436,9 @@ input UpdateAlbumItemInput {
 
   """What is there to say about this picture"""
   description: String
+
+  """Url of image"""
+  image: String
   date: DateTime!
   uploaderId: Int
   created_at: DateTime

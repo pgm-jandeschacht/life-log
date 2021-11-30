@@ -16,10 +16,27 @@ export interface AlbumItem {
     location?: string;
     description?: string;
     uploaderId?: number;
+    image?: string;
     uploader: FamilyMember;
     inPicture: FamilyMember[];
     inAlbumItem?: InAlbumItem[];
 }
+
+export interface AlbumItemData {
+    albumItemsByAuthor: AlbumItem[];
+}
+
+
+///////
+// export interface AlbumItem {
+//     id: number;
+//     date: string;
+// }
+
+// export interface AlbumItemData {
+//     albumItems: AlbumItem[]
+// }
+///////
 
 export interface FamilyMember {
     id: number;

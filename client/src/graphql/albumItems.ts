@@ -8,6 +8,15 @@ import { gql, useQuery, useLazyQuery } from "@apollo/client";
  * Queries
  */
 
+export const GET_ALBUMITEMS = gql`
+query {
+    albumItems {
+        id
+        date
+    }
+}
+`
+
 // Info for Home-page
 export const GET_ALBUMITEMS_BY_FAMILYMEMBER_ID = gql`
 query getAlbumItemsByFamilyMemberId($id: Int!) {
@@ -15,6 +24,7 @@ query getAlbumItemsByFamilyMemberId($id: Int!) {
         id
         location
         description
+        image
         inAlbumItem {
           id
           familyMember {
@@ -33,6 +43,7 @@ query getAllAlbumItemsWhereFamilyMemberIdIn($id: Int!) {
     id
     albumItem {
       id
+      image
       location
     }
   }

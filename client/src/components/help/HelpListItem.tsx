@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { IconDefinition } from '@fortawesome/fontawesome-common-types';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Breakpoint, Shadow, Transition } from '../../variables';
+import { Link } from 'react-router-dom';
 
 interface HelpListItemProps {
     title: string,
@@ -110,7 +111,7 @@ const StyledDiv = styled.div`
 const HelpListItem: React.FC<HelpListItemProps> = ({ title, keyId, image, color }) => {
     return (
         <StyledLi background={color}>
-            <a href="/help">
+            <Link to={"/help"} title={"Help"}>
                 <StyledDiv>
                     <FontAwesomeIcon icon={image}/>
 
@@ -118,7 +119,7 @@ const HelpListItem: React.FC<HelpListItemProps> = ({ title, keyId, image, color 
                 </StyledDiv>
 
                 <FontAwesomeIcon icon={faChevronRight}/>
-            </a>
+            </Link>
         </StyledLi>
     )
 }
