@@ -35,3 +35,16 @@ query getAlbumItemsByFamilyMemberId($id: Int!) {
     }    
 }
 `;
+
+
+export const GET_ALLALBUMITEMS_WHERE_FAMILYMEMBER_ID_IN = gql`
+query getAllAlbumItemsWhereFamilyMemberIdIn($id: Int!) {
+  FamilyMemberInAlbumItemsByFamilyMemberId(familyMemberId: $id) {
+    id
+    albumItem {
+      id
+      location
+    }
+  }
+}
+`;

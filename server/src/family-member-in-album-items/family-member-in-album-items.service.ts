@@ -41,7 +41,7 @@ export class FamilyMemberInAlbumItemsService {
       where: {
         familyMemberId: familyMemberId
       },
-      relations: ['wishListItem']
+      relations: ['albumItem']
     })
   }
 

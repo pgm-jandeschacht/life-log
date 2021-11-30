@@ -36,6 +36,14 @@ export class FamilyMemberInAlbumItemsResolver {
     return this.FamilyMemberInAlbumItemsService.findOneById(id);
   }
 
+  @Query((returns) => [FamilyMemberInAlbumItem], { name: 'FamilyMemberInAlbumItemsByFamilyMemberId' })
+  findAllByFamilyMemberId(
+    @Args('familyMemberId', { type: () => Int })
+    familyMemberId: number
+  ) {
+    return this.FamilyMemberInAlbumItemsService.findAllByFamilyMemberId(familyMemberId);
+  }
+
   @Mutation(() => FamilyMemberInAlbumItem)
   removeFamilyMemberInAlbumItem(@Args('id', { type: () => Int }) id: number) {
     return this.FamilyMemberInAlbumItemsService.delete(id);
