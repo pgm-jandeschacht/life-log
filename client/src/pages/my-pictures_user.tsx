@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import React from "react";
 import { useParams } from "react-router";
 import { Loading } from "../components/alerts";
-import { Pictures } from "../components/picturesLists";
+import { PicturesList } from "../components/picturesLists";
 import { GET_FAMILYMEMBER_BY_ID } from "../graphql/familyMembers";
 import { FamilyMemberData } from "../interfaces";
 import Ipage from '../interfaces/page';
@@ -21,7 +21,7 @@ const MyPicturesUserPage: React.FunctionComponent<Ipage> = props => {
 
     return (
         <BaseLayout backgroundStyle={"accent1"} PageTitle={`Pictures from ${data?.familyMemberById.firstname}`}>
-            <Pictures/>
+            <PicturesList/>
         </BaseLayout>
     )
 }

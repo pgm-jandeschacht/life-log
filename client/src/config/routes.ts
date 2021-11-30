@@ -16,6 +16,7 @@ import ProfileSettingsPage from "../pages/ProfileSettings";
 import MyPicturesUserPage from "../pages/my-pictures_user";
 import MyPicturesRecentPage from "../pages/my-pictures_recent";
 import MyPicturesLikedPage from "../pages/my-pictures_liked";
+import MyPicturesDetailPage from "../pages/my-pictures_detail";
 
 const routes: IRoute[] = [
     {
@@ -99,6 +100,13 @@ const routes: IRoute[] = [
         path: '/my-pictures/user/:userId',
         name: 'Detail page familymember pictures',
         component: MyPicturesUserPage,
+        exact: true
+
+    },
+    {
+        path: '/my-pictures/detail/:userId',
+        name: 'Detail page picture',
+        component: MyPicturesDetailPage,
         exact: true
 
     },

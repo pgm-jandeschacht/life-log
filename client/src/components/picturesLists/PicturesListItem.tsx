@@ -59,7 +59,7 @@ const StyledImg = styled.div`
 const PicturesListItem: React.FC = () => {
     return (
         <StyledLi>
-            <Link to={"/my-pictures"} title={"Picture detail"}>
+            <Link to={`/my-pictures/detail/${1}`} title={"Picture detail"}>
                 <StyledImg>
                     <img src={vacationImg} alt="Vacation" />
                 </StyledImg>

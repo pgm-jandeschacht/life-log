@@ -1,5 +1,7 @@
-import Pictures from './Pictures'
+import PicturesList from './PicturesList'
+import PicturesListRecent from './PicturesListRecent'
 
 export {
-    Pictures
+    PicturesList,
+    PicturesListRecent
 }
