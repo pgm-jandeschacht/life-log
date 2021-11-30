@@ -21,7 +21,7 @@ const MyPicturesUserPage: React.FunctionComponent<Ipage> = props => {
 
     return (
         <BaseLayout backgroundStyle={"accent1"} PageTitle={`Pictures from ${data?.familyMemberById.firstname}`}>
-            <PicturesList/>
+            <PicturesList user={userId}/>
         </BaseLayout>
     )
 }

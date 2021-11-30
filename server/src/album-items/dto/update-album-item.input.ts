@@ -20,6 +20,10 @@ export class UpdateAlbumItemInput extends PartialType(CreateAlbumItemInput) {
   @Field({nullable: true, description: 'What is there to say about this picture'})
   description?: string;
 
+  @IsString()
+  @Field({nullable: true, description: 'Url of image'})
+  image?: string;
+
   @IsDate()
   @Field()
   date: Date;

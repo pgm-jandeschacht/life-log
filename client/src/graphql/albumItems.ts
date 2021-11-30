@@ -24,6 +24,7 @@ query getAlbumItemsByFamilyMemberId($id: Int!) {
         id
         location
         description
+        image
         inAlbumItem {
           id
           familyMember {

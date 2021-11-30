@@ -4,6 +4,10 @@ import styled from 'styled-components'
 import vacationImg from '../../assets/images/vacation.jpg'
 import { Breakpoint, Shadow, Transition } from '../../variables'
 
+interface PicturesListItemProps {
+    pic?: any
+}
+
 const StyledLi = styled.li`
     transition: ${Transition.normal};
     box-shadow: ${Shadow.small};
@@ -56,12 +60,12 @@ const StyledImg = styled.div`
     }
 `
 
-const PicturesListItem: React.FC = () => {
+const PicturesListItem: React.FC<PicturesListItemProps> = ({ pic }) => {
     return (
         <StyledLi>
-            <Link to={`/my-pictures/detail/${1}`} title={"Picture detail"}>
+            <Link to={`/my-pictures/detail/${(pic ? pic.id : 1)}`} title={"Picture detail"}>
                 <StyledImg>
-                    <img src={vacationImg} alt="Vacation" />
+                    <img src={pic.image} alt="Vacation" />
                 </StyledImg>
             </Link>
         </StyledLi>
