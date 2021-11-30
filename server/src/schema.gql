@@ -262,6 +262,7 @@ type Query {
   FamilyMemberInAgendaItem(id: Int!): FamilyMemberInAgendaItem!
   albumItems: [AlbumItem!]!
   albumItem(id: Int!): AlbumItem!
+  albumItemsByAuthor(authorId: Int!): [AlbumItem!]!
   FamilyMemberInAlbumItems: [FamilyMemberInAlbumItem!]!
   FamilyMemberInAlbumItem(id: Int!): FamilyMemberInAlbumItem!
   wishListItems: [WishListItem!]!

@@ -98,6 +98,9 @@ const validationSchema = yup.object({
 })
 
 const AddAgendaItem = () => {
+
+// maak mutation-query, error & loading useMutation
+
     return (
         <Formik
             initialValues={{
@@ -105,8 +108,11 @@ const AddAgendaItem = () => {
                 user: '',
             }}
             validationSchema={validationSchema}
+            // rename data, niet zelfde als usemutation
             onSubmit={(data, { setSubmitting }) => {
                 setSubmitting(true);
+
+                // call name of useMutation, voeg variables toe, refetchquery-options
 
                 setSubmitting(false);
                 }}

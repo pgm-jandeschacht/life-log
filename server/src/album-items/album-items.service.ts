@@ -35,6 +35,7 @@ export class AlbumItemsService {
     return this.familyMemberService.findOneById(uploaderId);
   }
 
+
   findAllByAuthor(uploaderId: number): Promise<AlbumItem[]> {
     return this.albumItemRepository.find({
       where: {
