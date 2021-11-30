@@ -1,31 +1,19 @@
 import React from 'react'
-import vacationImg from '../../assets/images/vacation.jpg'
+import styled from 'styled-components'
+import PictureImg from './PictureImg'
+import PictureContent from './PictureContent'
 
-interface Props {
-    
-}
+const StyledDiv = styled.div`
+   display: flex;
+`
 
-const Picture = (props: Props) => {
+const Picture: React.FC = () => {
     return (
-        <div>
-            <div>
-                <img src={vacationImg} alt="On Vacation" />
-            </div>
+        <StyledDiv>
+            <PictureImg/>
 
-            <div>
-                <h2>Title</h2>
-                <p>Description</p>
-                <p>Date</p>
-                <p>Location</p>
-                <ul>
-                    <li>People in it</li>
-                    <li>People in it</li>
-                    <li>People in it</li>
-                    <li>People in it</li>
-                </ul>
-                <button>Like</button>
-            </div>
-        </div>
+            <PictureContent/>
+        </StyledDiv>
     )
 }
 

@@ -5,7 +5,7 @@ import { BaseLayout } from "../layouts";
 
 const MyPicturesDetailPage: React.FunctionComponent<Ipage> = props => {
     return (
-        <BaseLayout backgroundStyle={"accent1"} PageTitle={`Picture from Judy`}>
+        <BaseLayout backgroundStyle={"accent1"} PageTitle={`Picture from Sarah`}>
             <Picture/>
         </BaseLayout>
     )

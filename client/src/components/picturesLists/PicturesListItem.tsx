@@ -61,12 +61,11 @@ const StyledImg = styled.div`
 `
 
 const PicturesListItem: React.FC<PicturesListItemProps> = ({ pics }) => {
-    console.log(pics.albumItem.id)
     return (
-        <StyledLi key={pics.albumItem.id}>
-            <Link to={`/my-pictures/detail/${(pics ? pics.albumItem.id : 1)}`} title={"Picture detail"}>
+        <StyledLi key={(pics !== undefined ? pics.albumItem.id : 1)}>
+            <Link to={`/my-pictures/detail/${(pics !== undefined ? `${pics.albumItem.id}` : 1)}`} title={"Picture detail"}>
                 <StyledImg>
-                    <img src={pics.albumItem.image} alt={`${pics.albumItem.location}`} />
+                    <img src={(pics !== undefined ? pics.albumItem.image : vacationImg)} alt={(pics !== undefined ? pics.albumItem.location : 'Vacation')} />
                 </StyledImg>
             </Link>
         </StyledLi>
