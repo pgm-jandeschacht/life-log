@@ -1,3 +1,7 @@
+/**
+ * Main types
+ */
+
 export interface AgendaItem {
     id: number;
     title: string;
@@ -5,34 +9,6 @@ export interface AgendaItem {
     author: FamilyMember;
     inAgendaItem?: InAgendaItem[];
     date: Date;
-}
-
-export interface InAgendaItem {
-  id: number;
-  familyMember: FamilyMember;
-  agendaItem: AgendaItem;
-}
-export interface InAlbumItem {
-  id: number;
-  familyMember: FamilyMember;
-  albumItem: AlbumItem;
-}
-export interface InWishListItem {
-  id: number;
-  familyMember: FamilyMember;
-  wishListItem: WishListItemType;
-}
-
-export interface AgendaItemsData {
-    agendaItemsByAuthor: AgendaItem[];
-}
-
-export interface WishListItemsData {
-  wishListItemsByAuthor: WishListItemType[];
-}
-
-export interface FamilyRelationsData {
-  familyRelationsByFamilyMemberId: FamilyRelation[];
 }
 
 export interface AlbumItem {
@@ -85,29 +61,12 @@ export interface FamilyMember {
     inWishListItem?: WishListItemType[];
 }
 
-// export interface FamilyMembersData {
-//     familyMemberByUserId: FamilyMember[]
-// }
-export interface FamilyMembersData {
-    familyMembers: FamilyMember[]
-}
-export interface FamilyMemberData {
-    familyMemberById: FamilyMember
-}
-
-export interface FamilyRelationData {
-    familyRelationsByFamilyMemberId: FamilyRelation[]
-}
-
 export interface FamilyRelation {
     id: number
     familyMember: FamilyMember
     relationType: RelationType
     relatedFamilyMember: FamilyMember
 }
-// export interface FamilyMemberData {
-//     familyMemberById: FamilyMember
-// }
 
 export interface Note {
     id: number;
@@ -133,3 +92,57 @@ export interface RelationType {
 }
 
 
+/**
+ * Many to many relations
+ */
+
+export interface InAgendaItem {
+  id: number;
+  familyMember: FamilyMember;
+  agendaItem: AgendaItem;
+}
+
+export interface InAlbumItem {
+  id: number;
+  familyMember: FamilyMember;
+  albumItem: AlbumItem;
+}
+
+export interface InWishListItem {
+  id: number;
+  familyMember: FamilyMember;
+  wishListItem: WishListItemType;
+}
+
+
+/**
+ * Data types incoming from queries
+ */
+
+export interface AgendaItemsData {
+  agendaItemsByAuthor: AgendaItem[];
+}
+
+export interface AlbumItemsData {
+  albumItemsByAuthor: AlbumItem[];
+}
+
+export interface WishListItemsData {
+  wishListItemsByAuthor: WishListItemType[];
+}
+
+export interface FamilyRelationsData {
+  familyRelationsByFamilyMemberId: FamilyRelation[];
+}
+
+export interface FamilyMembersData {
+  familyMembers: FamilyMember[]
+}
+
+export interface FamilyMemberData {
+  familyMemberById: FamilyMember
+}
+
+export interface FamilyRelationData {
+  familyRelationsByFamilyMemberId: FamilyRelation[]
+}
