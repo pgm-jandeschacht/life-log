@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import { Colors, Transition } from '../../variables'
+import { Breakpoint, Colors, Transition } from '../../variables'
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const StyledDiv = styled.div`
-    width: 50%;
-    margin-left: 1rem;
+    width: 100%;
+    margin-left: 0;
+    @media (min-width: ${Breakpoint.large}) {
+        margin-left: 1rem;
+        width: 50%;
+    }
     `
 
 const StyledTitle = styled.div`
@@ -17,8 +21,17 @@ const StyledTitle = styled.div`
     
     h2 {
         font-weight: 900;
-        font-size: 3rem;
+        font-size: 2rem;
         margin-bottom: 0.5rem;
+        @media (min-width: ${Breakpoint.small}) {
+            font-size: 2.5rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            font-size: 3rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            font-size: 2.5rem;
+        }
     }
 ` 
 
@@ -28,8 +41,14 @@ interface StyledButtonProps {
 
 const StyledButton = styled.button<StyledButtonProps>`
     background: none;
-    font-size: 2rem;
+    font-size: 1.5rem;
     transition: ${Transition.normal};
+    @media (min-width: ${Breakpoint.small}) {
+        font-size: 1.75rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        font-size: 2rem;
+    }
     svg {
         transition: ${Transition.normal};
         path {
@@ -47,17 +66,35 @@ const StyledButton = styled.button<StyledButtonProps>`
 
 const Subtitle = styled.div`
     margin-bottom: 0.75rem;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-weight: 700;
-`
+    @media (min-width: ${Breakpoint.small}) {
+        font-size: 1.5rem;
+    }
+    @media (min-width: ${Breakpoint.small}) {
+        font-size: 1.75rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        font-size: 1.5rem;
+    }
+    `
 
 const Info = styled.div`
     display: flex;
-    margin-bottom: 2rem;
-
+    margin-bottom: 1rem;
+    @media (min-width: ${Breakpoint.small}) {
+        margin-bottom: 1.5rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 2rem;
+    }
+    
     p {
-        font-size: 1.2rem;
-
+        font-size: 1rem;
+        @media (min-width: ${Breakpoint.small}) {
+            font-size: 1.2rem;
+        }
+        
         &:last-of-type {
             margin-left: 0.75rem;
             &::before {
@@ -66,29 +103,59 @@ const Info = styled.div`
             }
         }
     }
-`
+    `
 
 const Detail = styled.div`
-    margin-bottom: 2rem;
-
+    margin-bottom: 1.5rem;
+    @media (min-width: ${Breakpoint.small}) {
+        margin-bottom: 1.75rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 2rem;
+    }
+    
     p {
         &:first-of-type {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             font-weight: 900;
             margin-bottom: 0.75rem;
+            @media (min-width: ${Breakpoint.small}) {
+                font-size: 1.75rem;
+            }
+            @media (min-width: ${Breakpoint.medium}) {
+                font-size: 2rem;
+            }
+            @media (min-width: ${Breakpoint.large}) {
+                font-size: 1.75rem;
+            }
         }
-
+        
         &:last-of-type {
-            font-size: 1.2rem;
+            font-size: 1rem;
+            @media (min-width: ${Breakpoint.small}) {
+                font-size: 1.2rem;
+            }
+            @media (min-width: ${Breakpoint.medium}) {
+                font-size: 1.5rem;
+            }
+            @media (min-width: ${Breakpoint.large}) {
+                font-size: 1.2rem;
+            }
         }
     }
-`
+    `
 
 const PeopleList = styled.ul`
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
-
+    margin-bottom: 1rem;
+    @media (min-width: ${Breakpoint.small}) {
+        margin-bottom: 1.5rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 2rem;
+    }
+    
     li {
         margin-right: 0.5rem;
         margin-bottom: 0.5rem;
@@ -100,7 +167,10 @@ const PeopleList = styled.ul`
         transition: ${Transition.normal};
         
         a {
-            padding: 0.5rem 1rem;
+            padding: 0.4rem 0.8rem;
+            @media (min-width: ${Breakpoint.small}) {
+                padding: 0.5rem 1rem;
+            }
         }
 
         &:hover {
