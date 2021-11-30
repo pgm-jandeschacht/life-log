@@ -142,6 +142,7 @@ export class AppService {
       const albumItem = await this.albumItemRepository.create({
         location: faker.address.city(),
         description: faker.lorem.sentence(),
+        image: `${faker.image.people()}?random=${Math.round(Math.random() * 1000)}`,
         created_at: date,
         updated_at: date,
         date: faker.date.between(new Date(2021, 9, 1), new Date(2021, 12, 29)),

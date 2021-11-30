@@ -35,6 +35,11 @@ export class AlbumItemsResolver {
     return this.albumItemsService.findOneById(id);
   }
 
+  @Query((returns) => [AlbumItem], { name: "albumItemsByAuthor" })
+  agendaItemsByAuthor(@Args("authorId", { type: () => Int }) authorId: number) {
+    return this.albumItemsService.findAllByAuthor(authorId);
+  }
+
   @ResolveField(returns => FamilyMember)
   uploader(@Parent() albumItem: AlbumItem): Promise<FamilyMember> {
       return this.albumItemsService.getUploader(albumItem.uploaderId);

@@ -13,6 +13,10 @@ import MyWishlistAdd from "../pages/my-wishlist_Add";
 import MyWishListEdit from "../pages/my-wishlist_Edit";
 import MyFamilyDetail from "../pages/my-family_detail";
 import ProfileSettingsPage from "../pages/ProfileSettings";
+import MyPicturesUserPage from "../pages/my-pictures_user";
+import MyPicturesRecentPage from "../pages/my-pictures_recent";
+import MyPicturesLikedPage from "../pages/my-pictures_liked";
+import MyPicturesDetailPage from "../pages/my-pictures_detail";
 
 const routes: IRoute[] = [
     {
@@ -89,6 +93,34 @@ const routes: IRoute[] = [
         path: '/my-family/:userId',
         name: 'Detail page family member',
         component: MyFamilyDetail,
+        exact: true
+
+    },
+    {
+        path: '/my-pictures/user/:userId',
+        name: 'Detail page familymember pictures',
+        component: MyPicturesUserPage,
+        exact: true
+
+    },
+    {
+        path: '/my-pictures/detail/:userId',
+        name: 'Detail page picture',
+        component: MyPicturesDetailPage,
+        exact: true
+
+    },
+    {
+        path: '/my-pictures/recent',
+        name: 'Recently added pictures',
+        component: MyPicturesRecentPage,
+        exact: true
+
+    },
+    {
+        path: '/my-pictures/liked',
+        name: 'Liked pictures',
+        component: MyPicturesLikedPage,
         exact: true
 
     },

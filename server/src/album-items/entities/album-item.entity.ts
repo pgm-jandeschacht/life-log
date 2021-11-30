@@ -28,19 +28,23 @@ export class AlbumItem {
     @Column()
     @Field({nullable: true, description: 'Location where this picture is taken'})
     location?: string;
-
+    
     @Column()
     @Field({nullable: true, description: 'What is there to say about this picture'})
     description?: string;
 
+    @Column()
+    @Field({nullable: true, description: 'Url of image'})
+    image?: string;
+
     @Column({ type: 'timestamp', nullable: true })
     @Field()
     date: Date;
-
+    
     @Column()
     @Field(type => Int, { nullable: true })
     uploaderId?: number;
-
+    
     @ManyToOne(() => FamilyMember, uploader => uploader.albumItems, { onDelete: 'SET NULL' })
     @Field(type => FamilyMember, { description: 'Uploader of this picture' })
     uploader: FamilyMember;
@@ -49,5 +53,4 @@ export class AlbumItem {
     @OneToMany(() => FamilyMemberInAlbumItem, FamilyMemberInAlbumItem => FamilyMemberInAlbumItem.albumItem, { cascade: true})
     @Field(type => [FamilyMemberInAlbumItem], { nullable: true, description: 'List of albumItels where a family member is in'})
     albumItemWithFamilyMemberIn: FamilyMemberInAlbumItem[];
-
 }

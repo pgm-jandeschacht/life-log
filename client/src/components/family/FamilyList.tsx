@@ -32,7 +32,7 @@ const FamilyList: React.FC<FamilyListProps> = ( ) => {
 
     if(loading) return <Loading/>;
     if(error) return <p>"ERRRORRR!!"</p>;
-
+    console.log(data?.familyRelationsByFamilyMemberId)
 
     return (
         <StyledUl>
