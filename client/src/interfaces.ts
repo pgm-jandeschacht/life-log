@@ -35,15 +35,15 @@ export interface FamilyRelationsData {
   familyRelationsByFamilyMemberId: FamilyRelation[];
 }
 
-// export interface AlbumItem {
-//     id: number;
-//     location?: string;
-//     description?: string;
-//     uploaderId?: number;
-//     uploader: FamilyMember;
-//     inPicture: FamilyMember[];
-//     inAlbumItem?: InAlbumItem[];
-// }
+export interface AlbumItem {
+    id: number;
+    location?: string;
+    description?: string;
+    uploaderId?: number;
+    uploader: FamilyMember;
+    inPicture: FamilyMember[];
+    inAlbumItem?: InAlbumItem[];
+}
 
 
 ///////
