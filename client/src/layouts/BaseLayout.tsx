@@ -29,13 +29,16 @@ const Main = styled.main`
     max-width: 80rem;
     margin: auto;
     position: relative;
-    padding: 0 2rem 13.25rem 2rem;
+    padding: 0 2rem 7rem 2rem;
     
     @media (min-width: ${Breakpoint.small}) {
-        padding: 0 3rem 13.25rem 3rem;
+        padding: 0 3rem 9rem 3rem;
     }
     @media (min-width: ${Breakpoint.medium}) {
         padding: 0 4rem 13.25rem 4rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        padding: 0 4rem 9rem 4rem;
     }
 `
     

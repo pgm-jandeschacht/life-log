@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Breakpoint } from '../../variables'
 import PicturesNamesList from './PicturesNamesList'
 import { Loading } from '../alerts'
 import { GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations';
@@ -12,9 +13,20 @@ interface PicturesNamesProps {
 
 const StyledDiv = styled.div`
     h2 {
-        font-size: 2.5rem;
+        font-size: 1.5rem;
         font-weight: 900;
-        margin-bottom: 0.25rem;
+        margin-bottom: 0.5rem;
+        @media (min-width: ${Breakpoint.small}) {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            font-size: 2rem;
+        }
     }
 `
 

@@ -2,9 +2,21 @@ import React from 'react'
 import HelpListItem from './HelpListItem'
 import { faImage, faUsers, faCalendarAlt, faUserAlt,faPencilAlt, faCog } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import { Breakpoint } from '../../variables';
 
 const StyledUl = styled.ul`
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
+    @media (min-width: ${Breakpoint.small}) {
+        margin-top: 2rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-top: 2.5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-top: 2rem;
+        display: flex;
+        flex-wrap: wrap;
+    }
 `
 
 const HelpList = () => {

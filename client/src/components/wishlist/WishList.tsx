@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Colors } from '../../variables'
+import { Breakpoint, Colors } from '../../variables'
 import WishListItem from './WishListItem';
 
 import { useQuery } from '@apollo/client';
@@ -28,7 +28,12 @@ const wishlist = [
     }
 ]
 
-const StyledUl = styled.div`
+const StyledUl = styled.ul`
+    @media (min-width: ${Breakpoint.large}) {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
 `
 
 const WishList = () => {
