@@ -5,7 +5,7 @@ import { ProfileSettingsDetail } from '../components/settingsPage'
 
 const ProfileSettingsPage: React.FunctionComponent<Ipage> = props => {
     return (
-        <BaseLayout PageTitle={"Profile settings"}>
+        <BaseLayout backButton={true} PageTitle={"Profile settings"}>
             <ProfileSettingsDetail/>
         </BaseLayout>
     )

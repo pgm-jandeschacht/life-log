@@ -22,7 +22,8 @@ interface BaseLayoutProps {
     backgroundStyle?: string,
     altButton?: boolean,
     altLink?: string,
-    formPage?: boolean
+    formPage?: boolean,
+    backButton?: boolean,
 }
 
 const Main = styled.main`
@@ -42,7 +43,7 @@ const Main = styled.main`
     }
 `
     
-const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton = false, altLink, formPage = false } : BaseLayoutProps) => {
+const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton = false, altLink, formPage = false, backButton = false } : BaseLayoutProps) => {
     
     // Change background color of navigation according to the page
     const [background, setBackground] = useState(Colors.primary)
@@ -74,7 +75,7 @@ const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton =
 
     return (
         <>
-            <Header form={formPage} link={altLink} button={altButton} title={PageTitle} backgroundColor={background} />
+            <Header back={backButton} form={formPage} link={altLink} button={altButton} title={PageTitle} backgroundColor={background} />
 
             <Main>
                 
