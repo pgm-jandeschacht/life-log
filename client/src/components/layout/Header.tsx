@@ -6,6 +6,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonIcon, BackButton } from '../buttons';
+import { useHistory } from 'react-router-dom'
 
 interface headerProps {
     title: string,
@@ -19,7 +20,6 @@ interface headerProps {
 interface HeaderProps {
     background: string,
     hide?: boolean,
-    hideBack?: boolean
 }
 
 const StyledHeader = styled.header<HeaderProps>`
@@ -41,21 +41,23 @@ const StyledHeader = styled.header<HeaderProps>`
     }
 
     div {
-        display: flex;
-        align-items: center;
+        @media (min-width: ${Breakpoint.large}) {
+            display: flex;
+            align-items: center;
+        }
 
         h1 {
             font-weight: 900;
-            font-size: ${(HeaderProps) => ((HeaderProps.hide || HeaderProps.hideBack) ? 2 : 2.5)}rem;
+            font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 2 : 2.5)}rem;
             
             @media (min-width: ${Breakpoint.small}) {
-                font-size: ${(HeaderProps) => ((HeaderProps.hide || HeaderProps.hideBack) ? 2.5 : 3)}rem;
+                font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 2.5 : 3)}rem;
             }
             @media (min-width: ${Breakpoint.medium}) {
-                font-size: ${(HeaderProps) => ((HeaderProps.hide || HeaderProps.hideBack) ? 3.25 : 4)}rem;
+                font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 3.25 : 4)}rem;
             }
             @media (min-width: ${Breakpoint.large}) {
-                font-size: ${(HeaderProps) => ((HeaderProps.hide || HeaderProps.hideBack) ? 2.5 : 3)}rem;
+                font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 2.5 : 3)}rem;
             }
         }
     }
@@ -104,11 +106,12 @@ const StyledHeader = styled.header<HeaderProps>`
 `
 
 const Header = ({ title, button, backgroundColor, link, form, back }: headerProps) => {
+    const history = useHistory();
     const handleClicking = () => {
-        window.history.back();
+        history.goBack();
     }
     return (
-        <StyledHeader hideBack={back} hide={form} background={backgroundColor}>
+        <StyledHeader hide={form} background={backgroundColor}>
 
             <div>
                 <BackButton background={backgroundColor} hide={back} onClick={handleClicking}/>

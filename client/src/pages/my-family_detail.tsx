@@ -30,7 +30,7 @@ const MyFamilyDetail: React.FunctionComponent<Ipage> = ({ }) => {
     const { userId } = useParams<{ userId: any }>();
     console.log(userId)
     return (
-        <BaseLayout backgroundStyle={"accent2"} PageTitle={"My family"}>
+        <BaseLayout backButton={true} backgroundStyle={"accent2"} PageTitle={"My family"}>
            <FamilyDetail profile={user} userId={userId}/>
         </BaseLayout>
     )
