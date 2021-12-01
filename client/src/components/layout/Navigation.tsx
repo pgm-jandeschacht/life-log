@@ -95,7 +95,7 @@ const StyledLogo = styled.div`
 
 const Navigation = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps) => {
     const [isClicked, setIsClicked] = useState(false);
-
+    
     const handleClick = () => {
         setIsClicked(true);
     }

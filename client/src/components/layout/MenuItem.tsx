@@ -8,7 +8,8 @@ interface MenuItemProps {
     to: string,
     children: React.ReactNode,
     styleColor: string,
-    alt: boolean
+    alt: boolean,
+    onClick?: (e: React.MouseEvent<HTMLLIElement>) => void,
 }
 
 interface LiProps {
@@ -102,9 +103,9 @@ const Li = styled.li<LiProps>`
     }
 `
 
-const MenuItem = ({title, to, children, styleColor, alt }: MenuItemProps) => {
+const MenuItem = ({title, to, children, styleColor, alt, onClick }: MenuItemProps) => {
     return (
-        <Li backgroundColor={styleColor} alternative={alt}>
+        <Li onClick={onClick} backgroundColor={styleColor} alternative={alt}>
             <Link to={to} title={title}>{children}</Link>
         </Li>
     )
