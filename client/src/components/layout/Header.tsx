@@ -5,20 +5,21 @@ import { Link } from 'react-router-dom';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonIcon } from '../buttons';
-
+import { ButtonIcon, BackButton } from '../buttons';
 
 interface headerProps {
     title: string,
     button: boolean,
     backgroundColor: string,
     link?: string,
-    form?: boolean
+    form?: boolean,
+    back?: boolean,
 }
 
 interface HeaderProps {
     background: string,
-    hide?: boolean
+    hide?: boolean,
+    hideBack?: boolean
 }
 
 const StyledHeader = styled.header<HeaderProps>`
@@ -39,20 +40,26 @@ const StyledHeader = styled.header<HeaderProps>`
         padding: 3rem 4rem;
     }
 
-    h1 {
-        font-weight: 900;
-        font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 2 : 2.5)}rem;
-        
-        @media (min-width: ${Breakpoint.small}) {
-            font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 2.5 : 3)}rem;
-        }
-        @media (min-width: ${Breakpoint.medium}) {
-            font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 3.25 : 4)}rem;
-        }
-        @media (min-width: ${Breakpoint.large}) {
-            font-size: ${(HeaderProps) => ((HeaderProps.hide) ? 2.5 : 3)}rem;
+    div {
+        display: flex;
+        align-items: center;
+
+        h1 {
+            font-weight: 900;
+            font-size: ${(HeaderProps) => ((HeaderProps.hide || HeaderProps.hideBack) ? 2 : 2.5)}rem;
+            
+            @media (min-width: ${Breakpoint.small}) {
+                font-size: ${(HeaderProps) => ((HeaderProps.hide || HeaderProps.hideBack) ? 2.5 : 3)}rem;
+            }
+            @media (min-width: ${Breakpoint.medium}) {
+                font-size: ${(HeaderProps) => ((HeaderProps.hide || HeaderProps.hideBack) ? 3.25 : 4)}rem;
+            }
+            @media (min-width: ${Breakpoint.large}) {
+                font-size: ${(HeaderProps) => ((HeaderProps.hide || HeaderProps.hideBack) ? 2.5 : 3)}rem;
+            }
         }
     }
+
 
     a {
         background: ${(HeaderProps) => HeaderProps.background};
@@ -96,16 +103,20 @@ const StyledHeader = styled.header<HeaderProps>`
     }
 `
 
-const Header = ({ title, button, backgroundColor, link, form }: headerProps) => {
-
+const Header = ({ title, button, backgroundColor, link, form, back }: headerProps) => {
     const handleClicking = () => {
         window.history.back();
     }
     return (
-        <StyledHeader hide={form} background={backgroundColor}>
-            <h1>
-                {title}
-            </h1>
+        <StyledHeader hideBack={back} hide={form} background={backgroundColor}>
+
+            <div>
+                <BackButton background={backgroundColor} hide={back} onClick={handleClicking}/>
+                
+                <h1>
+                    {title}
+                </h1>
+            </div>
 
             { (form) ? <ButtonIcon background={backgroundColor} onClick={handleClicking} ><FontAwesomeIcon icon={faTimes} /></ButtonIcon> : '' }
 
