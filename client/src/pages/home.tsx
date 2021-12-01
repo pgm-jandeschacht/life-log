@@ -17,11 +17,11 @@ const HomePage: React.FunctionComponent<Ipage> = props => {
         return (
         <BaseLayout PageTitle={"Home"} >
             
-            <p>This is the HOME page!</p>
+            {/* <p>This is the HOME page!</p>
             
             <FamilyMemberInfo/>
             <h1>Upcoming visits</h1>
-            <AgendaList/>
+            <AgendaList/> */}
             
         </BaseLayout>
     )
