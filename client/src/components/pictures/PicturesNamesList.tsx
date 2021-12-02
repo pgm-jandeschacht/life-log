@@ -88,7 +88,6 @@ const StyledLi = styled.li`
 `
 
 const PicturesNamesList: React.FC<PicturesNamesListProps> = ({ usersList }) => {
-    //TODO: ADD LINK to watch images from familymember
     return (
         <StyledUl>
             {usersList.map((user: any) => (
