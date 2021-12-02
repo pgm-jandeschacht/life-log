@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom'
 
 interface headerProps {
     title: string,
-    button: boolean,
+    button?: boolean,
     backgroundColor: string,
     link?: string,
     form?: boolean,
