@@ -75,25 +75,40 @@ const StyledDiv = styled.div<StyledDivProps>`
     background: ${Colors.primary};
     width: 100%;
     height: 100%;
-    max-width: 80rem;
     display: ${(StyledDivProps) => (StyledDivProps.hide ? 'block' : 'none')};
 `
 
 const ContentContainer = styled.div`
+    max-width: 80rem;
+    margin: auto;
     padding: 0 2rem 2.5rem 2rem;
     
     @media (min-width: ${Breakpoint.small}) {
         padding: 0 3rem 3.5rem 3rem;
     }
     @media (min-width: ${Breakpoint.medium}) {
+        padding: 0 4rem 3.5rem 4rem;
+        display: flex;
+    }
+    @media (min-width: ${Breakpoint.large}) {
         padding: 0 4rem 4.5rem 4rem;
     }
+    `
+
+const Flex = styled.div`
     @media (min-width: ${Breakpoint.medium}) {
-        padding: 0 4rem 4.5rem 4rem;
+        width: 50%;
+        margin-right: 2rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        width: 30%;
+        margin-right: 4rem;
     }
 `
 
 const StyledHeader = styled.div`
+    max-width: 80rem;
+    margin: auto;
     padding: 2.5rem 2rem;
     @media (min-width: ${Breakpoint.small}) {
         padding: 4rem 3rem;
@@ -119,9 +134,9 @@ const StyledHeader = styled.div`
             @media (min-width: ${Breakpoint.medium}) {
                 font-size: 3.25rem;
             }
-            @media (min-width: ${Breakpoint.large}) {
+            /* @media (min-width: ${Breakpoint.large}) {
                 font-size: 2.5rem;
-            }
+            } */
         }
     }
 
@@ -137,9 +152,10 @@ const StyledHeader = styled.div`
             margin-bottom: 1rem;
             font-size: 2.5rem;
         }
-        @media (min-width: ${Breakpoint.large}) {
+        /* @media (min-width: ${Breakpoint.large}) {
             font-size: 2rem;
-        }
+            margin-bottom: 0.75rem;
+        } */
     }
 
 `
@@ -159,10 +175,22 @@ const StyledButtons = styled.div<StyledDivProps>`
         border-radius: 10px;
         color: ${Colors.primary};
         background: ${(StyledDiv) => StyledDiv.background};
-        padding: 0.6rem 1.2rem;
+        padding: 0.5rem 1rem;
         font-size: 1.25rem;
         font-weight: 700;
         transition: ${Transition.normal};
+        @media (min-width: ${Breakpoint.small}) {
+            padding: 0.6rem 1.2rem;
+            font-size: 1.5rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.75rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            font-size: 1.75rem;
+            padding: 0.6rem 1.2rem;
+        }
         
         &:hover {
             transform: translateY(-5px);
@@ -187,7 +215,17 @@ const StyledProgress = styled.div<StyledDivProps>`
         background: ${Colors.secondary};
         margin-right: 0.75rem;
         transition: ${Transition.slow};
-
+        @media (min-width: ${Breakpoint.small}) {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 1rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            width: 0.75rem;
+            height: 0.75rem;
+            margin-right: 0.75rem;
+        }
+        
         &:last-of-type {
             margin-right: 0;
         }
@@ -202,6 +240,9 @@ interface ActiveProgressProps {
 const ActiveProgress = styled.span<ActiveProgressProps>`
     background: ${(ActiveProgressProps) => (ActiveProgressProps.active ? ActiveProgressProps.background : '')}!important;
     width:  ${(ActiveProgressProps) => (ActiveProgressProps.active ? '3rem' : '')}!important;
+    @media (min-width: ${Breakpoint.small}) {
+        width:  ${(ActiveProgressProps) => (ActiveProgressProps.active ? '4rem' : '')}!important;
+    }
 `
 
 const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
@@ -265,15 +306,17 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
 
                         </StyledHeader>
                         <ContentContainer>
-                            <HelpImage data={filtered.content[counter]}/>
+                            <Flex>
+                                <HelpImage data={filtered.content[counter]}/>
 
-                            <StyledProgress background={color}>
-                                {
-                                    (filtered.content).map((filter, index) => (
-                                        <ActiveProgress background={color} active={counter === (index) ? true : false} key={index}></ActiveProgress>
-                                    ))
-                                }
-                            </StyledProgress>
+                                <StyledProgress background={color}>
+                                    {
+                                        (filtered.content).map((filter, index) => (
+                                            <ActiveProgress background={color} active={counter === (index) ? true : false} key={index}></ActiveProgress>
+                                        ))
+                                    }
+                                </StyledProgress>
+                            </Flex>
 
                             <HelpText data={filtered.content[counter]}/>
                         </ContentContainer>

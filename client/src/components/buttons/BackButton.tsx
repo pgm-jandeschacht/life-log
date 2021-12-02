@@ -37,7 +37,6 @@ const StyledButton = styled.button<StyledButtonProps>`
         font-size: 1.75rem;
     }
     @media (min-width: ${Breakpoint.large}) {
-        font-size: 1.75rem;
         padding: 0.6rem 1.2rem;
         margin-right: 1.5rem;
         margin-top: 0.4rem;

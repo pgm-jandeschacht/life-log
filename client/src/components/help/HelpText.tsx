@@ -7,6 +7,9 @@ interface HelpTextProps {
 }
 
 const StyledText = styled.div`
+    @media (min-width: ${Breakpoint.medium}) {
+        width: 50%;
+    }
     h2 {
         font-size: 1.5rem;
         font-weight: 700;
