@@ -16,7 +16,7 @@ interface StyledButtonProps {
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
-    color: ${Colors.primary};
+    color: ${(StyledButtonProps) => (StyledButtonProps.color === '#0A213A' ? Colors.secondary : Colors.primary)};
     background: ${(StyledButtonProps) => (StyledButtonProps.color !== undefined ? StyledButtonProps.color : Colors.primary)};
     display: ${(StyledButtonProps) => (StyledButtonProps.hidden ? 'flex' : 'none')};
     align-items: center;
@@ -49,7 +49,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     
     &:hover {
         transform: translateY(-5px);
-        color: ${(StyledButtonProps) => (StyledButtonProps.color !== undefined ? StyledButtonProps.color : Colors.primary)};
+        color: ${(StyledButtonProps) => (StyledButtonProps.color === '#0A213A' ? Colors.secondary : StyledButtonProps.color)};
         background: ${(StyledButtonProps) => (StyledButtonProps.color !== undefined ? Colors.primary : Colors.secondary)};
         div {
             background: ${(StyledButtonProps) => (StyledButtonProps.color !== undefined ? Colors.primary : Colors.secondary)};

@@ -81,6 +81,12 @@ const SettingsList = (props: Props) => {
                     <FontAwesomeIcon icon={faChevronRight} />
                 </Link>
             </li>
+            <li>
+                <Link to={"/settings/followed-people"} title={"Followed people settings"}>
+                    Followed people
+                    <FontAwesomeIcon icon={faChevronRight} />
+                </Link>
+            </li>
         </StyledUl>
     )
 }
