@@ -8,6 +8,16 @@ const StyledImg = styled.div`
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
+    margin-top: 2rem;
+    @media (min-width: ${Breakpoint.small}) {
+        margin-top: 3rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-top: 5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-top: 3rem;
+    }
 
     img {
         width: 5rem;

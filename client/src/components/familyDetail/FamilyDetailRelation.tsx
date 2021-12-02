@@ -9,7 +9,7 @@ import FamilyDetailButtons from './FamilyDetailButtons'
 import { useQuery } from '@apollo/client'
 import { FamilyMemberData, FamilyRelationData } from "../../interfaces";
 import { GET_FAMILYMEMBER_BY_ID } from "../../graphql/familyMembers";
-import { Loading } from '../alerts'
+import { Error, Loading } from '../alerts'
 import { parseInt } from 'lodash'
 import { doTypesOverlap } from 'graphql'
 import { GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations';
@@ -193,7 +193,7 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
     // let children = '';
 
     if(loading) return <Loading/>;
-    if(error) return <p>{error.message}</p>;
+    if(error) return <Error error={error.message}/>;
 
     
     console.log('data relations.....',data?.familyRelationsByFamilyMemberId);
