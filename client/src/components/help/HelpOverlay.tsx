@@ -7,6 +7,7 @@ import HelpText from './HelpText'
 import { ButtonIcon } from '../buttons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import HelpProgress from './HelpProgress'
 
 const helpExample = [
     {
@@ -134,9 +135,6 @@ const StyledHeader = styled.div`
             @media (min-width: ${Breakpoint.medium}) {
                 font-size: 3.25rem;
             }
-            /* @media (min-width: ${Breakpoint.large}) {
-                font-size: 2.5rem;
-            } */
         }
     }
 
@@ -152,10 +150,6 @@ const StyledHeader = styled.div`
             margin-bottom: 1rem;
             font-size: 2.5rem;
         }
-        /* @media (min-width: ${Breakpoint.large}) {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-        } */
     }
 
 `
@@ -198,50 +192,6 @@ const StyledButtons = styled.div<StyledDivProps>`
             background: ${Colors.primary};
             color: ${(StyledDiv) => StyledDiv.background};
         }
-    }
-`
-
-const StyledProgress = styled.div<StyledDivProps>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 1.5rem;
-
-    span {
-        border-radius: 10px;
-        width: 0.75rem;
-        height: 0.75rem;
-        background: ${Colors.secondary};
-        margin-right: 0.75rem;
-        transition: ${Transition.slow};
-        @media (min-width: ${Breakpoint.small}) {
-            width: 1rem;
-            height: 1rem;
-            margin-right: 1rem;
-        }
-        @media (min-width: ${Breakpoint.large}) {
-            width: 0.75rem;
-            height: 0.75rem;
-            margin-right: 0.75rem;
-        }
-        
-        &:last-of-type {
-            margin-right: 0;
-        }
-    }
-`
-
-interface ActiveProgressProps {
-    active: boolean,
-    background: string
-}
-
-const ActiveProgress = styled.span<ActiveProgressProps>`
-    background: ${(ActiveProgressProps) => (ActiveProgressProps.active ? ActiveProgressProps.background : '')}!important;
-    width:  ${(ActiveProgressProps) => (ActiveProgressProps.active ? '3rem' : '')}!important;
-    @media (min-width: ${Breakpoint.small}) {
-        width:  ${(ActiveProgressProps) => (ActiveProgressProps.active ? '4rem' : '')}!important;
     }
 `
 
@@ -309,13 +259,7 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
                             <Flex>
                                 <HelpImage data={filtered.content[counter]}/>
 
-                                <StyledProgress background={color}>
-                                    {
-                                        (filtered.content).map((filter, index) => (
-                                            <ActiveProgress background={color} active={counter === (index) ? true : false} key={index}></ActiveProgress>
-                                        ))
-                                    }
-                                </StyledProgress>
+                                <HelpProgress count={counter} background={color} data={filtered}/>
                             </Flex>
 
                             <HelpText data={filtered.content[counter]}/>

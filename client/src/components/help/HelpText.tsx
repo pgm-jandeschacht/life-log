@@ -22,9 +22,6 @@ const StyledText = styled.div`
             margin-bottom: 1rem;
             font-size: 2.5rem;
         }
-        @media (min-width: ${Breakpoint.large}) {
-            font-size: 2rem;
-        }
     }
 
     p {
@@ -34,9 +31,6 @@ const StyledText = styled.div`
         }
         @media (min-width: ${Breakpoint.medium}) {
             font-size: 1.5rem;
-        }
-        @media (min-width: ${Breakpoint.large}) {
-            font-size: 1.2rem;
         }
     }
 `
