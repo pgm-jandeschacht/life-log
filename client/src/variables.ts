@@ -9,7 +9,8 @@ export const Colors = {
     accent3: '#FFECB0',
     accent4: '#C4E0EB',
     accent5: '#FFB2AB',
-    red: '#EA2F2F'
+    red: '#EA2F2F',
+    grey: '#dfdfdf'
 }
 
 export const Transition = {

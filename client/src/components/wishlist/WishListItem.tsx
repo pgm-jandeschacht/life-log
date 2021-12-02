@@ -17,6 +17,7 @@ interface StyledLiProps {
 }
 
 const StyledLi = styled.li<StyledLiProps>`
+    overflow: hidden;
     display: ${(StyledLiProps) => StyledLiProps.close ? 'block' : 'none'};
     background: ${Colors.secondary};
     border-radius: 10px;
@@ -47,7 +48,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     align-items: center;
     width: 100%;
     text-align: left;
-    background: ${(StyledButtonProps) => StyledButtonProps.completed ? Colors.secondary : Colors.accent5};
+    background: ${(StyledButtonProps) => StyledButtonProps.completed ? Colors.grey : Colors.accent5};
     border-radius: 10px;
     padding: 0.75rem 1.2rem;
     font-size: 1.3rem;
@@ -92,7 +93,7 @@ const WishListItem: React.FC<WishListItemProps> = ({ wishContent, keyId, toClose
                 <FontAwesomeIcon icon={faChevronDown} />
             </StyledButton>
 
-            <WishListItemContent wish={wishContent} clicked={isClicked}/>
+            <WishListItemContent completed={wishContent.completed} wish={wishContent} clicked={isClicked}/>
         </StyledLi>
     )
 }

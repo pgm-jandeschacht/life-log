@@ -6,15 +6,19 @@ import { Link } from 'react-router-dom';
 
 interface WishListItemContentProps {
     clicked: boolean,
-    wish: WishListItemType
+    wish: WishListItemType,
+    completed: boolean
 }
 
 interface StyledDivProps {
-    expand: boolean
+    expand: boolean,
+    background: boolean
 }
 
 const StyledDiv = styled.div<StyledDivProps>`
     display: ${(StyledDivProps) => (StyledDivProps.expand ? 'block' : 'none')};
+    background: ${(StyledDivProps) => (StyledDivProps.background ? Colors.secondary : '')};
+    color: ${(StyledDivProps) => (StyledDivProps.background ? Colors.greyBlue : '')};
     padding: 1rem;
     font-size: 1.3rem;
     font-weight: 600;
@@ -70,7 +74,7 @@ const StyledDiv = styled.div<StyledDivProps>`
         width: 100%;
 
         a {
-            background: ${Colors.ternary};
+            background: ${Colors.accent5};
             color: ${Colors.primary};
             box-shadow: ${Shadow.small};
             border-radius: 10px;
@@ -82,54 +86,54 @@ const StyledDiv = styled.div<StyledDivProps>`
             transition: ${Transition.normal};
             width: 100%;
             text-align: center;
-            margin-right: 0.5rem;
+            margin-left: 0.5rem;
             @media (min-width: ${Breakpoint.small}) {
                 padding: 1rem 2rem;
                 font-size: 1.5rem;
-                margin-right: 0.75rem;
+                margin-left: 0.75rem;
             }
             @media (min-width: ${Breakpoint.medium}) {
                 padding: 1.5rem 2.5rem;
                 font-size: 2rem;
-                margin-right: 1rem;
+                margin-left: 1rem;
             }
             @media (min-width: ${Breakpoint.large}) {
                 padding: 1rem 2rem;
                 font-size: 1.5rem;
-                margin-right: 0.75rem;
+                margin-left: 0.75rem;
             }
             
-            &:last-of-type {
-                background: ${Colors.accent5};
-                margin-right: 0;
-                margin-left: 0.5rem;
+            &:first-of-type {
+                background: ${Colors.ternary};
+                margin-left: 0;
+                margin-right: 0.5rem;
                 @media (min-width: ${Breakpoint.small}) {
-                    margin-left: 0.75rem;
+                    margin-right: 0.75rem;
                 }
                 @media (min-width: ${Breakpoint.medium}) {
-                    margin-left: 1rem;
+                    margin-right: 1rem;
                 }
                 @media (min-width: ${Breakpoint.large}) {
-                    margin-left: 0.75rem;
+                    margin-right: 0.75rem;
                 }
 
                 &:hover {
                     transform: translateY(-5px);
                     background: ${Colors.primary};
-                    color: ${Colors.accent5};
+                    color: ${Colors.secondary};
                 }
             }
             
             &:hover {
                 transform: translateY(-5px);
                 background: ${Colors.primary};
-                color: ${Colors.secondary};
+                color: ${Colors.accent5};
             }
         }
     }
 `
 
-const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish }) => {
+const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish, completed }) => {
     //TODO: add completed yes/no?
 
     let visitDate = '';
@@ -158,7 +162,7 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
     }
 
     return (
-        <StyledDiv expand={clicked}>
+        <StyledDiv background={completed} expand={clicked}>
             I want
             <span>{inWishList}</span>
             to bring me
@@ -167,12 +171,9 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
             <span>{beautifyDob(visitDate)}</span>
 
             <div>
-                <a onClick={handleClicking} title="Delete wishlist item" href="/">
-                    Delete
-                </a>
-                <Link to={"my-wishlist/edit"} title={"Edit wishlist item"}>
-                    Edit
-                </Link>
+                <a onClick={handleClicking} title="Delete wishlist item" href="/">Delete</a>
+                
+                {completed ? '' : <Link to={"my-wishlist/edit"} title={"Edit wishlist item"}>Edit</Link>}
             </div>
         </StyledDiv>
     )
