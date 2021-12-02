@@ -31,6 +31,10 @@ const wishlist = [
 
 const StyledDiv = styled.div`
     &:first-of-type {
+        margin-bottom: 1.5rem;
+        @media (min-width: ${Breakpoint.small}) {
+            margin-bottom: 2rem;
+        }
         @media (min-width: ${Breakpoint.medium}) {
             margin-bottom: 2.5rem;
         }
@@ -60,6 +64,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     padding: 0.75rem 0;
     background: ${Colors.white};
     color: ${Colors.primary};
+    transition: ${Transition.normal};
     @media (min-width: ${Breakpoint.small}) {
         font-size: 2rem;
     }
@@ -79,16 +84,27 @@ const StyledButton = styled.button<StyledButtonProps>`
         &::after {
             content: '';
             width: 100%;
-            height: 0.2rem;
+            height: 0.25rem;
             margin: 0 1rem;
-            background: ${Colors.primary};
+            transition: ${Transition.normal};
+            background: ${(StyledButtonProps) => (StyledButtonProps.clicked ? Colors.accent5 : Colors.primary)};
             border-radius: 50px;
             @media (min-width: ${Breakpoint.small}) {
                 margin: 0 1.25rem;
             }
             @media (min-width: ${Breakpoint.medium}) {
                 margin: 0 1.5rem;
-                height: 0.3rem;
+                height: 0.35rem;
+            }
+        }
+        
+    }
+
+    &:hover {
+        transform: translateY(-5px);
+        span {
+            &::after {
+                background: ${Colors.accent5};
             }
         }
     }
@@ -101,7 +117,7 @@ const StyledButton = styled.button<StyledButtonProps>`
 
 const WishList: React.FC = () => {
     const [isClickedPending, setIsClickedPending] = useState(true);
-    const [isClickedCompleted, setIsClickedCompleted] = useState(true);
+    const [isClickedCompleted, setIsClickedCompleted] = useState(false);
 
     const buttonHandlerPending = () => {
         setIsClickedPending(!isClickedPending)
