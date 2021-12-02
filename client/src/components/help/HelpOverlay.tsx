@@ -40,13 +40,13 @@ const helpExample = [
             {
                 id: 1,
                 img: "screenshot-family1.png",
-                title: "Recent pictures",
+                title: "Familymembers list",
                 text: "Dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt.",
             },
             {
                 id: 2,
                 img: "screenshot-family2.png",
-                title: "Pictures I liked",
+                title: "Familymember detail",
                 text: "Quam dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
             },
         ]
