@@ -8,31 +8,38 @@ import { WishListItemType } from '../../interfaces';
 
 interface WishListItemProps {
     wishContent: WishListItemType,
-    keyId: number
+    keyId: number,
+    toClose: boolean
 }
 
-interface StyledButtonProps {
-    rotate: boolean
+interface StyledLiProps {
+    close: boolean
 }
 
-const StyledLi = styled.li`
+const StyledLi = styled.li<StyledLiProps>`
+    display: ${(StyledLiProps) => StyledLiProps.close ? 'block' : 'none'};
     background: ${Colors.secondary};
     border-radius: 10px;
     box-shadow: ${Shadow.small};
     margin-bottom: 1.5rem;
-
+    
     &:last-of-type {
         margin-bottom: 0;
     }
-
+    
     @media (min-width: ${Breakpoint.large}) {
         width: calc(50% - 0.75rem);
-
+        
         &:nth-of-type(odd) {
             margin-right: 1.5rem;
         }
     }
 `
+
+interface StyledButtonProps {
+    rotate: boolean,
+    completed: boolean
+}
 
 const StyledButton = styled.button<StyledButtonProps>`
     display: flex;
@@ -40,12 +47,12 @@ const StyledButton = styled.button<StyledButtonProps>`
     align-items: center;
     width: 100%;
     text-align: left;
-    background: ${Colors.accent5};
+    background: ${(StyledButtonProps) => StyledButtonProps.completed ? Colors.secondary : Colors.accent5};
     border-radius: 10px;
     padding: 0.75rem 1.2rem;
     font-size: 1.3rem;
     font-weight: 900;
-    color: ${Colors.primary};
+    color: ${(StyledButtonProps) => StyledButtonProps.completed ? Colors.greyBlue : Colors.primary};
     @media (min-width: ${Breakpoint.small}) {
         padding: 1rem 1.5rem;
         font-size: 1.5rem;
@@ -70,18 +77,16 @@ const StyledButton = styled.button<StyledButtonProps>`
     }
 `
 
-const WishListItem: React.FC<WishListItemProps> = ({ wishContent, keyId }) => {
-    const [isClicked, setIsClicked] = useState(false)
+const WishListItem: React.FC<WishListItemProps> = ({ wishContent, keyId, toClose }) => {
+    const [isClicked, setIsClicked] = useState(false);
 
     const buttonHandler = () => {
         setIsClicked(!isClicked)
     }
 
-    // console.log(wishContent)
-
     return (
-        <StyledLi key={keyId}>
-            <StyledButton rotate={isClicked} onClick={buttonHandler}>
+        <StyledLi close={toClose} key={keyId}>
+            <StyledButton completed={wishContent.completed} rotate={isClicked} onClick={buttonHandler}>
                 {wishContent.content}
 
                 <FontAwesomeIcon icon={faChevronDown} />

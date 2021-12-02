@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Colors, Shadow, Transition, Breakpoint } from '../../variables'
 import { InWishListItem, WishListItemType } from '../../interfaces';
+import { Link } from 'react-router-dom';
 
 interface WishListItemContentProps {
     clicked: boolean,
@@ -159,7 +160,6 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
     return (
         <StyledDiv expand={clicked}>
             I want
-            {/* <span>{wish.for}</span> */}
             <span>{inWishList}</span>
             to bring me
             <span>{wish.content}</span>
@@ -167,12 +167,12 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
             <span>{beautifyDob(visitDate)}</span>
 
             <div>
-                <a onClick={handleClicking} href="/">
-                    Delete Wish
+                <a onClick={handleClicking} title="Delete wishlist item" href="/">
+                    Delete
                 </a>
-                <a href="my-wishlist/edit">
-                    Edit Wish
-                </a>
+                <Link to={"my-wishlist/edit"} title={"Edit wishlist item"}>
+                    Edit
+                </Link>
             </div>
         </StyledDiv>
     )

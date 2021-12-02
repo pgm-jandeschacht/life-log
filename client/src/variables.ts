@@ -3,6 +3,7 @@ export const Colors = {
     secondary: '#F2F2F2',
     ternary: '#AECCEE',
     white: '#FFFFFF',
+    greyBlue: '#39495c',
     accent1: '#FEDDBE',
     accent2: '#B1DFD4',
     accent3: '#FFECB0',
