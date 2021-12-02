@@ -43,7 +43,7 @@ const StyledDiv = styled.div<StyledDivProps>`
         padding: 1.5rem 4rem;
         padding-bottom: 1rem;
     }
-    & ${(StyledDivProps) => (StyledDivProps.linkButton ? "a" : "button")}:first-of-type {
+    & ${(StyledDivProps) => (StyledDivProps.linkButton ? "> a" : "button:first-of-type")} {
         text-align: center;
         margin-right: 1rem;
         width: 33.3%;
