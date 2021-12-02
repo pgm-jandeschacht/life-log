@@ -6,7 +6,7 @@ import { Breakpoint, Colors, Shadow } from '../../variables'
 import { useQuery } from '@apollo/client'
 import { GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID } from '../../graphql/familyMembers';
 import { FamilyMemberData, FamilyMember } from '../../interfaces';
-import { Loading } from '../alerts'
+import { Error, Loading } from '../alerts'
 
 // interface AboutMeProps {
 //     profile: FamilyMemberData
@@ -162,7 +162,7 @@ const AboutMe: React.FC = () => {
     });
 
     if(loading) return <Loading/>;
-    if(error) return <p>"ERRRORRR!!"</p>;
+    if(error) return <Error error={error.message}/>;
     console.log(data);
 
     const beautifyDob = (dobMember?: string) => {

@@ -9,7 +9,7 @@ import FamilyDetailButtons from './FamilyDetailButtons'
 import { useQuery } from '@apollo/client'
 import { FamilyMemberData, FamilyRelationData } from "../../interfaces";
 import { GET_FAMILYMEMBER_BY_ID } from "../../graphql/familyMembers";
-import { Loading } from '../alerts'
+import { Error, Loading } from '../alerts'
 import { parseInt } from 'lodash'
 import { doTypesOverlap } from 'graphql'
 import { Link } from 'react-router-dom'
@@ -183,7 +183,7 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
     });
 
     if(loading) return <Loading/>;
-    if(error) return <p>{error.message}</p>;
+    if(error) return <Error error={error.message}/>;
 
 
     // const { data: familyRelationsData , loading: familyRelationsLoading, error:familyRelationsError } = useQuery<FamilyRelationData>(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {

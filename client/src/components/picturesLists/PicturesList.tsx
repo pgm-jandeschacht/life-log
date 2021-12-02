@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { GET_ALLALBUMITEMS_WHERE_FAMILYMEMBER_ID_IN } from '../../graphql/albumItems'
 import { InAlbumItemData } from '../../interfaces'
-import { Loading } from '../alerts'
+import { Error, Loading } from '../alerts'
 import PicturesListItem from './PicturesListItem'
 
 interface PicturesListProps {
@@ -23,7 +23,7 @@ const PicturesList: React.FC<PicturesListProps> = ({ user }) => {
     });
 
     if(loading) return <Loading/>;
-    if(error) return <p>{error.message}</p>;
+    if(error) return <Error error={error.message}/>;
     console.log(data?.FamilyMemberInAlbumItemsByFamilyMemberId)
 
     return (

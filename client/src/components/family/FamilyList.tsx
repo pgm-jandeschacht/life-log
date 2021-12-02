@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Breakpoint } from '../../variables'
-import { Loading } from '../alerts'
+import { Error, Loading } from '../alerts'
 import FamilyListItem from './FamilyListItem'
 
 import { useQuery } from "@apollo/client";
@@ -31,7 +31,7 @@ const FamilyList: React.FC<FamilyListProps> = ( ) => {
     })
 
     if(loading) return <Loading/>;
-    if(error) return <p>"ERRRORRR!!"</p>;
+    if(error) return <Error error={error.message}/>;
     console.log(data?.familyRelationsByFamilyMemberId)
 
     return (

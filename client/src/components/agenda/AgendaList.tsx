@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import { GET_AGENDAITEMS_BY_FAMILYMEMBER_ID} from '../../graphql/agendaItems';
 import { FamilyMemberData, AgendaItemsData } from '../../interfaces';
 import _ from 'lodash';
-import { Loading } from '../alerts';
+import { Error, Loading } from '../alerts';
 import { Breakpoint } from '../../variables';
 
 
@@ -72,7 +72,7 @@ const AgendaList: React.FC = () => {
     });
 
     if(loading) return <Loading/>;
-    if(error) return <p>"ERRRORRR!!"</p>;
+    if(error) return <Error error={error.message}/>;
     
     const agendaItems = data?.agendaItemsByAuthor || [];
     const sortedAgendaItems = _.sortBy(agendaItems, ['date']);

@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Breakpoint } from '../../variables'
 import PicturesNamesList from './PicturesNamesList'
-import { Loading } from '../alerts'
+import { Loading, Error } from '../alerts'
 import { GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations';
 import { useQuery } from '@apollo/client'
 import { FamilyRelationData } from '../../interfaces';
@@ -41,7 +41,7 @@ const PicturesNames: React.FC<PicturesNamesProps> = ({ users }) => {
     });
 
     if(loading) return <Loading/>;
-    if(error) return <p>{error.message}</p>;
+    if(error) return <Error error={error.message}/>;
 
     return (
         <StyledDiv>
