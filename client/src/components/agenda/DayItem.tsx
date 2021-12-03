@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Colors, Breakpoint } from '../../variables'
+import { Colors, Breakpoint, Transition } from '../../variables'
 import { InAgendaItem } from '../../interfaces';
 
 interface DayItemProps {
@@ -31,18 +31,58 @@ const StyledLi = styled.li`
     }
 `
 
-const DayItem: React.FC<DayItemProps> = ({ content, inAgendaItem }) => {
+const StyledDiv = styled.div`
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-top: 1.5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-top: 1rem;
+    }
 
-    const familyMembers = inAgendaItem.map( i =>  i.familyMember.firstname).join(', ');
-    // console.log(familyMembers);
+    a {
+        background: ${Colors.ternary};
+        color: ${Colors.primary};
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        margin-right: 0.75rem;
+        transition: ${Transition.normal};
+        @media (min-width: ${Breakpoint.small}) {
+            padding: 0.6rem 1.2rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            padding: 0.75rem 1.5rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            padding: 0.6rem 1.2rem;
+        }
+
+        &:last-of-type {
+            margin-right: 0;
+        }
+
+        &:hover {
+            transform: translateY(-5px);
+            background: ${Colors.primary};
+            color: ${Colors.secondary};
+        }
+    }
+`
+
+const DayItem: React.FC<DayItemProps> = ({ content, inAgendaItem }) => {
+    const familyMembers = inAgendaItem.map( i =>  <a href={`/my-family/${i.familyMember.id}`}>{i.familyMember.firstname}</a>);
     // const length = inAgendaItem.length;
     return (
         <StyledLi>
-            {content}
-            <h3>With:</h3>
-            {
-                familyMembers
-            }
+            <p>
+                {content}
+            </p>
+            
+            <StyledDiv>
+                {familyMembers}
+            </StyledDiv>
             
             {/* {inAgendaItem.foreach(item => {
                 return item.familyMember.firstname

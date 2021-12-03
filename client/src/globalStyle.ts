@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
         outline: 0;
         box-sizing: border-box;
         font-family: 'Lato', sans-serif;
+        scroll-behavior: smooth;
     }
     
     #root {

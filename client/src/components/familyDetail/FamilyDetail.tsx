@@ -3,6 +3,7 @@ import img from '../../assets/images/karina_cox.jpg'
 import peter from '../../assets/images/peter_kox.jpg'
 import maria from '../../assets/images/maria_kox.jpg'
 // import oscar from '../../assets/images/oscar_kox.jpg'
+import { calculateAge } from '../../services/format/date'
 import styled from 'styled-components'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 import FamilyDetailButtons from './FamilyDetailButtons'
@@ -198,17 +199,6 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
     // if(!familyRelationsLoading && !familyRelationsError) {
     //     console.log(familyRelationsData);
     // }
-    
-
-    const calculateAge = (dobMember?: string) => {
-        var dob = new Date(`${dobMember}`);  
-        var month_diff = Date.now() - dob.getTime();  
-        var age_dt = new Date(month_diff);   
-        var year = age_dt.getUTCFullYear();  
-        var age = Math.abs(year - 1970); 
-        
-        return age;
-    }
 
     return (
         <div>

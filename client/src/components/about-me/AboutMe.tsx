@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import fallback from '../../assets/images/anna_boloise.jpg'
 import { Breakpoint, Colors, Shadow } from '../../variables'
-
+import { beautifyDate } from '../../services/format/date'
 import { useQuery } from '@apollo/client'
 import { GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID } from '../../graphql/familyMembers';
 import { FamilyMemberData, FamilyMember } from '../../interfaces';
@@ -151,10 +151,8 @@ const StyledImg = styled.div`
 `
 
 const AboutMe: React.FC = () => {
-
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
-    // const { data, loading, error } = useQuery<FamilyRelationData >(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
     const { data, loading, error } = useQuery<FamilyMemberData>(GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID, {
         variables: {
             id: parseInt(familyMemberId)
@@ -163,13 +161,6 @@ const AboutMe: React.FC = () => {
 
     if(loading) return <Loading/>;
     if(error) return <Error error={error.message}/>;
-    console.log(data);
-
-    const beautifyDob = (dobMember?: string) => {
-        var dob = new Date(`${dobMember}`);  
-        const date = `${dob.getUTCDay()}/${dob.getUTCMonth()}/${dob.getUTCFullYear()}`;
-        return date;
-    }
 
     return (
         <StyledDiv>
@@ -186,7 +177,7 @@ const AboutMe: React.FC = () => {
                 <StyledLi>
                     <li>
                         <p>Date of birth</p>
-                        <p>{ beautifyDob(data?.familyMemberById.dob) }</p>
+                        <p>{ beautifyDate(data?.familyMemberById.dob) }</p>
                     </li>
 
                     <li>
@@ -208,13 +199,11 @@ const AboutMe: React.FC = () => {
                 <li>
                     <p>Location</p>
                     <p>{ data?.familyMemberById.city } , { data?.familyMemberById.country }</p>
-                    {/* <p>{profile.location}</p> */}
                 </li>
 
                 <li>
                     <p>Carreer</p>
                     <p>{ data?.familyMemberById.occupation }</p>
-                    {/* <p>{profile.carreer}</p> */}
                 </li>
             </StyledUl>
         </StyledDiv>

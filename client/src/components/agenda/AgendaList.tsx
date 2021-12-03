@@ -1,14 +1,15 @@
 import React from 'react';
 import DayList from './DayList';
 import styled from 'styled-components';
-
 import { useQuery } from "@apollo/client";
 // import { GET_AGENDAITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
 import { GET_AGENDAITEMS_BY_FAMILYMEMBER_ID} from '../../graphql/agendaItems';
 import { FamilyMemberData, AgendaItemsData } from '../../interfaces';
 import _ from 'lodash';
 import { Error, Loading } from '../alerts';
-import { Breakpoint } from '../../variables';
+import { Breakpoint, Colors, Shadow, Transition } from '../../variables';
+import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 // example object agenda
@@ -60,6 +61,48 @@ const StyledUl = styled.ul`
     }
 `
 
+const StyledAnchor = styled.a`
+    position: fixed;
+    bottom: 6.5rem;
+    right: 1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: ${Transition.slow};
+    box-shadow: ${Shadow.large};
+    background: ${Colors.primary};
+    color: ${Colors.accent3};
+    border: 4px solid transparent;
+    @media (min-width: ${Breakpoint.small}) {
+        font-size: 1.4rem;
+        padding: 0.8rem 1rem;
+        bottom: 7.5rem;
+        right: 1.5rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        right: 2rem;
+        font-size: 1.6rem;
+        padding: 1rem 1.3rem;
+        bottom: 9.5rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        font-size: 1.4rem;
+        padding: 0.8rem 1rem;
+        bottom: 7.5rem;
+    }
+    @media (min-width: ${Breakpoint.max}) {
+        right: calc(50vw - 38.5rem);
+    }
+    
+    &:hover {
+        transform: translateY(-5px);
+        background: ${Colors.accent3};
+        color: ${Colors.primary};
+        border-color: ${Colors.primary};
+    }
+`
+
 const AgendaList: React.FC = () => {
     // agenda.map(agendaItem => console.log(agendaItem.id))
     
@@ -79,8 +122,10 @@ const AgendaList: React.FC = () => {
     const reverseAgenda = sortedAgendaItems.reverse();
     // const sortedAgendaItems = _.groupBy(agendaItems, 'date');
     // console.log(sortedAgendaItems['2021-10-27T18:48:22.281Z'])
+    const today = new Date().toDateString();
     return (
         <StyledUl>
+            <StyledAnchor title={`Go to today, ${today}`} href={"#today"}><FontAwesomeIcon icon={faCalendarDay}/></StyledAnchor>
             {  reverseAgenda.map(agendaItem => (
                 <DayList test={agendaItem} keyId={agendaItem.id} />
             )) }

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Colors, Shadow, Transition, Breakpoint } from '../../variables'
 import { InWishListItem, WishListItemType } from '../../interfaces';
 import { Link } from 'react-router-dom';
+import { beautifyDate } from '../../services/format/date'
 
 interface WishListItemContentProps {
     clicked: boolean,
@@ -138,7 +139,7 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
 
     let visitDate = '';
     if(wish.dueDate !== null) {
-        visitDate = 'on the: ' +  wish.dueDate;
+        visitDate = 'on the: ' +  beautifyDate(wish.dueDate);
     } else {
         visitDate = 'next time';
     }
@@ -153,13 +154,7 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
         e.preventDefault();
     }
 
-    const beautifyDob = (dobMember?: any) => {
-        var split = dobMember?.split('on the: ');
-        var newDob = split.join('');
-        var dob = new Date(`${newDob}`);  
-        const date = `${dob.getUTCDay()}/${dob.getUTCMonth()}/${dob.getUTCFullYear()}`;
-        return date;
-    }
+    console.log(typeof(wish.dueDate))
 
     return (
         <StyledDiv background={completed} expand={clicked}>
@@ -168,7 +163,7 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
             to bring me
             <span>{wish.content}</span>
             when they visit me
-            <span>{beautifyDob(visitDate)}</span>
+            <span>{ beautifyDate(wish?.dueDate) }</span>
 
             <div>
                 <a onClick={handleClicking} title="Delete wishlist item" href="/">Delete</a>

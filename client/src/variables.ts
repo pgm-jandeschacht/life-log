@@ -22,6 +22,7 @@ export const Transition = {
 export const Shadow = {
     small: '0px 1px 2px #0A213A26',
     medium: '0px 2px 4px #0A213A26',
+    large: '0px 2px 6px #0A213A26',
     altSmall: '0px 1px 2px #00000026',
 }
 
