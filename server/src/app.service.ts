@@ -15,6 +15,7 @@ import { FamilyRelation } from './family-relations/entities/family-relation.enti
 import { FamilyMemberInAgendaItem } from './family-member-in-agenda-items/entities/family-member-in-agenda-item.entity';
 import { FamilyMemberInAlbumItem } from './family-member-in-album-items/entities/family-member-in-album-item.entity';
 import { FamilyMemberInWishListItem } from './family-member-in-wish-list-item/entities/family-members-in-wish-list-item.entity';
+import { LikedPicture } from './liked-pictures/entities/liked-picture.entity';
 
 
 @Injectable()
@@ -42,6 +43,8 @@ export class AppService {
     private familyMemberInAlbumItemRepository: Repository<FamilyMemberInAlbumItem>,
     @InjectRepository(FamilyMemberInWishListItem)
     private familyMemberInWishListItemRepository: Repository<FamilyMemberInWishListItem>,
+    @InjectRepository(LikedPicture)
+    private likedPictureRepository: Repository<LikedPicture>,
   ) {}
 
   getHello(): void {
@@ -275,6 +278,30 @@ export class AppService {
     });
   }
 
+  // Liked pictures
+  async addLikedPictures() {
+    // All albumItems
+    const albumItems = await this.albumItemRepository.find();
+
+    // All familyMembers
+    const familyMembers = await this.familyMemberRepository.find();
+
+    albumItems.forEach(albumItem => {
+      const amountOfFamilyMembers = faker.datatype.number({min:0, max:10});
+      if(amountOfFamilyMembers > 0) {
+        const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, albumItem.uploaderId);
+          
+        randomFamilyMembers.forEach(familyMember => {
+          const likedPicture = this.likedPictureRepository.create({
+            albumItemId: albumItem.id,
+            familyMemberId: familyMember,
+          });
+          this.likedPictureRepository.save(likedPicture);     
+        });
+      }
+    });
+  }
+
   generateRandomArrayOfNumbers(amount: number, max: number, not:number = -1): number[] {
     let array = [];
     for(let i = 0; i < amount; i++) {
@@ -312,6 +339,7 @@ export class AppService {
     this.addFamilyMembersToAgendaItem();
     this.addFamilyMembersToAlbumItem();
     this.addFamilyMembersToWishListItem();
+    this.addLikedPictures();
   }
 
   // Clear all tables, cascade & restart count

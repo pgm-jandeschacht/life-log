@@ -5,6 +5,7 @@ import {
 } from '@nestjs/graphql';
 import { FamilyMemberInAlbumItem } from 'src/family-member-in-album-items/entities/family-member-in-album-item.entity';
 import { FamilyMember } from 'src/family-members/entities/family-member.entity';
+import { LikedPicture } from 'src/liked-pictures/entities/liked-picture.entity';
 import { 
   Column, 
   CreateDateColumn, 
@@ -53,4 +54,9 @@ export class AlbumItem {
     @OneToMany(() => FamilyMemberInAlbumItem, FamilyMemberInAlbumItem => FamilyMemberInAlbumItem.albumItem, { cascade: true})
     @Field(type => [FamilyMemberInAlbumItem], { nullable: true, description: 'List of albumItels where a family member is in'})
     albumItemWithFamilyMemberIn: FamilyMemberInAlbumItem[];
+
+    // Liked pictures list
+    @OneToMany(() => LikedPicture, likedPicture => likedPicture.albumItem, { cascade: true})
+    @Field(type => [LikedPicture], { nullable: true, description: 'List of liked pictures'})
+    likedPictures: LikedPicture[];
 }
