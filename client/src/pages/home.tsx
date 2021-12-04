@@ -5,57 +5,61 @@ import { BaseLayout } from "../layouts";
 import { useFetch } from '../Hooks'
 import { GET_ALL_FAMILYMEMBERS, GET_FAMILYMEMBER_BY_ID } from "../graphql/familyMembers";
 import { FamilyMember, FamilyMemberData, FamilyMembersData } from "../interfaces";
-
+import { Loading, Error } from "../components/alerts";
 import  FamilyMemberInfo from "../components/FamilyMember/FamilyMemberInfo";
 import { AgendaList } from "../components/agenda";
-
-
+// import { useFetch } from 'usehooks-ts'
 const HomePage: React.FunctionComponent<Ipage> = props => {
-    // const [weather, setWeather] = useState('');
-    const [isLocation, setIsLocation] = useState(false);
-    // const [latitude, setLatitude] = useState(0);
-    // const [longitude, setLongitude] = useState(0);
-    // let latitude: number = 0;
-    // let longitude: number = 0;
-    // let url: string = '';
-    // let weather: string = ''
+    const [longitude, setLongitude] = useState('51.228443');
+    const [latitude, setLatitude] = useState('2.934465');
 
     useEffect(() => {
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition(function(position) {
+        if (navigator.geolocation) {
+            navigator.permissions
+                .query({
+                    name: "geolocation"
+                })
+                .then(function(result) {
+                    const geoSuccess = (position: any) => {
+                        setLatitude(position.coords.latitude)
+                        setLongitude(position.coords.longitude)
+                    };
 
-            setIsLocation(true);
+                    const geoError = (error: any) => {
+                        if (error.code === 1) {
+                            console.error(error.message)
+                          }
+                    };
 
-            // setWeather(`${process.env.REACT_APP_WEATHERURL}${process.env.REACT_APP_WEATHERURL_KEY}&q=${position.coords.latitude}%2C${position.coords.longitude}`)
-            // weather = `${process.env.REACT_APP_WEATHERURL}${process.env.REACT_APP_WEATHERURL_KEY}&q=${position.coords.latitude}%2C${position.coords.longitude}`
-            //   setLatitude(position.coords.latitude);
-            //   setLongitude(position.coords.longitude);
-            });
-        } else {
-            navigator.geolocation.getCurrentPosition(function(error) {
-                console.error(error)
-            });
+                    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+                    
+                    // if (result.state === "denied") {
+                    //     geoError(Error);
+                    // }
+
+                    // result.onchange = function() {
+                    //     if (result.state === 'denied') {
+                    //         geoError(Error);
+                    //     }
+                    // }
+                });
         }
-    }, []);
+    }, [navigator.geolocation.getCurrentPosition])
 
-    console.log(isLocation)
+    const url = `${process.env.REACT_APP_WEATHER_BASE_URL}lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_KEY}`
 
+    const [data, isLoading, error] = useFetch(url);
+    const weather = data;
+    console.log(weather)
 
-    //   console.log(process.env.REACT_APP_WEATHERURL)
-    //   console.log(process.env.REACT_APP_WEATHERURL_KEY)
+    // icon url
+    // https://openweathermap.org/img/wn/04n.png
 
-    //   const url = `${process.env.REACT_APP_WEATHERURL}${process.env.REACT_APP_WEATHERURL_KEY}&q=${latitude}%2C${longitude}`
-
-    //   console.log(weather)
-
-    //   const API_URL = `${movieDatabase.baseUrl}/3/${(location === 'shows') ? 'tv' : 'movie' }/${checked}?api_key=${movieDatabase.apiKey}&language=en-US&page=${page}`;
-    //   const [data, isLoading, error] = useFetch(API_URL);
+    // To make bigger
+    // http://openweathermap.org/img/wn/10d@2x.png
     
     return (
         <BaseLayout PageTitle={"Home"} >
-            {
-
-            }
             {/* <p>This is the HOME page!</p>
             
             <FamilyMemberInfo/>
