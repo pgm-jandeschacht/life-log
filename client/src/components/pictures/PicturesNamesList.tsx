@@ -95,7 +95,8 @@ const PicturesNamesList: React.FC<PicturesNamesListProps> = ({ usersList }) => {
                     <Link to={`/my-pictures/user/${user.relatedFamilyMember.id}`} title={`Pictures of ${user.relatedFamilyMember.firstname} ${user.relatedFamilyMember.lastname}`}>
                         {/* <img src={`../../assets/images/${user.image}`} alt={`${user.firstName} ${user.lastName}`} /> */}
                         <div>
-                            <img src={fallback} alt={`${user.relatedFamilyMember.firstname} ${user.relatedFamilyMember.lastname}`} />
+                            {/* <img src={fallback} alt={`${user.relatedFamilyMember.firstname} ${user.relatedFamilyMember.lastname}`} /> */}
+                            <img src={user.relatedFamilyMember.image} alt={`${user.relatedFamilyMember.firstname} ${user.relatedFamilyMember.lastname}`} />
                         </div>
 
                         <p>{user.relatedFamilyMember.firstname} {user.relatedFamilyMember.lastname}</p>

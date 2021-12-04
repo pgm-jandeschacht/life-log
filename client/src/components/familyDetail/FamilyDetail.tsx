@@ -204,8 +204,8 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
         <div>
             <DetailTitle>
                 <StyledImg >
-                    {/* <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} /> */}
-                    <img src={img} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
+                    {/* <img src={img} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} /> */}
+                    <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
                 </StyledImg>
                 
                 <DetailInfo>

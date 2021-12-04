@@ -16,6 +16,7 @@ import { FamilyMemberInAgendaItem } from './family-member-in-agenda-items/entiti
 import { FamilyMemberInAlbumItem } from './family-member-in-album-items/entities/family-member-in-album-item.entity';
 import { FamilyMemberInWishListItem } from './family-member-in-wish-list-item/entities/family-members-in-wish-list-item.entity';
 import { LikedPicture } from './liked-pictures/entities/liked-picture.entity';
+import { clearScreenDown } from 'readline';
 
 
 @Injectable()
@@ -93,7 +94,9 @@ export class AppService {
       // max amount of relations for each family member
       const amountOfRelations = faker.datatype.number({min:1, max:10});
       
+      // create relations & not with itself
       const randomRelations = this.generateRandomArrayOfNumbers(amountOfRelations, familyMembers.length-1, familyMember.id);
+      console.log('random relations......', randomRelations);
       
       randomRelations.forEach(relation => {
         const familyRelation = this.familyRelationRepository.create({
@@ -178,13 +181,37 @@ export class AppService {
       isSender: true,
       isAlive : true,
       bio : faker.lorem.sentences(),
-      image: faker.image.avatar(),
+      // fakercloud is down
+      // image: faker.image.avatar(),
+      image: this.createRandomAvatar(),
       dob: faker.date.between('1920-01-01', '2021-12-31'),
       occupation: faker.name.jobTitle(),
       country: faker.address.country(),
       city: faker.address.city(),
     });
     return familyMember;
+  }
+
+  // fallback for fakercloud
+  // source: https://avatar-endpoint.herokuapp.com/
+  createRandomAvatar(): string {
+    const faceTypes = ['angrywithfang', 'awe', 'blank', 'calm', 'cheeky', 'concerned', 'concernedfear', 'contempt', 'cute', 'cyclops', 'driven', 'eatinghappy', 'explaining', 'eyesclosed', 'fear', 'hectic', 'lovinggrin1', 'lovinggrin2', 'monster', 'old', 'rage', 'serious', 'smile', 'smilebig', 'smilelol', 'smileteethgap', 'solemn', 'suspicious', 'tired', 'veryangry'];
+    const headTypes = ['afro', 'bangs', 'bangs2', 'bantuknots', 'bun', 'cornrows', 'cornrows2', 'graybun', 'graymedium', 'long', 'longbangs', 'longcurly', 'medium1', 'medium2', 'medium3', 'mediumbangs2', 'mediumbangs3', 'flattop', 'flattoplong', 'grayshort', 'mohawk', 'nohair2', 'nohair3', 'pomp', 'shaved2', 'shaved3', 'short1', 'short2', 'short4', 'short5', 'buns', 'hat-beanie', 'hat-hip', 'longafro', 'mediumbangs', 'mediumstraight', 'mohawk2', 'nohair1', 'shaved1', 'short3', 'twists', 'twists2', 'bear', 'hijab', 'turban'];
+
+    const baseUrl = 'https://avatar-endpoint.herokuapp.com/api/';
+
+    const url = `${baseUrl}?size=512&head_type=${headTypes[Math.floor(Math.random() * headTypes.length)]}&head_color=${this.createRandomHexadecimalForAvatar()}&face_type=${faceTypes[Math.floor(Math.random() * faceTypes.length)]}&bg_color=${this.createRandomHexadecimalForAvatar()}&`;
+
+    return url;
+  }
+
+  createRandomHexadecimalForAvatar(): string {
+    const hexadecimal = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+    let color = '%23';
+    for (let i = 0; i < 6; i++) {
+      color += hexadecimal[Math.floor(Math.random() * hexadecimal.length)];
+    }
+    return color;
   }
 
   hashPassword(password: string): string {
@@ -314,6 +341,10 @@ export class AppService {
   }
 
   async seedDatabase(amount: number = 5) {
+   this.createFamilyRelations();
+  }
+
+  async seedDatabasee(amount: number = 5) {
     this.createRelationTypes();
     let users=[];
 

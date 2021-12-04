@@ -125,8 +125,8 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ familyMember }) => {
         <StyledLi key={familyMember.id}>
             <Link to={`/my-family/${familyMember.relatedFamilyMember.id}`} title={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`}>
                 <StyledImg>
-                    {/* <img src={familyMember.relatedFamilyMember.image} alt={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`} /> */}
-                    <img src={img} alt={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`} />
+                    {/* <img src={img} alt={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`} /> */}
+                    <img src={familyMember.relatedFamilyMember.image} alt={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`} />
                 </StyledImg>
 
                 <StyledDiv>
