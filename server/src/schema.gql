@@ -343,6 +343,7 @@ type Mutation {
   createLikedPicture(createLikedPictureInput: CreateLikedPictureInput!): LikedPicture!
   updateLikedPicture(updateLikedPictureInput: UpdateLikedPictureInput!, id: Int!): LikedPicture!
   removeLikedPicture(id: Int!): LikedPicture!
+  removeLike(createLikedPictureInput: CreateLikedPictureInput!): LikedPicture!
 }
 
 input CreateFamilyMemberInput {
@@ -541,7 +542,7 @@ input CreateLikedPictureInput {
   familyMemberId: Int!
 
   """The ID of the picture that was liked"""
-  pictureId: Int!
+  albumItemId: Int!
 }
 
 input UpdateLikedPictureInput {
@@ -549,5 +550,5 @@ input UpdateLikedPictureInput {
   familyMemberId: Int!
 
   """The ID of the picture that was liked"""
-  pictureId: Int!
+  albumItemId: Int!
 }

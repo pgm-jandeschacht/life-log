@@ -101,3 +101,19 @@ query getLikedPicturesByFamilyMemberIdAndAlbumItemId($familyMemberId: Int!, $alb
   }
 }
 `;
+
+export const LIKE_PICTURE = gql`
+mutation likePicture($input : CreateLikedPictureInput!) {
+  createLikedPicture(createLikedPictureInput: $input) {
+    id
+  }
+}
+`;
+
+export const REMOVE_LIKE = gql`
+mutation removeLike($input : CreateLikedPictureInput!) {
+  removeLike(createLikedPictureInput: $input) {
+    id
+  }
+}
+`;

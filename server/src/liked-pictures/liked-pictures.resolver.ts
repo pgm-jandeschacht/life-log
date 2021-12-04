@@ -25,6 +25,16 @@ export class LikedPicturesResolver {
     return this.likedPicturesService.create(createLikedPictureInput);
   }
 
+  // @Mutation(() => LikedPicture)
+  // likePicture(
+  //   @Args('familyMemberId', { type: () => Int })
+  //   familyMemberId: number,
+  //   @Args('albumItemId', { type: () => Int })
+  //   albumItemId: number
+  // ): Promise<LikedPicture> {
+  //   return this.likedPicturesService.likePicture(familyMemberId, albumItemId);
+  // }
+
   @Query(() => [LikedPicture], { name: 'likedPictures' })
   likedPictures() {
     return this.likedPicturesService.findAll();
@@ -71,6 +81,11 @@ export class LikedPicturesResolver {
     } else {
       return null;
     }
+  }
+
+  @Mutation(() => LikedPicture)
+  removeLike(@Args('createLikedPictureInput') createLikedPictureInput: CreateLikedPictureInput) {
+    return this.likedPicturesService.removeLike(createLikedPictureInput);
   }
 
   @ResolveField(() => FamilyMember)
