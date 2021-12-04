@@ -20,10 +20,13 @@ export interface AlbumItem {
     uploader: FamilyMember;
     inPicture: FamilyMember[];
     inAlbumItem?: InAlbumItem[];
+    created_at: Date;
+    updated_at: Date;
 }
 
-export interface AlbumItemData {
-    albumItemsByAuthor: AlbumItem[];
+
+export interface LikedPicture {
+
 }
 
 
@@ -119,6 +122,12 @@ export interface InWishListItem {
   wishListItem: WishListItemType;
 }
 
+export interface LikedPicture {
+  id: number;
+  familyMember: FamilyMember;
+  albumitem: AlbumItem;
+}
+
 
 /**
  * Data types incoming from queries
@@ -130,6 +139,10 @@ export interface AgendaItemsData {
 
 export interface AlbumItemsData {
   albumItemsByAuthor: AlbumItem[];
+}
+
+export interface AlbumItemData {
+  albumItem: AlbumItem;
 }
 
 export interface WishListItemsData {
@@ -154,4 +167,12 @@ export interface FamilyRelationData {
 
 export interface InAlbumItemData {
   FamilyMemberInAlbumItemsByFamilyMemberId: InAlbumItem[]
+}
+
+export interface LikedPicturesData {
+  likedPicturesByFamilyMemberId: LikedPicture[];
+}
+
+export interface LikedPictureData {
+  likedPicture: LikedPicture;
 }

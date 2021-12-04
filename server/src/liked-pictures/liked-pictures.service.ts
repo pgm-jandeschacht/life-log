@@ -35,6 +35,15 @@ export class LikedPicturesService {
     return this.likedPictureRepository.find({where: {familyMemberId: id}});
   }
 
+  findByFamilyMemberIdAndAlbumItemId(familyMemberId: number, albumItemId: number): Promise<LikedPicture> {
+    return this.likedPictureRepository.findOneOrFail({
+      where: {
+        familyMemberId: familyMemberId, 
+        albumItemId: albumItemId
+      }
+    });
+  }
+
   async update(id: number, updateLikedPictureInput: UpdateLikedPictureInput): Promise<LikedPicture> {
     return this.likedPictureRepository.save({id: id, ...updateLikedPictureInput});
   }

@@ -22,8 +22,13 @@ export class AgendaItem {
     @Field(type => Int, { description: 'The ID of the agenda-item' })
     id:number;
 
-    @CreateDateColumn({ name: 'created_at' }) 'created_at': Date;
-    @UpdateDateColumn({ name: 'updated_at' }) 'updated_at': Date;
+    @CreateDateColumn({ name: 'created_at' }) 
+    @Field()
+    'created_at': Date;
+
+    @UpdateDateColumn({ name: 'updated_at' }) 
+    @Field()
+    'updated_at': Date;
     
     @Column()
     @Field({description: 'Content of the agenda-item'})

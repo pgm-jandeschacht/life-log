@@ -43,6 +43,16 @@ export class LikedPicturesResolver {
     return this.likedPicturesService.findByFamilyMemberId(familyMemberId);
   }
 
+  @Query(() => LikedPicture, { name: 'likedPictureByFamAndAlbum' })
+  likedPictureByFamilyMemberIdAndAlbumItemId(
+    @Args('familyMemberId', { type: () => Int })
+    familyMemberId: number,
+    @Args('albumItemId', { type: () => Int })
+    albumItemId: number
+  ) : Promise<LikedPicture> {
+    return this.likedPicturesService.findByFamilyMemberIdAndAlbumItemId(familyMemberId, albumItemId);
+  }
+
   @Mutation(() => LikedPicture)
   updateLikedPicture(
     @Args('id', { type: () => Int }) 

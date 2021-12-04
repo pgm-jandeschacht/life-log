@@ -47,7 +47,7 @@ export class AlbumItemsResolver {
 
   @ResolveField((returns) => [FamilyMemberInAlbumItem])
   inAlbumItem( @Parent() albumItem: AlbumItem): Promise<any> {
-    return this.albumItemsService.getInvolvedFamilyMembers(albumItem.uploaderId);
+    return this.albumItemsService.getInvolvedFamilyMembers(albumItem.id);
   }
 
   @Mutation(() => AlbumItem)

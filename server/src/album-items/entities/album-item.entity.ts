@@ -23,8 +23,13 @@ export class AlbumItem {
     @Field(type => Int, { description: 'The ID of the album-item' })
     id: number;
 
-    @CreateDateColumn({ name: 'created_at' }) 'created_at': Date;
-    @UpdateDateColumn({ name: 'updated_at' }) 'updated_at': Date;
+    @CreateDateColumn({ name: 'created_at' }) 
+    @Field()
+    'created_at': Date;
+
+    @UpdateDateColumn({ name: 'updated_at' }) 
+    @Field()
+    'updated_at': Date;
 
     @Column()
     @Field({nullable: true, description: 'Location where this picture is taken'})
