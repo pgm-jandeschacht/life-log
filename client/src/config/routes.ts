@@ -126,7 +126,7 @@ const routes: IRoute[] = [
 
     },
     {
-        path: '/my-wishlist/edit',
+        path: '/my-wishlist/edit/:wishListId',
         name: 'Edit page wishlist',
         component: MyWishListEdit,
         exact: true

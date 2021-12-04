@@ -27,6 +27,13 @@ export class FamilyMemberInAlbumItemsService {
   }
 
   async findAllByAlbumItemId(albumItemId: number): Promise<FamilyMemberInAlbumItem[]> {
+    console.log('ALBMUTITEM ID......', albumItemId);
+    console.log('DATA IN MANY TO MANY.........', await this.familyMemberInAlbumItemRepository.find({
+      where: {
+        albumItemId: albumItemId
+      },
+      relations: [ 'familyMember']
+    }));
     return this.familyMemberInAlbumItemRepository.find({
       where: {
         albumItemId: albumItemId

@@ -17,6 +17,35 @@ query {
 }
 `
 
+export const GET_ALBUMITEM_BY_ID = gql`
+query getAlbumItemById($id: Int!) {
+  albumItem(id: $id) {
+    id
+    created_at
+    updated_at
+    location
+    description
+    image
+    date
+    uploaderId
+    uploader {
+      id
+      firstname
+      lastname
+    }
+    inAlbumItem {
+      id
+      familyMember {
+        id
+        firstname
+        lastname
+      }
+    }
+  }
+}
+
+`;
+
 // Info for Home-page
 export const GET_ALBUMITEMS_BY_FAMILYMEMBER_ID = gql`
 query getAlbumItemsByFamilyMemberId($id: Int!) {
@@ -46,6 +75,29 @@ query getAllAlbumItemsWhereFamilyMemberIdIn($id: Int!) {
       image
       location
     }
+  }
+}
+`;
+
+export const GET_LIKEDPICTURES_BY_FAMILYMEMBER_ID = gql`
+query getLikedPicturesByFamilyMemberId($id: Int!) {
+  likedPicturesByFamilyMemberId(familyMemberId: $id) {
+    id
+    albumItem {
+      id
+      image
+      location
+      description
+    }
+  }
+}
+`;
+
+export const GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID = gql`
+query getLikedPicturesByFamilyMemberIdAndAlbumItemId($familyMemberId: Int!, $albumItemId: Int!) {
+  likedPictureByFamAndAlbum(albumItemId: $albumItemId, familyMemberId: $familyMemberId) {
+    id
+    familyMemberId
   }
 }
 `;

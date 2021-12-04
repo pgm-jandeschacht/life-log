@@ -25,3 +25,14 @@ query getAgendaItemsByFamilyMemberId($id: Int!) {
     }    
 }
 `;
+
+// Create new Agenda Item
+export const CREATE_AGENDAITEM = gql`
+mutation createAgendaItem($input: CreateAgendaItemInput!) {
+  createAgendaItem(createAgendaItemInput: $input) {
+    id
+  }
+}
+`;
+
+

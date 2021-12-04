@@ -30,6 +30,8 @@ import { DatabaseConfig } from './database.config';
 import { FamilyMemberInWishListItemsModule } from './family-member-in-wish-list-item/family-member-in-wish-list-items.module';
 import { FamilyMemberInAgendaItemsModule } from './family-member-in-agenda-items/family-member-in-agenda-items.module';
 import { FamilyMemberInAlbumItemsModule } from './family-member-in-album-items/family-member-in-album-items.module';
+import { LikedPicturesModule } from './liked-pictures/liked-pictures.module';
+import { LikedPicture } from './liked-pictures/entities/liked-picture.entity';
 
 @Module({
   imports: [
@@ -58,7 +60,8 @@ import { FamilyMemberInAlbumItemsModule } from './family-member-in-album-items/f
       RelationType, 
       FamilyMemberInAlbumItem, 
       FamilyMemberInWishListItem, 
-      FamilyMemberInAgendaItem
+      FamilyMemberInAgendaItem,
+      LikedPicture
     ]),
     FamilyMembersModule,
     NotesModule,
@@ -72,6 +75,7 @@ import { FamilyMemberInAlbumItemsModule } from './family-member-in-album-items/f
     FamilyMemberInWishListItemsModule,
     FamilyMemberInAgendaItemsModule,
     FamilyMemberInAlbumItemsModule,
+    LikedPicturesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
