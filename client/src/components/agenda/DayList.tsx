@@ -8,11 +8,16 @@ import { transformDate } from '../../services/transform/date'
 interface DayListProps {
     keyId: number | string,
     test: any,
+    isGrey?: boolean
 }
 
-const StyledLi = styled.li`
+interface StyledLiProps {
+    greyBg?: boolean
+}
+
+const StyledLi = styled.li<StyledLiProps>`
     width: 100%;
-    background: ${Colors.secondary};
+    background: ${(StyledLiProps) => StyledLiProps.greyBg ? Colors.grey : Colors.secondary};
     margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
@@ -74,17 +79,16 @@ const StyledDayTitle = styled.div<StyledDayTitleProps>`
     }
 `
 
-const DayList: React.FC<DayListProps> = ({ keyId, test }) => {
+const DayList: React.FC<DayListProps> = ({ keyId, test, isGrey = false }) => {
     const [isToday, setIsToday] = useState(false)
     const date = transformDate(test.date).split(" ", 1);
     useEffect(() => {
         (date[0].toLocaleLowerCase() === 'today' ? setIsToday(true) : setIsToday(false));
     });
     return (
-        <StyledLi key={`day${keyId}`}>
+        <StyledLi greyBg={isGrey} key={`day${keyId}`}>
             <StyledDayTitle id={(isToday ? 'today' : '')} today={isToday}>
                 <p>
-                    {/* { beautifyDob(test.date) } */}
                     { transformDate(test.date) }
                 </p>
             </StyledDayTitle>
