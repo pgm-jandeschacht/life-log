@@ -166,8 +166,8 @@ const AboutMe: React.FC = () => {
         <StyledDiv>
             <StyledImg>
                 <div>
-                    {/* <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} /> */}
-                    <img src={fallback} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
+                    {/* <img src={fallback} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} /> */}
+                    <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
                 </div>
 
                 <h2>{data?.familyMemberById.firstname} <span>{data?.familyMemberById.lastname}</span></h2>

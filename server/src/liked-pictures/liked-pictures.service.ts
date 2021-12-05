@@ -23,6 +23,16 @@ export class LikedPicturesService {
     return this.likedPictureRepository.save(newLikedPiture);
   }
 
+  // async likePicture(familyMemberId: number, albumItemId: number): Promise<LikedPicture> {
+  //   return this.likedPictureRepository.update([
+  //     {
+  //       familyMemberId: familyMemberId,
+  //       albumItemId: albumItemId,
+        
+  //     }
+  //   ]);
+  // }
+
   findAll(): Promise<LikedPicture[]> {
     return this.likedPictureRepository.find();
   }
@@ -42,6 +52,12 @@ export class LikedPicturesService {
         albumItemId: albumItemId
       }
     });
+    // return this.likedPictureRepository.findOneOrFail({
+    //   where: {
+    //     familyMemberId: familyMemberId, 
+    //     albumItemId: albumItemId
+    //   }
+    // });
   }
 
   async update(id: number, updateLikedPictureInput: UpdateLikedPictureInput): Promise<LikedPicture> {
@@ -51,6 +67,18 @@ export class LikedPicturesService {
   async delete(id: number): Promise<LikedPicture> {
     const likedPicture = await this.findOneById(id);
     return this.likedPictureRepository.remove(likedPicture);
+  }
+
+  async removeLike(tobeDeletedPicture: CreateLikedPictureInput): Promise<any> {
+    const likeInDb = this.likedPictureRepository.findOneOrFail({
+      where: {
+        familyMemberId: tobeDeletedPicture.familyMemberId,
+        albumItemId: tobeDeletedPicture.albumItemId
+      }
+    });
+  
+    this.likedPictureRepository.remove(await likeInDb);
+    return likeInDb;
   }
 
   getFamilyMember(familyMemberId: number): Promise<FamilyMember> {

@@ -74,6 +74,7 @@ export interface FamilyRelation {
     familyMember: FamilyMember
     relationType: RelationType
     relatedFamilyMember: FamilyMember
+    hidePictures: boolean
 }
 
 export interface Note {
@@ -139,6 +140,10 @@ export interface AgendaItemsData {
 
 export interface AlbumItemsData {
   albumItemsByAuthor: AlbumItem[];
+}
+
+export interface AlbumItemsAllData {
+  albumItems: AlbumItem[];
 }
 
 export interface AlbumItemData {

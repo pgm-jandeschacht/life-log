@@ -28,6 +28,7 @@ query getFamilyRelationsByFamilyMemberId($id: Int!) {
       firstname
       lastname
       dob
+      image
     }
   }
 }    
@@ -45,6 +46,7 @@ query getRelatedFamilyMembersByFamilyMemberId($id: Int!) {
       dob
       image
     }
+    hidePictures
   }
 }    
 `;

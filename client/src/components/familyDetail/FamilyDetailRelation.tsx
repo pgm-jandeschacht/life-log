@@ -224,7 +224,8 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
                     <DetailSmallContainer>
                         <Link to={`/my-family/${partner[0].relatedFamilyMember.id}`} title={`${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}`}>
                             <StyledImgSmall>
-                                <img src={peter} alt={`${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}`} />
+                                {/* <img src={peter} alt={`${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}`} /> */}
+                                <img src={partner[0].relatedFamilyMember.image} alt={`${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}`} />
                             </StyledImgSmall>
 
                             <DetailSmall>
@@ -244,7 +245,8 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
                                 <DetailSmallContainer>
                                     <Link to={`/my-family/${child.relatedFamilyMember.id}`} title={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`}>
                                         <StyledImgSmall>
-                                            <img src={maria} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
+                                            {/* <img src={maria} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} /> */}
+                                            <img src={child.relatedFamilyMember.image} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
                                         </StyledImgSmall>
 
                                         <DetailSmall>
@@ -268,7 +270,8 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
                                 <DetailSmallContainer>
                                     <Link to={`/my-family/${child.relatedFamilyMember.id}`} title={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`}>
                                         <StyledImgSmall>
-                                            <img src={maria} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
+                                            {/* <img src={maria} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} /> */}
+                                            <img src={child.relatedFamilyMember.image} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
                                         </StyledImgSmall>
 
                                         <DetailSmall>

@@ -293,18 +293,19 @@ type Query {
   albumItems: [AlbumItem!]!
   albumItem(id: Int!): AlbumItem!
   albumItemsByAuthor(authorId: Int!): [AlbumItem!]!
+  albumItemsByPeopleIfollow(familyMemberId: Int!): [AlbumItem!]!
   FamilyMemberInAlbumItems: [FamilyMemberInAlbumItem!]!
   FamilyMemberInAlbumItem(id: Int!): FamilyMemberInAlbumItem!
   FamilyMemberInAlbumItemsByFamilyMemberId(familyMemberId: Int!): [FamilyMemberInAlbumItem!]!
+  familyRelations: [FamilyRelation!]!
+  relationType(id: Int!): RelationType!
+  familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
+  relationTypes: [RelationType!]!
   wishListItems: [WishListItem!]!
   wishListItem(id: Int!): WishListItem!
   wishListItemsByAuthor(authorId: Int!): [WishListItem!]!
   FamilyMemberInWishListItem(id: Int!): FamilyMemberInWishListItem!
   FamilyMembersInvolvedInWishListItem(id: Int!): [FamilyMemberInWishListItem!]!
-  relationTypes: [RelationType!]!
-  relationType(id: Int!): FamilyRelation!
-  familyRelations: [FamilyRelation!]!
-  familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
   likedPictures: [LikedPicture!]!
   likedPicture(id: Int!): LikedPicture!
   likedPicturesByFamilyMemberId(familyMemberId: Int!): [LikedPicture!]!
@@ -331,18 +332,19 @@ type Mutation {
   deleteAlbumItem(id: Int!): AlbumItem!
   createFamilyMemberInAlbumItem(createFamilyMemberInAlbumItemInput: CreateFamilyMemberInAlbumItemInput!): FamilyMemberInAlbumItem!
   removeFamilyMemberInAlbumItem(id: Int!): FamilyMemberInAlbumItem!
+  createFamilyRelation(createFamilyRelationInput: CreateFamilyRelationInput!): FamilyRelation!
+  updateRelationType(updateRelationTypeInput: UpdateRelationTypeInput!, id: Int!): RelationType!
+  removeRelationType(id: Int!): RelationType!
+  createRelationType(createRelationTypeInput: CreateRelationTypeInput!): RelationType!
   createWishListItem(createWishListItemInput: CreateWishListItemInput!): WishListItem!
   updateWishListItem(updateWishListItemInput: UpdateWishListItemInput!, id: Int!): WishListItem!
   deleteWishListItem(id: Int!): WishListItem!
   createFamilyMemberInWishListItem(createFamilyMemberInWishListItemInput: CreateFamilyMemberInWishListItemInput!): FamilyMemberInWishListItem!
   removeFamilyMemberInWishListItem(id: Int!): FamilyMemberInWishListItem!
-  createRelationType(createRelationTypeInput: CreateRelationTypeInput!): RelationType!
-  updateRelationType(updateFamilyRelationInput: UpdateFamilyRelationInput!, id: Int!): FamilyRelation!
-  removeRelationType(id: Int!): FamilyRelation!
-  createFamilyRelation(createFamilyRelationInput: CreateFamilyRelationInput!): FamilyRelation!
   createLikedPicture(createLikedPictureInput: CreateLikedPictureInput!): LikedPicture!
   updateLikedPicture(updateLikedPictureInput: UpdateLikedPictureInput!, id: Int!): LikedPicture!
   removeLikedPicture(id: Int!): LikedPicture!
+  removeLike(createLikedPictureInput: CreateLikedPictureInput!): LikedPicture!
 }
 
 input CreateFamilyMemberInput {
@@ -487,6 +489,20 @@ input CreateFamilyMemberInAlbumItemInput {
   albumItemId: Int!
 }
 
+input CreateFamilyRelationInput {
+  familyMemberId: Int!
+  relationTypeId: Int!
+  relatedFamilyMemberId: Int!
+}
+
+input UpdateRelationTypeInput {
+  name: String!
+}
+
+input CreateRelationTypeInput {
+  name: String!
+}
+
 input CreateWishListItemInput {
   """Content of this wish"""
   content: String!
@@ -515,33 +531,12 @@ input CreateFamilyMemberInWishListItemInput {
   wishListItemId: Int!
 }
 
-input CreateRelationTypeInput {
-  name: String!
-}
-
-input UpdateFamilyRelationInput {
-  """Example field (placeholder)"""
-  familyMemberId: Int!
-
-  """Example field (placeholder)"""
-  relationTypeId: Int!
-
-  """Example field (placeholder)"""
-  relatedFamilyMemberId: Int!
-}
-
-input CreateFamilyRelationInput {
-  familyMemberId: Int!
-  relationTypeId: Int!
-  relatedFamilyMemberId: Int!
-}
-
 input CreateLikedPictureInput {
   """The ID of the family member who liked the picture"""
   familyMemberId: Int!
 
   """The ID of the picture that was liked"""
-  pictureId: Int!
+  albumItemId: Int!
 }
 
 input UpdateLikedPictureInput {
@@ -549,5 +544,5 @@ input UpdateLikedPictureInput {
   familyMemberId: Int!
 
   """The ID of the picture that was liked"""
-  pictureId: Int!
+  albumItemId: Int!
 }

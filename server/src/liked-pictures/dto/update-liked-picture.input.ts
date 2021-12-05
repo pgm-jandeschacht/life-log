@@ -12,5 +12,5 @@ export class UpdateLikedPictureInput extends PartialType(CreateLikedPictureInput
   familyMemberId: number;
 
   @Field(type => Int, { description: 'The ID of the picture that was liked' })
-  pictureId: number;
+  albumItemId: number;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -9,6 +9,8 @@ import { Loading, Error } from '../alerts'
 import { AlbumItemData, LikedPictureData } from '../../interfaces'
 import { useQuery, useLazyQuery } from '@apollo/client'
 import { GET_ALBUMITEM_BY_ID, GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID } from '../../graphql/albumItems'
+import { beautifyDate } from '../../services/format/date'
+import { LikeButton } from '../buttons'
 
 const StyledDiv = styled.div`
     width: 100%;
@@ -189,23 +191,28 @@ const PeopleList = styled.ul`
 const PictureContent: React.FC = () => {
     // GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
-    const [GetLikedStatus, { data: dataLiked, loading: loadingLiked, error: errorLiked }] = useLazyQuery<LikedPictureData >(GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID);
+    // const [GetLikedStatus, { data: dataLiked, loading: loadingLiked, error: errorLiked }] = useLazyQuery<LikedPictureData >(GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID);
     
     const [clicked, setClicked] = useState(false);
     const [albumItemId, setAlbumItemId] = useState(0);
     
     const handleClicking = () => {
         setClicked(!clicked);
-
     }
     const { userId } = useParams<{ userId: any }>();
 
+    
     const { data, loading, error } = useQuery<AlbumItemData >(GET_ALBUMITEM_BY_ID, {
         variables: {
             id: parseInt(userId)
         }
     });
-
+    
+    useEffect(() => {
+        if(data) {
+            setAlbumItemId(data.albumItem.id);
+        }
+    }, [data])
     // GetLikedStatus({
     //     variables: {
     //         familyMemberId: parseInt(familyMemberId),
@@ -221,19 +228,23 @@ const PictureContent: React.FC = () => {
 
     if(loading) return <Loading />;
     if(error) return <Error error={error.message}/>;
+    // if(!error && !loading && data) {
+    //     setAlbumItemId(data?.albumItem.id);
+    // }
+    
 
     
     return (
         <StyledDiv>
             <StyledTitle>
                 <h2>Fun in a field</h2>
-
-                <StyledButton heart={clicked} onClick={handleClicking}><FontAwesomeIcon icon={faHeart} /></StyledButton>
+                <LikeButton userId={parseInt(familyMemberId)} pictureId={albumItemId} />
+                {/* <StyledButton heart={clicked} onClick={handleClicking}><FontAwesomeIcon icon={faHeart} /></StyledButton> */}
             </StyledTitle>
 
             <Info>
                 {/* <p>05/08/2021</p> */}
-                <p>{ data?.albumItem.created_at }</p>
+                <p>{ beautifyDate(data?.albumItem.created_at) }</p>
                 {/* <p>Lockswood</p> */}
                 <p>{ data?.albumItem.location }</p>
             </Info>
