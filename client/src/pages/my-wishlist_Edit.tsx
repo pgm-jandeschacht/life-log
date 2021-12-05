@@ -20,7 +20,8 @@ const MyWishlistEdit: React.FunctionComponent<Ipage> = props => {
 
     return (
         <BaseLayout formPage={true} backgroundStyle={"accent5"} PageTitle={"Edit item in wishlist"}>
-           <EditWishListItem wish={data?.wishListItem}/>
+           {/* <EditWishListItem wish={data?.wishListItem}/> */}
+           <EditWishListItem />
         </BaseLayout>
     )
 }

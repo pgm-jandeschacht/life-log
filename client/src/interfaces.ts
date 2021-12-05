@@ -150,6 +150,10 @@ export interface AlbumItemData {
   albumItem: AlbumItem;
 }
 
+export interface WishListItemData {
+  wishListItem: WishListItemType;
+}
+
 export interface WishListItemsData {
   wishListItemsByAuthor: WishListItemType[];
 }
@@ -168,6 +172,10 @@ export interface FamilyMemberData {
 
 export interface FamilyRelationData {
   familyRelationsByFamilyMemberId: FamilyRelation[]
+}
+
+export interface FamilyRelationByIds {
+  familyRelationsByRelatedAndFamilyMemberId: FamilyRelation
 }
 
 export interface InAlbumItemData {

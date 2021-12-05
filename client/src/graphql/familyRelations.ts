@@ -50,3 +50,18 @@ query getRelatedFamilyMembersByFamilyMemberId($id: Int!) {
   }
 }    
 `;
+
+export const GET_RELATION_BY_FAMILYIDS = gql`
+query getRelationByFamilyIds($familyMemberId: Int!, $relatedFamilyMemberId: Int!) {
+  familyRelationsByRelatedAndFamilyMemberId(
+    familyMemberId: $familyMemberId,
+    relatedFamilyMemberId: $relatedFamilyMemberId
+  ) {
+    id
+    relationType {
+      id 
+      name
+    }
+  }
+}
+`;
