@@ -300,6 +300,7 @@ type Query {
   familyRelations: [FamilyRelation!]!
   relationType(id: Int!): RelationType!
   familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
+  familyRelationsByRelatedAndFamilyMemberId(familyMemberId: Int!, relatedFamilyMemberId: Int!): FamilyRelation!
   relationTypes: [RelationType!]!
   wishListItems: [WishListItem!]!
   wishListItem(id: Int!): WishListItem!

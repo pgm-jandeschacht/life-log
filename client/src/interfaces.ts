@@ -174,6 +174,10 @@ export interface FamilyRelationData {
   familyRelationsByFamilyMemberId: FamilyRelation[]
 }
 
+export interface FamilyRelationByIds {
+  familyRelationsByRelatedAndFamilyMemberId: FamilyRelation
+}
+
 export interface InAlbumItemData {
   FamilyMemberInAlbumItemsByFamilyMemberId: InAlbumItem[]
 }

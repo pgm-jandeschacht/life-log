@@ -36,11 +36,21 @@ export class FamilyRelationsResolver {
   }
 
   @Query(() => [FamilyRelation], { name: 'familyRelationsByFamilyMemberId' })
-  FamilyRelationsByFamilyMemberId(
+  familyRelationsByFamilyMemberId(
     @Args('familyMemberId', { type: () => Int }) 
     familyMemberId: number
   ): Promise<FamilyRelation[]> {
     return this.familyRelationsService.findByFamilyMemberId(familyMemberId);
+  }
+
+  @Query(() => FamilyRelation, { name: 'familyRelationsByRelatedAndFamilyMemberId'})
+  familyRelationsByRelatedFamilyMemberId(
+    @Args('relatedFamilyMemberId', { type: () => Int })
+    relatedFamilyMemberId: number,
+    @Args('familyMemberId', { type: () => Int })
+    familyMemberId: number
+  ): Promise<FamilyRelation> {
+    return this.familyRelationsService.findByRelatedFamilyMemberAndFamMember(relatedFamilyMemberId, familyMemberId);
   }
 
   @Mutation(() => FamilyRelation)
