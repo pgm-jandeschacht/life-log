@@ -24,6 +24,15 @@ export interface AlbumItem {
     updated_at: Date;
 }
 
+export interface HelpPage {
+  id: number;
+  page: string;
+  step: number;
+  title: string;
+  text: string;
+  image: string;
+}
+
 
 export interface LikedPicture {
 
@@ -188,4 +197,8 @@ export interface LikedPicturesData {
 
 export interface LikedPictureData {
   likedPicture: LikedPicture;
+}
+
+export interface HelpPagesData {
+  helpPagesByPageName: HelpPage[];
 }

@@ -68,6 +68,11 @@ getHelloTest(): string {
       // return amount;
   }
 
+  @Get('help')
+  getHelp() {
+    this.appService.addHelpPages();
+  }
+
   @Get('clear_database')
   emptyDatabase() {
       this.appService.emptyDatabase();

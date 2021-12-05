@@ -277,6 +277,26 @@ type AgendaItem {
   inAgendaItem: [FamilyMemberInAgendaItem!]
 }
 
+type HelpPage {
+  """The id of the help page"""
+  id: Int!
+
+  """The namee of the page"""
+  page: String!
+
+  """The step of the help Page"""
+  step: Int!
+
+  """The title for the step"""
+  title: String!
+
+  """The text for the step"""
+  text: String!
+
+  """The image for the step"""
+  image: String!
+}
+
 type Query {
   familyMembers: [FamilyMember!]!
   familyMemberById(id: Int!): FamilyMember!
@@ -311,6 +331,9 @@ type Query {
   likedPicture(id: Int!): LikedPicture!
   likedPicturesByFamilyMemberId(familyMemberId: Int!): [LikedPicture!]!
   likedPictureByFamAndAlbum(albumItemId: Int!, familyMemberId: Int!): LikedPicture!
+  helpPages: [HelpPage!]!
+  helpPage(id: Int!): HelpPage!
+  helpPagesByPageName(pageName: String!): [HelpPage!]!
 }
 
 type Mutation {
@@ -346,6 +369,9 @@ type Mutation {
   updateLikedPicture(updateLikedPictureInput: UpdateLikedPictureInput!, id: Int!): LikedPicture!
   removeLikedPicture(id: Int!): LikedPicture!
   removeLike(createLikedPictureInput: CreateLikedPictureInput!): LikedPicture!
+  createHelpPage(createHelpPageInput: CreateHelpPageInput!): HelpPage!
+  updateHelpPage(updateHelpPageInput: UpdateHelpPageInput!, id: Int!): HelpPage!
+  removeHelpPage(id: Int!): HelpPage!
 }
 
 input CreateFamilyMemberInput {
@@ -548,4 +574,38 @@ input UpdateLikedPictureInput {
 
   """The ID of the picture that was liked"""
   albumItemId: Int!
+}
+
+input CreateHelpPageInput {
+  """The namee of the page"""
+  page: String!
+
+  """The step of the help Page"""
+  step: Int!
+
+  """The title for the step"""
+  title: String!
+
+  """The text for the step"""
+  text: String!
+
+  """The image for the step"""
+  image: String!
+}
+
+input UpdateHelpPageInput {
+  """The namee of the page"""
+  page: String!
+
+  """The step of the help Page"""
+  step: Int!
+
+  """The title for the step"""
+  title: String!
+
+  """The text for the step"""
+  text: String!
+
+  """The image for the step"""
+  image: String!
 }

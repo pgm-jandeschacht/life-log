@@ -32,6 +32,8 @@ import { FamilyMemberInAgendaItemsModule } from './family-member-in-agenda-items
 import { FamilyMemberInAlbumItemsModule } from './family-member-in-album-items/family-member-in-album-items.module';
 import { LikedPicturesModule } from './liked-pictures/liked-pictures.module';
 import { LikedPicture } from './liked-pictures/entities/liked-picture.entity';
+import { HelpPagesModule } from './help-pages/help-pages.module';
+import { HelpPage } from './help-pages/entities/help-page.entity';
 
 @Module({
   imports: [
@@ -61,7 +63,8 @@ import { LikedPicture } from './liked-pictures/entities/liked-picture.entity';
       FamilyMemberInAlbumItem, 
       FamilyMemberInWishListItem, 
       FamilyMemberInAgendaItem,
-      LikedPicture
+      LikedPicture,
+      HelpPage
     ]),
     FamilyMembersModule,
     NotesModule,
@@ -76,6 +79,7 @@ import { LikedPicture } from './liked-pictures/entities/liked-picture.entity';
     FamilyMemberInAgendaItemsModule,
     FamilyMemberInAlbumItemsModule,
     LikedPicturesModule,
+    HelpPagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
