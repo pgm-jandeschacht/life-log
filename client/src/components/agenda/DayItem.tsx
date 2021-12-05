@@ -46,17 +46,22 @@ const StyledDiv = styled.div`
         background: ${Colors.ternary};
         color: ${Colors.primary};
         padding: 0.5rem 1rem;
+        padding-bottom: 0.25rem;
         border-radius: 10px;
         margin-right: 0.75rem;
+        margin-bottom: 0.75rem;
         transition: ${Transition.normal};
         @media (min-width: ${Breakpoint.small}) {
             padding: 0.6rem 1.2rem;
+            padding-bottom: 0.45rem;
         }
         @media (min-width: ${Breakpoint.medium}) {
             padding: 0.75rem 1.5rem;
+            padding-bottom: 0.75rem;
         }
         @media (min-width: ${Breakpoint.large}) {
             padding: 0.6rem 1.2rem;
+            padding-bottom: 0.45rem;
         }
 
         &:last-of-type {

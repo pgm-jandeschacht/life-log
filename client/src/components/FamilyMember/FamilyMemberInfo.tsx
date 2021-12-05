@@ -7,7 +7,6 @@ import { useQuery, useLazyQuery } from "@apollo/client";
 import { Error, Loading } from '../alerts';
 import { Breakpoint } from '../../variables';
 import styled from 'styled-components';
-import img from '../../assets/images/lucia_mullen.jpg'
 
 const Greeting = styled.div`
     display: flex;
@@ -30,7 +29,6 @@ const Greeting = styled.div`
             width: 70%;
         }
         @media (min-width: ${Breakpoint.large}) {
-            /* width: 80%; */
             width: auto;
             margin-right: 7.5rem;
         }
@@ -106,7 +104,6 @@ const FamilyMemberInfo: React.FC = () => {
         return "evening";
     }
     const greeting = new Date();
-    const today = greeting.toDateString()
 
     
     if(loading) return <Loading/>;
@@ -120,16 +117,10 @@ const FamilyMemberInfo: React.FC = () => {
             </div>
 
             <div>
-                <img src={img} alt={data?.familyMemberById.firstname} />
-                {/* <img src={data?.familyMemberById.image} alt={data?.familyMemberById.firstname} /> */}
+                <img src={data?.familyMemberById.image} alt={data?.familyMemberById.firstname} />
             </div>
         </Greeting>
     )
 }
-{/* <p>{data?.familyMemberById.firstname}</p> */}
-{/* <p>Lastname: {data?.familyMemberById.lastname}</p> */}
-{/* <p>Gender: {data?.familyMemberById.gender}</p> */}
-{/* <p>Alive? {data?.familyMemberById.isAlive}</p> */}
-{/* <p>Bio: {data?.familyMemberById.bio}</p> */}
 
 export default FamilyMemberInfo
