@@ -277,6 +277,11 @@ type AgendaItem {
   inAgendaItem: [FamilyMemberInAgendaItem!]
 }
 
+type HelpPage {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   familyMembers: [FamilyMember!]!
   familyMemberById(id: Int!): FamilyMember!
@@ -311,6 +316,8 @@ type Query {
   likedPicture(id: Int!): LikedPicture!
   likedPicturesByFamilyMemberId(familyMemberId: Int!): [LikedPicture!]!
   likedPictureByFamAndAlbum(albumItemId: Int!, familyMemberId: Int!): LikedPicture!
+  helpPages: [HelpPage!]!
+  helpPage(id: Int!): HelpPage!
 }
 
 type Mutation {
@@ -346,6 +353,9 @@ type Mutation {
   updateLikedPicture(updateLikedPictureInput: UpdateLikedPictureInput!, id: Int!): LikedPicture!
   removeLikedPicture(id: Int!): LikedPicture!
   removeLike(createLikedPictureInput: CreateLikedPictureInput!): LikedPicture!
+  createHelpPage(createHelpPageInput: CreateHelpPageInput!): HelpPage!
+  updateHelpPage(updateHelpPageInput: UpdateHelpPageInput!): HelpPage!
+  removeHelpPage(id: Int!): HelpPage!
 }
 
 input CreateFamilyMemberInput {
@@ -548,4 +558,15 @@ input UpdateLikedPictureInput {
 
   """The ID of the picture that was liked"""
   albumItemId: Int!
+}
+
+input CreateHelpPageInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateHelpPageInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }
