@@ -91,6 +91,7 @@ const PicturesNamesList: React.FC<PicturesNamesListProps> = ({ usersList }) => {
     return (
         <StyledUl>
             {usersList.map((user: any) => (
+                !user.hidePictures && (
                 <StyledLi key={user.relatedFamilyMember.id}>
                     <Link to={`/my-pictures/user/${user.relatedFamilyMember.id}`} title={`Pictures of ${user.relatedFamilyMember.firstname} ${user.relatedFamilyMember.lastname}`}>
                         {/* <img src={`../../assets/images/${user.image}`} alt={`${user.firstName} ${user.lastName}`} /> */}
@@ -102,7 +103,7 @@ const PicturesNamesList: React.FC<PicturesNamesListProps> = ({ usersList }) => {
                         <p>{user.relatedFamilyMember.firstname} {user.relatedFamilyMember.lastname}</p>
                     </Link>
                 </StyledLi>
-            ))}
+            )))}
         </StyledUl>
     )
 }
