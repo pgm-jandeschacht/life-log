@@ -341,10 +341,6 @@ export class AppService {
   }
 
   async seedDatabase(amount: number = 5) {
-   this.createFamilyRelations();
-  }
-
-  async seedDatabasee(amount: number = 5) {
     this.createRelationTypes();
     let users=[];
 
