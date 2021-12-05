@@ -6,7 +6,7 @@ import { BaseLayout } from "../layouts";
 const MyPicturesLikedPage: React.FunctionComponent<Ipage> = props => {
     return (
         <BaseLayout backButton={true} backgroundStyle={"accent1"} PageTitle={"Liked pictures"}>
-            {/* <PicturesList/> */}
+            <PicturesList user={''} liked={true}/>
         </BaseLayout>
     )
 }

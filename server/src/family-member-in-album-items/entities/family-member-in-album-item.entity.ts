@@ -24,7 +24,7 @@ export class FamilyMemberInAlbumItem {
     @Field(type => Int, { description: 'The ID of the album item' })
     albumItemId: number;
 
-    @ManyToOne(() => FamilyMember, familyMember => familyMember.FamilyMemberInAlbumItem, { onDelete: 'CASCADE' })
+    @ManyToOne(() => FamilyMember, familyMember => familyMember.familyMemberInAlbumItem, { onDelete: 'CASCADE' })
     @Field(type => FamilyMember, { description: 'The family member' })
     familyMember: FamilyMember;
 

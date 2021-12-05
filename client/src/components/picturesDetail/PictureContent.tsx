@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Breakpoint, Colors, Transition } from '../../variables'
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Loading, Error } from '../alerts'
+import { AlbumItemData, LikedPictureData } from '../../interfaces'
+import { useQuery, useLazyQuery } from '@apollo/client'
+import { GET_ALBUMITEM_BY_ID, GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID } from '../../graphql/albumItems'
 
 const StyledDiv = styled.div`
     width: 100%;
@@ -182,11 +187,42 @@ const PeopleList = styled.ul`
 `
 
 const PictureContent: React.FC = () => {
+    // GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
+    const [GetLikedStatus, { data: dataLiked, loading: loadingLiked, error: errorLiked }] = useLazyQuery<LikedPictureData >(GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID);
+    
     const [clicked, setClicked] = useState(false);
-
+    const [albumItemId, setAlbumItemId] = useState(0);
+    
     const handleClicking = () => {
         setClicked(!clicked);
+
     }
+    const { userId } = useParams<{ userId: any }>();
+
+    const { data, loading, error } = useQuery<AlbumItemData >(GET_ALBUMITEM_BY_ID, {
+        variables: {
+            id: parseInt(userId)
+        }
+    });
+
+    // GetLikedStatus({
+    //     variables: {
+    //         familyMemberId: parseInt(familyMemberId),
+    //         albumItemId: data?.albumItem.id
+    //     }
+    // })
+
+    // if( dataLiked) {
+    //     console.log('dataaaa')
+    //     console.log(dataLiked);
+    // }
+
+
+    if(loading) return <Loading />;
+    if(error) return <Error error={error.message}/>;
+
+    
     return (
         <StyledDiv>
             <StyledTitle>
@@ -196,20 +232,30 @@ const PictureContent: React.FC = () => {
             </StyledTitle>
 
             <Info>
-                <p>05/08/2021</p>
-                <p>Lockswood</p>
+                {/* <p>05/08/2021</p> */}
+                <p>{ data?.albumItem.created_at }</p>
+                {/* <p>Lockswood</p> */}
+                <p>{ data?.albumItem.location }</p>
             </Info>
 
             <Detail>
-                <p>Sarah Hoper</p>
-                <p>We had a fun trip with our kids visiting a field in the middle of nowhere. They didn't even cry the whole time!</p>
+                <p>{ data?.albumItem.uploader.firstname } { data?.albumItem.uploader.lastname } </p>
+                {/* <p>We had a fun trip with our kids visiting a field in the middle of nowhere. They didn't even cry the whole time!</p> */}
+                <p>{ data?.albumItem.description }</p>
             </Detail>
 
             <Subtitle>
                 <p>People in the picture</p>
             </Subtitle>
             <PeopleList>
-                <li>
+                {  data?.albumItem?.inAlbumItem?.map(({ familyMember }) => (
+                    <li key={familyMember.id}>
+                        <Link to={`/my-family/${familyMember.id}`} title={ familyMember.firstname + ' '  + familyMember.lastname }>
+                            { familyMember.firstname } { familyMember.lastname }
+                        </Link>
+                    </li>
+                )) }
+                {/* <li>
                     <Link to={'/my-family/1'} title={"Sarah Hoper"}>
                         Sarah Hoper
                     </Link>
@@ -237,14 +283,21 @@ const PictureContent: React.FC = () => {
                     <Link to={'/my-family/1'} title={"Louis Kox"}>
                         Louis Kox
                     </Link>
-                </li>
+                </li> */}
             </PeopleList>
 
             <Subtitle>
                 <p>More pictures of</p>
             </Subtitle>
             <PeopleList>
-                <li>
+                {  data?.albumItem?.inAlbumItem?.map(({ familyMember }) => (
+                    <li key={familyMember.id}>
+                        <Link to={`/my-pictures/user/${familyMember.id}`} title={ familyMember.firstname + ' '  + familyMember.lastname }>
+                            { familyMember.firstname } { familyMember.lastname }
+                        </Link>
+                    </li>
+                )) }
+                {/* <li>
                     <Link to={'/my-pictures/user/1'} title={"Pictures of Sarah Hoper"}>
                         Sarah Hoper
                     </Link>
@@ -272,7 +325,7 @@ const PictureContent: React.FC = () => {
                     <Link to={'/my-pictures/user/1'} title={"Pictures of Louis Kox"}>
                         Louis Kox
                     </Link>
-                </li>
+                </li> */}
             </PeopleList>
         </StyledDiv>
     )

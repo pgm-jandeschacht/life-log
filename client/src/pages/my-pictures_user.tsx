@@ -20,8 +20,8 @@ const MyPicturesUserPage: React.FunctionComponent<Ipage> = props => {
     if(error) return <Error error={error.message}/>;
 
     return (
-        <BaseLayout backButton={true} backgroundStyle={"accent1"} PageTitle={`Pictures from ${data?.familyMemberById.firstname}`}>
-            <PicturesList user={userId}/>
+        <BaseLayout backButton={true} backgroundStyle={"accent1"} PageTitle={`Pictures with ${data?.familyMemberById.firstname}`}>
+            <PicturesList user={userId} liked={false}/>
         </BaseLayout>
     )
 }

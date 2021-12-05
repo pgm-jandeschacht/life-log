@@ -44,8 +44,10 @@ export class AlbumItemsService {
     });
   }
 
-  async getInvolvedFamilyMembers(albumItemId: number): Promise<FamilyMemberInAlbumItem[]> {
-    return this.familyMemberInAlbumItemService.findAllByAlbumItemId(albumItemId);
+  async getInvolvedFamilyMembers(id: number): Promise<FamilyMemberInAlbumItem[]> {
+    console.log('GET INVOLVED FAMILY MEMBERS......');
+    console.log('data......,', await this.familyMemberInAlbumItemService.findAllByAlbumItemId(id));
+    return this.familyMemberInAlbumItemService.findAllByAlbumItemId(id);
   }
 
   async update(id: number, updateAlbumItemInput: UpdateAlbumItemInput): Promise<AlbumItem> {

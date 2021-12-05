@@ -12,6 +12,9 @@ import { RelationTypesModule } from 'src/relation-types/relation-types.module';
     FamilyMembersModule,
     RelationTypesModule
   ],
-  providers: [FamilyRelationsResolver, FamilyRelationsService]
+  providers: [
+    FamilyRelationsResolver, 
+    FamilyRelationsService
+  ]
 })
 export class FamilyRelationsModule {}

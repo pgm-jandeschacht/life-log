@@ -19,9 +19,28 @@ type FamilyMemberInAlbumItem {
   albumItem: AlbumItem!
 }
 
+type LikedPicture {
+  """The ID of the liked picture"""
+  id: Int!
+
+  """The ID of the family member who liked the picture"""
+  familyMemberId: Int!
+
+  """The ID of the picture that was liked"""
+  albumItemId: Int!
+
+  """The family member who liked the picture"""
+  familyMember: FamilyMember!
+
+  """The picture that was liked"""
+  albumItem: AlbumItem!
+}
+
 type AlbumItem {
   """The ID of the album-item"""
   id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
 
   """Location where this picture is taken"""
   location: String
@@ -39,6 +58,9 @@ type AlbumItem {
 
   """List of albumItels where a family member is in"""
   albumItemWithFamilyMemberIn: [FamilyMemberInAlbumItem!]
+
+  """List of liked pictures"""
+  likedPictures: [LikedPicture!]
   inAlbumItem: [FamilyMemberInAlbumItem!]!
 }
 
@@ -206,15 +228,18 @@ type FamilyMember {
   """
   List of family members in wishlistitems this family member is involved in
   """
-  FamilyMemberInWishListItems: [FamilyMemberInWishListItem!]
+  familyMemberInWishListItems: [FamilyMemberInWishListItem!]
 
   """
   List of family members in agendaitems this family member is involved in
   """
-  FamilyMemberInAgendaItem: [FamilyMemberInAgendaItem!]
+  familyMemberInAgendaItem: [FamilyMemberInAgendaItem!]
 
   """List of family members in albumitems this family member is involved in"""
-  FamilyMemberInAlbumItem: [FamilyMemberInAlbumItem!]
+  familyMemberInAlbumItem: [FamilyMemberInAlbumItem!]
+
+  """List of liked pictures this family member has liked"""
+  likedPictures: [LikedPicture!]
 }
 
 type FamilyMemberInAgendaItem {
@@ -237,6 +262,8 @@ type FamilyMemberInAgendaItem {
 type AgendaItem {
   """The ID of the agenda-item"""
   id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
 
   """Content of the agenda-item"""
   content: String!
@@ -278,6 +305,10 @@ type Query {
   relationType(id: Int!): FamilyRelation!
   familyRelations: [FamilyRelation!]!
   familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
+  likedPictures: [LikedPicture!]!
+  likedPicture(id: Int!): LikedPicture!
+  likedPicturesByFamilyMemberId(familyMemberId: Int!): [LikedPicture!]!
+  likedPictureByFamAndAlbum(albumItemId: Int!, familyMemberId: Int!): LikedPicture!
 }
 
 type Mutation {
@@ -309,6 +340,9 @@ type Mutation {
   updateRelationType(updateFamilyRelationInput: UpdateFamilyRelationInput!, id: Int!): FamilyRelation!
   removeRelationType(id: Int!): FamilyRelation!
   createFamilyRelation(createFamilyRelationInput: CreateFamilyRelationInput!): FamilyRelation!
+  createLikedPicture(createLikedPictureInput: CreateLikedPictureInput!): LikedPicture!
+  updateLikedPicture(updateLikedPictureInput: UpdateLikedPictureInput!, id: Int!): LikedPicture!
+  removeLikedPicture(id: Int!): LikedPicture!
 }
 
 input CreateFamilyMemberInput {
@@ -500,4 +534,20 @@ input CreateFamilyRelationInput {
   familyMemberId: Int!
   relationTypeId: Int!
   relatedFamilyMemberId: Int!
+}
+
+input CreateLikedPictureInput {
+  """The ID of the family member who liked the picture"""
+  familyMemberId: Int!
+
+  """The ID of the picture that was liked"""
+  pictureId: Int!
+}
+
+input UpdateLikedPictureInput {
+  """The ID of the family member who liked the picture"""
+  familyMemberId: Int!
+
+  """The ID of the picture that was liked"""
+  pictureId: Int!
 }

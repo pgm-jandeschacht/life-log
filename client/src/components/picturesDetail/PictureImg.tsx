@@ -1,7 +1,12 @@
+import { useQuery } from '@apollo/client'
 import React from 'react'
+import { useParams } from 'react-router'
 import styled from 'styled-components'
 import vacationImg from '../../assets/images/vacation.jpg'
+import { GET_ALBUMITEM_BY_ID } from '../../graphql/albumItems'
+import { AlbumItemData } from '../../interfaces'
 import { Breakpoint } from '../../variables'
+import { Loading, Error } from '../alerts'
 
 const StyledImg = styled.div`
     width: 100%;
@@ -27,10 +32,21 @@ const StyledImg = styled.div`
     }
 `
 
-const PictureImg: React.FC = () => {
+const PictureImg: React.FC = ( ) => {
+    const { userId } = useParams<{ userId: any }>();
+
+    const { data, loading, error } = useQuery<AlbumItemData >(GET_ALBUMITEM_BY_ID, {
+        variables: {
+            id: parseInt(userId)
+        }
+    });
+
+    if(loading) return <Loading />;
+    if(error) return <Error error={error.message}/>;
+
     return (
-        <StyledImg>
-            <img src={vacationImg} alt="On Vacation" />
+        <StyledImg >
+            <img src={data?.albumItem.image} alt="On Vacation" />
         </StyledImg>
     )
 }
