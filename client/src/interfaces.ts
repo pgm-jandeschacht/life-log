@@ -150,6 +150,10 @@ export interface AlbumItemData {
   albumItem: AlbumItem;
 }
 
+export interface WishListItemData {
+  wishListItem: WishListItemType;
+}
+
 export interface WishListItemsData {
   wishListItemsByAuthor: WishListItemType[];
 }

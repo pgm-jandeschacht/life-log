@@ -508,6 +508,7 @@ input CreateWishListItemInput {
   content: String!
   completed: Boolean = false
   authorId: Int
+  inWish: [Int!]
   dueDate: DateTime!
   created_at: DateTime!
   updated_at: DateTime!
@@ -518,6 +519,7 @@ input UpdateWishListItemInput {
   content: String!
   completed: Boolean = false
   authorId: Int
+  inWish: [Int!]
   dueDate: DateTime!
   created_at: DateTime
   updated_at: DateTime!

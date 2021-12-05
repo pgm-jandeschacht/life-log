@@ -22,6 +22,9 @@ export class CreateWishListItemInput {
   @Field(type => Int, { nullable: true })
   authorId?: number;
 
+  @Field(type => [Int], { nullable: true })
+  inWish?: number[];
+
   @IsDate()  
   @Field()
   dueDate?: Date;

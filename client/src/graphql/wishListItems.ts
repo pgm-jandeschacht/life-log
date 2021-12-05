@@ -34,6 +34,12 @@ query getWishListItemByWishListItemId($id: Int!) {
     content
     completed
     dueDate
+    authorId
+    inWishListItem {
+      familyMember {
+        id
+      }
+    }
   }
 }
 `;
@@ -51,6 +57,15 @@ mutation createWishListItem($input: CreateWishListItemInput!) {
 export const DELETE_WISHLISTITEM = gql`
 mutation deleteWishListItem($id: Int!) {
   deleteWishListItem(id: $id) {
+    id
+  }
+}
+`;
+
+// Update wishlistItem
+export const UPDATE_WISHLISTITEM = gql`
+mutation updateWishListItem($id: Int!,$input: UpdateWishListItemInput!) {
+  updateWishListItem(id: $id,updateWishListItemInput: $input) {
     id
   }
 }

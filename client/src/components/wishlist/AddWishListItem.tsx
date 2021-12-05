@@ -196,7 +196,6 @@ const AddWishListItem = () => {
     const history = useHistory();
 
     const [addWishListItem, { data: dataWish, loading: loadingWish, error: errorWish  }] = useMutation(CREATE_WISHLISTITEM);
-    const [addFamilyMemberToWishListItem, { }] = useMutation(ADD_FAMILYMEMBER_TO_FAMILYMEMBER_IN_WISHLISTITEM);
 
 
     const { data, loading, error } = useQuery<FamilyRelationsData> (GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID, {
@@ -234,25 +233,11 @@ const AddWishListItem = () => {
                             updated_at: new Date(),
                             content: data.wish,
                             authorId: parseInt(familyMemberId),
-                            dueDate: data.date
+                            dueDate: data.date,
+                            inWish: [parseInt(data.user)]
                         }
                     }
                 });
-
-                if(  dataWish) {
-                    console.log('post again');
-                    const wishListItemId = dataWish.createWishListItem.id;
-                    addFamilyMemberToWishListItem({
-                        variables: {
-                            input: {
-                                familyMemberId: parseInt(familyMemberId),
-                                wishListItemId: wishListItemId
-                            }
-                        }
-                    });
-                } else {
-                    console.log('cant post');
-                }
                 
                 setSubmitting(false);
                 history.push('/my-wishlist');

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import { FormTemplate } from '../layout'
 import { TextAreaError, DropDownError } from '../forms'
@@ -6,14 +6,15 @@ import { Formik, Field } from 'formik'
 import * as yup from 'yup';
 import { Breakpoint, Colors, Shadow } from '../../variables'
 import { useHistory, useParams } from 'react-router'
-import { useQuery } from '@apollo/client'
-import { FamilyRelationsData, WishListItemType } from '../../interfaces'
+import { useMutation, useQuery } from '@apollo/client'
+import { FamilyRelationsData, WishListItemData } from '../../interfaces'
 import { GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations'
-import { GET_WISHLISTITEM_BY_WISHLISTITEM_ID } from '../../graphql/wishListItems'
+import { GET_WISHLISTITEM_BY_WISHLISTITEM_ID, UPDATE_WISHLISTITEM } from '../../graphql/wishListItems'
 import { Error, Loading } from '../alerts'
+import { beautifyDate } from '../../services/format/date'
 
 interface EditWishListItemProps {
-    wish: WishListItemType | undefined;
+    // wish: WishListItemType | undefined;
 }
 
 const example = [
@@ -193,11 +194,14 @@ const validationSchema = yup.object({
     user: yup.string().required()
 })
 
-const EditWishListItem: React.FC<EditWishListItemProps> = ({ wish }) => {
+// const EditWishListItem: React.FC<EditWishListItemProps> = ({ wish }) => {
+const EditWishListItem: React.FC<EditWishListItemProps> = () => {
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
+    const { wishListId } = useParams<{ wishListId: any }>();
     let relatedFamilyMembersForDropDown: any[] = [];
     const history = useHistory();
-    console.log('wish in component.....',wish);
+    
+    // console.log('wish in component.....',wish);
 
     // const [addWishListItem, { data: dataWish, loading: loadingWish, error: errorWish  }] = useMutation(CREATE_WISHLISTITEM);
     // const [addFamilyMemberToWishListItem, { }] = useMutation(ADD_FAMILYMEMBER_TO_FAMILYMEMBER_IN_WISHLISTITEM);
@@ -209,8 +213,28 @@ const EditWishListItem: React.FC<EditWishListItemProps> = ({ wish }) => {
         }
     });
 
-    if(loading) return <Loading />;
-    if(error) return <Error error={error.message}/>;
+    const { data: dataWish, loading: loadingWish, error: errorWish } = useQuery<WishListItemData> (GET_WISHLISTITEM_BY_WISHLISTITEM_ID, {
+        variables: {
+            id: parseInt(wishListId)
+        }
+    });
+
+    const [updateWishListItem, { data: dataWishUpdate, loading: loadingWishUpdate, error: errorWishUpdate  }] = useMutation(UPDATE_WISHLISTITEM);
+
+
+
+    // add date from wishlistitem to array of dates
+    useEffect(() => {
+        if(!loadingWish && dataWish && dataWish.wishListItem.dueDate) {
+            example2.unshift({
+                    id: 0,
+                    value: beautifyDate(dataWish?.wishListItem?.dueDate)
+                });
+            }
+    }, [])
+
+    if(loading ) return <Loading />;
+    if(error  ) return <Error error={error.message}/>;
     if(!loading && data) {
         data?.familyRelationsByFamilyMemberId.forEach(member => {
             const famMember = {
@@ -220,6 +244,14 @@ const EditWishListItem: React.FC<EditWishListItemProps> = ({ wish }) => {
             relatedFamilyMembersForDropDown.push(famMember);
          })        
     }
+
+    if(loadingWish ) return <Loading />;
+    if(errorWish  ) return <Error error={errorWish.message}/>;
+    console.log('datawish.....',dataWish);
+    
+
+
+    console.log(dataWish?.wishListItem?.inWishListItem[0].familyMember.id)
 
     return (
         <Formik
@@ -232,7 +264,22 @@ const EditWishListItem: React.FC<EditWishListItemProps> = ({ wish }) => {
             onSubmit={(data, { setSubmitting }) => {
                 setSubmitting(true);
 
+                updateWishListItem({
+                    variables: {
+                        id: parseInt(wishListId),
+                        input: {
+                            updated_at: new Date(),
+                            content: data.wish,
+                            authorId: parseInt(familyMemberId),
+                            dueDate: data.date,
+                            inWish: [parseInt(data.user)]
+                        }
+                    }
+                })
+
+
                 setSubmitting(false);
+                history.push('/my-wishlist');
                 }}
             >
 
@@ -240,12 +287,12 @@ const EditWishListItem: React.FC<EditWishListItemProps> = ({ wish }) => {
                 <StyledForm onSubmit={handleSubmit}>
                     <StyledLabelSelect>
                         <p>Who do you want to bring it? <span>*</span></p>
-                        <DropDownError dropDownTitle={'Select a family member'} dummyText={relatedFamilyMembersForDropDown} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
+                        <DropDownError dropDownTitle={'Select a family member'}  dummyText={relatedFamilyMembersForDropDown} name={"user"} onChange={handleChange} onBlur={handleBlur} selected={dataWish?.wishListItem?.inWishListItem[0].familyMember.id} /> 
                     </StyledLabelSelect>
                     
                     <StyledLabel>
                         <p>What do they need to bring? <span>*</span></p>
-                        <Field  placeholder="Write here what you want" value={wish?.content}  name={"wish"} as={TextAreaError} type="textarea" />
+                        <Field  placeholder="Write here what you want" value={dataWish?.wishListItem?.content}  name={"wish"} as={TextAreaError} type="textarea" />
                     </StyledLabel>
                     <StyledLabelSelect>
                         <p>When do they have to bring it? <span>*</span></p>

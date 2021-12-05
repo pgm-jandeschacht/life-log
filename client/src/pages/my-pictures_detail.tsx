@@ -10,7 +10,6 @@ import { Loading, Error } from "../components/alerts";
 
 const MyPicturesDetailPage: React.FunctionComponent<Ipage> = props => {
     const { userId } = useParams<{ userId: any }>();
-    console.log('userID.......',userId);
 
     const { data, loading, error } = useQuery<AlbumItemData >(GET_ALBUMITEM_BY_ID, {
         variables: {

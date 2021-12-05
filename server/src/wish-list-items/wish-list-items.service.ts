@@ -18,9 +18,20 @@ export class WishListItemsService {
     private familyMemberInWishListItemService: FamilyMemberInWishListItemsService
   ) {};
 
-  create(createWishListItemInput: CreateWishListItemInput): Promise<WishListItem> {
-    const newWishListItem = this.wishListItemRepository.create(createWishListItemInput); 
-    return this.wishListItemRepository.save(newWishListItem);
+  async create(createWishListItemInput: CreateWishListItemInput): Promise<WishListItem> {
+    const newWishListItem = await this.wishListItemRepository.create(createWishListItemInput); 
+    const createdWish = await this.wishListItemRepository.save(newWishListItem);
+    
+    // when array is given with familyMembers
+    if(createWishListItemInput.inWish) {
+      createWishListItemInput.inWish.forEach(inWish => {
+        this.familyMemberInWishListItemService.create({
+          familyMemberId: inWish,
+          wishListItemId: createdWish.id
+        })
+      });
+    } 
+    return createdWish;
   }
 
   findAll(): Promise<WishListItem[]> {
