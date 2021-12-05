@@ -211,6 +211,8 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
     //     console.log(familyRelationsData);
     // }
 
+    console.log(data)
+
     return (
         <div>
             <DetailTitle>
