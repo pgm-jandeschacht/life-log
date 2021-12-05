@@ -141,6 +141,10 @@ export interface AlbumItemsData {
   albumItemsByAuthor: AlbumItem[];
 }
 
+export interface AlbumItemsAllData {
+  albumItems: AlbumItem[];
+}
+
 export interface AlbumItemData {
   albumItem: AlbumItem;
 }

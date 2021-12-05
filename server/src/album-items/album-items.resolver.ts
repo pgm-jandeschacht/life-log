@@ -36,8 +36,17 @@ export class AlbumItemsResolver {
   }
 
   @Query((returns) => [AlbumItem], { name: "albumItemsByAuthor" })
-  agendaItemsByAuthor(@Args("authorId", { type: () => Int }) authorId: number) {
+  albumtemsByAuthor(@Args("authorId", { type: () => Int }) authorId: number) {
     return this.albumItemsService.findAllByAuthor(authorId);
+  }
+
+  @Query((returns) => [AlbumItem], { name: "albumItemsByPeopleIfollow" })
+  async albumItemsByFamilyMembersIFollow(
+    @Args('familyMemberId', { type: () => Int }) 
+    familyMemberId: number
+  ): Promise<AlbumItem[]> {
+    console.log('albumItems.......', await this.albumItemsService.findAllByFamilyMemberIFollow(familyMemberId) );
+    return this.albumItemsService.findAllByFamilyMemberIFollow(familyMemberId);
   }
 
   @ResolveField(returns => FamilyMember)
