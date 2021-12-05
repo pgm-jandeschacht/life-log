@@ -117,6 +117,8 @@ DATABASE = 'lifelog_l9w0'
 REACT_APP_AUTH_DOMAIN= 'http://localhost:3000/login'
 REACT_APP_GRAPHQL= 'http://localhost:3000/graphql'
 SKIP_PREFLIGHT_CHECK = true
+REACT_APP_WEATHER_BASE_URL = 'http://api.openweathermap.org/data/2.5/weather?'
+REACT_APP_WEATHER_KEY = '27bba7db2e4e1575d1d898d4aec93d1b'
 ```
 
 ### `.env.prod`
@@ -125,4 +127,6 @@ SKIP_PREFLIGHT_CHECK = true
 REACT_APP_AUTH_DOMAIN= 'https://lifelog-backend.onrender.com/login'
 REACT_APP_GRAPHQL= 'https://lifelog-backend.onrender.com/graphql'
 SKIP_PREFLIGHT_CHECK = true
+REACT_APP_WEATHER_BASE_URL = 'http://api.openweathermap.org/data/2.5/weather?'
+REACT_APP_WEATHER_KEY = '27bba7db2e4e1575d1d898d4aec93d1b'
 ```
