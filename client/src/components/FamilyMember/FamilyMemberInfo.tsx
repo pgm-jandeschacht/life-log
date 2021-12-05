@@ -108,7 +108,7 @@ const FamilyMemberInfo: React.FC = () => {
     
     if(loading) return <Loading/>;
     if(error) return <Error error={error.message}/>;
-    console.log(data);
+    // console.log(data);
     return (
         <Greeting>
             <div>

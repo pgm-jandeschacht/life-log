@@ -8,6 +8,10 @@ import { ButtonIcon } from '../buttons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import HelpProgress from './HelpProgress'
+import { HelpPagesData } from '../../interfaces'
+import { useLazyQuery } from '@apollo/client'
+import { GET_HELP_PAGE_BY_NAME } from '../../graphql/helpPages';
+import { Error, Loading } from '../alerts';
 
 const helpExample = [
     {
@@ -211,22 +215,59 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
     const [helpId, setHelpId] = useState(0)
     const url = useLocation().pathname.split('/')[1];
 
+    const [getHelpPages, { data, loading, error}] = useLazyQuery<HelpPagesData>(GET_HELP_PAGE_BY_NAME);
+    // "pages" in data: wishlist, picturesDetail, pictures, family, agenda
+    //TODO: will be better to change data to correspond with path..?
+    // opgelet het type heeft prop "image" en niet "img"
+
+
     useEffect(() => {
         if(url === 'my-pictures') {
+            getHelpPages({
+                variables: {
+                    name: 'pictures'
+                }
+            })
             setHelpId(1);
         } else if(url === 'my-family') {
+            getHelpPages({
+                variables: {
+                    name: ''
+                }
+            })
             setHelpId(2);
         } else if(url === 'my-agenda') {
+            getHelpPages({
+                variables: {
+                    name: 'agenda'
+                }
+            })
             setHelpId(3);
         } else if(url === 'about-me') {
+            getHelpPages({
+                variables: {
+                    name: ''
+                }
+            })
             setHelpId(4);
         } else if(url === 'my-wishlist') {
+            getHelpPages({
+                variables: {
+                    name: 'wishlist'
+                }
+            })
             setHelpId(5);
         } else {
+            getHelpPages({
+                variables: {
+                    name: ''
+                }
+            })
             setHelpId(0);
         }
 
     }, [url]);
+
     
     const filteredHelp = helpExample.filter(helpContent => helpContent.id === helpId);
     const [counter, setCounter] = useState(0)
@@ -239,6 +280,12 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
         } else if (event.innerText === "Previous") {
             setCounter(counter - 1);
         }
+    }
+
+    if(loading) return <Loading/>;
+    if(error) return <Error error={error.message}/>;
+    if(!loading && data) {
+        console.log(data);
     }
     
     return (

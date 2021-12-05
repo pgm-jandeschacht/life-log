@@ -8,6 +8,7 @@ import { HelpPage } from './entities/help-page.entity';
   imports: [
     TypeOrmModule.forFeature([HelpPage]),
   ],
-  providers: [HelpPagesResolver, HelpPagesService]
+  providers: [HelpPagesResolver, HelpPagesService],
+  exports: [HelpPagesService],
 })
 export class HelpPagesModule {}

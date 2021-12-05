@@ -33,6 +33,7 @@ import { FamilyMemberInAlbumItemsModule } from './family-member-in-album-items/f
 import { LikedPicturesModule } from './liked-pictures/liked-pictures.module';
 import { LikedPicture } from './liked-pictures/entities/liked-picture.entity';
 import { HelpPagesModule } from './help-pages/help-pages.module';
+import { HelpPage } from './help-pages/entities/help-page.entity';
 
 @Module({
   imports: [
@@ -62,7 +63,8 @@ import { HelpPagesModule } from './help-pages/help-pages.module';
       FamilyMemberInAlbumItem, 
       FamilyMemberInWishListItem, 
       FamilyMemberInAgendaItem,
-      LikedPicture
+      LikedPicture,
+      HelpPage
     ]),
     FamilyMembersModule,
     NotesModule,

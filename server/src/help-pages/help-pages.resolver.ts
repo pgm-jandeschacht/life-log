@@ -25,6 +25,7 @@ export class HelpPagesResolver {
     return this.helpPagesService.findOneById(id);
   }
 
+  @Query(() => [HelpPage], { name: 'helpPagesByPageName' })
   async helpPagesByPageName(@Args('pageName') pageName: string): Promise<HelpPage[]> {
     return this.helpPagesService.findPagesByPageName(pageName);
   }
