@@ -54,7 +54,7 @@ const HomePage: React.FunctionComponent<Ipage> = props => {
             <FamilyMemberInfo/>
 
             <Grey>
-                <SubTitle>Upcoming visits</SubTitle>
+                <SubTitle>Agenda items</SubTitle>
                 <AgendaList isHome={true}/>
             </Grey>
 
