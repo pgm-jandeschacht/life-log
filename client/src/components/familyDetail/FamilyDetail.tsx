@@ -8,13 +8,13 @@ import styled from 'styled-components'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 import FamilyDetailButtons from './FamilyDetailButtons'
 import { useQuery } from '@apollo/client'
-import { FamilyMemberData, FamilyRelationData } from "../../interfaces";
+import { FamilyMemberData, FamilyRelationByIds, FamilyRelationData } from "../../interfaces";
 import { GET_FAMILYMEMBER_BY_ID } from "../../graphql/familyMembers";
 import { Error, Loading } from '../alerts'
 import { parseInt } from 'lodash'
 import { doTypesOverlap } from 'graphql'
 import { Link } from 'react-router-dom'
-import { GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations';
+import { GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, GET_RELATION_BY_FAMILYIDS } from '../../graphql/familyRelations';
 
 import FamilyDetailRelation  from './FamilyDetailRelation';
 
@@ -177,14 +177,25 @@ const Bio = styled.div`
 `
 
 const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
     const { data, loading, error } = useQuery<FamilyMemberData>(GET_FAMILYMEMBER_BY_ID, {
         variables: {
             id: parseInt(userId)
         }
     });
 
+    const { data: dataRelation, loading: loadingRelation, error: errorRelation } = useQuery<FamilyRelationByIds>(GET_RELATION_BY_FAMILYIDS, {
+        variables: {
+            familyMemberId: parseInt(familyMemberId),
+            relatedFamilyMemberId: parseInt(userId)
+        }
+    });
+
     if(loading) return <Loading/>;
     if(error) return <Error error={error.message}/>;
+
+    if(loadingRelation) return <Loading/>;
+    if(errorRelation) return <Error error={errorRelation.message}/>;
 
 
     // const { data: familyRelationsData , loading: familyRelationsLoading, error:familyRelationsError } = useQuery<FamilyRelationData>(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
@@ -213,7 +224,8 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
                 <DetailInfo>
                     <div>
                         <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
-                        <p>{profile.familyMember}</p>
+                        {/* <p>{profile.familyMember}</p> */}
+                        <p>{dataRelation?.familyRelationsByRelatedAndFamilyMemberId.relationType.name}</p>
                     </div>
 
                     <div>
