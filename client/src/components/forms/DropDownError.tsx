@@ -29,6 +29,7 @@ const DropDownError: React.FC<DropDownProps & FieldAttributes<{}>> = ({ ...props
             value={props.value}
             onChange={props.onChange}
             onBlur={props.onBlur}
+            dropDownTitle={props.dropDownTitle}
             />
             {errorText &&
                 <StyledError>

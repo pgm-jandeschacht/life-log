@@ -27,6 +27,17 @@ query getWishListItemsByFamilyMemberId($id: Int!) {
 }    
 `;
 
+export const GET_WISHLISTITEM_BY_WISHLISTITEM_ID = gql`
+query getWishListItemByWishListItemId($id: Int!) {
+  wishListItem(id: $id) {
+    id
+    content
+    completed
+    dueDate
+  }
+}
+`;
+
 // Create new WishList Item
 export const CREATE_WISHLISTITEM = gql`
 mutation createWishListItem($input: CreateWishListItemInput!) {

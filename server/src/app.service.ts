@@ -92,7 +92,7 @@ export class AppService {
 
     familyMembers.forEach(familyMember => {
       // max amount of relations for each family member
-      const amountOfRelations = faker.datatype.number({min:1, max:10});
+      const amountOfRelations = faker.datatype.number({min:1, max:15});
       
       // create relations & not with itself
       const randomRelations = this.generateRandomArrayOfNumbers(amountOfRelations, familyMembers.length-1, familyMember.id);
@@ -200,7 +200,7 @@ export class AppService {
 
     const baseUrl = 'https://avatar-endpoint.herokuapp.com/api/';
 
-    const url = `${baseUrl}?size=512&head_type=${headTypes[Math.floor(Math.random() * headTypes.length)]}&head_color=${this.createRandomHexadecimalForAvatar()}&face_type=${faceTypes[Math.floor(Math.random() * faceTypes.length)]}&bg_color=${this.createRandomHexadecimalForAvatar()}&`;
+    const url = `${baseUrl}?size=512&head_type=${headTypes[Math.floor(Math.random() * headTypes.length)]}&head_color=${this.createRandomHexadecimalForAvatar()}&face_type=${faceTypes[Math.floor(Math.random() * faceTypes.length)]}&bg_color=${this.createRandomHexadecimalForAvatar()}`;
 
     return url;
   }
@@ -249,7 +249,7 @@ export class AppService {
         randomFamilyMembers.forEach(familyMember => {
           const familyAgendaItem = this.familyMemberInAgendaItemRepository.create({
             agendaItem: agendaItem,
-            familyMember: familyMembers[familyMember],
+            familyMemberId: familyMember,
           });
           this.familyMemberInAgendaItemRepository.save(familyAgendaItem);     
         });
@@ -273,7 +273,7 @@ export class AppService {
         randomFamilyMembers.forEach(familyMember => {
           const familyAlbumItem = this.familyMemberInAlbumItemRepository.create({
             albumItem: albumItem,
-            familyMember: familyMembers[familyMember],
+            familyMemberId: familyMember,
           });
           this.familyMemberInAlbumItemRepository.save(familyAlbumItem);     
         });
@@ -290,14 +290,14 @@ export class AppService {
     const familyMembers = await this.familyMemberRepository.find();
 
     wishListItems.forEach(wishListItem => {
-      const amountOfFamilyMembers = faker.datatype.number({min:0, max:10});
+      const amountOfFamilyMembers = faker.datatype.number({min:0, max:5});
       if(amountOfFamilyMembers > 0) {
         const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, wishListItem.authorId);
           
         randomFamilyMembers.forEach(familyMember => {
           const familyWishListItem = this.familyMemberInWishListItemRepository.create({
             wishListItem: wishListItem,
-            familyMember: familyMembers[familyMember],
+            familyMemberId: familyMember,
           });
           this.familyMemberInWishListItemRepository.save(familyWishListItem);     
         });
@@ -332,10 +332,11 @@ export class AppService {
   generateRandomArrayOfNumbers(amount: number, max: number, not:number = -1): number[] {
     let array = [];
     for(let i = 0; i < amount; i++) {
-      const randomNumber = faker.datatype.number({min: 0, max: max});
-      if(!array.includes(randomNumber) && randomNumber !== not) {
-        array.push(randomNumber);
+      let randomNumber = faker.datatype.number({min: 0, max: max});
+      while(array.includes(randomNumber) && randomNumber === not) {
+        randomNumber = faker.datatype.number({min: 0, max: max});
       }
+      array.push(randomNumber);
     }
     return array;
   }
@@ -378,5 +379,9 @@ export class AppService {
     await this.albumItemRepository.query(`TRUNCATE "album_item" RESTART IDENTITY CASCADE`);
     await this.noteRepository.query(`TRUNCATE "note" RESTART IDENTITY CASCADE`);
     await this.relationTypeRepository.query(`TRUNCATE "relation_type" RESTART IDENTITY CASCADE`);
+    
+    await this.familyMemberInWishListItemRepository.query(`TRUNCATE "family_member_in_wish_list_item" RESTART IDENTITY CASCADE`);
+    await this.familyMemberInAgendaItemRepository.query(`TRUNCATE "family_member_in_agenda_item" RESTART IDENTITY CASCADE`);
+    await this.familyMemberInAlbumItemRepository.query(`TRUNCATE "family_member_in_album_item" RESTART IDENTITY CASCADE`);
   }
 }

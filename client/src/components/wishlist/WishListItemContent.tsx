@@ -1,9 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Colors, Shadow, Transition, Breakpoint } from '../../variables'
-import { InWishListItem, WishListItemType } from '../../interfaces';
+import { InWishListItem, WishListItemsData, WishListItemType } from '../../interfaces';
 import { Link } from 'react-router-dom';
 import { beautifyDate } from '../../services/format/date'
+import { useMutation } from '@apollo/client';
+import { DELETE_WISHLISTITEM } from '../../graphql/wishListItems';
 
 interface WishListItemContentProps {
     clicked: boolean,
@@ -137,6 +139,12 @@ const StyledDiv = styled.div<StyledDivProps>`
 const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish, completed }) => {
     //TODO: add completed yes/no?
 
+    const [deleteWish, { }] = useMutation(DELETE_WISHLISTITEM, {
+        variables: {
+            id: wish.id
+        }
+    });
+
     let visitDate = '';
     if(wish.dueDate !== null) {
         visitDate = 'on the: ' +  beautifyDate(wish.dueDate);
@@ -152,6 +160,9 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
     
     const handleClicking = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
+        deleteWish();
+        window.location.reload();
+
     }
 
     console.log(typeof(wish.dueDate))
@@ -168,7 +179,7 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
             <div>
                 <a onClick={handleClicking} title="Delete wishlist item" href="/">Delete</a>
                 
-                {completed ? '' : <Link to={"my-wishlist/edit"} title={"Edit wishlist item"}>Edit</Link>}
+                {completed ? '' : <Link to={`my-wishlist/edit/${wish.id}`} title={"Edit wishlist item"}>Edit</Link>}
             </div>
         </StyledDiv>
     )

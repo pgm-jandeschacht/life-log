@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { FormTemplate } from '../layout'
 import { TextAreaError, DropDownError } from '../forms'
 import { Formik, Field } from 'formik'
 import * as yup from 'yup';
 import { Breakpoint, Colors, Shadow } from '../../variables'
+import { useHistory } from 'react-router'
+import { useMutation, useQuery } from '@apollo/client'
+import { ADD_FAMILYMEMBER_TO_FAMILYMEMBER_IN_WISHLISTITEM, CREATE_WISHLISTITEM } from '../../graphql/wishListItems'
+import { Error, Loading } from '../alerts'
+import { GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations'
+import { FamilyMember, FamilyRelationsData } from '../../interfaces'
 
 
 const example = [
@@ -185,6 +191,31 @@ const validationSchema = yup.object({
 })
 
 const AddWishListItem = () => {
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
+    let relatedFamilyMembersForDropDown: any[] = [];
+    const history = useHistory();
+
+    const [addWishListItem, { data: dataWish, loading: loadingWish, error: errorWish  }] = useMutation(CREATE_WISHLISTITEM);
+    const [addFamilyMemberToWishListItem, { }] = useMutation(ADD_FAMILYMEMBER_TO_FAMILYMEMBER_IN_WISHLISTITEM);
+
+
+    const { data, loading, error } = useQuery<FamilyRelationsData> (GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID, {
+        variables: {
+            id: parseInt(familyMemberId)
+        }
+    });
+    if(loading) return <Loading />;
+    if(error) return <Error error={error.message}/>;
+    if(!loading && data) {
+        data?.familyRelationsByFamilyMemberId.forEach(member => {
+            const famMember = {
+                id: member.relatedFamilyMember.id,
+                value: member.relatedFamilyMember.firstname + ' ' + member.relatedFamilyMember.lastname
+            }
+            relatedFamilyMembersForDropDown.push(famMember);
+         })        
+    }
+
     return (
         <Formik
             initialValues={{
@@ -196,7 +227,36 @@ const AddWishListItem = () => {
             onSubmit={(data, { setSubmitting }) => {
                 setSubmitting(true);
 
+                addWishListItem({
+                    variables: {
+                        input: {
+                            created_at: new Date(),
+                            updated_at: new Date(),
+                            content: data.wish,
+                            authorId: parseInt(familyMemberId),
+                            dueDate: data.date
+                        }
+                    }
+                });
+
+                if(  dataWish) {
+                    console.log('post again');
+                    const wishListItemId = dataWish.createWishListItem.id;
+                    addFamilyMemberToWishListItem({
+                        variables: {
+                            input: {
+                                familyMemberId: parseInt(familyMemberId),
+                                wishListItemId: wishListItemId
+                            }
+                        }
+                    });
+                } else {
+                    console.log('cant post');
+                }
+                
                 setSubmitting(false);
+                history.push('/my-wishlist');
+                
                 }}
             >
 
@@ -204,7 +264,8 @@ const AddWishListItem = () => {
                 <StyledForm onSubmit={handleSubmit}>
                     <StyledLabelSelect>
                         <p>Who do you want to bring it? <span>*</span></p>
-                        <DropDownError dummyText={example} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
+                        {/* <DropDownError dummyText={example} name={"user"} onChange={handleChange} onBlur={handleBlur} />  */}
+                        <DropDownError dropDownTitle={'Select a family member'} dummyText={relatedFamilyMembersForDropDown} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
                     
                     <StyledLabel>
@@ -213,7 +274,7 @@ const AddWishListItem = () => {
                     </StyledLabel>
                     <StyledLabelSelect>
                         <p>When do they have to bring it? <span>*</span></p>
-                        <DropDownError dummyText={example2} name={"date"} onChange={handleChange} onBlur={handleBlur} /> 
+                        <DropDownError dropDownTitle={'Select a date'} dummyText={example2} name={"date"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
 
                     <FormTemplate submitting={isSubmitting} page={"wishlist"} color={"#FFB2AB"} />

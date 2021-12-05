@@ -5,6 +5,16 @@ import { TextAreaError, DropDownError } from '../forms'
 import { Formik, Field } from 'formik'
 import * as yup from 'yup';
 import { Breakpoint, Colors, Shadow } from '../../variables'
+import { useHistory, useParams } from 'react-router'
+import { useQuery } from '@apollo/client'
+import { FamilyRelationsData, WishListItemType } from '../../interfaces'
+import { GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations'
+import { GET_WISHLISTITEM_BY_WISHLISTITEM_ID } from '../../graphql/wishListItems'
+import { Error, Loading } from '../alerts'
+
+interface EditWishListItemProps {
+    wish: WishListItemType | undefined;
+}
 
 const example = [
     {
@@ -183,7 +193,34 @@ const validationSchema = yup.object({
     user: yup.string().required()
 })
 
-const EditWishListItem = () => {
+const EditWishListItem: React.FC<EditWishListItemProps> = ({ wish }) => {
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
+    let relatedFamilyMembersForDropDown: any[] = [];
+    const history = useHistory();
+    console.log('wish in component.....',wish);
+
+    // const [addWishListItem, { data: dataWish, loading: loadingWish, error: errorWish  }] = useMutation(CREATE_WISHLISTITEM);
+    // const [addFamilyMemberToWishListItem, { }] = useMutation(ADD_FAMILYMEMBER_TO_FAMILYMEMBER_IN_WISHLISTITEM);
+
+
+    const { data, loading, error } = useQuery<FamilyRelationsData> (GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID, {
+        variables: {
+            id: parseInt(familyMemberId)
+        }
+    });
+
+    if(loading) return <Loading />;
+    if(error) return <Error error={error.message}/>;
+    if(!loading && data) {
+        data?.familyRelationsByFamilyMemberId.forEach(member => {
+            const famMember = {
+                id: member.relatedFamilyMember.id,
+                value: member.relatedFamilyMember.firstname + ' ' + member.relatedFamilyMember.lastname
+            }
+            relatedFamilyMembersForDropDown.push(famMember);
+         })        
+    }
+
     return (
         <Formik
             initialValues={{
@@ -203,16 +240,16 @@ const EditWishListItem = () => {
                 <StyledForm onSubmit={handleSubmit}>
                     <StyledLabelSelect>
                         <p>Who do you want to bring it? <span>*</span></p>
-                        <DropDownError dummyText={example} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
+                        <DropDownError dropDownTitle={'Select a family member'} dummyText={relatedFamilyMembersForDropDown} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
                     
                     <StyledLabel>
                         <p>What do they need to bring? <span>*</span></p>
-                        <Field  placeholder="Write here what you want" name={"wish"} as={TextAreaError} type="textarea" />
+                        <Field  placeholder="Write here what you want" value={wish?.content}  name={"wish"} as={TextAreaError} type="textarea" />
                     </StyledLabel>
                     <StyledLabelSelect>
                         <p>When do they have to bring it? <span>*</span></p>
-                        <DropDownError dummyText={example2} name={"date"} onChange={handleChange} onBlur={handleBlur} /> 
+                        <DropDownError dropDownTitle={'Select a date'} dummyText={example2} name={"date"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
 
                     <FormTemplate submitting={isSubmitting} page={"wishlist"} color={"#FFB2AB"} />
