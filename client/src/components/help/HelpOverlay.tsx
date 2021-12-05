@@ -13,50 +13,50 @@ import { useLazyQuery } from '@apollo/client'
 import { GET_HELP_PAGE_BY_NAME } from '../../graphql/helpPages';
 import { Error, Loading } from '../alerts';
 
-const helpExample = [
-    {
-        id: 1,
-        title: "My pictures",
-        content: [
-            {
-                id: 1,
-                img: "screenshot-pictures1.png",
-                title: "Recent pictures",
-                text: "Dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt.",
-            },
-            {
-                id: 2,
-                img: "screenshot-pictures2.png",
-                title: "Pictures I liked",
-                text: "Quam dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
-            },
-            {
-                id: 3,
-                img: "screenshot-pictures3.png",
-                title: "Pictures from...",
-                text: "Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
-            },
-        ]
-    },
-    {
-        id: 2,
-        title: "My family",
-        content: [
-            {
-                id: 1,
-                img: "screenshot-family1.png",
-                title: "Familymembers list",
-                text: "Dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt.",
-            },
-            {
-                id: 2,
-                img: "screenshot-family2.png",
-                title: "Familymember detail",
-                text: "Quam dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
-            },
-        ]
-    },
-]
+// const helpExample = [
+//     {
+//         id: 1,
+//         title: "My pictures",
+//         content: [
+//             {
+//                 id: 1,
+//                 img: "screenshot-pictures1.png",
+//                 title: "Recent pictures",
+//                 text: "Dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt.",
+//             },
+//             {
+//                 id: 2,
+//                 img: "screenshot-pictures2.png",
+//                 title: "Pictures I liked",
+//                 text: "Quam dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
+//             },
+//             {
+//                 id: 3,
+//                 img: "screenshot-pictures3.png",
+//                 title: "Pictures from...",
+//                 text: "Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
+//             },
+//         ]
+//     },
+//     {
+//         id: 2,
+//         title: "My family",
+//         content: [
+//             {
+//                 id: 1,
+//                 img: "screenshot-family1.png",
+//                 title: "Familymembers list",
+//                 text: "Dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt.",
+//             },
+//             {
+//                 id: 2,
+//                 img: "screenshot-family2.png",
+//                 title: "Familymember detail",
+//                 text: "Quam dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
+//             },
+//         ]
+//     },
+// ]
 
 interface HelpOverlayProps {
     show: boolean,
@@ -154,8 +154,7 @@ const StyledHeader = styled.div`
             margin-bottom: 1rem;
             font-size: 2.5rem;
         }
-    }
-
+    }    
 `
 
 const ContentContainerSpecial = styled(ContentContainer)`
@@ -203,7 +202,7 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
     const [helpClose, setHelpClose] = useState(true)
     const handleClosing = () => {
         setHelpClose(false);
-        setCounter(0);
+        setCounter(1);
     }
     
     useEffect(() => {
@@ -212,8 +211,9 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
     }, [onClose, helpClose]);
 
     ////////////////////////
-    const [helpId, setHelpId] = useState(0)
+    // const [helpId, setHelpId] = useState(0)
     const url = useLocation().pathname.split('/')[1];
+    const url2 = useLocation().pathname.split('/')[2];
 
     const [getHelpPages, { data, loading, error}] = useLazyQuery<HelpPagesData>(GET_HELP_PAGE_BY_NAME);
     // "pages" in data: wishlist, picturesDetail, pictures, family, agenda
@@ -222,59 +222,52 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
 
 
     useEffect(() => {
-        if(url === 'my-pictures') {
+        if(url === 'my-pictures' && url2 !== 'detail') {
             getHelpPages({
                 variables: {
                     name: 'pictures'
                 }
             })
-            setHelpId(1);
         } else if(url === 'my-family') {
             getHelpPages({
                 variables: {
-                    name: ''
+                    name: 'family'
                 }
             })
-            setHelpId(2);
         } else if(url === 'my-agenda') {
             getHelpPages({
                 variables: {
                     name: 'agenda'
                 }
             })
-            setHelpId(3);
-        } else if(url === 'about-me') {
+        } else if(url === 'my-pictures' && url2 === 'detail') {
             getHelpPages({
                 variables: {
-                    name: ''
+                    name: 'picturesDetail'
                 }
             })
-            setHelpId(4);
         } else if(url === 'my-wishlist') {
             getHelpPages({
                 variables: {
                     name: 'wishlist'
                 }
             })
-            setHelpId(5);
         } else {
             getHelpPages({
                 variables: {
                     name: ''
                 }
             })
-            setHelpId(0);
         }
 
     }, [url]);
 
     
-    const filteredHelp = helpExample.filter(helpContent => helpContent.id === helpId);
-    const [counter, setCounter] = useState(0)
+    // const filteredHelp = helpExample.filter(helpContent => helpContent.id === helpId);
+    const [counter, setCounter] = useState(1)
     
     const handleCounter = (e: React.MouseEvent<HTMLButtonElement>) => {
         let event = e.target as HTMLInputElement;
-        console.log(event)
         if (event.innerText === "Next") {
             setCounter(counter + 1);
         } else if (event.innerText === "Previous") {
@@ -282,46 +275,55 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
         }
     }
 
-    if(loading) return <Loading/>;
     if(error) return <Error error={error.message}/>;
-    if(!loading && data) {
-        console.log(data);
-    }
+    if(loading) return <Loading/>;
     
+    // console.log(data?.helpPagesByPageName.map((help: any) => help));
+    // console.log(data?.helpPagesByPageName);
     return (
         <StyledDiv hide={show}>
             {
-                filteredHelp.map((filtered) => (
+                data?.helpPagesByPageName.map((help) => (
                     <>
-                        <StyledHeader>
-                            <p>Help</p>
-                            <div>
-                                <h1>{filtered.title}</h1>
-
-                                <ButtonIcon background={color} onClick={handleClosing} ><FontAwesomeIcon icon={faTimes} /></ButtonIcon>
-                            </div>
-
-                        </StyledHeader>
-                        <ContentContainer>
-                            <Flex>
-                                <HelpImage data={filtered.content[counter]}/>
-
-                                <HelpProgress count={counter} background={color} data={filtered}/>
-                            </Flex>
-
-                            <HelpText data={filtered.content[counter]}/>
-                        </ContentContainer>
+                    {
+                        counter === help.step ?
+                        <>
+                            <StyledHeader>
+                                <p>Help</p>
+                                <div>
+                                    <h1>{help.page}</h1>
+    
+                                    <ButtonIcon background={color} onClick={handleClosing} ><FontAwesomeIcon icon={faTimes} /></ButtonIcon>
+                                </div>
+    
+                            </StyledHeader>
+                            <ContentContainer>
+                                <Flex>
+                                    <HelpImage data={help}/>
+    
+                                    <HelpProgress count={counter} background={color} data={data?.helpPagesByPageName}/>
+                                </Flex>
+    
+                                <HelpText data={help}/>
+                            </ContentContainer>
+                        </>
+                        : ''
+                    }
                     </>
                 ))
             }
 
             <ContentContainerSpecial>
                 <StyledButtons left={true} background={color}>
-                    {counter === 0 ? '' : <button onClick={handleCounter}>Previous</button>}
+                    {counter === 1 ? '' : <button onClick={handleCounter}>Previous</button>}
                 </StyledButtons>
 
                 <StyledButtons left={false} background={color}>
-                    {counter + 1 < filteredHelp.map(filtered => (filtered.content.length))[0] ? <button onClick={handleCounter}>Next</button> : <button onClick={handleClosing}><FontAwesomeIcon icon={faTimes} /></button>}
+                    {
+                        data !== undefined ? 
+                        counter < data?.helpPagesByPageName.length ? <button onClick={handleCounter}>Next</button> : <button onClick={handleClosing}><FontAwesomeIcon icon={faTimes} /></button>
+                        : ''
+                    }
                 </StyledButtons>
             </ContentContainerSpecial>
         </StyledDiv>
