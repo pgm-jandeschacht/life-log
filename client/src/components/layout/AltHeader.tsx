@@ -42,12 +42,21 @@ const StyledWeather = styled.div`
     margin: 0!important;
     display: flex;
     align-items: center;
+    p {
+        margin-right: 0.5rem;
+    }
+    p:first-of-type{
+        display: none;
+        @media (min-width:${Breakpoint.small}) {
+            display: block;
+        }
+    }
 `
 
 
 const AltHeader: React.FC = () => {
-    const [longitude, setLongitude] = useState('51.228443');
-    const [latitude, setLatitude] = useState('2.934465');
+    const [longitude, setLongitude] = useState('3.733333');
+    const [latitude, setLatitude] = useState('51.049999');
     
     useEffect(() => {
         if (navigator.geolocation) {
@@ -84,10 +93,13 @@ const AltHeader: React.FC = () => {
     
     const url = `${process.env.REACT_APP_WEATHER_BASE_URL}lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_KEY}&units=metric`
     
+    console.log(url)
+
     const [data, isLoading, error] = useFetch(url);
     
-    const weatherIcon: any = data.cod === 200 ? data.weather[0].icon : data.cod;
-    const weatherTemp: any = data.cod === 200 ? data.main.temp : data.cod;
+    const weatherIcon: string = data.cod === 200 ? data.weather[0].icon : data.cod;
+    const weatherTemp: string = data.cod === 200 ? data.main.temp : data.cod;
+    const weatherLoc: string = data.cod === 200 ? data.name : data.cod;
 
     const today = new Date().toDateString()
 
@@ -97,9 +109,9 @@ const AltHeader: React.FC = () => {
                 <div>
                     <p>{today}</p>
 
-                    <StyledWeather>
+                    <StyledWeather title={`The weather in ${weatherLoc}`}>
+                        <p>{weatherLoc},</p>
                         <p>{weatherTemp}°C</p>
-                        
                         <img src={`https://openweathermap.org/img/wn/${weatherIcon}.png`} alt="Current weather" />
                     </StyledWeather>
                 </div>

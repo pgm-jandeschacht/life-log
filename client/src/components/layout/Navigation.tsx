@@ -136,8 +136,6 @@ const Navigation = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps)
             setLink(false);
         } else if(url === 'my-agenda') {
             setLink(false);
-        } else if(url === 'about-me') {
-            setLink(false);
         } else if(url === 'my-wishlist') {
             setLink(false);
         } else {

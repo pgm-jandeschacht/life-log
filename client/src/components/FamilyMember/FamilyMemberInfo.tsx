@@ -96,7 +96,6 @@ const FamilyMemberInfo: React.FC = () => {
         }
     });
 
-
     const getGreeting = (date: Date): string => {
         const hours = date.getHours();
         if(hours < 12) return "morning";
@@ -105,10 +104,9 @@ const FamilyMemberInfo: React.FC = () => {
     }
     const greeting = new Date();
 
-    
     if(loading) return <Loading/>;
     if(error) return <Error error={error.message}/>;
-    // console.log(data);
+
     return (
         <Greeting>
             <div>
