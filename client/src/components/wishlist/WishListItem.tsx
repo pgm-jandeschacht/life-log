@@ -9,20 +9,23 @@ import { WishListItemType } from '../../interfaces';
 interface WishListItemProps {
     wishContent: WishListItemType,
     keyId: number,
-    toClose: boolean
+    toClose: boolean,
+    greyBg?: boolean,
 }
 
 interface StyledLiProps {
-    close: boolean
+    close: boolean,
+    isGrey?: boolean,
 }
 
 const StyledLi = styled.li<StyledLiProps>`
     overflow: hidden;
     display: ${(StyledLiProps) => StyledLiProps.close ? 'block' : 'none'};
-    background: ${Colors.secondary};
+    background: ${(StyledLiProps) => StyledLiProps.isGrey ? Colors.grey : Colors.secondary};
     border-radius: 10px;
     box-shadow: ${Shadow.small};
     margin-bottom: 1.5rem;
+    transition: ${Transition.normal};
     
     &:last-of-type {
         margin-bottom: 0;
@@ -35,11 +38,15 @@ const StyledLi = styled.li<StyledLiProps>`
             margin-right: 1.5rem;
         }
     }
+
+    &:hover {
+        transform: translateY(-5px);
+    }
 `
 
 interface StyledButtonProps {
     rotate: boolean,
-    completed: boolean
+    completed: boolean,
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
@@ -78,15 +85,17 @@ const StyledButton = styled.button<StyledButtonProps>`
     }
 `
 
-const WishListItem: React.FC<WishListItemProps> = ({ wishContent, keyId, toClose }) => {
+const WishListItem: React.FC<WishListItemProps> = ({ wishContent, keyId, toClose, greyBg}) => {
     const [isClicked, setIsClicked] = useState(false);
 
     const buttonHandler = () => {
         setIsClicked(!isClicked)
     }
 
+    console.log(greyBg)
+
     return (
-        <StyledLi close={toClose} key={keyId}>
+        <StyledLi close={toClose} isGrey={greyBg} key={keyId}>
             <StyledButton completed={wishContent.completed} rotate={isClicked} onClick={buttonHandler}>
                 {wishContent.content}
 

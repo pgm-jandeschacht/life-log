@@ -19,10 +19,10 @@ function FamilyMemberAgendaItems({}: FamilyMemberAgendaItemsProps): ReactElement
             id: parseInt(familyMemberId)
         }
     });
+    console.log(data);
 
     if(loading) return <Loading/>;
     if(error) return <Error error={error.message}/>;
-    // console.log(data);
     return (
     <>
         <ul>

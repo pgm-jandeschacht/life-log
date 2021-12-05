@@ -39,7 +39,7 @@ const StyledDiv = styled.div<StyledDivProps>`
 
     span {
         font-weight: 900;
-        font-size: 2rem;
+        font-size: 1.75rem;
         display: block;
         margin: 1rem 0;
         @media (min-width: ${Breakpoint.small}) {

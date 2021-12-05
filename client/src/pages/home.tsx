@@ -8,66 +8,65 @@ import { FamilyMember, FamilyMemberData, FamilyMembersData } from "../interfaces
 import { Loading, Error } from "../components/alerts";
 import  FamilyMemberInfo from "../components/FamilyMember/FamilyMemberInfo";
 import { AgendaList } from "../components/agenda";
-// import { useFetch } from 'usehooks-ts'
-const HomePage: React.FunctionComponent<Ipage> = props => {
-    const [longitude, setLongitude] = useState('51.228443');
-    const [latitude, setLatitude] = useState('2.934465');
+import styled from "styled-components";
+import { WishList } from "../components/wishlist";
+import { Breakpoint, Colors } from "../variables";
+import { FamilyList } from "../components/family";
 
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.permissions
-                .query({
-                    name: "geolocation"
-                })
-                .then(function(result) {
-                    const geoSuccess = (position: any) => {
-                        setLatitude(position.coords.latitude)
-                        setLongitude(position.coords.longitude)
-                    };
+const SubTitle = styled.h2`
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    @media (min-width: ${Breakpoint.small}) {
+        font-size: 1.75rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-bottom: 1.5rem;
+        font-size: 1.75rem;
+    }
+    `
 
-                    const geoError = (error: any) => {
-                        if (error.code === 1) {
-                            console.error(error.message)
-                          }
-                    };
+const Grey = styled.div`
+    background: ${Colors.secondary};
+    padding: 1rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    @media (min-width: ${Breakpoint.small}) {
+        padding: 1.5rem;
+    }
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-bottom: 3rem;
+        padding: 2rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+    }
+`
 
-                    navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-                    
-                    // if (result.state === "denied") {
-                    //     geoError(Error);
-                    // }
-
-                    // result.onchange = function() {
-                    //     if (result.state === 'denied') {
-                    //         geoError(Error);
-                    //     }
-                    // }
-                });
-        }
-    }, [navigator.geolocation.getCurrentPosition])
-
-    const url = `${process.env.REACT_APP_WEATHER_BASE_URL}lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_KEY}`
-
-    const [data, isLoading, error] = useFetch(url);
-    const weather = data;
-    console.log(weather)
-
-    // icon url
-    // https://openweathermap.org/img/wn/04n.png
-
-    // To make bigger
-    // http://openweathermap.org/img/wn/10d@2x.png
-    
+const HomePage: React.FunctionComponent<Ipage> = props => {    
     return (
-        <BaseLayout PageTitle={"Home"} >
-            {/* <p>This is the HOME page!</p>
-            
+        <BaseLayout PageTitle={"Home"} isHome={true}>
             <FamilyMemberInfo/>
-            <h1>Upcoming visits</h1>
-            <AgendaList/> */}
 
+            <Grey>
+                <SubTitle>Upcoming visits</SubTitle>
+                <AgendaList isHome={true}/>
+            </Grey>
 
-            
+            <Grey>
+                <SubTitle>Wishes</SubTitle>
+                <WishList isHome={true}/>
+            </Grey>
+
+            <Grey>
+                <SubTitle>My Family</SubTitle>
+                <FamilyList isHome={true}/>
+            </Grey>
         </BaseLayout>
     )
 }

@@ -10,7 +10,11 @@ import { Error, Loading } from '../alerts';
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables';
 import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
+interface AgendaListProps {
+    isHome?: boolean
+}
 
 // example object agenda
 const agenda = [
@@ -61,7 +65,7 @@ const StyledUl = styled.ul`
     }
 `
 
-const StyledAnchor = styled.a`
+const StyledAnchors = styled.a`
     position: fixed;
     bottom: 6.5rem;
     right: 1rem;
@@ -103,9 +107,45 @@ const StyledAnchor = styled.a`
     }
 `
 
-const AgendaList: React.FC = () => {
-    // agenda.map(agendaItem => console.log(agendaItem.id))
+const StyledAnchor = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+    @media (min-width: ${Breakpoint.large}) {
+        margin: auto;
+    }
     
+    a {
+        background: ${Colors.accent3};
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 0.6rem 1.2rem;
+        border-radius: 10px;
+        transition: ${Transition.normal};
+        box-shadow: ${Shadow.small};
+        @media (min-width: ${Breakpoint.small}) {
+            font-size: 1.5rem;
+            padding: 0.75rem 1.5rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            font-size: 1.75rem;
+            padding: 1rem 2rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            font-size: 1.5rem;
+            padding: 0.75rem 1.5rem;
+        }
+        
+        &:hover {
+            transform: translateY(-5px);
+            background: ${Colors.primary};
+            color: ${Colors.accent3};
+            box-shadow: ${Shadow.large};
+        }
+    }
+`
+
+const AgendaList: React.FC<AgendaListProps> = ({isHome = false}) => {
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
     const { data, loading, error } = useQuery<AgendaItemsData >(GET_AGENDAITEMS_BY_FAMILYMEMBER_ID, {
@@ -120,18 +160,26 @@ const AgendaList: React.FC = () => {
     const agendaItems = data?.agendaItemsByAuthor || [];
     const sortedAgendaItems = _.sortBy(agendaItems, ['date']);
     const reverseAgenda = sortedAgendaItems.reverse();
-    // const sortedAgendaItems = _.groupBy(agendaItems, 'date');
-    // console.log(sortedAgendaItems['2021-10-27T18:48:22.281Z'])
+
     const today = new Date().toDateString();
     return (
         <StyledUl>
-            <StyledAnchor title={`Go to today, ${today}`} href={"#today"}><FontAwesomeIcon icon={faCalendarDay}/></StyledAnchor>
-            {  reverseAgenda.map(agendaItem => (
-                <DayList test={agendaItem} keyId={agendaItem.id} />
-            )) }
-            {/* { agenda.map(agendaItem => (
-                <DayList test={agendaItem.day} keyId={agendaItem.id} />
-            )) } */}
+            {
+                isHome ? '' : 
+                <StyledAnchors title={`Go to today, ${today}`} href={"#today"}><FontAwesomeIcon icon={faCalendarDay}/></StyledAnchors>
+            }
+            {  reverseAgenda.map((agendaItem, index) => (
+                isHome && index > 3 ? '' : 
+                <DayList isGrey={isHome} test={agendaItem} keyId={agendaItem.id} />
+                )) }
+            
+            {
+                isHome ? 
+                <StyledAnchor>
+                    <Link to={"/my-agenda/"} title={"My agenda"}>See all agenda items</Link>
+                </StyledAnchor>
+                : ''
+            }
         </StyledUl>
     )
 }
