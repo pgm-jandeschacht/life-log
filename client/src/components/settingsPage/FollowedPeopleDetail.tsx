@@ -1,6 +1,10 @@
+import { useQuery } from '@apollo/client'
 import React from 'react'
 import styled from 'styled-components'
+import { GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations'
+import { FamilyMember, FamilyRelationData } from '../../interfaces'
 import { Breakpoint, Colors, Transition } from '../../variables'
+import { Error, Loading } from '../alerts'
 
 const StyledDiv = styled.div`
     h2 {
@@ -87,41 +91,54 @@ const StyledForm = styled.form`
 `
 
 const FollowedPeople: React.FC = () => {
-    return (
-        <StyledDiv>
-            <h2>Choose which people to follow</h2>
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
+    let peopleIFollow: FamilyMember[] = [];
+    let peopleIDontFollow: FamilyMember[] = [];
 
+    const { data, loading, error } = useQuery<FamilyRelationData>(GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID, {
+        variables: {
+            id: parseInt(familyMemberId)
+        }
+    });
+
+    if(loading) return <Loading />;
+    if(error) return <Error error={error.message}/>;
+    if(!loading && data) {
+        data.familyRelationsByFamilyMemberId.forEach(relation => {
+            if(relation.hidePictures){
+                peopleIDontFollow.push(relation.relatedFamilyMember);
+            } else {
+                peopleIFollow.push(relation.relatedFamilyMember);
+            }
+    })};
+
+    
+    return (
+        <>
+        <StyledDiv>
+            <h2>People You follow</h2>
             <StyledForm>
-                <label htmlFor="1">
-                    <input id="1" value="1" type="checkbox" />
-                    <span>Karina Cox</span>
-                </label>
-                <label htmlFor="2">
-                    <input id="2" value="2" type="checkbox" />
-                    <span>Landyn Foster</span>
-                </label>
-                <label htmlFor="3">
-                    <input id="3" value="3" type="checkbox" />
-                    <span>Lucia Mullen</span>
-                </label>
-                <label htmlFor="4">
-                    <input id="4" value="4" type="checkbox" />
-                    <span>Max Thomson</span>
-                </label>
-                <label htmlFor="5">
-                    <input id="5" value="5" type="checkbox" />
-                    <span>Peter Kox</span>
-                </label>
-                <label htmlFor="6">
-                    <input id="6" value="5" type="checkbox" />
-                    <span>Maria Kox</span>
-                </label>
-                <label htmlFor="7">
-                    <input id="7" value="5" type="checkbox" />
-                    <span>Oscar Kox</span>
-                </label>
+                {peopleIFollow.map(familyMember => (
+                    <label htmlFor={familyMember.id.toString()}>
+                        <input id={familyMember.id.toString()} value={familyMember.id.toString()} type="checkbox" />
+                        <span>{ familyMember.firstname }  { familyMember.lastname }</span>
+                    </label>
+                ))}
             </StyledForm>
         </StyledDiv>
+
+        <StyledDiv>
+            <h2>People You don't follow</h2>
+            <StyledForm>
+                { peopleIDontFollow && peopleIDontFollow.length > 0 ?  peopleIDontFollow.map(familyMember => (
+                    <label htmlFor={familyMember.id.toString()}>
+                        <input id={familyMember.id.toString()} value={familyMember.id.toString()} type="checkbox" />
+                        <span>{ familyMember.firstname }  { familyMember.lastname }</span>
+                    </label>
+                )): <p>You are following everyone from your family</p>}
+            </StyledForm>
+        </StyledDiv>
+        </>
     )
 }
 

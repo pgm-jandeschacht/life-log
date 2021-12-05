@@ -103,7 +103,7 @@ export class AppService {
           familyMember: familyMember,
           relationType: relationTypes[faker.datatype.number({min: 0, max: relationTypes.length -1})],
           relatedFamilyMember: familyMembers[relation],
-          hidePictures: false
+          hidePictures: faker.datatype.boolean(),
         });
         this.familyRelationRepository.save(familyRelation);
       });

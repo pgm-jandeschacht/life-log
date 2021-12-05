@@ -46,6 +46,7 @@ query getRelatedFamilyMembersByFamilyMemberId($id: Int!) {
       dob
       image
     }
+    hidePictures
   }
 }    
 `;

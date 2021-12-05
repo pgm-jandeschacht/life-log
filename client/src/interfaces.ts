@@ -74,6 +74,7 @@ export interface FamilyRelation {
     familyMember: FamilyMember
     relationType: RelationType
     relatedFamilyMember: FamilyMember
+    hidePictures: boolean
 }
 
 export interface Note {
