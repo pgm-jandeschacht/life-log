@@ -73,7 +73,7 @@ const StyledDiv = styled.div`
 
 const DayItem: React.FC<DayItemProps> = ({ content, inAgendaItem }) => {
     const familyMembers = inAgendaItem.map( i =>  <a href={`/my-family/${i.familyMember.id}`}>{i.familyMember.firstname}</a>);
-    // const length = inAgendaItem.length;
+    
     return (
         <StyledLi>
             <p>
@@ -83,10 +83,6 @@ const DayItem: React.FC<DayItemProps> = ({ content, inAgendaItem }) => {
             <StyledDiv>
                 {familyMembers}
             </StyledDiv>
-            
-            {/* {inAgendaItem.foreach(item => {
-                return item.familyMember.firstname
-            })} */}
         </StyledLi>
     )
 }

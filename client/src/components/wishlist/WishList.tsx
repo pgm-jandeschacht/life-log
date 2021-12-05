@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { Breakpoint, Colors, Transition } from '../../variables'
+import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 import WishListItem from './WishListItem';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,37 +9,27 @@ import { GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/wishListItem
 import { FamilyMemberData, WishListItemsData } from '../../interfaces';
 import _ from 'lodash';
 import { Error, Loading } from '../alerts';
+import { Link } from 'react-router-dom';
 
-// example object wishlist
-const wishlist = [
-    {
-        for: "Karina Cox",
-        content: "Fresh laundry",
-        dueDate: "18 November, 2021",
-    },
-    {
-        for: "Lucia Mullen",
-        content: "Haribo bears",
-        dueDate: "Next time",
-    },
-    {
-        for: "Landyn Foster",
-        content: "New batteries",
-        dueDate: "As soon as possible",
-    }
-]
+interface WishListProps {
+    isHome?: boolean
+}
 
-const StyledDiv = styled.div`
+interface StyledDivProps {
+    noMargin?: boolean
+}
+
+const StyledDiv = styled.div<StyledDivProps>`
     &:first-of-type {
-        margin-bottom: 1.5rem;
+        margin-bottom: ${(StyledDivProps) => StyledDivProps.noMargin ? 0 : '1.5rem'};
         @media (min-width: ${Breakpoint.small}) {
-            margin-bottom: 2rem;
+            margin-bottom: ${(StyledDivProps) => StyledDivProps.noMargin ? 0 : '2rem'};
         }
         @media (min-width: ${Breakpoint.medium}) {
-            margin-bottom: 2.5rem;
+            margin-bottom: ${(StyledDivProps) => StyledDivProps.noMargin ? 0 : '2.5rem'};
         }
         @media (min-width: ${Breakpoint.large}) {
-            margin-bottom: 2rem;
+            margin-bottom: ${(StyledDivProps) => StyledDivProps.noMargin ? 0 : '2rem'};
         }
     }
     @media (min-width: ${Breakpoint.large}) {
@@ -50,7 +40,7 @@ const StyledDiv = styled.div`
 `
 
 interface StyledButtonProps {
-    clicked: boolean
+    clicked: boolean,
 }
 
 const StyledButton = styled.button<StyledButtonProps>`
@@ -97,7 +87,6 @@ const StyledButton = styled.button<StyledButtonProps>`
                 height: 0.35rem;
             }
         }
-        
     }
 
     &:hover {
@@ -115,7 +104,50 @@ const StyledButton = styled.button<StyledButtonProps>`
     }
 `
 
-const WishList: React.FC = () => {
+const StyledAnchor = styled.div`
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    @media (min-width: ${Breakpoint.medium}) {
+        margin-top: 2rem;
+    }
+    @media (min-width: ${Breakpoint.large}) {
+        margin: auto;
+        margin-top: 1.5rem;
+    }
+    
+    a {
+        background: ${Colors.accent5 };
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 0.6rem 1.2rem;
+        border-radius: 10px;
+        transition: ${Transition.normal};
+        box-shadow: ${Shadow.small};
+        @media (min-width: ${Breakpoint.small}) {
+            font-size: 1.5rem;
+            padding: 0.75rem 1.5rem;
+        }
+        @media (min-width: ${Breakpoint.medium}) {
+            font-size: 1.75rem;
+            padding: 1rem 2rem;
+        }
+        @media (min-width: ${Breakpoint.large}) {
+            font-size: 1.5rem;
+            padding: 0.75rem 1.5rem;
+        }
+
+        &:hover {
+            transform: translateY(-5px);
+            background: ${Colors.primary};
+            color: ${Colors.accent5};
+            box-shadow: ${Shadow.large};
+        }
+    }
+`
+
+const WishList: React.FC<WishListProps> = ({isHome}) => {
+    console.log(isHome)
     const [isClickedPending, setIsClickedPending] = useState(true);
     const [isClickedCompleted, setIsClickedCompleted] = useState(false);
 
@@ -145,20 +177,35 @@ const WishList: React.FC = () => {
 
     return (
         <ul>
-            <StyledDiv>
-                <StyledButton clicked={isClickedPending} onClick={buttonHandlerPending}><span>Pending</span><FontAwesomeIcon icon={faChevronDown} /></StyledButton>
+            <StyledDiv noMargin={isHome}>
+                {
+                    isHome ? '' : 
+                    <StyledButton clicked={isClickedPending} onClick={buttonHandlerPending}><span>Pending</span><FontAwesomeIcon icon={faChevronDown} /></StyledButton>
+                }
                 
-                { pending.map((wish) => (
-                    <WishListItem toClose={isClickedPending} wishContent={wish} keyId={wish.id}/>
+                { pending.map((wish, index) => (
+                    isHome && index > 3 ? '' :
+                    <WishListItem greyBg={isHome} toClose={isClickedPending} wishContent={wish} keyId={wish.id}/>
                 )) }
             </StyledDiv>
 
-            <StyledDiv>
-                <StyledButton clicked={isClickedCompleted} onClick={buttonHandlerCompleted}><span>Completed</span><FontAwesomeIcon icon={faChevronDown} /></StyledButton>
-                { completed.map((wish) => (
-                    <WishListItem toClose={isClickedCompleted} wishContent={wish} keyId={wish.id}/>
-                )) }
-            </StyledDiv>
+            {
+                isHome ? '' :
+                <StyledDiv>
+                    <StyledButton clicked={isClickedCompleted} onClick={buttonHandlerCompleted}><span>Completed</span><FontAwesomeIcon icon={faChevronDown} /></StyledButton>
+                    { completed.map((wish) => (
+                        <WishListItem toClose={isClickedCompleted} wishContent={wish} keyId={wish.id}/>
+                    )) }
+                </StyledDiv>
+            }
+
+            {
+                isHome ? 
+                <StyledAnchor>
+                    <Link to={"/my-wishlist/"} title={"My wishlist"}>See all wishes</Link>
+                </StyledAnchor>
+                : ''
+            }
         </ul>
     )
 }
