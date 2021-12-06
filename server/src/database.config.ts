@@ -10,12 +10,9 @@ export class DatabaseConfig implements TypeOrmOptionsFactory {
 
     createTypeOrmOptions() {
         if(process.env.NODE_ENV === 'prod') {
-            // console.log('PRODUCTION')
             return this.configService.get('databaseProd');
         } else {
-            // console.log('DEVELOPMENT');
-            // console.log( this.configService.get('databaseTEST'))
-            return this.configService.get('databaseTEST');
+            return this.configService.get('databaseDev');
         }
     }
 }

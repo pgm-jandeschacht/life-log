@@ -6,7 +6,6 @@ import * as session from 'express-session';
 import * as passport from 'passport';
 
 async function bootstrap() {
-    // const app = await NestFactory.create(AppModule);
     // With Express
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
 

@@ -74,7 +74,6 @@ export class WishListItemsService {
     .where("wishListItems.id = :id", { id: wishListItemId })
     .getMany();
 
-    console.log(familyMembers);
     return familyMembers;
   }
 }
