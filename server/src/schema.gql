@@ -2,66 +2,39 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type FamilyMemberInAlbumItem {
+type FamilyMemberInAgendaItem {
   """The ID"""
   id: Int!
 
   """The ID of the family member"""
   familyMemberId: Int!
 
-  """The ID of the album item"""
-  albumItemId: Int!
+  """The ID of the agenda item"""
+  agendaItemId: Int!
 
   """The family member"""
   familyMember: FamilyMember!
 
   """The related agenda item"""
-  albumItem: AlbumItem!
+  agendaItem: AgendaItem!
 }
 
-type LikedPicture {
-  """The ID of the liked picture"""
-  id: Int!
-
-  """The ID of the family member who liked the picture"""
-  familyMemberId: Int!
-
-  """The ID of the picture that was liked"""
-  albumItemId: Int!
-
-  """The family member who liked the picture"""
-  familyMember: FamilyMember!
-
-  """The picture that was liked"""
-  albumItem: AlbumItem!
-}
-
-type AlbumItem {
-  """The ID of the album-item"""
+type AgendaItem {
+  """The ID of the agenda-item"""
   id: Int!
   created_at: DateTime!
   updated_at: DateTime!
 
-  """Location where this picture is taken"""
-  location: String
-
-  """What is there to say about this picture"""
-  description: String
-
-  """Url of image"""
-  image: String
+  """Content of the agenda-item"""
+  content: String!
   date: DateTime!
-  uploaderId: Int
+  authorId: Int
 
-  """Uploader of this picture"""
-  uploader: FamilyMember!
+  """Author of this agenda-item"""
+  author: FamilyMember!
 
-  """List of albumItels where a family member is in"""
-  albumItemWithFamilyMemberIn: [FamilyMemberInAlbumItem!]
-
-  """List of liked pictures"""
-  likedPictures: [LikedPicture!]
-  inAlbumItem: [FamilyMemberInAlbumItem!]!
+  """List of agendaItems where a family member is linked in"""
+  inAgendaItem: [FamilyMemberInAgendaItem!]
 }
 
 """
@@ -137,6 +110,23 @@ type FamilyRelation {
 
   """The related family member"""
   relatedFamilyMember: FamilyMember!
+}
+
+type LikedPicture {
+  """The ID of the liked picture"""
+  id: Int!
+
+  """The ID of the family member who liked the picture"""
+  familyMemberId: Int!
+
+  """The ID of the picture that was liked"""
+  albumItemId: Int!
+
+  """The family member who liked the picture"""
+  familyMember: FamilyMember!
+
+  """The picture that was liked"""
+  albumItem: AlbumItem!
 }
 
 type Note {
@@ -242,39 +232,49 @@ type FamilyMember {
   likedPictures: [LikedPicture!]
 }
 
-type FamilyMemberInAgendaItem {
+type FamilyMemberInAlbumItem {
   """The ID"""
   id: Int!
 
   """The ID of the family member"""
   familyMemberId: Int!
 
-  """The ID of the agenda item"""
-  agendaItemId: Int!
+  """The ID of the album item"""
+  albumItemId: Int!
 
   """The family member"""
   familyMember: FamilyMember!
 
   """The related agenda item"""
-  agendaItem: AgendaItem!
+  albumItem: AlbumItem!
 }
 
-type AgendaItem {
-  """The ID of the agenda-item"""
+type AlbumItem {
+  """The ID of the album-item"""
   id: Int!
   created_at: DateTime!
   updated_at: DateTime!
 
-  """Content of the agenda-item"""
-  content: String!
+  """Location where this picture is taken"""
+  location: String
+
+  """What is there to say about this picture"""
+  description: String
+
+  """Url of image"""
+  image: String
   date: DateTime!
-  authorId: Int
+  uploaderId: Int
 
-  """Author of this agenda-item"""
-  author: FamilyMember!
+  """Uploader of this picture"""
+  uploader: FamilyMember!
 
-  """List of agendaItems where a family member is linked in"""
-  inAgendaItem: [FamilyMemberInAgendaItem!]
+  """List of albumItels where a family member is in"""
+  albumItemWithFamilyMemberIn: [FamilyMemberInAlbumItem!]
+
+  """List of liked pictures"""
+  likedPictures: [LikedPicture!]
+  inAlbumItem: [FamilyMemberInAlbumItem!]!
 }
 
 type HelpPage {
