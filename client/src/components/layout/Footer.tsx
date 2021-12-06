@@ -13,7 +13,7 @@ const StyledFooter = styled.footer`
     margin: auto;
 `
 
-const Footer = ({ backgroundColor, blue, form }: FooterProps) => {
+const Footer: React.FC<FooterProps> = ({ backgroundColor, blue, form }) => {
     return (
         <StyledFooter>
             <Navigation isForm={form} setBlue={blue} backgroundColorAccent={backgroundColor}/>

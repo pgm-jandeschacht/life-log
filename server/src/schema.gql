@@ -2,44 +2,39 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type FamilyMemberInAlbumItem {
+type FamilyMemberInAgendaItem {
   """The ID"""
   id: Int!
 
   """The ID of the family member"""
   familyMemberId: Int!
 
-  """The ID of the album item"""
-  albumItemId: Int!
+  """The ID of the agenda item"""
+  agendaItemId: Int!
 
   """The family member"""
   familyMember: FamilyMember!
 
   """The related agenda item"""
-  albumItem: AlbumItem!
+  agendaItem: AgendaItem!
 }
 
-type AlbumItem {
-  """The ID of the album-item"""
+type AgendaItem {
+  """The ID of the agenda-item"""
   id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
 
-  """Location where this picture is taken"""
-  location: String
-
-  """What is there to say about this picture"""
-  description: String
-
-  """Url of image"""
-  image: String
+  """Content of the agenda-item"""
+  content: String!
   date: DateTime!
-  uploaderId: Int
+  authorId: Int
 
-  """Uploader of this picture"""
-  uploader: FamilyMember!
+  """Author of this agenda-item"""
+  author: FamilyMember!
 
-  """List of albumItels where a family member is in"""
-  albumItemWithFamilyMemberIn: [FamilyMemberInAlbumItem!]
-  inAlbumItem: [FamilyMemberInAlbumItem!]!
+  """List of agendaItems where a family member is linked in"""
+  inAgendaItem: [FamilyMemberInAgendaItem!]
 }
 
 """
@@ -115,6 +110,23 @@ type FamilyRelation {
 
   """The related family member"""
   relatedFamilyMember: FamilyMember!
+}
+
+type LikedPicture {
+  """The ID of the liked picture"""
+  id: Int!
+
+  """The ID of the family member who liked the picture"""
+  familyMemberId: Int!
+
+  """The ID of the picture that was liked"""
+  albumItemId: Int!
+
+  """The family member who liked the picture"""
+  familyMember: FamilyMember!
+
+  """The picture that was liked"""
+  albumItem: AlbumItem!
 }
 
 type Note {
@@ -206,48 +218,83 @@ type FamilyMember {
   """
   List of family members in wishlistitems this family member is involved in
   """
-  FamilyMemberInWishListItems: [FamilyMemberInWishListItem!]
+  familyMemberInWishListItems: [FamilyMemberInWishListItem!]
 
   """
   List of family members in agendaitems this family member is involved in
   """
-  FamilyMemberInAgendaItem: [FamilyMemberInAgendaItem!]
+  familyMemberInAgendaItem: [FamilyMemberInAgendaItem!]
 
   """List of family members in albumitems this family member is involved in"""
-  FamilyMemberInAlbumItem: [FamilyMemberInAlbumItem!]
+  familyMemberInAlbumItem: [FamilyMemberInAlbumItem!]
+
+  """List of liked pictures this family member has liked"""
+  likedPictures: [LikedPicture!]
 }
 
-type FamilyMemberInAgendaItem {
+type FamilyMemberInAlbumItem {
   """The ID"""
   id: Int!
 
   """The ID of the family member"""
   familyMemberId: Int!
 
-  """The ID of the agenda item"""
-  agendaItemId: Int!
+  """The ID of the album item"""
+  albumItemId: Int!
 
   """The family member"""
   familyMember: FamilyMember!
 
   """The related agenda item"""
-  agendaItem: AgendaItem!
+  albumItem: AlbumItem!
 }
 
-type AgendaItem {
-  """The ID of the agenda-item"""
+type AlbumItem {
+  """The ID of the album-item"""
+  id: Int!
+  created_at: DateTime!
+  updated_at: DateTime!
+
+  """Location where this picture is taken"""
+  location: String
+
+  """What is there to say about this picture"""
+  description: String
+
+  """Url of image"""
+  image: String
+  date: DateTime!
+  uploaderId: Int
+
+  """Uploader of this picture"""
+  uploader: FamilyMember!
+
+  """List of albumItels where a family member is in"""
+  albumItemWithFamilyMemberIn: [FamilyMemberInAlbumItem!]
+
+  """List of liked pictures"""
+  likedPictures: [LikedPicture!]
+  inAlbumItem: [FamilyMemberInAlbumItem!]!
+}
+
+type HelpPage {
+  """The id of the help page"""
   id: Int!
 
-  """Content of the agenda-item"""
-  content: String!
-  date: DateTime!
-  authorId: Int
+  """The namee of the page"""
+  page: String!
 
-  """Author of this agenda-item"""
-  author: FamilyMember!
+  """The step of the help Page"""
+  step: Int!
 
-  """List of agendaItems where a family member is linked in"""
-  inAgendaItem: [FamilyMemberInAgendaItem!]
+  """The title for the step"""
+  title: String!
+
+  """The text for the step"""
+  text: String!
+
+  """The image for the step"""
+  image: String!
 }
 
 type Query {
@@ -266,18 +313,27 @@ type Query {
   albumItems: [AlbumItem!]!
   albumItem(id: Int!): AlbumItem!
   albumItemsByAuthor(authorId: Int!): [AlbumItem!]!
+  albumItemsByPeopleIfollow(familyMemberId: Int!): [AlbumItem!]!
   FamilyMemberInAlbumItems: [FamilyMemberInAlbumItem!]!
   FamilyMemberInAlbumItem(id: Int!): FamilyMemberInAlbumItem!
   FamilyMemberInAlbumItemsByFamilyMemberId(familyMemberId: Int!): [FamilyMemberInAlbumItem!]!
+  familyRelations: [FamilyRelation!]!
+  relationType(id: Int!): RelationType!
+  familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
+  familyRelationsByRelatedAndFamilyMemberId(familyMemberId: Int!, relatedFamilyMemberId: Int!): FamilyRelation!
+  relationTypes: [RelationType!]!
   wishListItems: [WishListItem!]!
   wishListItem(id: Int!): WishListItem!
   wishListItemsByAuthor(authorId: Int!): [WishListItem!]!
   FamilyMemberInWishListItem(id: Int!): FamilyMemberInWishListItem!
   FamilyMembersInvolvedInWishListItem(id: Int!): [FamilyMemberInWishListItem!]!
-  relationTypes: [RelationType!]!
-  relationType(id: Int!): FamilyRelation!
-  familyRelations: [FamilyRelation!]!
-  familyRelationsByFamilyMemberId(familyMemberId: Int!): [FamilyRelation!]!
+  likedPictures: [LikedPicture!]!
+  likedPicture(id: Int!): LikedPicture!
+  likedPicturesByFamilyMemberId(familyMemberId: Int!): [LikedPicture!]!
+  likedPictureByFamAndAlbum(albumItemId: Int!, familyMemberId: Int!): LikedPicture!
+  helpPages: [HelpPage!]!
+  helpPage(id: Int!): HelpPage!
+  helpPagesByPageName(pageName: String!): [HelpPage!]!
 }
 
 type Mutation {
@@ -300,15 +356,22 @@ type Mutation {
   deleteAlbumItem(id: Int!): AlbumItem!
   createFamilyMemberInAlbumItem(createFamilyMemberInAlbumItemInput: CreateFamilyMemberInAlbumItemInput!): FamilyMemberInAlbumItem!
   removeFamilyMemberInAlbumItem(id: Int!): FamilyMemberInAlbumItem!
+  createFamilyRelation(createFamilyRelationInput: CreateFamilyRelationInput!): FamilyRelation!
+  updateRelationType(updateRelationTypeInput: UpdateRelationTypeInput!, id: Int!): RelationType!
+  removeRelationType(id: Int!): RelationType!
+  createRelationType(createRelationTypeInput: CreateRelationTypeInput!): RelationType!
   createWishListItem(createWishListItemInput: CreateWishListItemInput!): WishListItem!
   updateWishListItem(updateWishListItemInput: UpdateWishListItemInput!, id: Int!): WishListItem!
   deleteWishListItem(id: Int!): WishListItem!
   createFamilyMemberInWishListItem(createFamilyMemberInWishListItemInput: CreateFamilyMemberInWishListItemInput!): FamilyMemberInWishListItem!
   removeFamilyMemberInWishListItem(id: Int!): FamilyMemberInWishListItem!
-  createRelationType(createRelationTypeInput: CreateRelationTypeInput!): RelationType!
-  updateRelationType(updateFamilyRelationInput: UpdateFamilyRelationInput!, id: Int!): FamilyRelation!
-  removeRelationType(id: Int!): FamilyRelation!
-  createFamilyRelation(createFamilyRelationInput: CreateFamilyRelationInput!): FamilyRelation!
+  createLikedPicture(createLikedPictureInput: CreateLikedPictureInput!): LikedPicture!
+  updateLikedPicture(updateLikedPictureInput: UpdateLikedPictureInput!, id: Int!): LikedPicture!
+  removeLikedPicture(id: Int!): LikedPicture!
+  removeLike(createLikedPictureInput: CreateLikedPictureInput!): LikedPicture!
+  createHelpPage(createHelpPageInput: CreateHelpPageInput!): HelpPage!
+  updateHelpPage(updateHelpPageInput: UpdateHelpPageInput!, id: Int!): HelpPage!
+  removeHelpPage(id: Int!): HelpPage!
 }
 
 input CreateFamilyMemberInput {
@@ -453,11 +516,26 @@ input CreateFamilyMemberInAlbumItemInput {
   albumItemId: Int!
 }
 
+input CreateFamilyRelationInput {
+  familyMemberId: Int!
+  relationTypeId: Int!
+  relatedFamilyMemberId: Int!
+}
+
+input UpdateRelationTypeInput {
+  name: String!
+}
+
+input CreateRelationTypeInput {
+  name: String!
+}
+
 input CreateWishListItemInput {
   """Content of this wish"""
   content: String!
   completed: Boolean = false
   authorId: Int
+  inWish: [Int!]
   dueDate: DateTime!
   created_at: DateTime!
   updated_at: DateTime!
@@ -468,6 +546,7 @@ input UpdateWishListItemInput {
   content: String!
   completed: Boolean = false
   authorId: Int
+  inWish: [Int!]
   dueDate: DateTime!
   created_at: DateTime
   updated_at: DateTime!
@@ -481,23 +560,52 @@ input CreateFamilyMemberInWishListItemInput {
   wishListItemId: Int!
 }
 
-input CreateRelationTypeInput {
-  name: String!
-}
-
-input UpdateFamilyRelationInput {
-  """Example field (placeholder)"""
+input CreateLikedPictureInput {
+  """The ID of the family member who liked the picture"""
   familyMemberId: Int!
 
-  """Example field (placeholder)"""
-  relationTypeId: Int!
-
-  """Example field (placeholder)"""
-  relatedFamilyMemberId: Int!
+  """The ID of the picture that was liked"""
+  albumItemId: Int!
 }
 
-input CreateFamilyRelationInput {
+input UpdateLikedPictureInput {
+  """The ID of the family member who liked the picture"""
   familyMemberId: Int!
-  relationTypeId: Int!
-  relatedFamilyMemberId: Int!
+
+  """The ID of the picture that was liked"""
+  albumItemId: Int!
+}
+
+input CreateHelpPageInput {
+  """The namee of the page"""
+  page: String!
+
+  """The step of the help Page"""
+  step: Int!
+
+  """The title for the step"""
+  title: String!
+
+  """The text for the step"""
+  text: String!
+
+  """The image for the step"""
+  image: String!
+}
+
+input UpdateHelpPageInput {
+  """The namee of the page"""
+  page: String!
+
+  """The step of the help Page"""
+  step: Int!
+
+  """The title for the step"""
+  title: String!
+
+  """The text for the step"""
+  text: String!
+
+  """The image for the step"""
+  image: String!
 }

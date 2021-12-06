@@ -26,3 +26,81 @@ query getWishListItemsByFamilyMemberId($id: Int!) {
   }
 }    
 `;
+
+export const GET_WISHLISTITEM_BY_WISHLISTITEM_ID = gql`
+query getWishListItemByWishListItemId($id: Int!) {
+  wishListItem(id: $id) {
+    id
+    content
+    completed
+    dueDate
+    authorId
+    inWishListItem {
+      familyMember {
+        id
+      }
+    }
+  }
+}
+`;
+
+// Create new WishList Item
+export const CREATE_WISHLISTITEM = gql`
+mutation createWishListItem($input: CreateWishListItemInput!) {
+  createWishListItem(createWishListItemInput: $input) {
+    id
+  }
+}
+`;
+
+// Delete wishlistItem
+export const DELETE_WISHLISTITEM = gql`
+mutation deleteWishListItem($id: Int!) {
+  deleteWishListItem(id: $id) {
+    id
+  }
+}
+`;
+
+// Update wishlistItem
+export const UPDATE_WISHLISTITEM = gql`
+mutation updateWishListItem($id: Int!,$input: UpdateWishListItemInput!) {
+  updateWishListItem(id: $id,updateWishListItemInput: $input) {
+    id
+  }
+}
+`;
+
+// Get wishlistItem by id
+export const GET_WISHLISTITEM_BY_ID = gql`
+query getWishListItemById($id: Int!) {
+  wishListItem(id: $id) {
+    id
+    content
+    completed
+    dueDate
+    authorId
+    inWishListItem {
+      id
+      familyMember {
+        id
+        firstname
+      }
+    }
+  }
+}
+`;
+
+// Add family members to wishlistItem
+// needed input:
+// {"input": {
+//   "familyMemberId": 3,
+//   "wishListItemId": 50
+// }}
+export const ADD_FAMILYMEMBER_TO_FAMILYMEMBER_IN_WISHLISTITEM = gql`
+mutation create($input: CreateFamilyMemberInWishListItemInput!){
+  createFamilyMemberInWishListItem(createFamilyMemberInWishListItemInput: $input) {
+    id
+  }
+}
+`;

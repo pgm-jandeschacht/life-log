@@ -23,11 +23,11 @@ export class FamilyMemberInWishListItem {
     @Field(type => Int, { description: 'The ID of the wishlist item' })
     wishListItemId: number;
 
-    @ManyToOne(() => FamilyMember, familyMember => familyMember.FamilyMemberInWishListItems, { onDelete: 'CASCADE' })
+    @ManyToOne(() => FamilyMember, familyMember => familyMember.familyMemberInWishListItems, { onDelete: 'CASCADE' })
     @Field(type => FamilyMember, { description: 'The family member' })
     familyMember: FamilyMember;
 
-    @ManyToOne(() => WishListItem, wishListItem => wishListItem.inWishListItem, { onDelete: 'SET NULL' })
+    @ManyToOne(() => WishListItem, wishListItem => wishListItem.inWishListItem, { onDelete: 'CASCADE' })
     @Field(type => WishListItem, { description: 'The related wishlist item' })
     wishListItem: WishListItem;
 

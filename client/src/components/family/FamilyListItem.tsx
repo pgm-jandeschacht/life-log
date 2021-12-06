@@ -2,13 +2,17 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
-import img from '../../assets/images/karina_cox.jpg'
 
 interface FamilyListItemProps {
-    familyMember: any
+    familyMember: any,
+    isGrey?: boolean
 }
 
-const StyledLi = styled.li`
+interface StyledLiProps {
+    greyBg?: boolean
+}
+
+const StyledLi = styled.li<StyledLiProps>`
     @media (min-width: ${Breakpoint.large}) {
         width: calc(50% - 0.5rem);
 
@@ -24,7 +28,7 @@ const StyledLi = styled.li`
     }
 
     a {
-        background: ${Colors.secondary};
+        background: ${(StyledLiProps) => StyledLiProps.greyBg ? Colors.grey : Colors.secondary};
         display: flex;
         align-items: center;
         transition: ${Transition.normal};
@@ -120,13 +124,12 @@ const StyledDiv = styled.div`
     }
 `
 
-const FamilyListItem: React.FC<FamilyListItemProps> = ({ familyMember }) => {
+const FamilyListItem: React.FC<FamilyListItemProps> = ({ familyMember, isGrey = false }) => {
     return (
-        <StyledLi key={familyMember.id}>
+        <StyledLi greyBg={isGrey} key={familyMember.id}>
             <Link to={`/my-family/${familyMember.relatedFamilyMember.id}`} title={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`}>
                 <StyledImg>
-                    {/* <img src={familyMember.relatedFamilyMember.image} alt={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`} /> */}
-                    <img src={img} alt={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`} />
+                    <img src={familyMember.relatedFamilyMember.image} alt={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`} />
                 </StyledImg>
 
                 <StyledDiv>

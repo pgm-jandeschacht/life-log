@@ -28,6 +28,7 @@ query getFamilyRelationsByFamilyMemberId($id: Int!) {
       firstname
       lastname
       dob
+      image
     }
   }
 }    
@@ -45,6 +46,22 @@ query getRelatedFamilyMembersByFamilyMemberId($id: Int!) {
       dob
       image
     }
+    hidePictures
   }
 }    
+`;
+
+export const GET_RELATION_BY_FAMILYIDS = gql`
+query getRelationByFamilyIds($familyMemberId: Int!, $relatedFamilyMemberId: Int!) {
+  familyRelationsByRelatedAndFamilyMemberId(
+    familyMemberId: $familyMemberId,
+    relatedFamilyMemberId: $relatedFamilyMemberId
+  ) {
+    id
+    relationType {
+      id 
+      name
+    }
+  }
+}
 `;

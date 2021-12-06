@@ -13,6 +13,7 @@ import MyWishlistAdd from "../pages/my-wishlist_Add";
 import MyWishListEdit from "../pages/my-wishlist_Edit";
 import MyFamilyDetail from "../pages/my-family_detail";
 import ProfileSettingsPage from "../pages/ProfileSettings";
+import FollowedPeoplePage from "../pages/FollowedPeople";
 import MyPicturesUserPage from "../pages/my-pictures_user";
 import MyPicturesRecentPage from "../pages/my-pictures_recent";
 import MyPicturesLikedPage from "../pages/my-pictures_liked";
@@ -125,7 +126,7 @@ const routes: IRoute[] = [
 
     },
     {
-        path: '/my-wishlist/edit',
+        path: '/my-wishlist/edit/:wishListId',
         name: 'Edit page wishlist',
         component: MyWishListEdit,
         exact: true
@@ -135,6 +136,13 @@ const routes: IRoute[] = [
         path: '/settings/profile',
         name: 'Profile settings page',
         component: ProfileSettingsPage,
+        exact: true
+
+    },
+    {
+        path: '/settings/followed-people',
+        name: 'Followed people settings page',
+        component: FollowedPeoplePage,
         exact: true
 
     },

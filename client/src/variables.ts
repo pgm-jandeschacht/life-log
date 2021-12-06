@@ -3,12 +3,14 @@ export const Colors = {
     secondary: '#F2F2F2',
     ternary: '#AECCEE',
     white: '#FFFFFF',
+    greyBlue: '#39495c',
     accent1: '#FEDDBE',
     accent2: '#B1DFD4',
     accent3: '#FFECB0',
     accent4: '#C4E0EB',
     accent5: '#FFB2AB',
-    red: '#EA2F2F'
+    red: '#EA2F2F',
+    grey: '#dfdfdf'
 }
 
 export const Transition = {
@@ -20,6 +22,7 @@ export const Transition = {
 export const Shadow = {
     small: '0px 1px 2px #0A213A26',
     medium: '0px 2px 4px #0A213A26',
+    large: '0px 2px 6px #0A213A26',
     altSmall: '0px 1px 2px #00000026',
 }
 

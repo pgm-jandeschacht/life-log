@@ -5,10 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 
-interface Props {
-    
-}
-
 const StyledUl = styled.ul`
 
     @media (min-width: ${Breakpoint.large}) {
@@ -72,12 +68,21 @@ const StyledUl = styled.ul`
     }
 `
 
-const SettingsList = (props: Props) => {
+const SettingsList: React.FC = () => {
     return (
         <StyledUl>
             <li>
                 <Link to={"/settings/profile"} title={"Profile settings"}>
                     Profile
+
+                    <FontAwesomeIcon icon={faChevronRight} />
+                </Link>
+            </li>
+            
+            <li>
+                <Link to={"/settings/followed-people"} title={"Followed people settings"}>
+                    Followed people
+
                     <FontAwesomeIcon icon={faChevronRight} />
                 </Link>
             </li>

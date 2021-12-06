@@ -8,12 +8,13 @@ const GlobalStyle = createGlobalStyle`
         outline: 0;
         box-sizing: border-box;
         font-family: 'Lato', sans-serif;
+        scroll-behavior: smooth;
     }
     
     #root {
         margin:0 auto;
     }
-
+    
     body {
         color: ${Colors.primary}
     }

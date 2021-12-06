@@ -6,7 +6,7 @@ import { BaseLayout } from "../layouts";
 const MyWishlistEdit: React.FunctionComponent<Ipage> = props => {
     return (
         <BaseLayout formPage={true} backgroundStyle={"accent5"} PageTitle={"Edit item in wishlist"}>
-           <EditWishListItem/>
+           <EditWishListItem />
         </BaseLayout>
     )
 }
