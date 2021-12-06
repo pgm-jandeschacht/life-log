@@ -195,7 +195,6 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ userId }) => {
                     <div>
                         <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
                         <p>{!errorRelation ? dataRelation?.familyRelationsByRelatedAndFamilyMemberId.relationType.name : ''}</p>
-                        <p>{dataRelation?.familyRelationsByRelatedAndFamilyMemberId.relationType.name}</p>
                     </div>
 
                     <div>
