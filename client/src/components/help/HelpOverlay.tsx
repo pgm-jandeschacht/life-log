@@ -225,31 +225,31 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
         if(url === 'my-pictures' && url2 !== 'detail') {
             getHelpPages({
                 variables: {
-                    name: 'pictures'
+                    name: 'My pictures'
                 }
             })
         } else if(url === 'my-family') {
             getHelpPages({
                 variables: {
-                    name: 'family'
+                    name: 'My family'
                 }
             })
         } else if(url === 'my-agenda') {
             getHelpPages({
                 variables: {
-                    name: 'agenda'
+                    name: 'My agenda'
                 }
             })
         } else if(url === 'my-pictures' && url2 === 'detail') {
             getHelpPages({
                 variables: {
-                    name: 'picturesDetail'
+                    name: 'Pictures detail'
                 }
             })
         } else if(url === 'my-wishlist') {
             getHelpPages({
                 variables: {
-                    name: 'wishlist'
+                    name: 'My wishlist'
                 }
             })
         } else {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { FormTemplate } from '../layout'
-import { TextAreaError, DropDownError } from '../forms'
+import { TextAreaError, DropDownError, DateFieldError, DateField } from '../forms'
 import { Formik, Field } from 'formik'
 import * as yup from 'yup';
 import { Breakpoint, Colors, Shadow } from '../../variables'
@@ -249,7 +249,6 @@ const AddWishListItem = () => {
                 <StyledForm onSubmit={handleSubmit}>
                     <StyledLabelSelect>
                         <p>Who do you want to bring it? <span>*</span></p>
-                        {/* <DropDownError dummyText={example} name={"user"} onChange={handleChange} onBlur={handleBlur} />  */}
                         <DropDownError dropDownTitle={'Select a family member'} dummyText={relatedFamilyMembersForDropDown} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
                     
@@ -259,6 +258,7 @@ const AddWishListItem = () => {
                     </StyledLabel>
                     <StyledLabelSelect>
                         <p>When do they have to bring it? <span>*</span></p>
+                        {/* <Field name={"date"} as={DateFieldError} type="date" test={"date"}/> */}
                         <DropDownError dropDownTitle={'Select a date'} dummyText={example2} name={"date"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
 

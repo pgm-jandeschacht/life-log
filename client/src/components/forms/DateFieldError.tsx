@@ -1,5 +1,5 @@
 import React from 'react'
-import TextField from './TextField';
+import DateField from './TextField';
 import { TextFieldProps } from './TextField';
 import { FieldAttributes, useField } from 'formik'
 import styled from 'styled-components';
@@ -18,12 +18,14 @@ const StyledError = styled.div`
     }
 `
 
-const TextFieldError: React.FC<TextFieldProps & FieldAttributes<{}>> = ({ ...props }) => {
+const DateFieldError: React.FC<TextFieldProps & FieldAttributes<{}>> = ({ ...props }) => {
     const [field, meta] = useField<{}>(props);
     const errorText = meta.error && meta.touched ? meta.error : "";
+    console.log(field)
+    console.log(props)
     return (
         <>
-            <TextField
+            <DateField
                 {...field}
                 placeholder={props.placeholder}
                 value={props.value}
@@ -38,4 +40,4 @@ const TextFieldError: React.FC<TextFieldProps & FieldAttributes<{}>> = ({ ...pro
     )
 }
 
-export default TextFieldError
+export default DateFieldError
