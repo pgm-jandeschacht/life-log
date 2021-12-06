@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import DayItem from './DayItem';
 import { Breakpoint, Colors, Shadow } from '../../variables'
-import { render } from '@testing-library/react';
 import { transformDate } from '../../services/transform/date'
 
 interface DayListProps {

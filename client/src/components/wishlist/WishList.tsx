@@ -6,7 +6,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useQuery } from '@apollo/client';
 import { GET_WISHLISTITEMS_BY_FAMILYMEMBER_ID } from '../../graphql/wishListItems';
-import { FamilyMemberData, WishListItemsData } from '../../interfaces';
+import { WishListItemsData } from '../../interfaces';
 import _ from 'lodash';
 import { Error, Loading } from '../alerts';
 import { Link } from 'react-router-dom';
@@ -147,7 +147,6 @@ const StyledAnchor = styled.div`
 `
 
 const WishList: React.FC<WishListProps> = ({isHome}) => {
-    console.log(isHome)
     const [isClickedPending, setIsClickedPending] = useState(true);
     const [isClickedCompleted, setIsClickedCompleted] = useState(false);
 
@@ -157,7 +156,6 @@ const WishList: React.FC<WishListProps> = ({isHome}) => {
     const buttonHandlerCompleted = () => {
         setIsClickedCompleted(!isClickedCompleted)
     }
-
 
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
@@ -193,6 +191,7 @@ const WishList: React.FC<WishListProps> = ({isHome}) => {
                 isHome ? '' :
                 <StyledDiv>
                     <StyledButton clicked={isClickedCompleted} onClick={buttonHandlerCompleted}><span>Completed</span><FontAwesomeIcon icon={faChevronDown} /></StyledButton>
+                    
                     { completed.map((wish) => (
                         <WishListItem toClose={isClickedCompleted} wishContent={wish} keyId={wish.id}/>
                     )) }

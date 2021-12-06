@@ -77,7 +77,7 @@ const StyledButtons = styled.div<StyledButtonProps>`
             background: ${Colors.secondary};
             color: ${Colors.primary};
         }
-}
+    }
 `
 
 const FormTemplate: React.FC<FormTemplateProps> = ({ page, color, submitting }) => {
@@ -89,7 +89,7 @@ const FormTemplate: React.FC<FormTemplateProps> = ({ page, color, submitting }) 
     return (
         <StyledButtons colorCode={color}>
             <button onClick={handleClicking}>Cancel</button>
-            {/* onClick is added but just because there is no query yet */}
+            
             <ButtonForm disabled={submitting} type="submit">Add to {page}</ButtonForm>
         </StyledButtons>
     )

@@ -105,14 +105,13 @@ const StyledHeader = styled.header<HeaderProps>`
     }
 `
 
-const Header = ({ title, button, backgroundColor, link, form, back }: headerProps) => {
+const Header: React.FC<headerProps> = ({ title, button, backgroundColor, link, form, back }) => {
     const history = useHistory();
     const handleClicking = () => {
         history.goBack();
     }
     return (
         <StyledHeader hide={form} background={backgroundColor}>
-
             <div>
                 <BackButton background={backgroundColor} hide={back} onClick={handleClicking}/>
                 

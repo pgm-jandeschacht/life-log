@@ -103,7 +103,7 @@ const Li = styled.li<LiProps>`
     }
 `
 
-const MenuItem = ({title, to, children, styleColor, alt, onClick }: MenuItemProps) => {
+const MenuItem: React.FC<MenuItemProps> = ({title, to, children, styleColor, alt, onClick }) => {
     return (
         <Li onClick={onClick} backgroundColor={styleColor} alternative={alt}>
             <Link to={to} title={title}>{children}</Link>

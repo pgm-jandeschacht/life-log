@@ -1,4 +1,4 @@
-import { useLazyQuery, useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import React from 'react'
 import { useEffect } from 'react'
 import styled from 'styled-components'
@@ -23,8 +23,6 @@ const PicturesList: React.FC<PicturesListProps> = ({ user = '', liked = false })
 
     const [ fetchLikedPictures , { data: dataLikedPictures, loading: loadingLikedPictures, error: errorLikedPictures } ] = useLazyQuery<LikedPicturesData>(GET_LIKEDPICTURES_BY_FAMILYMEMBER_ID );
     
-
-
     useEffect(() => {
         if(liked) {
             fetchLikedPictures({
@@ -47,7 +45,6 @@ const PicturesList: React.FC<PicturesListProps> = ({ user = '', liked = false })
 
     // Show liked pictures from user OR by familyMemberId
     if(liked) {
-        console.log('liked pictures');
         if(loadingLikedPictures) return <Loading/>;
         if(errorLikedPictures) return <Error error={errorLikedPictures.message}/>;
         
@@ -58,7 +55,6 @@ const PicturesList: React.FC<PicturesListProps> = ({ user = '', liked = false })
         )
         
     } else {
-        console.log(' pictures by ID', user);
         if(loadingAlbumItems) return <Loading/>;
         if(errorAlbumItems) return <Error error={errorAlbumItems.message}/>;
         

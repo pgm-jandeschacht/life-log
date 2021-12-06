@@ -95,7 +95,7 @@ const StyledLogo = styled.div`
     }
 `
 
-const Navigation = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps) => {
+const Navigation: React.FC<NavigationProps> = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps) => {
     const [isClicked, setIsClicked] = useState(false);
     
     // Click on menu button
@@ -161,7 +161,7 @@ const Navigation = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps)
 
             <HelpOverlay color={backgroundColorAccent} onClose={handleCloseHelp} show={helpClicked}/>
 
-           <Menu clicked={isClicked} onClose={handleClosing} />
+            <Menu clicked={isClicked} onClose={handleClosing} />
         </div>
     )
 }

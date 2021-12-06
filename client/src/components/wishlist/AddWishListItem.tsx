@@ -1,48 +1,16 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { FormTemplate } from '../layout'
-import { TextAreaError, DropDownError, DateFieldError, DateField } from '../forms'
+import { TextAreaError, DropDownError } from '../forms'
 import { Formik, Field } from 'formik'
 import * as yup from 'yup';
 import { Breakpoint, Colors, Shadow } from '../../variables'
 import { useHistory } from 'react-router'
 import { useMutation, useQuery } from '@apollo/client'
-import { ADD_FAMILYMEMBER_TO_FAMILYMEMBER_IN_WISHLISTITEM, CREATE_WISHLISTITEM } from '../../graphql/wishListItems'
+import { CREATE_WISHLISTITEM } from '../../graphql/wishListItems'
 import { Error, Loading } from '../alerts'
 import { GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations'
-import { FamilyMember, FamilyRelationsData } from '../../interfaces'
-
-
-const example = [
-    {
-        id: 1,
-        value: "Karina Cox"
-    },
-    {
-        id: 2,
-        value: "Landyn Foster"
-    },
-    {
-        id: 3,
-        value: "Lucia Mullen"
-    },
-    {
-        id: 4,
-        value: "Peter Kox"
-    },
-    {
-        id: 5,
-        value: "Maria Kox"
-    },
-    {
-        id: 6,
-        value: "Oscar Kox"
-    },
-    {
-        id: 7,
-        value: "Max Thomson"
-    },
-]
+import { FamilyRelationsData } from '../../interfaces'
 
 const example2 = [
     {
@@ -190,7 +158,7 @@ const validationSchema = yup.object({
     user: yup.string().required()
 })
 
-const AddWishListItem = () => {
+const AddWishListItem: React.FC = () => {
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
     let relatedFamilyMembersForDropDown: any[] = [];
     const history = useHistory();
@@ -249,16 +217,18 @@ const AddWishListItem = () => {
                 <StyledForm onSubmit={handleSubmit}>
                     <StyledLabelSelect>
                         <p>Who do you want to bring it? <span>*</span></p>
+
                         <DropDownError dropDownTitle={'Select a family member'} dummyText={relatedFamilyMembersForDropDown} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
                     
                     <StyledLabel>
                         <p>What do they need to bring? <span>*</span></p>
+
                         <Field  placeholder="Write here what you want" name={"wish"} as={TextAreaError} type="textarea" />
                     </StyledLabel>
                     <StyledLabelSelect>
                         <p>When do they have to bring it? <span>*</span></p>
-                        {/* <Field name={"date"} as={DateFieldError} type="date" test={"date"}/> */}
+
                         <DropDownError dropDownTitle={'Select a date'} dummyText={example2} name={"date"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
 

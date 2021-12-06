@@ -23,19 +23,17 @@ const TextAreaError: React.FC<TextAreaProps & FieldAttributes<{}>> = ({ ...props
     const errorText = meta.error && meta.touched ? meta.error : "";  
     return (
         <>
-        <TextArea
-            {...field}
-            placeholder={props.placeholder}
-            value={props.value}
-        />
-        {errorText &&
-            <StyledError>
-                {errorText}
-            </StyledError>
-        }
-
-    </>
-        // <textarea required id="agenda_content" rows={5} name="agenda_content" placeholder={placeholder}></textarea>
+            <TextArea
+                {...field}
+                placeholder={props.placeholder}
+                value={props.value}
+            />
+            {errorText &&
+                <StyledError>
+                    {errorText}
+                </StyledError>
+            }
+        </>
     )
 }
 

@@ -1,20 +1,11 @@
-import React, { useState, useEffect, ReactNode } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Header, Footer, AltHeader } from '../components/layout'
 import { Breakpoint } from '../variables'
 import { Colors } from '../variables'
-
-import { useQuery, useLazyQuery } from '@apollo/client';
-
 import useToken from '../Hooks/useToken';
 import useFamilyMember from '../Hooks/useFamilyMember';
-
 import { Login } from '../components/Login';
-import { FamilyMemberData } from '../interfaces';
-
-// import { GET_FAMILYMEMBER_BY_USERID } from '../graphql/familyMembers';
-
-import { GET_FAMILYMEMBER_BY_USERID }   from '../graphql/familyMembers';
 
 interface BaseLayoutProps {
     children: React.ReactNode,
@@ -73,8 +64,6 @@ const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton =
             setIsBlue(true);
         }
     }, [backgroundStyle]);
-
-    console.log(isHome)
 
     return (
         <>

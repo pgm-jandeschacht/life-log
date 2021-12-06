@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useQuery, useLazyQuery } from "@apollo/client";
+import React from "react";
 import Ipage from '../interfaces/page';
 import { BaseLayout } from "../layouts";
-import { useFetch } from '../Hooks'
-import { GET_ALL_FAMILYMEMBERS, GET_FAMILYMEMBER_BY_ID } from "../graphql/familyMembers";
-import { FamilyMember, FamilyMemberData, FamilyMembersData } from "../interfaces";
-import { Loading, Error } from "../components/alerts";
 import  FamilyMemberInfo from "../components/FamilyMember/FamilyMemberInfo";
 import { AgendaList } from "../components/agenda";
 import styled from "styled-components";
@@ -28,7 +23,7 @@ const SubTitle = styled.h2`
         margin-bottom: 1.5rem;
         font-size: 1.75rem;
     }
-    `
+`
 
 const Grey = styled.div`
     background: ${Colors.secondary};
@@ -55,16 +50,19 @@ const HomePage: React.FunctionComponent<Ipage> = props => {
 
             <Grey>
                 <SubTitle>Agenda items</SubTitle>
+                
                 <AgendaList isHome={true}/>
             </Grey>
 
             <Grey>
                 <SubTitle>Wishes</SubTitle>
+
                 <WishList isHome={true}/>
             </Grey>
 
             <Grey>
                 <SubTitle>My Family</SubTitle>
+
                 <FamilyList isHome={true}/>
             </Grey>
         </BaseLayout>

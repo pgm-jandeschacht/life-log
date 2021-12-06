@@ -65,7 +65,6 @@ const StyledDiv = styled.div`
 `
 
 const ProfileSettingsDetail: React.FC = () => {
-
     const handlesSignOff = () => {
         localStorage.clear();
     }
@@ -73,6 +72,7 @@ const ProfileSettingsDetail: React.FC = () => {
     return (
         <StyledDiv>
             <h2>Log out of account</h2>
+
             <div>
                 <a href="/" onClick={handlesSignOff}>Log off</a>
             </div>

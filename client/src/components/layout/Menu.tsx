@@ -59,7 +59,7 @@ const Nav = styled.nav<NavProps>`
         max-width: 80rem;
         margin: auto;
     }
-    `
+`
     
 const Container = styled.div`
     max-width: 80rem;
@@ -80,7 +80,7 @@ const Container = styled.div`
     }
 `
 
-const Menu = ({ clicked, onClose }: MenuProps) => {
+const Menu: React.FC<MenuProps> = ({ clicked, onClose }) => {
     const [click, setClick] = useState(true);
     const handleClicking = () => {
         setClick(false);
@@ -95,6 +95,7 @@ const Menu = ({ clicked, onClose }: MenuProps) => {
         <Nav change={clicked}>
             <Container>
                 <h2>Menu</h2>
+                
                 <ButtonIcon onClick={handleClicking} >
                     <FontAwesomeIcon icon={faTimes} />
                 </ButtonIcon>
@@ -102,13 +103,19 @@ const Menu = ({ clicked, onClose }: MenuProps) => {
             
             <ul>
                 <MenuItem onClick={handleClicking} alt={false} styleColor={"#FEDDBE"} to={"/my-pictures"} title={"My pictures"}><FontAwesomeIcon icon={faImage} /></MenuItem>
+                
                 <MenuItem onClick={handleClicking} alt={false} styleColor={"#B1DFD4"} to={"/my-family"} title={"My family"}><FontAwesomeIcon icon={faUsers} /></MenuItem>
+                
                 <MenuItem onClick={handleClicking} alt={false} styleColor={"#FFECB0"} to={"/my-agenda"} title={"My agenda"}><FontAwesomeIcon icon={faCalendarAlt} /></MenuItem>
+                
                 <MenuItem onClick={handleClicking} alt={false} styleColor={"#C4E0EB"} to={"/about-me"} title={"About me"}><FontAwesomeIcon icon={faUserAlt} /></MenuItem>
+                
                 <MenuItem onClick={handleClicking} alt={false} styleColor={"#FFB2AB"} to={"/my-wishlist"} title={"My wishlist"}><FontAwesomeIcon icon={faPencilAlt} /></MenuItem>
+                
                 <MenuItem onClick={handleClicking} alt={false} styleColor={"#F2F2F2"} to={"/settings"} title={"Settings"}><FontAwesomeIcon icon={faCog} /></MenuItem>
                 
                 <MenuItem onClick={handleClicking} alt={true} styleColor={"#0A213A"} to={"/help"} title={"Help"}><FontAwesomeIcon icon={faQuestionCircle} /></MenuItem>
+                
                 <MenuItem onClick={handleClicking} alt={true} styleColor={"#0A213A"} to={"/"} title={"Home"}><FontAwesomeIcon icon={faHome} /></MenuItem>
             </ul>
         </Nav>

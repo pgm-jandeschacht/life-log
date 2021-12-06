@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Colors, Shadow, Transition, Breakpoint } from '../../variables'
-import { InWishListItem, WishListItemsData, WishListItemType } from '../../interfaces';
+import { WishListItemType } from '../../interfaces';
 import { Link } from 'react-router-dom';
 import { beautifyDate } from '../../services/format/date'
 import { useMutation } from '@apollo/client';
@@ -137,8 +137,6 @@ const StyledDiv = styled.div<StyledDivProps>`
 `
 
 const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish, completed }) => {
-    //TODO: add completed yes/no?
-
     const [deleteWish, { }] = useMutation(DELETE_WISHLISTITEM, {
         variables: {
             id: wish.id
@@ -165,15 +163,18 @@ const WishListItemContent: React.FC<WishListItemContentProps> = ({ clicked, wish
 
     }
 
-    console.log(typeof(wish.dueDate))
-
     return (
         <StyledDiv background={completed} expand={clicked}>
             I want
+
             <span>{inWishList}</span>
+
             to bring me
+
             <span>{wish.content}</span>
+
             when they visit me
+            
             <span>{ beautifyDate(wish?.dueDate) }</span>
 
             <div>

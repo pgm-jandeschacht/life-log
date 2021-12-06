@@ -117,10 +117,12 @@ const FollowedPeople: React.FC = () => {
         <>
         <StyledDiv>
             <h2>People You follow</h2>
+
             <StyledForm>
                 {peopleIFollow.map(familyMember => (
                     <label htmlFor={familyMember.id.toString()}>
                         <input id={familyMember.id.toString()} value={familyMember.id.toString()} type="checkbox" />
+                        
                         <span>{ familyMember.firstname }  { familyMember.lastname }</span>
                     </label>
                 ))}
@@ -129,10 +131,12 @@ const FollowedPeople: React.FC = () => {
 
         <StyledDiv>
             <h2>People You don't follow</h2>
+
             <StyledForm>
                 { peopleIDontFollow && peopleIDontFollow.length > 0 ?  peopleIDontFollow.map(familyMember => (
                     <label htmlFor={familyMember.id.toString()}>
                         <input id={familyMember.id.toString()} value={familyMember.id.toString()} type="checkbox" />
+                        
                         <span>{ familyMember.firstname }  { familyMember.lastname }</span>
                     </label>
                 )): <p>You are following everyone from your family</p>}

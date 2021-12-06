@@ -33,7 +33,7 @@ const StyledImg = styled.div`
     }
 `
 
-const Loading = () => {
+const Loading: React.FC = () => {
     return (
         <StyledImg>
             <img src={animation} alt="Loading animation" />

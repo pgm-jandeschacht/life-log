@@ -26,7 +26,6 @@ const DropDown: React.FC<DropDownProps> = ({ dummyText, name, value, onChange, o
             {dummyText.map((optionItem: any) => (
                 
                 <option value={optionItem.id} selected={optionItem.id === selected ? true : false} >{optionItem.value}</option>
-                // <option value={optionItem.id} selected={optionItem.id === 15 ? true : false} >{optionItem.value}</option>
             ))}
         </select>
     )

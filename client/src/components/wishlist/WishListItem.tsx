@@ -92,8 +92,6 @@ const WishListItem: React.FC<WishListItemProps> = ({ wishContent, keyId, toClose
         setIsClicked(!isClicked)
     }
 
-    console.log(greyBg)
-
     return (
         <StyledLi close={toClose} isGrey={greyBg} key={keyId}>
             <StyledButton completed={wishContent.completed} rotate={isClicked} onClick={buttonHandler}>

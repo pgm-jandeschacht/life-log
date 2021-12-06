@@ -1,25 +1,11 @@
-import React, { 
-    useEffect, 
-    useState 
-} from 'react'
-import { 
-    Breakpoint, 
-    Colors, 
-    Transition 
-} from '../../variables'
+import React, { useEffect, useState } from 'react'
+import { Breakpoint, Colors, Transition } from '../../variables'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { LikedPictureData } from '../../interfaces';
-import { 
-    GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID, 
-    LIKE_PICTURE, 
-    REMOVE_LIKE 
-} from '../../graphql/albumItems';
-import { 
-    useLazyQuery, 
-    useMutation 
-} from '@apollo/client';
+import { GET_LIKED_PICTURES_BY_FAMILYMEMBER_ID_AND_ALBUMITEM_ID, LIKE_PICTURE, REMOVE_LIKE} from '../../graphql/albumItems';
+import { useLazyQuery, useMutation } from '@apollo/client';
 
 interface LikeButtonProps {
     userId: number,
@@ -54,8 +40,6 @@ const StyledButton = styled.button<StyledButtonProps>`
         transform: translateY(-5px);
     }
 `
-
-
 
 const LikeButton: React.FC<LikeButtonProps> = ({ userId, pictureId}) => {
     const [liked, setLiked] = useState(false);
