@@ -145,8 +145,8 @@ This project was created as an assignment for **Artevelde** and is hosted on **r
    
 
 Use the following credentials to login:  
-**username**: xxxx  
-**password**: xxx  
+**username**: coil2021  
+**password**: super_secret_password  
 
 ## Accessing the hosted database from the graphql-playground
 url:  
