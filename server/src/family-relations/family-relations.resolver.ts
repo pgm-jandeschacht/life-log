@@ -31,7 +31,7 @@ export class FamilyRelationsResolver {
   }
 
   @Query(() => FamilyRelation, { name: 'relationType' })
-  FamilyRelationById(@Args('id', { type: () => Int }) id: number): Promise<FamilyRelation> {
+  familyRelationById(@Args('id', { type: () => Int }) id: number): Promise<FamilyRelation> {
     return this.familyRelationsService.findOneById(id);
   }
 

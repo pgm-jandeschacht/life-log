@@ -31,13 +31,18 @@ export class FamilyRelationsService {
     return this.familyRelationRepository.find({where: { familyMemberId: id}, relations: ['familyMember', 'relatedFamilyMember']});
   }
 
-  findByRelatedFamilyMemberAndFamMember(relatedFamilyMemberId: number, familyMemberId: number): Promise<FamilyRelation> {
-    return this.familyRelationRepository.findOneOrFail({
+  async findByRelatedFamilyMemberAndFamMember(relatedFamilyMemberId: number, familyMemberId: number): Promise<FamilyRelation> {
+    console.log('--------');
+    console.log(relatedFamilyMemberId, familyMemberId);
+
+    const test = await  this.familyRelationRepository.findOneOrFail({
       where: {
         relatedFamilyMemberId: relatedFamilyMemberId,
         familyMemberId: familyMemberId,
       },
     });
+    console.log('test,', test);
+    return test;
   }
 
   findOneById(id: number): Promise<FamilyRelation> {

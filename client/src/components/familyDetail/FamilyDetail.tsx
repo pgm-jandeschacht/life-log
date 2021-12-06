@@ -195,7 +195,7 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
     if(error) return <Error error={error.message}/>;
 
     if(loadingRelation) return <Loading/>;
-    if(errorRelation) return <Error error={errorRelation.message}/>;
+    // if(errorRelation) return <Error error={errorRelation.message}/>;
 
 
     // const { data: familyRelationsData , loading: familyRelationsLoading, error:familyRelationsError } = useQuery<FamilyRelationData>(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
@@ -225,7 +225,7 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
                     <div>
                         <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
                         {/* <p>{profile.familyMember}</p> */}
-                        <p>{dataRelation?.familyRelationsByRelatedAndFamilyMemberId.relationType.name}</p>
+                        <p>{!errorRelation ? dataRelation?.familyRelationsByRelatedAndFamilyMemberId.relationType.name : ''}</p>
                     </div>
 
                     <div>
