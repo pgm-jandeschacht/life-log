@@ -1,20 +1,11 @@
-import React, { useState, useEffect, ReactNode } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Header, Footer } from '../components/layout'
+import { Header, Footer, AltHeader } from '../components/layout'
 import { Breakpoint } from '../variables'
 import { Colors } from '../variables'
-
-import { useQuery, useLazyQuery } from '@apollo/client';
-
 import useToken from '../Hooks/useToken';
 import useFamilyMember from '../Hooks/useFamilyMember';
-
 import { Login } from '../components/Login';
-import { FamilyMemberData } from '../interfaces';
-
-// import { GET_FAMILYMEMBER_BY_USERID } from '../graphql/familyMembers';
-
-import { GET_FAMILYMEMBER_BY_USERID }   from '../graphql/familyMembers';
 
 interface BaseLayoutProps {
     children: React.ReactNode,
@@ -22,7 +13,9 @@ interface BaseLayoutProps {
     backgroundStyle?: string,
     altButton?: boolean,
     altLink?: string,
-    formPage?: boolean
+    formPage?: boolean,
+    backButton?: boolean,
+    isHome?: boolean
 }
 
 const Main = styled.main`
@@ -42,7 +35,7 @@ const Main = styled.main`
     }
 `
     
-const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton = false, altLink, formPage = false } : BaseLayoutProps) => {
+const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton = false, altLink, formPage = false, backButton = false, isHome = false } : BaseLayoutProps) => {
     
     // Change background color of navigation according to the page
     const [background, setBackground] = useState(Colors.primary)
@@ -74,7 +67,11 @@ const BaseLayout = ({ children, PageTitle, backgroundStyle = 'blue', altButton =
 
     return (
         <>
-            <Header form={formPage} link={altLink} button={altButton} title={PageTitle} backgroundColor={background} />
+            {
+                isHome ? 
+                <AltHeader /> : 
+                <Header back={backButton} form={formPage} link={altLink} button={altButton} title={PageTitle} backgroundColor={background} />
+            }
 
             <Main>
                 

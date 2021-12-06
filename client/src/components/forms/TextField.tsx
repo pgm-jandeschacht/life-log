@@ -5,12 +5,11 @@ export interface TextFieldProps {
     name: string,
     placeholder?: string,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void  
+    onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void,
 }
 
 const TextField: React.FC<TextFieldProps> = ({ value, name, placeholder, onBlur, onChange }) => {
     const [ currentValue, setCurrentValue ] = useState(value);
-
     return (
         <input
         type="text"

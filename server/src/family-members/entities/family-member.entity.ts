@@ -9,6 +9,7 @@ import { FamilyMemberInAgendaItem } from 'src/family-member-in-agenda-items/enti
 import { FamilyMemberInAlbumItem } from 'src/family-member-in-album-items/entities/family-member-in-album-item.entity';
 import { FamilyMemberInWishListItem } from 'src/family-member-in-wish-list-item/entities/family-members-in-wish-list-item.entity';
 import { FamilyRelation } from 'src/family-relations/entities/family-relation.entity';
+import { LikedPicture } from 'src/liked-pictures/entities/liked-picture.entity';
 import { Note } from 'src/notes/entities/note.entity';
 import { User } from 'src/users/entities/user.entity';
 import { WishListItem } from 'src/wish-list-items/entities/wish-list-item.entity';
@@ -109,17 +110,22 @@ export class FamilyMember {
   familyRelationsFrom: FamilyRelation[];
 
   // In Wishlist Items
-  @OneToMany(() => FamilyMemberInWishListItem, FamilyMemberInWishListItem => FamilyMemberInWishListItem.familyMember, { cascade: true})
+  @OneToMany(() => FamilyMemberInWishListItem, familyMemberInWishListItem => familyMemberInWishListItem.familyMember, { cascade: true})
   @Field(type => [FamilyMemberInWishListItem], { nullable: true, description: 'List of family members in wishlistitems this family member is involved in'})
-  FamilyMemberInWishListItems: FamilyMemberInWishListItem[];
+  familyMemberInWishListItems: FamilyMemberInWishListItem[];
   
   // In Agenda Items
-  @OneToMany(() => FamilyMemberInAgendaItem, FamilyMemberInAgendaItem => FamilyMemberInAgendaItem.familyMember, { cascade: true})
+  @OneToMany(() => FamilyMemberInAgendaItem, familyMemberInAgendaItem => familyMemberInAgendaItem.familyMember, { cascade: true})
   @Field(type => [FamilyMemberInAgendaItem], { nullable: true, description: 'List of family members in agendaitems this family member is involved in'})
-  FamilyMemberInAgendaItem: FamilyMemberInAgendaItem[];
+  familyMemberInAgendaItem: FamilyMemberInAgendaItem[];
   
   // In Album Items
-  @OneToMany(() => FamilyMemberInAlbumItem, FamilyMemberInAlbumItem => FamilyMemberInAlbumItem.familyMember, { cascade: true})
+  @OneToMany(() => FamilyMemberInAlbumItem, familyMemberInAlbumItem => familyMemberInAlbumItem.familyMember, { cascade: true})
   @Field(type => [FamilyMemberInAlbumItem], { nullable: true, description: 'List of family members in albumitems this family member is involved in'})
-  FamilyMemberInAlbumItem: FamilyMemberInAlbumItem[];
+  familyMemberInAlbumItem: FamilyMemberInAlbumItem[];
+
+  // Liked Picutres
+  @OneToMany(() => LikedPicture, likedPicture => likedPicture.familyMember, { cascade: true})
+  @Field(type => [LikedPicture], { nullable: true, description: 'List of liked pictures this family member has liked'})
+  likedPictures: LikedPicture[];
 }

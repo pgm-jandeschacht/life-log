@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
+import * as bcrypt from 'bcrypt';
 const faker = require('faker');
 
 @Injectable()
@@ -16,9 +17,18 @@ export class UsersService {
       private familyMemberRepository: Repository<FamilyMember>
 
   ) {}
+
+  hashPassword(password: string): string {
+    // const salt = bcrypt.genSaltSync(10);
+    return bcrypt.hashSync(password, 10);
+  }
   
   create(createUserInput: CreateUserInput): Promise<User> {
-    const newUser = this.userRepository.create(createUserInput);
+    const newUser = this.userRepository.create({
+      username: createUserInput.username,
+      email: createUserInput.email,
+      password: this.hashPassword(createUserInput.password)
+    });
     return this.userRepository.save(newUser);
   }
 

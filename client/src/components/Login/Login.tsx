@@ -17,7 +17,6 @@ async function loginUser(credentials: any) {
         },
         body: JSON.stringify(credentials)
     }).then(res => {
-        // console.log(res.status);
         // Server error, user does not exist
         if(res.status === 500) {
             return {
@@ -33,7 +32,6 @@ async function loginUser(credentials: any) {
         // User password is correct
         if(res.status === 201) {
             return res.json()
-            // 'msg' : 'Logged in!'
         }
         return {
             'msg' : 'something went wrong'
@@ -124,7 +122,6 @@ const StyledContainer = styled.div`
 `
 
 const StyledForm = styled.form`
-    
     label {
         display: flex;
         flex-direction: column;
@@ -276,14 +273,17 @@ export const Login: React.FC<LoginProps> = ({ setToken, setFamilyMemberId }) => 
                             <StyledForm onSubmit={handleSubmit}>
                                 <label>
                                     <p>Username <span>*</span></p>
+                                    
                                     <Field  placeholder="username" name="username" as={TextFieldError} type="input" />
                                 </label>
                                 <label>
                                     <p>Password <span>*</span></p>
+
                                     <Field  placeholder="password" name="password" as={PasswordFieldError} type="input" />
                                 </label>
                                 <StyledButtons>
                                     <a href="/">Register</a>
+
                                     <ButtonForm disabled={isSubmitting} type="submit">Sign in</ButtonForm>
                                 </StyledButtons>
                             </StyledForm>

@@ -1,20 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { AgendaItem } from './agenda-items/entities/agenda-item.entity';
-import { AlbumItem } from './album-items/entities/album-item.entity';
-import { FamilyMember } from './family-members/entities/family-member.entity';
-import { Note } from './notes/entities/note.entity';
-import { User } from './users/entities/user.entity';
-import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
+
+// Help Scripts
 import * as faker from 'faker';
 import * as bcrypt from 'bcrypt';
 import * as _ from 'lodash';
-import { RelationType } from './relation-types/entities/relation-type.entity';
-import { FamilyRelation } from './family-relations/entities/family-relation.entity';
+
+// Data Files
+import { helpPages } from './data/pages';
+
+// Entities
+import { AlbumItem } from './album-items/entities/album-item.entity';
+import { AgendaItem } from './agenda-items/entities/agenda-item.entity';
+import { FamilyMember } from './family-members/entities/family-member.entity';
 import { FamilyMemberInAgendaItem } from './family-member-in-agenda-items/entities/family-member-in-agenda-item.entity';
 import { FamilyMemberInAlbumItem } from './family-member-in-album-items/entities/family-member-in-album-item.entity';
 import { FamilyMemberInWishListItem } from './family-member-in-wish-list-item/entities/family-members-in-wish-list-item.entity';
+import { FamilyRelation } from './family-relations/entities/family-relation.entity';
+import { HelpPage } from './help-pages/entities/help-page.entity';
+import { LikedPicture } from './liked-pictures/entities/liked-picture.entity';
+import { Note } from './notes/entities/note.entity';
+import { User } from './users/entities/user.entity';
+import { RelationType } from './relation-types/entities/relation-type.entity';
+import { WishListItem } from './wish-list-items/entities/wish-list-item.entity';
+
 
 
 @Injectable()
@@ -42,10 +52,14 @@ export class AppService {
     private familyMemberInAlbumItemRepository: Repository<FamilyMemberInAlbumItem>,
     @InjectRepository(FamilyMemberInWishListItem)
     private familyMemberInWishListItemRepository: Repository<FamilyMemberInWishListItem>,
+    @InjectRepository(LikedPicture)
+    private likedPictureRepository: Repository<LikedPicture>,
+    @InjectRepository(HelpPage)
+    private helpPageRepository: Repository<HelpPage>
   ) {}
 
-  getHello(): void {
-    // return 'Hello World!';
+  getHello(): string {
+    return 'Hello World!';
   }
 
   createRelationTypes() {
@@ -88,8 +102,9 @@ export class AppService {
 
     familyMembers.forEach(familyMember => {
       // max amount of relations for each family member
-      const amountOfRelations = faker.datatype.number({min:1, max:10});
+      const amountOfRelations = faker.datatype.number({min:1, max:15});
       
+      // create relations & not with itself
       const randomRelations = this.generateRandomArrayOfNumbers(amountOfRelations, familyMembers.length-1, familyMember.id);
       
       randomRelations.forEach(relation => {
@@ -97,7 +112,7 @@ export class AppService {
           familyMember: familyMember,
           relationType: relationTypes[faker.datatype.number({min: 0, max: relationTypes.length -1})],
           relatedFamilyMember: familyMembers[relation],
-          hidePictures: false
+          hidePictures: faker.datatype.boolean(),
         });
         this.familyRelationRepository.save(familyRelation);
       });
@@ -175,7 +190,9 @@ export class AppService {
       isSender: true,
       isAlive : true,
       bio : faker.lorem.sentences(),
-      image: faker.image.avatar(),
+      // fakercloud is down
+      // image: faker.image.avatar(),
+      image: this.createRandomAvatar(),
       dob: faker.date.between('1920-01-01', '2021-12-31'),
       occupation: faker.name.jobTitle(),
       country: faker.address.country(),
@@ -184,8 +201,29 @@ export class AppService {
     return familyMember;
   }
 
+  // fallback for fakercloud
+  // source: https://avatar-endpoint.herokuapp.com/
+  createRandomAvatar(): string {
+    const faceTypes = ['angrywithfang', 'awe', 'blank', 'calm', 'cheeky', 'concerned', 'concernedfear', 'contempt', 'cute', 'cyclops', 'driven', 'eatinghappy', 'explaining', 'eyesclosed', 'fear', 'hectic', 'lovinggrin1', 'lovinggrin2', 'monster', 'old', 'rage', 'serious', 'smile', 'smilebig', 'smilelol', 'smileteethgap', 'solemn', 'suspicious', 'tired', 'veryangry'];
+    const headTypes = ['afro', 'bangs', 'bangs2', 'bantuknots', 'bun', 'cornrows', 'cornrows2', 'graybun', 'graymedium', 'long', 'longbangs', 'longcurly', 'medium1', 'medium2', 'medium3', 'mediumbangs2', 'mediumbangs3', 'flattop', 'flattoplong', 'grayshort', 'mohawk', 'nohair2', 'nohair3', 'pomp', 'shaved2', 'shaved3', 'short1', 'short2', 'short4', 'short5', 'buns', 'hat-beanie', 'hat-hip', 'longafro', 'mediumbangs', 'mediumstraight', 'mohawk2', 'nohair1', 'shaved1', 'short3', 'twists', 'twists2', 'bear', 'hijab', 'turban'];
+
+    const baseUrl = 'https://avatar-endpoint.herokuapp.com/api/';
+
+    const url = `${baseUrl}?size=512&head_type=${headTypes[Math.floor(Math.random() * headTypes.length)]}&head_color=${this.createRandomHexadecimalForAvatar()}&face_type=${faceTypes[Math.floor(Math.random() * faceTypes.length)]}&bg_color=${this.createRandomHexadecimalForAvatar()}`;
+
+    return url;
+  }
+
+  createRandomHexadecimalForAvatar(): string {
+    const hexadecimal = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+    let color = '%23';
+    for (let i = 0; i < 6; i++) {
+      color += hexadecimal[Math.floor(Math.random() * hexadecimal.length)];
+    }
+    return color;
+  }
+
   hashPassword(password: string): string {
-    // const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(password, 10);
   }
 
@@ -196,9 +234,7 @@ export class AppService {
     const user = await this.userRepository.create({
       username : faker.internet.userName(),
       email : faker.internet.email(),
-      //TODO enable later
-      //   password: this.hashPassword(faker.internet.password()),
-      password : faker.internet.password(),
+      password: this.hashPassword('super_secret_password'),
     });
     return user;
   }
@@ -219,7 +255,7 @@ export class AppService {
         randomFamilyMembers.forEach(familyMember => {
           const familyAgendaItem = this.familyMemberInAgendaItemRepository.create({
             agendaItem: agendaItem,
-            familyMember: familyMembers[familyMember],
+            familyMemberId: familyMember,
           });
           this.familyMemberInAgendaItemRepository.save(familyAgendaItem);     
         });
@@ -243,7 +279,7 @@ export class AppService {
         randomFamilyMembers.forEach(familyMember => {
           const familyAlbumItem = this.familyMemberInAlbumItemRepository.create({
             albumItem: albumItem,
-            familyMember: familyMembers[familyMember],
+            familyMemberId: familyMember,
           });
           this.familyMemberInAlbumItemRepository.save(familyAlbumItem);     
         });
@@ -260,16 +296,40 @@ export class AppService {
     const familyMembers = await this.familyMemberRepository.find();
 
     wishListItems.forEach(wishListItem => {
-      const amountOfFamilyMembers = faker.datatype.number({min:0, max:10});
+      const amountOfFamilyMembers = faker.datatype.number({min:0, max:5});
       if(amountOfFamilyMembers > 0) {
         const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, wishListItem.authorId);
           
         randomFamilyMembers.forEach(familyMember => {
           const familyWishListItem = this.familyMemberInWishListItemRepository.create({
             wishListItem: wishListItem,
-            familyMember: familyMembers[familyMember],
+            familyMemberId: familyMember,
           });
           this.familyMemberInWishListItemRepository.save(familyWishListItem);     
+        });
+      }
+    });
+  }
+
+  // Liked pictures
+  async addLikedPictures() {
+    // All albumItems
+    const albumItems = await this.albumItemRepository.find();
+
+    // All familyMembers
+    const familyMembers = await this.familyMemberRepository.find();
+
+    albumItems.forEach(albumItem => {
+      const amountOfFamilyMembers = faker.datatype.number({min:0, max:10});
+      if(amountOfFamilyMembers > 0) {
+        const randomFamilyMembers = this.generateRandomArrayOfNumbers(amountOfFamilyMembers, familyMembers.length-1, albumItem.uploaderId);
+          
+        randomFamilyMembers.forEach(familyMember => {
+          const likedPicture = this.likedPictureRepository.create({
+            albumItemId: albumItem.id,
+            familyMemberId: familyMember,
+          });
+          this.likedPictureRepository.save(likedPicture);     
         });
       }
     });
@@ -278,12 +338,27 @@ export class AppService {
   generateRandomArrayOfNumbers(amount: number, max: number, not:number = -1): number[] {
     let array = [];
     for(let i = 0; i < amount; i++) {
-      const randomNumber = faker.datatype.number({min: 0, max: max});
-      if(!array.includes(randomNumber) && randomNumber !== not) {
-        array.push(randomNumber);
+      let randomNumber = faker.datatype.number({min: 0, max: max});
+      while(array.includes(randomNumber) && randomNumber === not) {
+        randomNumber = faker.datatype.number({min: 0, max: max});
       }
+      array.push(randomNumber);
     }
     return array;
+  }
+
+  addHelpPages() {
+    helpPages.forEach(helpPage => {
+      const newHelpPage =  this.helpPageRepository.create({
+        page: helpPage.page,
+        step: helpPage.step,
+        image: helpPage.img,
+        title: helpPage.title,
+        text: helpPage.text
+      });
+      this.helpPageRepository.save(newHelpPage);
+    });
+
   }
 
   async seedDatabase(amount: number = 5) {
@@ -299,7 +374,7 @@ export class AppService {
         familyMember.wishListItems = await this.createWishListItems(5);
         familyMember.agendaItems = await this.createAgendaItems(5);
         familyMember.albumItems = await this.createAlbumItems(5);
-        const albumItems = await this.createAlbumItems(5);
+        // const albumItems = await this.createAlbumItems(5);
         familyMember.notes = await this.createNotes(5);
         familyMember.user = user;
         await this.familyMemberRepository.save(familyMember);
@@ -312,16 +387,23 @@ export class AppService {
     this.addFamilyMembersToAgendaItem();
     this.addFamilyMembersToAlbumItem();
     this.addFamilyMembersToWishListItem();
+    this.addLikedPictures();
+    this.addHelpPages();
   }
 
   // Clear all tables, cascade & restart count
   async emptyDatabase() {
-    await this.userRepository.query(`TRUNCATE "user" RESTART IDENTITY CASCADE`);
-    await this.familyMemberRepository.query(`TRUNCATE "family_member" RESTART IDENTITY CASCADE`);
-    await this.wishListItemRepository.query(`TRUNCATE "wish_list_item" RESTART IDENTITY CASCADE`);
     await this.agendaItemRepository.query(`TRUNCATE "agenda_item" RESTART IDENTITY CASCADE`);
     await this.albumItemRepository.query(`TRUNCATE "album_item" RESTART IDENTITY CASCADE`);
+    await this.familyMemberRepository.query(`TRUNCATE "family_member" RESTART IDENTITY CASCADE`);
     await this.noteRepository.query(`TRUNCATE "note" RESTART IDENTITY CASCADE`);
+    await this.userRepository.query(`TRUNCATE "user" RESTART IDENTITY CASCADE`);
     await this.relationTypeRepository.query(`TRUNCATE "relation_type" RESTART IDENTITY CASCADE`);
+    await this.wishListItemRepository.query(`TRUNCATE "wish_list_item" RESTART IDENTITY CASCADE`);
+    
+    await this.familyMemberInWishListItemRepository.query(`TRUNCATE "family_member_in_wish_list_item" RESTART IDENTITY CASCADE`);
+    await this.familyMemberInAgendaItemRepository.query(`TRUNCATE "family_member_in_agenda_item" RESTART IDENTITY CASCADE`);
+    await this.familyMemberInAlbumItemRepository.query(`TRUNCATE "family_member_in_album_item" RESTART IDENTITY CASCADE`);
+    await this.helpPageRepository.query(`TRUNCATE "help_page" RESTART IDENTITY CASCADE`);
   }
 }

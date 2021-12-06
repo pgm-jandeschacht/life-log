@@ -27,5 +27,8 @@
   ],
   "devDependencies": {
     "lodash": "^4.17.21"
+  },
+  "dependencies": {
+    "usehooks-ts": "^2.1.1"
   }
 }

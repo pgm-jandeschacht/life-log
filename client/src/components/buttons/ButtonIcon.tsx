@@ -51,7 +51,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     }
 `
 
-const ButtonIcon = ({ children, onClick, background }: ButtonIconProps) => {
+const ButtonIcon: React.FC<ButtonIconProps> = ({ children, onClick, background }) => {
     return (
         <StyledButton backgroundColor={background} onClick={onClick}>
             {children}

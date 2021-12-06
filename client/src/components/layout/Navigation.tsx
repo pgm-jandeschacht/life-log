@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Menu from './Menu';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Colors, Transition, Breakpoint } from '../../variables'
 import { ButtonNav } from '../buttons';
 import { faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import logo from '../../assets/images/logo.png'
 import logoBlue from '../../assets/images/logoBlue.png'
+import { HelpOverlay } from '../help'
 
 interface NavigationProps {
     backgroundColorAccent: string,
     setBlue: boolean,
-    isForm?: boolean
+    isForm?: boolean,
+    onHelp?: (open: boolean) => void,
 }
 
 interface StyledDivProps {
     backgroundColor: string,
     buttonColor: boolean,
-    hide?: boolean
+    hide?: boolean,
+    linkButton?: boolean,
 }
 
 const StyledDiv = styled.div<StyledDivProps>`
@@ -40,8 +43,7 @@ const StyledDiv = styled.div<StyledDivProps>`
         padding: 1.5rem 4rem;
         padding-bottom: 1rem;
     }
-    
-    & > a {
+    & ${(StyledDivProps) => (StyledDivProps.linkButton ? "> a" : "button:first-of-type")} {
         text-align: center;
         margin-right: 1rem;
         width: 33.3%;
@@ -93,23 +95,58 @@ const StyledLogo = styled.div`
     }
 `
 
-const Navigation = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps) => {
+const Navigation: React.FC<NavigationProps> = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps) => {
     const [isClicked, setIsClicked] = useState(false);
-
+    
+    // Click on menu button
     const handleClick = () => {
         setIsClicked(true);
     }
     
+    // Click on close menu button
     const handleClosing = (click: boolean) => {
         if (!click) {
             setIsClicked(false);
         }
     }
 
+
+    ////////////////////////
+    const [helpClicked, setHelpClicked] = useState(false);
+    
+    // Click on help button
+    const handleHelp = () => {
+        setHelpClicked(true);
+    }
+
+    const handleCloseHelp = (helpClose: boolean) => {
+        if (!helpClose) {
+            setHelpClicked(false);
+        }
+    }
+    ////////////////////////
+    // Link or button for help
+    const [link, setLink] = useState(false)
+    const url = useLocation().pathname.split('/')[1];
+
+    useEffect(() => {
+        if(url === 'my-pictures') {
+            setLink(false);
+        } else if(url === 'my-family') {
+            setLink(false);
+        } else if(url === 'my-agenda') {
+            setLink(false);
+        } else if(url === 'my-wishlist') {
+            setLink(false);
+        } else {
+            setLink(true);
+        }
+    }, [url]);
+
     return (
         <div>
-            <StyledDiv hide={isForm} buttonColor={setBlue} backgroundColor={backgroundColorAccent}>
-                <Link to={'/help'} title={'Help'}>Help</Link>
+            <StyledDiv linkButton={link} hide={isForm} buttonColor={setBlue} backgroundColor={backgroundColorAccent}>
+                {link ? <Link to={'/help'} title={"Help"}>Help</Link> : <button onClick={handleHelp} title={'Help'}>Help</button>}
 
                 <StyledLogo>
                     <Link to={'/'} title={'Home'}>
@@ -122,7 +159,9 @@ const Navigation = ({ backgroundColorAccent, setBlue, isForm }: NavigationProps)
                 </ButtonNav>
             </StyledDiv>
 
-           <Menu clicked={isClicked} onClose={handleClosing} />
+            <HelpOverlay color={backgroundColorAccent} onClose={handleCloseHelp} show={helpClicked}/>
+
+            <Menu clicked={isClicked} onClose={handleClosing} />
         </div>
     )
 }

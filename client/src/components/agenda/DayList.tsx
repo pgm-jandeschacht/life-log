@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import DayItem from './DayItem';
 import { Breakpoint, Colors, Shadow } from '../../variables'
-import { render } from '@testing-library/react';
+import { transformDate } from '../../services/transform/date'
 
 interface DayListProps {
     keyId: number | string,
     test: any,
+    isGrey?: boolean
 }
 
-const StyledLi = styled.li`
+interface StyledLiProps {
+    greyBg?: boolean
+}
+
+const StyledLi = styled.li<StyledLiProps>`
     width: 100%;
-    background: ${Colors.secondary};
+    background: ${(StyledLiProps) => StyledLiProps.greyBg ? Colors.grey : Colors.secondary};
     margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
@@ -46,9 +51,14 @@ const StyledLi = styled.li`
     }
 `
 
-const StyledDayTitle = styled.div`
+interface StyledDayTitleProps {
+    today: boolean
+}
+
+const StyledDayTitle = styled.div<StyledDayTitleProps>`
     padding: 0.75rem 1.2rem;
-    background: ${Colors.accent3};
+    background: ${(StyledDayTitleProps) => (StyledDayTitleProps.today ? Colors.primary : Colors.accent3)};
+    color: ${(StyledDayTitleProps) => (StyledDayTitleProps.today ? Colors.secondary : Colors.primary)};
     border-radius: 10px;
     font-size: 1.3rem;
     font-weight: 700;
@@ -68,14 +78,17 @@ const StyledDayTitle = styled.div`
     }
 `
 
-const DayList: React.FC<DayListProps> = ({ keyId, test }) => {
-    //  console.log(test);
+const DayList: React.FC<DayListProps> = ({ keyId, test, isGrey = false }) => {
+    const [isToday, setIsToday] = useState(false)
+    const date = transformDate(test.date).split(" ", 1);
+    useEffect(() => {
+        (date[0].toLocaleLowerCase() === 'today' ? setIsToday(true) : setIsToday(false));
+    });
     return (
-        <StyledLi key={`day${keyId}`}>
-            <StyledDayTitle>
+        <StyledLi greyBg={isGrey} key={`day${keyId}`}>
+            <StyledDayTitle id={(isToday ? 'today' : '')} today={isToday}>
                 <p>
-                    {new Date(test.date).toLocaleDateString()}
-                    {/* { test.date } */}
+                    { transformDate(test.date) }
                 </p>
             </StyledDayTitle>
 

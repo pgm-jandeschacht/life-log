@@ -2,10 +2,6 @@ import React from 'react'
 import styled from 'styled-components';
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables';
 
-interface Props {
-    
-}
-
 const StyledDiv = styled.div`
     h2 {
         font-size: 1.5rem;
@@ -68,8 +64,7 @@ const StyledDiv = styled.div`
     }
 `
 
-const ProfileSettingsDetail = (props: Props) => {
-
+const ProfileSettingsDetail: React.FC = () => {
     const handlesSignOff = () => {
         localStorage.clear();
     }
@@ -77,6 +72,7 @@ const ProfileSettingsDetail = (props: Props) => {
     return (
         <StyledDiv>
             <h2>Log out of account</h2>
+
             <div>
                 <a href="/" onClick={handlesSignOff}>Log off</a>
             </div>

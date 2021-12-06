@@ -60,7 +60,7 @@ const StyledAnchor = styled.a<StyledButtonProps>`
 const FamilyDetailButtons: React.FC<FamilyDetailButtonsProps> = ({ name, id }) => {
     return (
         <StyledDiv>
-            <StyledAnchor href="/my-pictures" color={"#FEDDBE"}>Pictures from {name}</StyledAnchor>
+            <StyledAnchor href={`/my-pictures/user/${id}`} color={"#FEDDBE"}>Pictures from {name}</StyledAnchor>
             <StyledAnchor href="/my-wishlist/add" color={"#FFB2AB"}>Ask {name} to bring something</StyledAnchor>
         </StyledDiv>
     )

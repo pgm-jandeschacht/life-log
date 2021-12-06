@@ -1,21 +1,13 @@
 import React from 'react'
-import karina from '../../assets/images/karina_cox.jpg'
-import peter from '../../assets/images/peter_kox.jpg'
-import maria from '../../assets/images/maria_kox.jpg'
-// import oscar from '../../assets/images/oscar_kox.jpg'
 import styled from 'styled-components'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 import FamilyDetailButtons from './FamilyDetailButtons'
 import { useQuery } from '@apollo/client'
-import { FamilyMemberData, FamilyRelationData } from "../../interfaces";
-import { GET_FAMILYMEMBER_BY_ID } from "../../graphql/familyMembers";
-import { Loading } from '../alerts'
+import { FamilyRelationData } from "../../interfaces";
+import { Error, Loading } from '../alerts'
 import { parseInt } from 'lodash'
-import { doTypesOverlap } from 'graphql'
 import { GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations';
 import { Link } from 'react-router-dom'
-
-
 
 interface FamilyDetailRelationProps {
     userId: string
@@ -179,32 +171,18 @@ const Children = styled.div`
 `
 
 const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) => {
-    console.log('user Id from props.....', userId);
-
-    // const familyMemberId = localStorage.getItem('familyMemberId') || '';
-
     const { data , loading, error } = useQuery<FamilyRelationData>(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
         variables: {
             id: parseInt(userId)
         }
     });
 
-    // let partner = '';
-    // let children = '';
-
     if(loading) return <Loading/>;
-    if(error) return <p>{error.message}</p>;
-
-    
-    console.log('data relations.....',data?.familyRelationsByFamilyMemberId);
+    if(error) return <Error error={error.message}/>;
 
     const partner = data?.familyRelationsByFamilyMemberId.filter(i => i.relationType.name === 'partner');
     const children = data?.familyRelationsByFamilyMemberId.filter(i => i.relationType.name === 'son' || i.relationType.name === 'daughter' || i.relationType.name === 'child');
-    const grandChildren = data?.familyRelationsByFamilyMemberId.filter(i => i.relationType.name === 'grandson' || i.relationType.name === 'granddaughter' || i.relationType.name === 'grandchild');
-    console.log('partner', partner);
-    console.log('children', children);
-    console.log(grandChildren);
-    
+    const grandChildren = data?.familyRelationsByFamilyMemberId.filter(i => i.relationType.name === 'grandson' || i.relationType.name === 'granddaughter' || i.relationType.name === 'grandchild');    
 
     function calculateAge (dobMember: string | undefined) {
         var dob = new Date(`${dobMember}`);  
@@ -220,11 +198,12 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
         <div>
             <Married>
                 <SubTitle>{partner && (partner?.length > 0) ? 'Married with:'  : 'Single' }</SubTitle>
+
                 {partner && (partner?.length > 0) ? 
                     <DetailSmallContainer>
                         <Link to={`/my-family/${partner[0].relatedFamilyMember.id}`} title={`${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}`}>
                             <StyledImgSmall>
-                                <img src={peter} alt={`${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}`} />
+                                <img src={partner[0].relatedFamilyMember.image} alt={`${partner[0].relatedFamilyMember.firstname} ${partner[0].relatedFamilyMember.lastname}`} />
                             </StyledImgSmall>
 
                             <DetailSmall>
@@ -244,11 +223,12 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
                                 <DetailSmallContainer>
                                     <Link to={`/my-family/${child.relatedFamilyMember.id}`} title={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`}>
                                         <StyledImgSmall>
-                                            <img src={maria} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
+                                            <img src={child.relatedFamilyMember.image} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
                                         </StyledImgSmall>
 
                                         <DetailSmall>
                                             <p>{child.relatedFamilyMember.firstname} {child.relatedFamilyMember.lastname}</p>
+                                            
                                             <p>{ calculateAge(child.relatedFamilyMember.dob) } years old</p>
                                         </DetailSmall>
                                     </Link>
@@ -268,11 +248,12 @@ const FamilyDetailRelation: React.FC<FamilyDetailRelationProps> = ({ userId}) =>
                                 <DetailSmallContainer>
                                     <Link to={`/my-family/${child.relatedFamilyMember.id}`} title={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`}>
                                         <StyledImgSmall>
-                                            <img src={maria} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
+                                            <img src={child.relatedFamilyMember.image} alt={`${child.relatedFamilyMember.firstname} ${child.relatedFamilyMember.lastname}`} />
                                         </StyledImgSmall>
 
                                         <DetailSmall>
                                             <p>{child.relatedFamilyMember.firstname} {child.relatedFamilyMember.lastname}</p>
+                                            
                                             <p>{ calculateAge(child.relatedFamilyMember.dob) } years old</p>
                                         </DetailSmall>
                                     </Link>

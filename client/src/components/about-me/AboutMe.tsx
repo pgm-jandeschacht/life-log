@@ -1,16 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import fallback from '../../assets/images/anna_boloise.jpg'
 import { Breakpoint, Colors, Shadow } from '../../variables'
-
+import { beautifyDate } from '../../services/format/date'
 import { useQuery } from '@apollo/client'
 import { GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID } from '../../graphql/familyMembers';
-import { FamilyMemberData, FamilyMember } from '../../interfaces';
-import { Loading } from '../alerts'
-
-// interface AboutMeProps {
-//     profile: FamilyMemberData
-// }
+import { FamilyMemberData } from '../../interfaces';
+import { Error, Loading } from '../alerts'
 
 const StyledDiv = styled.div `
     display: flex;
@@ -151,10 +146,8 @@ const StyledImg = styled.div`
 `
 
 const AboutMe: React.FC = () => {
-
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
-    // const { data, loading, error } = useQuery<FamilyRelationData >(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
     const { data, loading, error } = useQuery<FamilyMemberData>(GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID, {
         variables: {
             id: parseInt(familyMemberId)
@@ -162,21 +155,13 @@ const AboutMe: React.FC = () => {
     });
 
     if(loading) return <Loading/>;
-    if(error) return <p>"ERRRORRR!!"</p>;
-    console.log(data);
-
-    const beautifyDob = (dobMember?: string) => {
-        var dob = new Date(`${dobMember}`);  
-        const date = `${dob.getUTCDay()}/${dob.getUTCMonth()}/${dob.getUTCFullYear()}`;
-        return date;
-    }
+    if(error) return <Error error={error.message}/>;
 
     return (
         <StyledDiv>
             <StyledImg>
                 <div>
-                    {/* <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} /> */}
-                    <img src={fallback} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
+                    <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
                 </div>
 
                 <h2>{data?.familyMemberById.firstname} <span>{data?.familyMemberById.lastname}</span></h2>
@@ -186,35 +171,27 @@ const AboutMe: React.FC = () => {
                 <StyledLi>
                     <li>
                         <p>Date of birth</p>
-                        <p>{ beautifyDob(data?.familyMemberById.dob) }</p>
+                        
+                        <p>{ beautifyDate(data?.familyMemberById.dob) }</p>
                     </li>
 
                     <li>
                         <p>Gender</p>
+
                         <p>{ data?.familyMemberById.gender }</p>
                     </li>
                 </StyledLi>
 
-                {/* <li>
-                    <p>Status</p>
-                    <p>{profile.maritalStatus} of {profile.partner}</p>
-                </li>
-
-                <li>
-                    <p>Nursing home</p>
-                    <p>{profile.nursingHome}</p>
-                </li> */}
-
                 <li>
                     <p>Location</p>
+
                     <p>{ data?.familyMemberById.city } , { data?.familyMemberById.country }</p>
-                    {/* <p>{profile.location}</p> */}
                 </li>
 
                 <li>
-                    <p>Carreer</p>
+                    <p>Career</p>
+
                     <p>{ data?.familyMemberById.occupation }</p>
-                    {/* <p>{profile.carreer}</p> */}
                 </li>
             </StyledUl>
         </StyledDiv>

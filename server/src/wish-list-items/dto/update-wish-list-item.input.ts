@@ -24,6 +24,9 @@ export class UpdateWishListItemInput extends PartialType(CreateWishListItemInput
   @Field(type => Int, { nullable: true })
   authorId?: number;
 
+  @Field(type => [Int], { nullable: true })
+  inWish?: number[];
+
   @IsDate()  
   @Field()
   dueDate?: Date;

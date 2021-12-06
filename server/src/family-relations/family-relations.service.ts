@@ -28,7 +28,21 @@ export class FamilyRelationsService {
   }
 
   findByFamilyMemberId(id: number): Promise<FamilyRelation[]> {
-    return this.familyRelationRepository.find({where: { familyMemberId: id}});
+    return this.familyRelationRepository.find({where: { familyMemberId: id}, relations: ['familyMember', 'relatedFamilyMember']});
+  }
+
+  async findByRelatedFamilyMemberAndFamMember(relatedFamilyMemberId: number, familyMemberId: number): Promise<FamilyRelation> {
+    console.log('--------');
+    console.log(relatedFamilyMemberId, familyMemberId);
+
+    const test = await  this.familyRelationRepository.findOneOrFail({
+      where: {
+        relatedFamilyMemberId: relatedFamilyMemberId,
+        familyMemberId: familyMemberId,
+      },
+    });
+    console.log('test,', test);
+    return test;
   }
 
   findOneById(id: number): Promise<FamilyRelation> {

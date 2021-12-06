@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import React from "react";
 import { useParams } from "react-router";
-import { Loading } from "../components/alerts";
+import { Error, Loading } from "../components/alerts";
 import { PicturesList } from "../components/picturesLists";
 import { GET_FAMILYMEMBER_BY_ID } from "../graphql/familyMembers";
 import { FamilyMemberData } from "../interfaces";
@@ -17,11 +17,11 @@ const MyPicturesUserPage: React.FunctionComponent<Ipage> = props => {
     });
 
     if(loading) return <Loading/>;
-    if(error) return <p>{error.message}</p>;
+    if(error) return <Error error={error.message}/>;
 
     return (
-        <BaseLayout backgroundStyle={"accent1"} PageTitle={`Pictures from ${data?.familyMemberById.firstname}`}>
-            <PicturesList user={userId}/>
+        <BaseLayout backButton={true} backgroundStyle={"accent1"} PageTitle={`Pictures with ${data?.familyMemberById.firstname}`}>
+            <PicturesList user={userId} liked={false}/>
         </BaseLayout>
     )
 }

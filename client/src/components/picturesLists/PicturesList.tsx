@@ -1,13 +1,15 @@
-import { useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import React from 'react'
+import { useEffect } from 'react'
 import styled from 'styled-components'
-import { GET_ALLALBUMITEMS_WHERE_FAMILYMEMBER_ID_IN } from '../../graphql/albumItems'
-import { InAlbumItemData } from '../../interfaces'
-import { Loading } from '../alerts'
+import { GET_ALLALBUMITEMS_WHERE_FAMILYMEMBER_ID_IN, GET_LIKEDPICTURES_BY_FAMILYMEMBER_ID } from '../../graphql/albumItems'
+import { InAlbumItemData, LikedPicturesData } from '../../interfaces'
+import { Error, Loading } from '../alerts'
 import PicturesListItem from './PicturesListItem'
 
 interface PicturesListProps {
-    user: string
+    user: string ,
+    liked: boolean,
 }
 
 const StyledUl = styled.ul`
@@ -15,24 +17,54 @@ const StyledUl = styled.ul`
     flex-wrap: wrap;
 `
 
-const PicturesList: React.FC<PicturesListProps> = ({ user }) => {
-    const { data, loading, error } = useQuery<InAlbumItemData>(GET_ALLALBUMITEMS_WHERE_FAMILYMEMBER_ID_IN, {
-        variables: {
-            id: parseInt(user)
+const PicturesList: React.FC<PicturesListProps> = ({ user = '', liked = false }) => {
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
+    const [ fetchAlbumItemData, { data: dataAlbumItems, loading: loadingAlbumItems, error: errorAlbumItems } ] = useLazyQuery<InAlbumItemData>(GET_ALLALBUMITEMS_WHERE_FAMILYMEMBER_ID_IN);
+
+    const [ fetchLikedPictures , { data: dataLikedPictures, loading: loadingLikedPictures, error: errorLikedPictures } ] = useLazyQuery<LikedPicturesData>(GET_LIKEDPICTURES_BY_FAMILYMEMBER_ID );
+    
+    useEffect(() => {
+        if(liked) {
+            fetchLikedPictures({
+                variables: {
+                    id: parseInt(familyMemberId)
+                }
+            });
         }
-    });
+    }, [])
 
-    if(loading) return <Loading/>;
-    if(error) return <p>{error.message}</p>;
-    console.log(data?.FamilyMemberInAlbumItemsByFamilyMemberId)
+    useEffect(() => {
+        if(user) {
+            fetchAlbumItemData({
+                variables: {
+                    id: parseInt(user)
+                }
+            });
+        }
+    }, [])
 
-    return (
-        <StyledUl>
-            {data?.FamilyMemberInAlbumItemsByFamilyMemberId.map((content: any) => 
-                <PicturesListItem pics={content}/>
-            )}
-        </StyledUl>
-    )
+    // Show liked pictures from user OR by familyMemberId
+    if(liked) {
+        if(loadingLikedPictures) return <Loading/>;
+        if(errorLikedPictures) return <Error error={errorLikedPictures.message}/>;
+        
+        return (
+            <StyledUl>
+                {dataLikedPictures?.likedPicturesByFamilyMemberId.map((content: any) => <PicturesListItem pics={content} />)}
+            </StyledUl>
+        )
+        
+    } else {
+        if(loadingAlbumItems) return <Loading/>;
+        if(errorAlbumItems) return <Error error={errorAlbumItems.message}/>;
+        
+        return (
+            <StyledUl>
+                {dataAlbumItems?.FamilyMemberInAlbumItemsByFamilyMemberId.map((content: any) => <PicturesListItem pics={content} />)}
+            </StyledUl>
+        )
+    }
+
 }
 
 export default PicturesList

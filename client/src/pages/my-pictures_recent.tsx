@@ -5,7 +5,7 @@ import { BaseLayout } from "../layouts";
 
 const MyPicturesRecentPage: React.FunctionComponent<Ipage> = props => {
     return (
-        <BaseLayout backgroundStyle={"accent1"} PageTitle={"Recent pictures"}>
+        <BaseLayout backButton={true} backgroundStyle={"accent1"} PageTitle={"Recent pictures"}>
             <PicturesListRecent/>
         </BaseLayout>
     )

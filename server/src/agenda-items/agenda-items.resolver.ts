@@ -50,7 +50,7 @@ export class AgendaItemsResolver {
 
   @ResolveField((returns) => [FamilyMemberInAgendaItem ])
   inAgendaItem( @Parent() agendaItem: AgendaItem ): Promise<any> {
-    return this.agendaItemsService.getInvitedFamilyMembers(agendaItem.authorId);
+    return this.agendaItemsService.getInvitedFamilyMembers(agendaItem.id);
   }
 
   @Mutation(() => AgendaItem)

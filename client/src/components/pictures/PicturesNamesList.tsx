@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import fallback from '../../assets/images/lucia_mullen.jpg'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 
 interface PicturesNamesListProps {
@@ -88,21 +87,20 @@ const StyledLi = styled.li`
 `
 
 const PicturesNamesList: React.FC<PicturesNamesListProps> = ({ usersList }) => {
-    //TODO: ADD LINK to watch images from familymember
     return (
         <StyledUl>
             {usersList.map((user: any) => (
+                !user.hidePictures && (
                 <StyledLi key={user.relatedFamilyMember.id}>
                     <Link to={`/my-pictures/user/${user.relatedFamilyMember.id}`} title={`Pictures of ${user.relatedFamilyMember.firstname} ${user.relatedFamilyMember.lastname}`}>
-                        {/* <img src={`../../assets/images/${user.image}`} alt={`${user.firstName} ${user.lastName}`} /> */}
                         <div>
-                            <img src={fallback} alt={`${user.relatedFamilyMember.firstname} ${user.relatedFamilyMember.lastname}`} />
+                            <img src={user.relatedFamilyMember.image} alt={`${user.relatedFamilyMember.firstname} ${user.relatedFamilyMember.lastname}`} />
                         </div>
 
                         <p>{user.relatedFamilyMember.firstname} {user.relatedFamilyMember.lastname}</p>
                     </Link>
                 </StyledLi>
-            ))}
+            )))}
         </StyledUl>
     )
 }

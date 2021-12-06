@@ -26,7 +26,6 @@ export class User {
     @Field({description: 'The email of the user'})
     email:string;
 
-    // Change PASSWORD to encode, ...
     @Column()
     @Field({ description: 'The password of the user'})
     password: string;

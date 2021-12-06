@@ -19,7 +19,7 @@ const StyledUl = styled.ul`
     }
 `
 
-const HelpList = () => {
+const HelpList: React.FC = () => {
     return (
         <StyledUl>
             <HelpListItem color={"#FEDDBE"} image={faImage} title={"Pictures"} keyId={1}/>

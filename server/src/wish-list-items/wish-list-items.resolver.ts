@@ -21,7 +21,7 @@ export class WishListItemsResolver {
   ) {}
 
   @Mutation(() => WishListItem)
-  createWishListItem(@Args('createWishListItemInput') createWishListItemInput: CreateWishListItemInput) {
+  async createWishListItem(@Args('createWishListItemInput') createWishListItemInput: CreateWishListItemInput) {
     return this.wishListItemsService.create(createWishListItemInput);
   }
 
@@ -47,7 +47,7 @@ export class WishListItemsResolver {
 
   @ResolveField(returns => [FamilyMemberInWishListItem] )
   inWishListItem( @Parent() wishListItem: WishListItem ): Promise<any> {
-    return this.wishListItemsService.getInvolvedFamilyMembers(wishListItem.authorId);
+    return this.wishListItemsService.getInvolvedFamilyMembers(wishListItem.id);
   }
 
   @Mutation(() => WishListItem)

@@ -15,8 +15,8 @@ const StyledDiv = styled.div`
 const Picture: React.FC = () => {
     return (
         <StyledDiv>
-            <PictureImg/>
-
+            <PictureImg />
+            
             <PictureContent/>
         </StyledDiv>
     )

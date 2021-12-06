@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 import { ButtonForm } from '../buttons'
@@ -62,7 +63,7 @@ const StyledButtons = styled.div<StyledButtonProps>`
         
     }
     
-    button {
+    button:last-of-type {
         margin-left: 1rem;
         background: ${(StyledButtonProps) => StyledButtonProps.colorCode};
         @media (min-width: ${Breakpoint.medium}) {
@@ -76,20 +77,19 @@ const StyledButtons = styled.div<StyledButtonProps>`
             background: ${Colors.secondary};
             color: ${Colors.primary};
         }
-}
+    }
 `
 
 const FormTemplate: React.FC<FormTemplateProps> = ({ page, color, submitting }) => {
-
-    const handleClicking = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        window.history.back();
+    const history = useHistory();
+    const handleClicking = () => {
+        history.goBack();
     }
 
     return (
         <StyledButtons colorCode={color}>
-            <a href="/" onClick={handleClicking}>Cancel</a>
-            {/* onClick is added but just because there is no query yet */}
+            <button onClick={handleClicking}>Cancel</button>
+            
             <ButtonForm disabled={submitting} type="submit">Add to {page}</ButtonForm>
         </StyledButtons>
     )

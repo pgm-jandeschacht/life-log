@@ -5,37 +5,12 @@ import { FormTemplate } from '../layout'
 import { Formik, Field } from 'formik'
 import * as yup from 'yup';
 import { Breakpoint, Colors, Shadow } from '../../variables'
-
-const example = [
-    {
-        id: 1,
-        value: "Karina Cox"
-    },
-    {
-        id: 2,
-        value: "Landyn Foster"
-    },
-    {
-        id: 3,
-        value: "Lucia Mullen"
-    },
-    {
-        id: 4,
-        value: "Peter Kox"
-    },
-    {
-        id: 5,
-        value: "Maria Kox"
-    },
-    {
-        id: 6,
-        value: "Oscar Kox"
-    },
-    {
-        id: 7,
-        value: "Max Thomson"
-    },
-]
+import { useHistory } from 'react-router'
+import { CREATE_AGENDAITEM } from '../../graphql/agendaItems'
+import { useMutation, useQuery } from '@apollo/client'
+import { Error, Loading } from '../alerts'
+import { FamilyRelationsData } from '../../interfaces'
+import { GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID } from '../../graphql/familyRelations'
 
 const StyledForm = styled.form`
     label:last-of-type {
@@ -158,9 +133,29 @@ const validationSchema = yup.object({
     user: yup.string().required()
 })
 
-const AddAgendaItem = () => {
+const AddAgendaItem: React.FC = () => {
+    const familyMemberId = localStorage.getItem('familyMemberId') || '';
+    let relatedFamilyMembersForDropDown: any[] = [];
+    const history = useHistory();
 
-// maak mutation-query, error & loading useMutation
+    const [addAgendatItem, { data: dataWish, loading: loadingWish, error: errorWish  }] = useMutation(CREATE_AGENDAITEM);
+
+    const { data, loading, error } = useQuery<FamilyRelationsData> (GET_RELATEDFAMILYMEMBERS_BY_FAMILYMEMBER_ID, {
+        variables: {
+            id: parseInt(familyMemberId)
+        }
+    });
+    if(loading) return <Loading />;
+    if(error) return <Error error={error.message}/>;
+    if(!loading && data) {
+        data?.familyRelationsByFamilyMemberId.forEach(member => {
+            const famMember = {
+                id: member.relatedFamilyMember.id,
+                value: member.relatedFamilyMember.firstname + ' ' + member.relatedFamilyMember.lastname
+            }
+            relatedFamilyMembersForDropDown.push(famMember);
+         })        
+    }
 
     return (
         <Formik
@@ -169,13 +164,24 @@ const AddAgendaItem = () => {
                 user: '',
             }}
             validationSchema={validationSchema}
-            // rename data, niet zelfde als usemutation
+            
             onSubmit={(data, { setSubmitting }) => {
                 setSubmitting(true);
 
-                // call name of useMutation, voeg variables toe, refetchquery-options
+                addAgendatItem({
+                    variables: {
+                        input: {
+                            created_at: new Date(),
+                            updated_at: new Date(),
+                            content: data.agendaItem,
+                            authorId: parseInt(familyMemberId),
+                            date: new Date(),
+                        }
+                    }
+                })
 
                 setSubmitting(false);
+                history.push('/my-agenda');
                 }}
             >
 
@@ -184,13 +190,11 @@ const AddAgendaItem = () => {
                     <StyledLabel>
                         <p>Today I <span>*</span></p>
                         <Field  placeholder="Write here what you did today" name="agendaItem" as={TextAreaError} type="textarea" />
-                        {/* <TextArea placeholder={"Write here what you did today"}>Today I</TextArea> */}
                     </StyledLabel>
 
-                    {/* Send the options to the dropdown with props */}
                     <StyledLabelSelect>
                         <p>This was with <span>*</span></p>
-                        <DropDownError dummyText={example} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
+                        <DropDownError dropDownTitle={'Select a family member'}  dummyText={relatedFamilyMembersForDropDown} name={"user"} onChange={handleChange} onBlur={handleBlur} /> 
                     </StyledLabelSelect>
                     
                     <FormTemplate submitting={isSubmitting} page={"agenda"} color={"#FFECB0"} />
