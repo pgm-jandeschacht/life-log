@@ -1,31 +1,19 @@
 import React from 'react'
-import img from '../../assets/images/karina_cox.jpg'
-import peter from '../../assets/images/peter_kox.jpg'
-import maria from '../../assets/images/maria_kox.jpg'
-// import oscar from '../../assets/images/oscar_kox.jpg'
 import { calculateAge } from '../../services/format/date'
 import styled from 'styled-components'
-import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
-import FamilyDetailButtons from './FamilyDetailButtons'
+import { Breakpoint, Shadow } from '../../variables'
 import { useQuery } from '@apollo/client'
-import { FamilyMemberData, FamilyRelationByIds, FamilyRelationData } from "../../interfaces";
+import { FamilyMemberData, FamilyRelationByIds } from "../../interfaces";
 import { GET_FAMILYMEMBER_BY_ID } from "../../graphql/familyMembers";
 import { Error, Loading } from '../alerts'
 import { parseInt } from 'lodash'
-import { doTypesOverlap } from 'graphql'
-import { Link } from 'react-router-dom'
-import { GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, GET_RELATION_BY_FAMILYIDS } from '../../graphql/familyRelations';
-
+import { GET_RELATION_BY_FAMILYIDS } from '../../graphql/familyRelations';
 import FamilyDetailRelation  from './FamilyDetailRelation';
 
-
-
 interface FamilyDetailProps {
-    profile: any,
     userId: string
 }
 
-// Nog in componenten zetten, to veel styled components
 const StyledImg = styled.div`
     width: 10rem;
     height: 10rem;
@@ -41,7 +29,6 @@ const StyledImg = styled.div`
         margin-bottom: 0;
         width: 15rem;
         height: 15rem;
-        /* width: 50%; */
     }
     
     img {
@@ -176,7 +163,7 @@ const Bio = styled.div`
     }
 `
 
-const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
+const FamilyDetail: React.FC<FamilyDetailProps> = ({ userId }) => {
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
     const { data, loading, error } = useQuery<FamilyMemberData>(GET_FAMILYMEMBER_BY_ID, {
         variables: {
@@ -197,39 +184,23 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
     if(loadingRelation) return <Loading/>;
     // if(errorRelation) return <Error error={errorRelation.message}/>;
 
-
-    // const { data: familyRelationsData , loading: familyRelationsLoading, error:familyRelationsError } = useQuery<FamilyRelationData>(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
-    //     variables: {
-    //         id: parseInt(userId)
-    //     }
-    // });
-
-    // if(familyRelationsLoading) return <Loading/>;
-    // if(familyRelationsError) return <p>{familyRelationsError.message}</p>;
-
-    // if(!familyRelationsLoading && !familyRelationsError) {
-    //     console.log(familyRelationsData);
-    // }
-
-    console.log(data)
-
     return (
         <div>
             <DetailTitle>
                 <StyledImg >
-                    {/* <img src={img} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} /> */}
                     <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
                 </StyledImg>
                 
                 <DetailInfo>
                     <div>
                         <h2>{data?.familyMemberById.firstname} {data?.familyMemberById.lastname}</h2>
-                        {/* <p>{profile.familyMember}</p> */}
                         <p>{!errorRelation ? dataRelation?.familyRelationsByRelatedAndFamilyMemberId.relationType.name : ''}</p>
+                        <p>{dataRelation?.familyRelationsByRelatedAndFamilyMemberId.relationType.name}</p>
                     </div>
 
                     <div>
                         <p>{calculateAge(data?.familyMemberById.dob)} {(calculateAge(data?.familyMemberById.dob)) < 1 ? 'year' : 'years'} old</p>
+                        
                         <p>Lives in {data?.familyMemberById.city}</p>
                     </div>
                 </DetailInfo>
@@ -237,6 +208,7 @@ const FamilyDetail: React.FC<FamilyDetailProps> = ({ profile, userId }) => {
 
             <Bio>
                 <SubTitle>About {data?.familyMemberById.firstname}</SubTitle>
+
                 <p>{data?.familyMemberById.bio}</p>
             </Bio>
 

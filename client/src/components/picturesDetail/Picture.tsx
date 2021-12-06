@@ -16,6 +16,7 @@ const Picture: React.FC = () => {
     return (
         <StyledDiv>
             <PictureImg />
+            
             <PictureContent/>
         </StyledDiv>
     )

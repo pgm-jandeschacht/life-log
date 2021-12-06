@@ -67,7 +67,7 @@ const StyledLi = styled.li<StyledLiProps>`
             transform: translateY(-5px);
         }
     }
-    `
+`
 
 const StyledDiv = styled.div`
     display: flex;
@@ -108,7 +108,7 @@ const StyledDiv = styled.div`
     }
 `
 
-const HelpListItem: React.FC<HelpListItemProps> = ({ title, keyId, image, color }) => {
+const HelpListItem: React.FC<HelpListItemProps> = ({ title, image, color }) => {
     return (
         <StyledLi background={color}>
             <Link to={"/help"} title={"Help"}>

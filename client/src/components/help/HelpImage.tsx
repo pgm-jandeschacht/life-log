@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import helpImage1 from '../../assets/images/help/screenshot-pictures1.png'
-import { Transition } from '../../variables'
 
 interface HelpImageProps {
     data: any
@@ -19,7 +17,7 @@ const StyledImg = styled.div`
 const HelpImage: React.FC<HelpImageProps> = ({ data }) => {
     return (
         <StyledImg>
-            <img src={`/assets/images/help/${data.image}`} alt="" />
+            <img src={`/assets/images/help/${data.image}`} alt={data.title} />
         </StyledImg>
     )
 }

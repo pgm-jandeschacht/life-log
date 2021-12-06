@@ -56,7 +56,7 @@ const HelpProgress: React.FC<HelpProgressProps> = ({ data, background, count }) 
     return (
         <StyledProgress color={background}>
             {
-                data.map((help: any, index: number) => (
+                data.map((help: any) => (
                     <ActiveProgress backgroundColor={background} active={count === (help.step) ? true : false} key={help.step}></ActiveProgress>
                 ))
             }

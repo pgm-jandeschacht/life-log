@@ -1,9 +1,7 @@
 import React, { ReactElement } from 'react';
-
-import { GET_ALL_FAMILYMEMBERS, GET_FAMILYMEMBER_BY_ID, GET_FAMILYMEMBERINFO_BY_ID } from "../../graphql/familyMembers";
-import { FamilyMember, FamilyMemberData, FamilyMembersData } from "../../interfaces";
-
-import { useQuery, useLazyQuery } from "@apollo/client";
+import { GET_FAMILYMEMBERINFO_BY_ID } from "../../graphql/familyMembers";
+import { FamilyMemberData } from "../../interfaces";
+import { useQuery } from "@apollo/client";
 import { Error, Loading } from '../alerts';
 import { Breakpoint } from '../../variables';
 import styled from 'styled-components';
@@ -111,6 +109,7 @@ const FamilyMemberInfo: React.FC = () => {
         <Greeting>
             <div>
                 <p>Good {getGreeting(greeting)}</p>
+
                 <h1>{data?.familyMemberById.firstname}</h1>
             </div>
 

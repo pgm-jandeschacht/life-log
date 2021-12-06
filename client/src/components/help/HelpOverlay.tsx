@@ -6,57 +6,12 @@ import HelpImage from './HelpImage'
 import HelpText from './HelpText'
 import { ButtonIcon } from '../buttons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import HelpProgress from './HelpProgress'
 import { HelpPagesData } from '../../interfaces'
 import { useLazyQuery } from '@apollo/client'
 import { GET_HELP_PAGE_BY_NAME } from '../../graphql/helpPages';
 import { Error, Loading } from '../alerts';
-
-// const helpExample = [
-//     {
-//         id: 1,
-//         title: "My pictures",
-//         content: [
-//             {
-//                 id: 1,
-//                 img: "screenshot-pictures1.png",
-//                 title: "Recent pictures",
-//                 text: "Dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt.",
-//             },
-//             {
-//                 id: 2,
-//                 img: "screenshot-pictures2.png",
-//                 title: "Pictures I liked",
-//                 text: "Quam dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
-//             },
-//             {
-//                 id: 3,
-//                 img: "screenshot-pictures3.png",
-//                 title: "Pictures from...",
-//                 text: "Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
-//             },
-//         ]
-//     },
-//     {
-//         id: 2,
-//         title: "My family",
-//         content: [
-//             {
-//                 id: 1,
-//                 img: "screenshot-family1.png",
-//                 title: "Familymembers list",
-//                 text: "Dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt.",
-//             },
-//             {
-//                 id: 2,
-//                 img: "screenshot-family2.png",
-//                 title: "Familymember detail",
-//                 text: "Quam dicta quo similique molestiae omnis qui. Itaque qui tempore deserunt pariatur sed corporis veniam aut deserunt. Et fugiat tempore quidem eveniet quas est ipsa.",
-//             },
-//         ]
-//     },
-// ]
 
 interface HelpOverlayProps {
     show: boolean,
@@ -98,7 +53,7 @@ const ContentContainer = styled.div`
     @media (min-width: ${Breakpoint.large}) {
         padding: 0 4rem 4.5rem 4rem;
     }
-    `
+`
 
 const Flex = styled.div`
     @media (min-width: ${Breakpoint.medium}) {
@@ -210,16 +165,10 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
         setHelpClose(true);
     }, [onClose, helpClose]);
 
-    ////////////////////////
-    // const [helpId, setHelpId] = useState(0)
     const url = useLocation().pathname.split('/')[1];
     const url2 = useLocation().pathname.split('/')[2];
 
     const [getHelpPages, { data, loading, error}] = useLazyQuery<HelpPagesData>(GET_HELP_PAGE_BY_NAME);
-    // "pages" in data: wishlist, picturesDetail, pictures, family, agenda
-    //TODO: will be better to change data to correspond with path..?
-    // opgelet het type heeft prop "image" en niet "img"
-
 
     useEffect(() => {
         if(url === 'my-pictures' && url2 !== 'detail') {
@@ -262,8 +211,6 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
 
     }, [url]);
 
-    
-    // const filteredHelp = helpExample.filter(helpContent => helpContent.id === helpId);
     const [counter, setCounter] = useState(1)
     
     const handleCounter = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -278,8 +225,6 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
     if(error) return <Error error={error.message}/>;
     if(loading) return <Loading/>;
     
-    // console.log(data?.helpPagesByPageName.map((help: any) => help));
-    // console.log(data?.helpPagesByPageName);
     return (
         <StyledDiv hide={show}>
             {
@@ -290,6 +235,7 @@ const HelpOverlay: React.FC<HelpOverlayProps> = ({ show, onClose, color }) => {
                         <>
                             <StyledHeader>
                                 <p>Help</p>
+
                                 <div>
                                     <h1>{help.page}</h1>
     

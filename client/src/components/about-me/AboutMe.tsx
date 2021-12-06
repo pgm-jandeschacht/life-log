@@ -1,16 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import fallback from '../../assets/images/anna_boloise.jpg'
 import { Breakpoint, Colors, Shadow } from '../../variables'
 import { beautifyDate } from '../../services/format/date'
 import { useQuery } from '@apollo/client'
 import { GET_FAMILYMEMBERDETAILS_BY_FAMILYMEMBERID } from '../../graphql/familyMembers';
-import { FamilyMemberData, FamilyMember } from '../../interfaces';
+import { FamilyMemberData } from '../../interfaces';
 import { Error, Loading } from '../alerts'
-
-// interface AboutMeProps {
-//     profile: FamilyMemberData
-// }
 
 const StyledDiv = styled.div `
     display: flex;
@@ -166,7 +161,6 @@ const AboutMe: React.FC = () => {
         <StyledDiv>
             <StyledImg>
                 <div>
-                    {/* <img src={fallback} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} /> */}
                     <img src={data?.familyMemberById.image} alt={`${data?.familyMemberById.firstname} ${data?.familyMemberById.lastname}`} />
                 </div>
 
@@ -177,32 +171,26 @@ const AboutMe: React.FC = () => {
                 <StyledLi>
                     <li>
                         <p>Date of birth</p>
+                        
                         <p>{ beautifyDate(data?.familyMemberById.dob) }</p>
                     </li>
 
                     <li>
                         <p>Gender</p>
+
                         <p>{ data?.familyMemberById.gender }</p>
                     </li>
                 </StyledLi>
 
-                {/* <li>
-                    <p>Status</p>
-                    <p>{profile.maritalStatus} of {profile.partner}</p>
-                </li>
-
-                <li>
-                    <p>Nursing home</p>
-                    <p>{profile.nursingHome}</p>
-                </li> */}
-
                 <li>
                     <p>Location</p>
+
                     <p>{ data?.familyMemberById.city } , { data?.familyMemberById.country }</p>
                 </li>
 
                 <li>
-                    <p>Carreer</p>
+                    <p>Career</p>
+
                     <p>{ data?.familyMemberById.occupation }</p>
                 </li>
             </StyledUl>

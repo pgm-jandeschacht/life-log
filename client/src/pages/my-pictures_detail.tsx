@@ -20,9 +20,6 @@ const MyPicturesDetailPage: React.FunctionComponent<Ipage> = props => {
     if(loading) return <Loading />;
     if(error) return <Error error={error.message}/>;
 
-
-
-
     return (
         <BaseLayout backButton={true} backgroundStyle={"accent1"} PageTitle={`Picture from ${data?.albumItem.uploader.firstname}`}>
             <Picture/>

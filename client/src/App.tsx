@@ -1,14 +1,8 @@
-import React, { useEffect, useState} from 'react';
-import { useLazyQuery, useQuery } from '@apollo/client';
-
-
 // ROUTER
 import { BrowserRouter, Route, Switch, RouteComponentProps } from 'react-router-dom';
 
 import routes from './config/routes';
 import GlobalStyle from './globalStyle';
-
-// import { Login } from './components/Login';
 
 function App() {
     return (
@@ -34,12 +28,8 @@ function App() {
                     );
                 } ) }
             </Switch>
-            
-
 
         </BrowserRouter>
-
-        
     </>
   );
 }

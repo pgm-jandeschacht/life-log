@@ -3,10 +3,8 @@ import styled from 'styled-components'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
 import { Error, Loading } from '../alerts'
 import FamilyListItem from './FamilyListItem'
-
 import { useQuery } from "@apollo/client";
 import { GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID } from '../../graphql/familyMembers';
-
 import { FamilyRelationData, FamilyRelation } from '../../interfaces';
 import { Link } from 'react-router-dom'
 
@@ -64,7 +62,6 @@ const StyledAnchor = styled.div`
 `
 
 const FamilyList: React.FC<FamilyListProps> = ({ isHome = false }) => {
-
     const familyMemberId = localStorage.getItem('familyMemberId') || '';
 
     const { data, loading, error } = useQuery<FamilyRelationData>(GET_FAMILYRELATIONS_BY_FAMILYMEMBER_ID, {
@@ -75,7 +72,6 @@ const FamilyList: React.FC<FamilyListProps> = ({ isHome = false }) => {
 
     if(loading) return <Loading/>;
     if(error) return <Error error={error.message}/>;
-    console.log(data?.familyRelationsByFamilyMemberId)
 
     return (
         <StyledUl>
@@ -91,7 +87,6 @@ const FamilyList: React.FC<FamilyListProps> = ({ isHome = false }) => {
                 </StyledAnchor>
                 : ''
             }
-
         </StyledUl>
     )
 }

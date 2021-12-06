@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Colors, Transition, Breakpoint } from '../../variables'
 
-interface ButtenNavProps {
+interface ButtonNavProps {
     children: React.ReactNode,
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void,
     backgroundColorButton: string,
@@ -49,7 +49,7 @@ const StyledButtonNav = styled.button<StyledButtonNavProps>`
     }
 `
 
-const ButtonNav = ({ children, onClick, backgroundColorButton, buttonColorButton }: ButtenNavProps) => {
+const ButtonNav: React.FC<ButtonNavProps> = ({ children, onClick, backgroundColorButton, buttonColorButton }) => {
     return (
         <StyledButtonNav buttonColor={buttonColorButton} backgroundColor={backgroundColorButton} onClick={onClick}>
             {children}

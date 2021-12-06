@@ -77,24 +77,12 @@ const AltHeader: React.FC = () => {
                     };
     
                     navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-                    
-                    // if (result.state === "denied") {
-                    //     geoError(Error);
-                    // }
-    
-                    // result.onchange = function() {
-                    //     if (result.state === 'denied') {
-                    //         geoError(Error);
-                    //     }
-                    // }
                 });
         }
     }, [navigator.geolocation.getCurrentPosition])
     
     const url = `${process.env.REACT_APP_WEATHER_BASE_URL}lat=${latitude}&lon=${longitude}&appid=${process.env.REACT_APP_WEATHER_KEY}&units=metric`
     
-    console.log(url)
-
     const [data, isLoading, error] = useFetch(url);
     
     const weatherIcon: string = data.cod === 200 ? data.weather[0].icon : data.cod;
@@ -111,7 +99,9 @@ const AltHeader: React.FC = () => {
 
                     <StyledWeather title={`The weather in ${weatherLoc}`}>
                         <p>{weatherLoc},</p>
+
                         <p>{weatherTemp}°C</p>
+                        
                         <img src={`https://openweathermap.org/img/wn/${weatherIcon}.png`} alt="Current weather" />
                     </StyledWeather>
                 </div>

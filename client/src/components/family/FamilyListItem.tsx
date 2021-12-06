@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { Breakpoint, Colors, Shadow, Transition } from '../../variables'
-import img from '../../assets/images/karina_cox.jpg'
 
 interface FamilyListItemProps {
     familyMember: any,
@@ -130,7 +129,6 @@ const FamilyListItem: React.FC<FamilyListItemProps> = ({ familyMember, isGrey = 
         <StyledLi greyBg={isGrey} key={familyMember.id}>
             <Link to={`/my-family/${familyMember.relatedFamilyMember.id}`} title={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`}>
                 <StyledImg>
-                    {/* <img src={img} alt={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`} /> */}
                     <img src={familyMember.relatedFamilyMember.image} alt={`${familyMember.relatedFamilyMember.firstname} ${familyMember.relatedFamilyMember.lastname}`} />
                 </StyledImg>
 
