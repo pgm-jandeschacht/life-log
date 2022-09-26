@@ -39,7 +39,7 @@ PORT = 4000
 SECRET = 'test'
 HOST = 'localhost'
 USERNAME = 'postgres'
-PASSWORD = 'Fvh89cxn'
+PASSWORD = 'supersecret-PW'
 DATABASE = 'lifelog'
 ```
 
